@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.pytest_cache/
+
+# SQLite
+*.db
+
+# Uploads (keep directories)
+backend/uploads/cv/*
+backend/uploads/logos/*
+!backend/uploads/cv/.gitkeep
+!backend/uploads/logos/.gitkeep
+
+# Node
+node_modules/
+.next/
+.turbo/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
