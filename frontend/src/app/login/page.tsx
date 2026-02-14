@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, Suspense } from "react";
 import { useAuthStore } from "@/store/authStore";
+import { getRecaptchaToken } from "@/lib/recaptcha";
 
 function LoginForm() {
   const router = useRouter();
@@ -21,7 +22,8 @@ function LoginForm() {
     setLoading(true);
 
     try {
-      await login(email, password);
+      const recaptchaToken = await getRecaptchaToken("login");
+      await login(email, password, recaptchaToken);
       const redirect = searchParams.get("redirect");
       if (redirect) {
         router.push(redirect);
@@ -64,7 +66,7 @@ function LoginForm() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
                 placeholder="jan@example.com"
               />
             </div>
@@ -78,7 +80,7 @@ function LoginForm() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
                 placeholder="Min. 8 znaków"
               />
             </div>
@@ -86,13 +88,19 @@ function LoginForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 font-semibold disabled:opacity-50"
+              className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 font-semibold disabled:opacity-50 transition-colors"
             >
               {loading ? "Logowanie..." : "Zaloguj się"}
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-gray-500">
+          <div className="mt-4 text-center">
+            <Link href="/reset-password" className="text-sm text-gray-500 hover:text-red-600 hover:underline">
+              Zapomniałeś hasła?
+            </Link>
+          </div>
+
+          <div className="mt-4 text-center text-sm text-gray-500">
             Nie masz konta?{" "}
             <Link href="/register" className="text-red-600 hover:underline font-medium">
               Zarejestruj się

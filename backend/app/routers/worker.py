@@ -11,12 +11,14 @@ from app.config import get_settings
 from app.core.exceptions import NotFoundError, ConflictError, BadRequestError
 from app.models.user import User
 from app.models.worker_profile import WorkerProfile
+from app.models.employer_profile import EmployerProfile
 from app.models.job_offer import JobOffer
 from app.models.application import Application
 from app.models.cv_file import CVFile
 from app.schemas.worker import WorkerProfileUpdate, WorkerProfileResponse, CVConsentRequest
 from app.schemas.application import ApplyRequest, ApplicationResponse
 from app.schemas.common import PaginatedResponse, MessageResponse
+from app.services.email import send_application_notification
 
 router = APIRouter(prefix="/worker", tags=["Panel pracownika"])
 settings = get_settings()
@@ -93,6 +95,9 @@ async def update_profile(
     for field in profile_fields:
         value = getattr(data, field, None)
         if value is not None:
+            # Serializuj obiekty Pydantic na dicts dla kolumn JSON
+            if field == "languages" and value is not None:
+                value = [v.model_dump() if hasattr(v, "model_dump") else v for v in value]
             setattr(profile, field, value)
 
     return WorkerProfileResponse(
@@ -356,6 +361,22 @@ async def apply_for_job(
         status="sent",
     )
     db.add(application)
+
+    # Notify employer about new application
+    job_with_employer = await db.execute(
+        select(JobOffer)
+        .options(selectinload(JobOffer.employer).selectinload(EmployerProfile.user))
+        .where(JobOffer.id == job_id)
+    )
+    job_detail = job_with_employer.scalar_one_or_none()
+    if job_detail and job_detail.employer and job_detail.employer.user:
+        employer_user = job_detail.employer.user
+        send_application_notification(
+            employer_email=employer_user.email,
+            employer_name=employer_user.first_name,
+            job_title=job_detail.title,
+            applicant_name=f"{current_user.first_name} {current_user.last_name}",
+        )
 
     return MessageResponse(message="Aplikacja została wysłana")
 

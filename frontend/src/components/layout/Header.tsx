@@ -110,7 +110,7 @@ export default function Header() {
                 </Link>
                 <button
                   onClick={() => { logout(); setMobileOpen(false); }}
-                  className="block text-red-600 font-medium py-2"
+                  className="block text-red-600 font-medium py-2 hover:underline"
                 >
                   Wyloguj się
                 </button>

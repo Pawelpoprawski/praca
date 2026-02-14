@@ -45,7 +45,7 @@ function ProgressBar({ step }: { step: number }) {
             </span>
           </div>
           {i < STEPS.length - 1 && (
-            <div className={`h-0.5 flex-1 -mt-4 mx-1 ${step > s.num ? "bg-green-500" : "bg-gray-200"}`} />
+            <div className={`h-0.5 flex-1 -mt-4 mx-1 transition-colors duration-500 ${step > s.num ? "bg-green-500" : "bg-gray-200"}`} />
           )}
         </div>
       ))}
@@ -313,9 +313,14 @@ export default function CVPage() {
           <div>
             {analyzeMutation.isPending ? (
               <div className="text-center py-8">
-                <div className="animate-spin w-10 h-10 border-4 border-red-200 border-t-red-600 rounded-full mx-auto mb-4" />
-                <p className="text-gray-600 font-medium">Analizujemy Twoje CV...</p>
-                <p className="text-sm text-gray-400 mt-1">To potrwa kilka sekund</p>
+                <div className="animate-spin w-12 h-12 border-4 border-red-200 border-t-red-600 rounded-full mx-auto mb-4" />
+                <p className="text-gray-700 font-semibold text-lg mb-2">Analizujemy Twoje CV...</p>
+                <p className="text-sm text-gray-500">AI sprawdza Twoje doświadczenie, umiejętności i formatowanie</p>
+                <div className="mt-4 flex items-center justify-center gap-2">
+                  <div className="w-2 h-2 bg-red-600 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                  <div className="w-2 h-2 bg-red-600 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                  <div className="w-2 h-2 bg-red-600 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                </div>
               </div>
             ) : analysis ? (
               <div>

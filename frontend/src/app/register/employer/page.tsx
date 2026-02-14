@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useAuthStore } from "@/store/authStore";
+import { getRecaptchaToken } from "@/lib/recaptcha";
 
 export default function RegisterEmployerPage() {
   const register = useAuthStore((s) => s.register);
@@ -14,9 +15,26 @@ export default function RegisterEmployerPage() {
     password2: "",
     company_name: "",
   });
+  const [fieldErrors, setFieldErrors] = useState({ password: "", password2: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  const validatePassword = (value: string) => {
+    if (value.length > 0 && value.length < 8) {
+      setFieldErrors((prev) => ({ ...prev, password: "Hasło musi mieć min. 8 znaków" }));
+    } else {
+      setFieldErrors((prev) => ({ ...prev, password: "" }));
+    }
+  };
+
+  const validatePassword2 = (value: string, password: string) => {
+    if (value.length > 0 && value !== password) {
+      setFieldErrors((prev) => ({ ...prev, password2: "Hasła nie są identyczne" }));
+    } else {
+      setFieldErrors((prev) => ({ ...prev, password2: "" }));
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,9 +44,14 @@ export default function RegisterEmployerPage() {
       setError("Hasła nie są identyczne");
       return;
     }
+    if (form.password.length < 8) {
+      setError("Hasło musi mieć min. 8 znaków");
+      return;
+    }
 
     setLoading(true);
     try {
+      const recaptchaToken = await getRecaptchaToken("register");
       await register({
         email: form.email,
         password: form.password,
@@ -36,7 +59,7 @@ export default function RegisterEmployerPage() {
         first_name: form.first_name,
         last_name: form.last_name,
         company_name: form.company_name,
-      });
+      }, recaptchaToken);
       setSuccess(true);
     } catch (err: any) {
       setError(err.response?.data?.detail || "Wystąpił błąd rejestracji");
@@ -55,7 +78,7 @@ export default function RegisterEmployerPage() {
           </p>
           <Link
             href="/login"
-            className="inline-block bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 font-medium"
+            className="inline-block bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 font-medium transition-colors"
           >
             Przejdź do logowania
           </Link>
@@ -82,7 +105,7 @@ export default function RegisterEmployerPage() {
               <input
                 type="text" required value={form.company_name}
                 onChange={(e) => setForm({ ...form, company_name: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
                 placeholder="np. SwissBau GmbH"
               />
             </div>
@@ -93,7 +116,7 @@ export default function RegisterEmployerPage() {
                 <input
                   type="text" required value={form.first_name}
                   onChange={(e) => setForm({ ...form, first_name: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
                 />
               </div>
               <div>
@@ -101,7 +124,7 @@ export default function RegisterEmployerPage() {
                 <input
                   type="text" required value={form.last_name}
                   onChange={(e) => setForm({ ...form, last_name: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
                 />
               </div>
             </div>
@@ -111,7 +134,7 @@ export default function RegisterEmployerPage() {
               <input
                 type="email" required value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
               />
             </div>
 
@@ -119,24 +142,41 @@ export default function RegisterEmployerPage() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Hasło</label>
               <input
                 type="password" required value={form.password}
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+                onChange={(e) => {
+                  setForm({ ...form, password: e.target.value });
+                  validatePassword(e.target.value);
+                  if (form.password2) validatePassword2(form.password2, e.target.value);
+                }}
+                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 ${
+                  fieldErrors.password ? "border-red-300" : "border-gray-300"
+                }`}
                 placeholder="Min. 8 znaków"
               />
+              {fieldErrors.password && (
+                <p className="text-xs text-red-600 mt-1">{fieldErrors.password}</p>
+              )}
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Powtórz hasło</label>
               <input
                 type="password" required value={form.password2}
-                onChange={(e) => setForm({ ...form, password2: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+                onChange={(e) => {
+                  setForm({ ...form, password2: e.target.value });
+                  validatePassword2(e.target.value, form.password);
+                }}
+                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 ${
+                  fieldErrors.password2 ? "border-red-300" : "border-gray-300"
+                }`}
               />
+              {fieldErrors.password2 && (
+                <p className="text-xs text-red-600 mt-1">{fieldErrors.password2}</p>
+              )}
             </div>
 
             <button
               type="submit" disabled={loading}
-              className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 font-semibold disabled:opacity-50"
+              className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 font-semibold disabled:opacity-50 transition-colors"
             >
               {loading ? "Rejestracja..." : "Zarejestruj firmę"}
             </button>

@@ -7,7 +7,7 @@ interface AuthState {
   isLoading: boolean;
   isAuthenticated: boolean;
 
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string, recaptchaToken?: string) => Promise<void>;
   register: (data: {
     email: string;
     password: string;
@@ -15,7 +15,7 @@ interface AuthState {
     first_name: string;
     last_name: string;
     company_name?: string;
-  }) => Promise<void>;
+  }, recaptchaToken?: string) => Promise<void>;
   logout: () => void;
   fetchUser: () => Promise<void>;
 }
@@ -25,8 +25,11 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoading: true,
   isAuthenticated: false,
 
-  login: async (email, password) => {
-    const { data } = await api.post("/auth/login", { email, password });
+  login: async (email, password, recaptchaToken?) => {
+    const headers: Record<string, string> = {};
+    if (recaptchaToken) headers["X-Recaptcha-Token"] = recaptchaToken;
+
+    const { data } = await api.post("/auth/login", { email, password }, { headers });
     localStorage.setItem("access_token", data.access_token);
     localStorage.setItem("refresh_token", data.refresh_token);
 
@@ -34,8 +37,11 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ user: userRes.data, isAuthenticated: true, isLoading: false });
   },
 
-  register: async (formData) => {
-    await api.post("/auth/register", formData);
+  register: async (formData, recaptchaToken?) => {
+    const headers: Record<string, string> = {};
+    if (recaptchaToken) headers["X-Recaptcha-Token"] = recaptchaToken;
+
+    await api.post("/auth/register", formData, { headers });
   },
 
   logout: () => {

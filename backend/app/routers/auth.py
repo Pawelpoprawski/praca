@@ -20,6 +20,8 @@ from app.schemas.auth import (
     ResetPasswordRequest,
 )
 from app.schemas.common import MessageResponse
+from app.core.recaptcha import verify_recaptcha
+from app.services.email import send_verification_email, send_password_reset_email
 
 router = APIRouter(prefix="/auth", tags=["Autoryzacja"])
 
@@ -32,7 +34,7 @@ def slugify(text: str) -> str:
     return text
 
 
-@router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED, dependencies=[Depends(verify_recaptcha)])
 async def register(data: RegisterRequest, db: AsyncSession = Depends(get_db)):
     """Rejestracja nowego użytkownika (pracownik lub pracodawca)."""
     # Sprawdź czy email zajęty
@@ -95,11 +97,11 @@ async def register(data: RegisterRequest, db: AsyncSession = Depends(get_db)):
         )
         db.add(quota)
 
-    # TODO: Wysłanie emaila weryfikacyjnego
+    send_verification_email(data.email, data.first_name, user.verification_token)
     return user
 
 
-@router.post("/login", response_model=TokenResponse)
+@router.post("/login", response_model=TokenResponse, dependencies=[Depends(verify_recaptcha)])
 async def login(data: LoginRequest, db: AsyncSession = Depends(get_db)):
     """Logowanie - zwraca access token i refresh token."""
     result = await db.execute(select(User).where(User.email == data.email))
@@ -182,7 +184,7 @@ async def verify_email(token: str, db: AsyncSession = Depends(get_db)):
     return MessageResponse(message="Email został zweryfikowany. Możesz się zalogować.")
 
 
-@router.post("/forgot-password", response_model=MessageResponse)
+@router.post("/forgot-password", response_model=MessageResponse, dependencies=[Depends(verify_recaptcha)])
 async def forgot_password(data: ForgotPasswordRequest, db: AsyncSession = Depends(get_db)):
     """Wysyła email z linkiem do resetu hasła."""
     result = await db.execute(select(User).where(User.email == data.email))
@@ -191,7 +193,8 @@ async def forgot_password(data: ForgotPasswordRequest, db: AsyncSession = Depend
     # Zawsze zwracamy sukces (bezpieczeństwo - nie ujawniamy czy email istnieje)
     if user:
         user.reset_token = create_verification_token()
-        # TODO: Wysłanie emaila z linkiem
+        user.reset_token_expires = date.today() + timedelta(days=1)
+        send_password_reset_email(user.email, user.first_name, user.reset_token)
 
     return MessageResponse(
         message="Jeśli konto istnieje, wysłaliśmy link do resetowania hasła."

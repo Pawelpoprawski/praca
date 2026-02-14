@@ -24,6 +24,7 @@ from app.schemas.employer import (
 )
 from app.schemas.application import ApplicationStatusUpdate, CandidateResponse
 from app.schemas.common import PaginatedResponse, MessageResponse
+from app.services.email import send_status_change_notification
 
 router = APIRouter(prefix="/employer", tags=["Panel pracodawcy"])
 settings = get_settings()
@@ -316,7 +317,7 @@ async def update_job(
 
     result = await db.execute(
         select(JobOffer)
-        .options(selectinload(JobOffer.category))
+        .options(selectinload(JobOffer.employer), selectinload(JobOffer.category))
         .where(JobOffer.id == job_id, JobOffer.employer_id == profile.id)
     )
     job = result.scalar_one_or_none()
@@ -442,6 +443,25 @@ async def update_application_status(
     application.status = data.status
     if data.employer_notes is not None:
         application.employer_notes = data.employer_notes
+
+    # Notify worker about status change
+    app_with_details = await db.execute(
+        select(Application)
+        .options(
+            selectinload(Application.worker),
+            selectinload(Application.job_offer).selectinload(JobOffer.employer),
+        )
+        .where(Application.id == application_id)
+    )
+    app_detail = app_with_details.scalar_one_or_none()
+    if app_detail and app_detail.worker and app_detail.job_offer:
+        send_status_change_notification(
+            worker_email=app_detail.worker.email,
+            worker_name=app_detail.worker.first_name,
+            job_title=app_detail.job_offer.title,
+            company_name=app_detail.job_offer.employer.company_name if app_detail.job_offer.employer else "",
+            new_status=data.status,
+        )
 
     return MessageResponse(message=f"Status aplikacji zmieniony na: {data.status}")
 

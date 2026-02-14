@@ -19,12 +19,16 @@ class Settings(BaseSettings):
     MAX_CV_SIZE_MB: int = 5
     MAX_LOGO_SIZE_MB: int = 2
 
-    # Email
-    SMTP_HOST: str = ""
-    SMTP_PORT: int = 587
-    SMTP_USER: str = ""
-    SMTP_PASSWORD: str = ""
-    SMTP_FROM: str = ""
+    # Email (Resend)
+    RESEND_API_KEY: str = ""
+    EMAIL_FROM: str = "PolacySzwajcaria <noreply@polacyszwajcaria.ch>"
+    EMAIL_ENABLED: bool = False
+
+    # reCAPTCHA v3
+    RECAPTCHA_SECRET_KEY: str = ""
+    RECAPTCHA_SITE_KEY: str = ""
+    RECAPTCHA_ENABLED: bool = False
+    RECAPTCHA_SCORE_THRESHOLD: float = 0.5
 
     # Frontend
     FRONTEND_URL: str = "http://localhost:3000"

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { Search, MapPin, Briefcase, Users, Building2 } from "lucide-react";
+import { Search, MapPin, Briefcase, Users, Building2, Plus } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/services/api";
@@ -70,7 +70,7 @@ export default function HomePage() {
                 placeholder="Stanowisko, firma..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="w-full py-2 text-gray-900 placeholder-gray-400 outline-none"
+                className="w-full py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1 rounded"
               />
             </div>
             <div className="flex items-center gap-2 px-3 border-t sm:border-t-0 sm:border-l border-gray-200">
@@ -78,7 +78,7 @@ export default function HomePage() {
               <select
                 value={canton}
                 onChange={(e) => setCanton(e.target.value)}
-                className="py-2 text-gray-900 outline-none bg-transparent min-w-[140px]"
+                className="py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1 rounded bg-transparent min-w-[140px]"
               >
                 <option value="">Cała Szwajcaria</option>
                 {cantons?.map((c: { value: string; label: string }) => (
@@ -97,14 +97,14 @@ export default function HomePage() {
           </form>
 
           {/* Popular tags */}
-          <div className="mt-6 text-center text-sm text-red-200">
+          <div className="mt-6 text-center text-sm text-red-50">
             Popularne:{" "}
             {["spawacz", "kierowca", "opiekun/ka", "kelner/ka", "sprzątanie"].map(
               (tag) => (
                 <Link
                   key={tag}
                   href={`/oferty?q=${tag}`}
-                  className="inline-block mx-1 px-2 py-1 bg-white/10 rounded hover:bg-white/20"
+                  className="inline-block mx-1 px-2 py-1 bg-white/20 rounded hover:bg-white/30 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
                 >
                   {tag}
                 </Link>
@@ -117,7 +117,7 @@ export default function HomePage() {
       {/* Stats */}
       <section className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-3 gap-8 text-center">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-8 text-center">
             <div>
               <div className="flex items-center justify-center gap-2 text-red-600 mb-1">
                 <Briefcase className="w-5 h-5" />
@@ -153,7 +153,7 @@ export default function HomePage() {
                 <Link
                   key={cat.id}
                   href={`/oferty?category_id=${cat.id}`}
-                  className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md hover:border-red-200 transition-all"
+                  className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md hover:border-red-200 hover:-translate-y-0.5 transition-all"
                 >
                   <span className="font-medium text-gray-900">{cat.name}</span>
                 </Link>
@@ -214,16 +214,26 @@ export default function HomePage() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 text-gray-500">
-              <Briefcase className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-              <p>Brak ofert pracy. Dodaj pierwsze ogłoszenie!</p>
+            <div className="text-center py-16 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+              <Briefcase className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Brak ofert pracy</h3>
+              <p className="text-gray-500 mb-6 max-w-md mx-auto">
+                Obecnie nie ma żadnych opublikowanych ofert. Jesteś pracodawcą? Dodaj pierwsze ogłoszenie za darmo!
+              </p>
+              <Link
+                href="/register/employer"
+                className="inline-flex items-center gap-2 bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 font-medium transition-colors"
+              >
+                <Plus className="w-4 h-4" />
+                Dodaj ogłoszenie
+              </Link>
             </div>
           )}
         </div>
       </section>
 
       {/* CTA for employers */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-12 bg-gray-50">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Szukasz polskojęzycznych pracowników?

@@ -3,11 +3,32 @@
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { Search, MapPin, SlidersHorizontal, X } from "lucide-react";
-import { useState, Suspense } from "react";
+import { Search, MapPin, SlidersHorizontal, X, Briefcase } from "lucide-react";
+import { useState, useEffect, Suspense } from "react";
 import api from "@/services/api";
 import { formatSalary, formatDate, CONTRACT_TYPES } from "@/lib/utils";
 import type { JobListItem, PaginatedResponse, Canton } from "@/types/api";
+
+function JobCardSkeleton() {
+  return (
+    <div className="bg-white border rounded-lg p-5 animate-pulse">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex-1">
+          <div className="h-5 bg-gray-200 rounded w-2/3 mb-3" />
+          <div className="h-4 bg-gray-100 rounded w-1/3 mb-3" />
+          <div className="flex gap-2">
+            <div className="h-5 bg-gray-100 rounded w-20" />
+            <div className="h-5 bg-gray-100 rounded w-24" />
+          </div>
+        </div>
+        <div className="text-right">
+          <div className="h-5 bg-gray-200 rounded w-28 mb-2" />
+          <div className="h-3 bg-gray-100 rounded w-20 ml-auto" />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function JobsContent() {
   const searchParams = useSearchParams();
@@ -18,6 +39,16 @@ function JobsContent() {
   const canton = searchParams.get("canton") || "";
   const contractType = searchParams.get("contract_type") || "";
   const page = parseInt(searchParams.get("page") || "1");
+
+  // Lock body scroll when mobile filters open
+  useEffect(() => {
+    if (showFilters) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [showFilters]);
 
   const { data, isLoading } = useQuery({
     queryKey: ["jobs", q, canton, contractType, page],
@@ -68,7 +99,7 @@ function JobsContent() {
         </h1>
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="md:hidden flex items-center gap-2 px-3 py-2 bg-white border rounded-lg text-sm"
+          className="md:hidden flex items-center gap-2 px-3 py-2 bg-white border rounded-lg text-sm hover:bg-gray-50 transition-colors"
         >
           <SlidersHorizontal className="w-4 h-4" />
           Filtry{hasFilters ? " *" : ""}
@@ -76,13 +107,26 @@ function JobsContent() {
       </div>
 
       <div className="flex gap-8">
+        {/* Mobile backdrop */}
+        {showFilters && (
+          <div
+            className="fixed inset-0 z-30 bg-black/50 md:hidden transition-opacity"
+            onClick={() => setShowFilters(false)}
+            aria-hidden="true"
+          />
+        )}
+
         {/* Filters sidebar */}
         <aside
-          className={`${showFilters ? "block fixed inset-0 z-40 bg-white p-6 overflow-auto" : "hidden"} md:block md:relative md:w-64 flex-shrink-0`}
+          className={`${showFilters ? "fixed inset-0 z-40 bg-white p-6 overflow-auto" : "hidden"} md:block md:relative md:w-64 flex-shrink-0`}
         >
           <div className="flex items-center justify-between md:hidden mb-4">
             <h2 className="text-lg font-semibold">Filtry</h2>
-            <button onClick={() => setShowFilters(false)}>
+            <button
+              onClick={() => setShowFilters(false)}
+              className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
+              aria-label="Zamknij filtry"
+            >
               <X className="w-6 h-6" />
             </button>
           </div>
@@ -100,7 +144,7 @@ function JobsContent() {
                   onKeyDown={(e) => {
                     if (e.key === "Enter") updateFilter("q", e.currentTarget.value);
                   }}
-                  className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
                 />
               </div>
             </div>
@@ -111,7 +155,7 @@ function JobsContent() {
               <select
                 value={canton}
                 onChange={(e) => updateFilter("canton", e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
               >
                 <option value="">Wszystkie</option>
                 {cantons?.map((c) => (
@@ -126,7 +170,7 @@ function JobsContent() {
               <select
                 value={contractType}
                 onChange={(e) => updateFilter("contract_type", e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
               >
                 <option value="">Wszystkie</option>
                 {Object.entries(CONTRACT_TYPES).map(([key, label]) => (
@@ -151,11 +195,7 @@ function JobsContent() {
           {isLoading ? (
             <div className="space-y-4">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="bg-white border rounded-lg p-5 animate-pulse">
-                  <div className="h-5 bg-gray-200 rounded w-2/3 mb-3" />
-                  <div className="h-4 bg-gray-100 rounded w-1/3 mb-2" />
-                  <div className="h-3 bg-gray-100 rounded w-1/4" />
-                </div>
+                <JobCardSkeleton key={i} />
               ))}
             </div>
           ) : data?.data && data.data.length > 0 ? (
@@ -168,14 +208,14 @@ function JobsContent() {
                     className="block bg-white border border-gray-200 rounded-lg p-5 hover:shadow-md hover:border-red-200 transition-all"
                   >
                     <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
                         {job.is_featured && (
                           <span className="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-0.5 rounded mb-2">
                             Wyróżnione
                           </span>
                         )}
-                        <h2 className="text-lg font-semibold text-gray-900">{job.title}</h2>
-                        <p className="text-sm text-gray-500 mt-1">
+                        <h2 className="text-lg font-semibold text-gray-900 truncate">{job.title}</h2>
+                        <p className="text-sm text-gray-500 mt-1 truncate">
                           {job.employer?.company_name}
                         </p>
                         <div className="flex flex-wrap gap-2 mt-2 text-xs text-gray-500">
@@ -208,14 +248,16 @@ function JobsContent() {
                 ))}
               </div>
 
-              {/* Pagination */}
+              {/* Pagination with ARIA */}
               {data.pages > 1 && (
-                <div className="flex justify-center gap-2 mt-8">
+                <nav className="flex justify-center gap-2 mt-8" aria-label="Paginacja ofert pracy">
                   {Array.from({ length: data.pages }, (_, i) => i + 1).map((p) => (
                     <button
                       key={p}
                       onClick={() => updateFilter("page", String(p))}
-                      className={`px-3 py-1 rounded text-sm ${
+                      aria-label={`Strona ${p}`}
+                      aria-current={p === page ? "page" : undefined}
+                      className={`px-3 py-1 rounded text-sm transition-colors ${
                         p === page
                           ? "bg-red-600 text-white"
                           : "bg-white border text-gray-700 hover:bg-gray-50"
@@ -224,12 +266,13 @@ function JobsContent() {
                       {p}
                     </button>
                   ))}
-                </div>
+                </nav>
               )}
             </>
           ) : (
-            <div className="text-center py-16 text-gray-500">
-              <p className="text-lg mb-2">Brak ofert spełniających kryteria</p>
+            <div className="text-center py-16 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+              <Briefcase className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+              <p className="text-lg font-medium text-gray-700 mb-2">Brak ofert spełniających kryteria</p>
               {hasFilters && (
                 <button onClick={clearFilters} className="text-red-600 hover:underline text-sm">
                   Wyczyść filtry
@@ -245,7 +288,16 @@ function JobsContent() {
 
 export default function OffertyPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center">Ładowanie...</div>}>
+    <Suspense fallback={
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="h-8 bg-gray-200 rounded w-48 mb-6 animate-pulse" />
+        <div className="space-y-4">
+          {[...Array(3)].map((_, i) => (
+            <JobCardSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    }>
       <JobsContent />
     </Suspense>
   );

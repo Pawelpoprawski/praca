@@ -23,9 +23,21 @@ export default function ApplicationsPage() {
 
   if (isLoading) {
     return (
-      <div className="space-y-3">
+      <div className="bg-white border rounded-lg divide-y">
         {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="animate-pulse h-16 bg-gray-100 rounded-lg" />
+          <div key={i} className="px-5 py-4 flex items-center justify-between animate-pulse">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 bg-gray-200 rounded-lg" />
+              <div>
+                <div className="h-4 bg-gray-200 rounded w-40 mb-2" />
+                <div className="h-3 bg-gray-100 rounded w-24" />
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="h-5 bg-gray-100 rounded w-20 mb-2" />
+              <div className="h-3 bg-gray-100 rounded w-16 ml-auto" />
+            </div>
+          </div>
         ))}
       </div>
     );
@@ -56,11 +68,11 @@ export default function ApplicationsPage() {
                     <div className="min-w-0">
                       <Link
                         href={`/oferty/${app.job_offer_id}`}
-                        className="font-medium text-gray-900 hover:text-red-600 truncate block"
+                        className="font-medium text-gray-900 hover:text-red-600 truncate block max-w-xs"
                       >
                         {app.job_title || "Oferta pracy"}
                       </Link>
-                      <p className="text-sm text-gray-500 truncate">
+                      <p className="text-sm text-gray-500 truncate max-w-xs">
                         {app.company_name}
                       </p>
                     </div>
@@ -81,7 +93,7 @@ export default function ApplicationsPage() {
           </div>
 
           {data.pages > 1 && (
-            <div className="flex items-center justify-between mt-4">
+            <nav className="flex items-center justify-between mt-4" aria-label="Paginacja aplikacji">
               <p className="text-sm text-gray-500">
                 Strona {data.page} z {data.pages} ({data.total} aplikacji)
               </p>
@@ -89,19 +101,21 @@ export default function ApplicationsPage() {
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page <= 1}
-                  className="p-2 border rounded-lg hover:bg-gray-50 disabled:opacity-30"
+                  aria-label="Poprzednia strona"
+                  className="p-2 border rounded-lg hover:bg-gray-50 disabled:opacity-30 transition-colors"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setPage((p) => Math.min(data.pages, p + 1))}
                   disabled={page >= data.pages}
-                  className="p-2 border rounded-lg hover:bg-gray-50 disabled:opacity-30"
+                  aria-label="Następna strona"
+                  className="p-2 border rounded-lg hover:bg-gray-50 disabled:opacity-30 transition-colors"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
-            </div>
+            </nav>
           )}
         </>
       ) : (
