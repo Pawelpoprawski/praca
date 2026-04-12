@@ -1,8 +1,8 @@
 import re
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from app.database import get_db
 from app.dependencies import get_current_user
 from app.core.security import (
@@ -16,12 +16,13 @@ from app.models.employer_profile import EmployerProfile
 from app.models.posting_quota import PostingQuota
 from app.schemas.auth import (
     RegisterRequest, LoginRequest, TokenResponse,
-    RefreshRequest, UserResponse, ForgotPasswordRequest,
-    ResetPasswordRequest,
+    RefreshRequest, UserResponse, UserUpdateRequest,
+    ForgotPasswordRequest, ResetPasswordRequest,
 )
 from app.schemas.common import MessageResponse
 from app.core.recaptcha import verify_recaptcha
 from app.services.email import send_verification_email, send_password_reset_email
+from app.core.rate_limit import limiter
 
 router = APIRouter(prefix="/auth", tags=["Autoryzacja"])
 
@@ -35,10 +36,14 @@ def slugify(text: str) -> str:
 
 
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED, dependencies=[Depends(verify_recaptcha)])
-async def register(data: RegisterRequest, db: AsyncSession = Depends(get_db)):
+@limiter.limit("10/minute")
+async def register(request: Request, data: RegisterRequest, db: AsyncSession = Depends(get_db)):
     """Rejestracja nowego użytkownika (pracownik lub pracodawca)."""
-    # Sprawdź czy email zajęty
-    existing = await db.execute(select(User).where(User.email == data.email))
+    # Normalize email to lowercase for case-insensitive uniqueness
+    normalized_email = data.email.lower()
+
+    # Sprawdź czy email zajęty (case-insensitive)
+    existing = await db.execute(select(User).where(User.email == normalized_email))
     if existing.scalar_one_or_none():
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
@@ -54,7 +59,7 @@ async def register(data: RegisterRequest, db: AsyncSession = Depends(get_db)):
 
     # Utwórz użytkownika
     user = User(
-        email=data.email,
+        email=normalized_email,
         password_hash=hash_password(data.password),
         role=data.role,
         first_name=data.first_name,
@@ -102,9 +107,10 @@ async def register(data: RegisterRequest, db: AsyncSession = Depends(get_db)):
 
 
 @router.post("/login", response_model=TokenResponse, dependencies=[Depends(verify_recaptcha)])
-async def login(data: LoginRequest, db: AsyncSession = Depends(get_db)):
+@limiter.limit("10/minute")
+async def login(request: Request, data: LoginRequest, db: AsyncSession = Depends(get_db)):
     """Logowanie - zwraca access token i refresh token."""
-    result = await db.execute(select(User).where(User.email == data.email))
+    result = await db.execute(select(User).where(User.email == data.email.lower()))
     user = result.scalar_one_or_none()
 
     if not user or not verify_password(data.password, user.password_hash):
@@ -164,6 +170,23 @@ async def get_me(current_user: User = Depends(get_current_user)):
     return current_user
 
 
+@router.patch("/me", response_model=UserResponse)
+async def update_me(
+    data: UserUpdateRequest,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Edycja podstawowych danych użytkownika (imię, nazwisko, telefon)."""
+    if data.first_name is not None:
+        current_user.first_name = data.first_name
+    if data.last_name is not None:
+        current_user.last_name = data.last_name
+    if data.phone is not None:
+        current_user.phone = data.phone
+
+    return current_user
+
+
 @router.get("/verify-email/{token}", response_model=MessageResponse)
 async def verify_email(token: str, db: AsyncSession = Depends(get_db)):
     """Weryfikacja adresu email."""
@@ -185,15 +208,16 @@ async def verify_email(token: str, db: AsyncSession = Depends(get_db)):
 
 
 @router.post("/forgot-password", response_model=MessageResponse, dependencies=[Depends(verify_recaptcha)])
-async def forgot_password(data: ForgotPasswordRequest, db: AsyncSession = Depends(get_db)):
+@limiter.limit("10/minute")
+async def forgot_password(request: Request, data: ForgotPasswordRequest, db: AsyncSession = Depends(get_db)):
     """Wysyła email z linkiem do resetu hasła."""
-    result = await db.execute(select(User).where(User.email == data.email))
+    result = await db.execute(select(User).where(User.email == data.email.lower()))
     user = result.scalar_one_or_none()
 
     # Zawsze zwracamy sukces (bezpieczeństwo - nie ujawniamy czy email istnieje)
     if user:
         user.reset_token = create_verification_token()
-        user.reset_token_expires = date.today() + timedelta(days=1)
+        user.reset_token_expires = datetime.now(timezone.utc) + timedelta(hours=24)
         send_password_reset_email(user.email, user.first_name, user.reset_token)
 
     return MessageResponse(
@@ -214,6 +238,21 @@ async def reset_password(data: ResetPasswordRequest, db: AsyncSession = Depends(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Nieprawidłowy lub wygasły link",
         )
+
+    # Check if the reset token has expired
+    if user.reset_token_expires:
+        expires = user.reset_token_expires
+        now = datetime.now(timezone.utc)
+        # Handle naive datetimes from SQLite (assume UTC)
+        if expires.tzinfo is None:
+            expires = expires.replace(tzinfo=timezone.utc)
+        if expires < now:
+            user.reset_token = None
+            user.reset_token_expires = None
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Link do resetowania hasła wygasł. Poproś o nowy.",
+            )
 
     user.password_hash = hash_password(data.new_password)
     user.reset_token = None

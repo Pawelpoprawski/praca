@@ -2,6 +2,12 @@ import { create } from "zustand";
 import api from "@/services/api";
 import type { User } from "@/types/api";
 
+interface UserUpdateData {
+  first_name?: string;
+  last_name?: string;
+  phone?: string;
+}
+
 interface AuthState {
   user: User | null;
   isLoading: boolean;
@@ -18,6 +24,7 @@ interface AuthState {
   }, recaptchaToken?: string) => Promise<void>;
   logout: () => void;
   fetchUser: () => Promise<void>;
+  updateUser: (data: UserUpdateData) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -64,5 +71,10 @@ export const useAuthStore = create<AuthState>((set) => ({
       localStorage.removeItem("refresh_token");
       set({ user: null, isAuthenticated: false, isLoading: false });
     }
+  },
+
+  updateUser: async (userData) => {
+    const { data } = await api.patch("/auth/me", userData);
+    set({ user: data });
   },
 }));

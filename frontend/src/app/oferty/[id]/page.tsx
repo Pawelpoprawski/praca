@@ -48,7 +48,7 @@ export async function generateMetadata({
     title: job.title,
     description,
     openGraph: {
-      title: `${job.title} - PolacySzwajcaria`,
+      title: `${job.title} - Praca w Szwajcarii`,
       description,
       url: `${SITE_URL}/oferty/${id}`,
       type: "article",

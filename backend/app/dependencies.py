@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -7,6 +7,7 @@ from app.core.security import decode_token
 from app.models.user import User
 
 bearer_scheme = HTTPBearer()
+bearer_scheme_optional = HTTPBearer(auto_error=False)
 
 
 async def get_current_user(
@@ -45,6 +46,27 @@ async def get_current_user(
             detail="Konto zostało dezaktywowane",
         )
 
+    return user
+
+
+async def get_optional_user(
+    credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme_optional),
+    db: AsyncSession = Depends(get_db),
+) -> User | None:
+    """Zwróć aktualnego użytkownika lub None jeśli brak tokenu."""
+    if credentials is None:
+        return None
+    token = credentials.credentials
+    payload = decode_token(token)
+    if payload is None or payload.get("type") != "access":
+        return None
+    user_id = payload.get("sub")
+    if user_id is None:
+        return None
+    result = await db.execute(select(User).where(User.id == user_id))
+    user = result.scalar_one_or_none()
+    if user is None or not user.is_active:
+        return None
     return user
 
 

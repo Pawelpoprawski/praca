@@ -45,6 +45,9 @@ class User(Base):
     applications: Mapped[list["Application"]] = relationship(
         back_populates="worker", cascade="all, delete-orphan"
     )
+    reviews: Mapped[list["EmployerReview"]] = relationship(
+        back_populates="worker", cascade="all, delete-orphan"
+    )
 
     @property
     def full_name(self) -> str:

@@ -4,14 +4,17 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
 from sqlalchemy import select
 from app.config import get_settings
 from app.database import engine, Base, async_session
 from app.core.security import hash_password
+from app.core.rate_limit import limiter
 from app.models import *  # noqa: F401,F403 - register all models
 from app.models.user import User
 from app.models.system_setting import SystemSetting
-from app.routers import auth, jobs, worker, employer, companies, admin
+from app.routers import auth, jobs, worker, employer, companies, admin, notifications, reviews, job_alerts, cv_review
 from app.tasks.scheduler import start_scheduler, stop_scheduler
 
 logging.basicConfig(level=logging.INFO)
@@ -20,7 +23,7 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 SEED_SETTINGS = [
-    ("default_monthly_posting_limit", "5", "integer", "Domyślny limit ogłoszeń miesięcznie"),
+    ("default_monthly_posting_limit", "200", "integer", "Domyślny limit ogłoszeń miesięcznie"),
     ("job_expiry_days", "30", "integer", "Domyślny czas wygaśnięcia oferty (dni)"),
     ("max_job_expiry_days", "60", "integer", "Maksymalny czas wygaśnięcia oferty (dni)"),
     ("max_cv_size_mb", "5", "integer", "Maksymalny rozmiar CV w MB"),
@@ -116,10 +119,28 @@ app = FastAPI(
     redoc_url="/api/redoc",
 )
 
+# Rate limiter
+app.state.limiter = limiter
+
+
+async def custom_rate_limit_handler(request: Request, exc: RateLimitExceeded):
+    """Custom 429 handler - JSON response instead of default HTML."""
+    return JSONResponse(
+        status_code=429,
+        content={
+            "detail": "Zbyt wiele żądań. Spróbuj ponownie za chwilę.",
+            "retry_after": str(exc.detail),
+        },
+    )
+
+
+app.add_exception_handler(RateLimitExceeded, custom_rate_limit_handler)
+app.add_middleware(SlowAPIMiddleware)
+
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.FRONTEND_URL, "http://localhost:3000"],
+    allow_origins=[settings.FRONTEND_URL, "http://localhost:3000", "http://localhost:3002"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -147,6 +168,10 @@ app.include_router(worker.router, prefix="/api/v1")
 app.include_router(employer.router, prefix="/api/v1")
 app.include_router(companies.router, prefix="/api/v1")
 app.include_router(admin.router, prefix="/api/v1")
+app.include_router(notifications.router, prefix="/api/v1")
+app.include_router(reviews.router, prefix="/api/v1")
+app.include_router(job_alerts.router, prefix="/api/v1")
+app.include_router(cv_review.router, prefix="/api/v1")
 
 
 @app.get("/api/health")

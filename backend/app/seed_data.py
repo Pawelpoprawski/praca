@@ -230,7 +230,6 @@ JOBS = [
         "languages_required": [{"lang": "fr", "level": "A1"}],
         "employer_idx": 3,
         "category_slug": "transport",
-        "work_permit_sponsored": True,
     },
     {
         "title": "Malarz budowlany",
@@ -261,7 +260,6 @@ JOBS = [
         "languages_required": [],
         "employer_idx": 1,
         "category_slug": "gastronomia",
-        "work_permit_sponsored": True,
     },
 ]
 
@@ -515,7 +513,6 @@ async def seed_demo_data():
                 experience_min=job_data["experience_min"],
                 is_remote=job_data["is_remote"],
                 languages_required=job_data["languages_required"],
-                work_permit_sponsored=job_data.get("work_permit_sponsored", False),
                 is_featured=job_data.get("is_featured", False),
                 feature_priority=5 if job_data.get("is_featured") else 0,
                 apply_via="portal",

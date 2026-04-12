@@ -1,10 +1,11 @@
 "use client";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, User, FileText, Mail } from "lucide-react";
-import api from "@/services/api";
+import { ArrowLeft, User, FileText, Mail, Download } from "lucide-react";
+import api, { downloadCSV } from "@/services/api";
 import { APPLICATION_STATUSES, formatDate } from "@/lib/utils";
 import type { Candidate } from "@/types/api";
 
@@ -12,6 +13,7 @@ export default function CandidatesPage() {
   const params = useParams();
   const jobId = params.id as string;
   const queryClient = useQueryClient();
+  const [exporting, setExporting] = useState(false);
 
   const { data: candidates, isLoading } = useQuery({
     queryKey: ["candidates", jobId],
@@ -31,20 +33,55 @@ export default function CandidatesPage() {
     return (
       <div className="space-y-3">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="animate-pulse h-24 bg-gray-100 rounded-lg" />
+          <div key={i} className="bg-white border rounded-lg p-4 animate-pulse">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0" />
+                <div>
+                  <div className="h-4 bg-gray-200 rounded w-32 mb-2" />
+                  <div className="h-3 bg-gray-100 rounded w-40" />
+                </div>
+              </div>
+              <div className="h-5 bg-gray-100 rounded w-20" />
+            </div>
+          </div>
         ))}
       </div>
     );
   }
 
+  const handleExportCSV = async () => {
+    setExporting(true);
+    try {
+      await downloadCSV(
+        `/employer/jobs/${jobId}/export-candidates`,
+        `kandydaci_${new Date().toISOString().slice(0, 10)}.csv`
+      );
+    } finally {
+      setExporting(false);
+    }
+  };
+
   return (
     <div>
-      <div className="flex items-center gap-3 mb-6">
-        <Link href="/panel/pracodawca/ogloszenia" className="p-2 hover:bg-gray-100 rounded-lg">
-          <ArrowLeft className="w-5 h-5" />
-        </Link>
-        <h1 className="text-2xl font-bold text-gray-900">Kandydaci</h1>
-        <span className="text-sm text-gray-500">({candidates?.length || 0})</span>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <Link href="/panel/pracodawca/ogloszenia" className="p-2 hover:bg-gray-100 rounded-lg" aria-label="Powrót do ogłoszeń">
+            <ArrowLeft className="w-5 h-5" />
+          </Link>
+          <h1 className="text-2xl font-bold text-gray-900">Kandydaci</h1>
+          <span className="text-sm text-gray-500">({candidates?.length || 0})</span>
+        </div>
+        {candidates && candidates.length > 0 && (
+          <button
+            onClick={handleExportCSV}
+            disabled={exporting}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium border rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+          >
+            <Download className="w-4 h-4" />
+            {exporting ? "Eksportowanie..." : "Eksportuj CSV"}
+          </button>
+        )}
       </div>
 
       {candidates && candidates.length > 0 ? (

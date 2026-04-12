@@ -2,13 +2,15 @@
 
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import Image from "next/image";
 import {
-  Building2, Globe, MapPin, Users, BadgeCheck, Briefcase,
+  Building2, Globe, BadgeCheck, Briefcase,
   ChevronLeft, ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
 import api from "@/services/api";
 import { formatSalary, formatDate, CONTRACT_TYPES } from "@/lib/utils";
+import ReviewSection from "@/components/common/ReviewSection";
 import type { JobListItem, PaginatedResponse } from "@/types/api";
 
 interface CompanyPublic {
@@ -18,10 +20,6 @@ interface CompanyPublic {
   description: string | null;
   logo_url: string | null;
   website: string | null;
-  industry: string | null;
-  canton: string | null;
-  city: string | null;
-  company_size: string | null;
   is_verified: boolean;
 }
 
@@ -49,11 +47,11 @@ export default function CompanyClient({ initialCompany }: Props) {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Company header */}
-      <div className="bg-white border rounded-lg p-6 mb-6">
+      <div className="bg-white border border-gray-200 rounded-xl p-6 mb-6 shadow-sm">
         <div className="flex items-start gap-4">
-          <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+          <div className="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden flex-shrink-0">
             {company.logo_url ? (
-              <img src={company.logo_url} alt={company.company_name} className="w-full h-full object-cover" />
+              <Image src={company.logo_url} alt={company.company_name} width={64} height={64} className="w-full h-full object-cover" />
             ) : (
               <Building2 className="w-8 h-8 text-gray-400" />
             )}
@@ -65,28 +63,15 @@ export default function CompanyClient({ initialCompany }: Props) {
                 <BadgeCheck className="w-5 h-5 text-blue-500" />
               )}
             </div>
-            <div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-gray-500">
-              {company.industry && <span>{company.industry}</span>}
-              {(company.canton || company.city) && (
-                <span className="flex items-center gap-1">
-                  <MapPin className="w-3 h-3" />
-                  {[company.city, company.canton].filter(Boolean).join(", ")}
-                </span>
-              )}
-              {company.company_size && (
-                <span className="flex items-center gap-1">
-                  <Users className="w-3 h-3" />
-                  {company.company_size} pracowników
-                </span>
-              )}
-              {company.website && (
+            {company.website && (
+              <div className="mt-2">
                 <a href={company.website} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-1 text-red-600 hover:underline">
+                  className="inline-flex items-center gap-1 text-sm text-red-600 hover:underline">
                   <Globe className="w-3 h-3" />
                   Strona www
                 </a>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -106,7 +91,18 @@ export default function CompanyClient({ initialCompany }: Props) {
       {loadingJobs ? (
         <div className="space-y-3">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="animate-pulse h-20 bg-gray-100 rounded-lg" />
+            <div key={i} className="bg-white border border-gray-200 rounded-xl p-4 animate-pulse">
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="h-4 bg-gray-200 rounded w-2/3 mb-2" />
+                  <div className="flex gap-3">
+                    <div className="h-3 bg-gray-100 rounded w-24" />
+                    <div className="h-3 bg-gray-100 rounded w-20" />
+                  </div>
+                </div>
+                <div className="h-3 bg-gray-100 rounded w-16 ml-4" />
+              </div>
+            </div>
           ))}
         </div>
       ) : jobsData?.data && jobsData.data.length > 0 ? (
@@ -116,7 +112,7 @@ export default function CompanyClient({ initialCompany }: Props) {
               <Link
                 key={job.id}
                 href={`/oferty/${job.id}`}
-                className="block bg-white border rounded-lg p-4 hover:border-red-200 hover:shadow-sm transition-all"
+                className="block bg-white border border-gray-200 rounded-xl p-4 hover:border-red-200 hover:shadow-md transition-all"
               >
                 <div className="flex items-start justify-between">
                   <div>
@@ -124,9 +120,6 @@ export default function CompanyClient({ initialCompany }: Props) {
                     <div className="flex items-center gap-3 mt-1 text-sm text-gray-500">
                       <span>{CONTRACT_TYPES[job.contract_type] || job.contract_type}</span>
                       <span>{formatSalary(job.salary_min, job.salary_max, job.salary_type)}</span>
-                      {job.is_remote === "yes" && (
-                        <span className="text-green-600 text-xs font-medium">Zdalna</span>
-                      )}
                     </div>
                   </div>
                   {job.published_at && (
@@ -160,6 +153,9 @@ export default function CompanyClient({ initialCompany }: Props) {
           <p className="text-gray-500">Firma nie ma aktualnie aktywnych ofert</p>
         </div>
       )}
+
+      {/* Reviews section */}
+      <ReviewSection companySlug={company.company_slug} />
     </div>
   );
 }

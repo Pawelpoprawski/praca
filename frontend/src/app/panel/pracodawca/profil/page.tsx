@@ -4,9 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState, useEffect, useRef } from "react";
 import { Upload, Building2 } from "lucide-react";
 import api from "@/services/api";
-import type { EmployerProfile, Canton } from "@/types/api";
-
-const COMPANY_SIZES = ["1-10", "11-50", "51-200", "201-500", "500+"];
+import type { EmployerProfile } from "@/types/api";
 
 export default function EmployerProfilePage() {
   const queryClient = useQueryClient();
@@ -19,15 +17,8 @@ export default function EmployerProfilePage() {
     queryFn: () => api.get<EmployerProfile>("/employer/profile").then((r) => r.data),
   });
 
-  const { data: cantons } = useQuery({
-    queryKey: ["cantons"],
-    queryFn: () => api.get<Canton[]>("/jobs/cantons").then((r) => r.data),
-    staleTime: 24 * 60 * 60 * 1000,
-  });
-
   const [form, setForm] = useState({
-    company_name: "", description: "", website: "", industry: "",
-    canton: "", city: "", address: "", uid_number: "", company_size: "",
+    company_name: "", description: "", website: "",
   });
 
   useEffect(() => {
@@ -36,12 +27,6 @@ export default function EmployerProfilePage() {
         company_name: profile.company_name || "",
         description: profile.description || "",
         website: profile.website || "",
-        industry: profile.industry || "",
-        canton: profile.canton || "",
-        city: profile.city || "",
-        address: profile.address || "",
-        uid_number: profile.uid_number || "",
-        company_size: profile.company_size || "",
       });
     }
   }, [profile]);
@@ -105,8 +90,18 @@ export default function EmployerProfilePage() {
     <div>
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Profil firmy</h1>
 
-      {success && <div className="bg-green-50 text-green-700 px-4 py-3 rounded-lg mb-4 text-sm">{success}</div>}
-      {error && <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>}
+      {success && (
+        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4 text-sm flex items-center gap-2" role="status">
+          <span className="flex-shrink-0">✓</span>
+          {success}
+        </div>
+      )}
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm flex items-center gap-2" role="alert">
+          <span className="flex-shrink-0">⚠</span>
+          {error}
+        </div>
+      )}
 
       {/* Logo */}
       <div className="bg-white border rounded-lg p-6 mb-6">
@@ -148,62 +143,15 @@ export default function EmployerProfilePage() {
             placeholder="Krótki opis Twojej firmy..." />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Strona internetowa</label>
-            <input type="url" value={form.website} onChange={(e) => setForm({ ...form, website: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="https://..." />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Branża</label>
-            <input type="text" value={form.industry} onChange={(e) => setForm({ ...form, industry: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="np. IT, Budownictwo..." />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Kanton</label>
-            <select value={form.canton} onChange={(e) => setForm({ ...form, canton: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none">
-              <option value="">Wybierz...</option>
-              {cantons?.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Miasto</label>
-            <input type="text" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500" />
-          </div>
-        </div>
-
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Adres</label>
-          <input type="text" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })}
-            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500" />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Numer UID (CHE-...)</label>
-            <input type="text" value={form.uid_number} onChange={(e) => setForm({ ...form, uid_number: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="CHE-123.456.789" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Wielkość firmy</label>
-            <select value={form.company_size} onChange={(e) => setForm({ ...form, company_size: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none">
-              <option value="">Wybierz...</option>
-              {COMPANY_SIZES.map((size) => <option key={size} value={size}>{size} pracowników</option>)}
-            </select>
-          </div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Strona internetowa</label>
+          <input type="url" value={form.website} onChange={(e) => setForm({ ...form, website: e.target.value })}
+            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500"
+            placeholder="https://..." />
         </div>
 
         <button type="submit" disabled={mutation.isPending}
-          className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 font-medium text-sm disabled:opacity-50">
+          className="w-full sm:w-auto bg-red-600 text-white px-6 py-2.5 rounded-lg hover:bg-red-700 font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
           {mutation.isPending ? "Zapisywanie..." : "Zapisz zmiany"}
         </button>
       </form>

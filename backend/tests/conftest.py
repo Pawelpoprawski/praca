@@ -20,6 +20,7 @@ os.environ["UPLOAD_DIR"] = "./test_uploads"
 os.environ["REDIS_URL"] = ""
 os.environ["RECAPTCHA_ENABLED"] = "false"
 os.environ["EMAIL_ENABLED"] = "false"
+os.environ["RATELIMIT_ENABLED"] = "false"
 
 # Ensure the test_uploads directory exists (required by StaticFiles)
 os.makedirs("./test_uploads", exist_ok=True)

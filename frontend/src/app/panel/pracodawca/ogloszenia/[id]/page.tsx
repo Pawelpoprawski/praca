@@ -6,7 +6,7 @@ import { useRouter, useParams } from "next/navigation";
 import { ArrowLeft, Plus, X } from "lucide-react";
 import Link from "next/link";
 import api from "@/services/api";
-import { CONTRACT_TYPES, WORK_PERMITS } from "@/lib/utils";
+import { CONTRACT_TYPES } from "@/lib/utils";
 import type { JobOffer, Canton, CategoryBrief } from "@/types/api";
 
 const LANG_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
@@ -48,8 +48,8 @@ export default function EditJobPage() {
   const [form, setForm] = useState({
     title: "", description: "", canton: "", city: "", category_id: "",
     contract_type: "full_time", salary_min: "", salary_max: "",
-    salary_type: "monthly", experience_min: 0, work_permit_required: "",
-    work_permit_sponsored: false, is_remote: "no",
+    salary_type: "monthly", experience_min: 0,
+    car_required: false, driving_license_required: false,
     languages_required: [] as { lang: string; level: string }[],
     contact_email: "", apply_via: "portal", external_url: "",
   });
@@ -67,9 +67,8 @@ export default function EditJobPage() {
         salary_max: job.salary_max?.toString() || "",
         salary_type: job.salary_type,
         experience_min: job.experience_min,
-        work_permit_required: job.work_permit_required || "",
-        work_permit_sponsored: job.work_permit_sponsored,
-        is_remote: job.is_remote,
+        car_required: job.car_required ?? false,
+        driving_license_required: job.driving_license_required ?? false,
         languages_required: job.languages_required || [],
         contact_email: (job as any).contact_email || "",
         apply_via: job.apply_via,
@@ -108,7 +107,6 @@ export default function EditJobPage() {
       salary_min: form.salary_min ? parseInt(form.salary_min) : null,
       salary_max: form.salary_max ? parseInt(form.salary_max) : null,
       category_id: form.category_id || null,
-      work_permit_required: form.work_permit_required || null,
       contact_email: form.contact_email || null,
       external_url: form.external_url || null,
     });
@@ -180,7 +178,7 @@ export default function EditJobPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Kanton *</label>
             <select required value={form.canton} onChange={(e) => setForm({ ...form, canton: e.target.value })}
@@ -193,15 +191,6 @@ export default function EditJobPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Miasto</label>
             <input type="text" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })}
               className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Praca zdalna</label>
-            <select value={form.is_remote} onChange={(e) => setForm({ ...form, is_remote: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none">
-              <option value="no">Nie</option>
-              <option value="yes">Tak</option>
-              <option value="hybrid">Hybrydowa</option>
-            </select>
           </div>
         </div>
 
@@ -228,29 +217,25 @@ export default function EditJobPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Min. doświadczenie (lata)</label>
             <input type="number" min={0} max={50} value={form.experience_min}
               onChange={(e) => setForm({ ...form, experience_min: parseInt(e.target.value) || 0 })}
               className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500" />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Wymagane pozwolenie</label>
-            <select value={form.work_permit_required} onChange={(e) => setForm({ ...form, work_permit_required: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none">
-              <option value="">Bez wymagań</option>
-              {Object.entries(WORK_PERMITS).map(([key, label]) => (
-                <option key={key} value={key}>{label}</option>
-              ))}
-            </select>
-          </div>
-          <div className="flex items-end">
+          <div className="flex items-end gap-6">
             <label className="flex items-center gap-2 px-3 py-2">
-              <input type="checkbox" checked={form.work_permit_sponsored}
-                onChange={(e) => setForm({ ...form, work_permit_sponsored: e.target.checked })}
+              <input type="checkbox" checked={form.driving_license_required}
+                onChange={(e) => setForm({ ...form, driving_license_required: e.target.checked })}
                 className="rounded border-gray-300 text-red-600 focus:ring-red-500" />
-              <span className="text-sm text-gray-700">Sponsoring pozwolenia</span>
+              <span className="text-sm text-gray-700">Wymagane prawo jazdy</span>
+            </label>
+            <label className="flex items-center gap-2 px-3 py-2">
+              <input type="checkbox" checked={form.car_required}
+                onChange={(e) => setForm({ ...form, car_required: e.target.checked })}
+                className="rounded border-gray-300 text-red-600 focus:ring-red-500" />
+              <span className="text-sm text-gray-700">Wymagany samochód</span>
             </label>
           </div>
         </div>

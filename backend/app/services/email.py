@@ -37,7 +37,7 @@ def _send_email(to: str, subject: str, html: str) -> bool:
 
 def send_verification_email(to: str, name: str, token: str) -> bool:
     settings = get_settings()
-    link = f"{settings.FRONTEND_URL}/api/v1/auth/verify-email/{token}"
+    link = f"{settings.FRONTEND_URL}/verify-email/{token}"
     html = f"""
     <h2>Witaj {name}!</h2>
     <p>Dziękujemy za rejestrację w PolacySzwajcaria.</p>

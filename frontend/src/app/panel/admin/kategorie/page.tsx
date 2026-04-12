@@ -60,7 +60,7 @@ export default function CategoriesPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Kategorie</h1>
+      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">Kategorie</h1>
 
       {message.text && (
         <div className={`px-4 py-3 rounded-lg mb-4 text-sm ${
@@ -71,21 +71,21 @@ export default function CategoriesPage() {
       )}
 
       {/* Add new */}
-      <form onSubmit={handleCreate} className="bg-white border rounded-lg p-4 mb-6 flex gap-3 items-end">
+      <form onSubmit={handleCreate} className="bg-white border rounded-lg p-3 sm:p-4 mb-6 flex flex-col sm:flex-row gap-3 sm:items-end">
         <div className="flex-1">
           <label className="block text-sm font-medium text-gray-700 mb-1">Nowa kategoria</label>
           <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)}
             placeholder="Nazwa kategorii"
             className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500" />
         </div>
-        <div className="w-32">
+        <div className="sm:w-32">
           <label className="block text-sm font-medium text-gray-700 mb-1">Ikona</label>
           <input type="text" value={newIcon} onChange={(e) => setNewIcon(e.target.value)}
             placeholder="np. wrench"
             className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500" />
         </div>
         <button type="submit" disabled={createMutation.isPending || !newName.trim()}
-          className="px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 disabled:opacity-50 flex items-center gap-1">
+          className="px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 disabled:opacity-50 flex items-center justify-center gap-1 w-full sm:w-auto">
           <Plus className="w-4 h-4" /> Dodaj
         </button>
       </form>
@@ -100,9 +100,9 @@ export default function CategoriesPage() {
       ) : (
         <div className="bg-white border rounded-lg divide-y">
           {categories?.map((cat) => (
-            <div key={cat.id} className="px-4 py-3 flex items-center justify-between">
+            <div key={cat.id} className="px-3 sm:px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               {editId === cat.id ? (
-                <div className="flex gap-2 flex-1 mr-4">
+                <div className="flex flex-col sm:flex-row gap-2 flex-1">
                   <input type="text" value={editName} onChange={(e) => setEditName(e.target.value)}
                     className="flex-1 px-3 py-1.5 border rounded-lg text-sm outline-none" />
                   <input type="text" value={editIcon} onChange={(e) => setEditIcon(e.target.value)}

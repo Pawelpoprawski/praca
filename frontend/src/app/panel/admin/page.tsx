@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import {
   Users, Briefcase, Send, Shield, UserCheck, Building2, Clock,
-  Eye, TrendingUp, TrendingDown, ArrowRight,
+  Eye, TrendingUp, TrendingDown, ArrowRight, FileSearch,
 } from "lucide-react";
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -34,7 +34,7 @@ function ChangeBadge({ comparison }: { comparison: PeriodComparison | undefined 
 export default function AdminDashboardPage() {
   const [period, setPeriod] = useState<Period>("7d");
 
-  const { data: stats } = useQuery({
+  const { data: stats, isLoading: statsLoading } = useQuery({
     queryKey: ["admin-dashboard"],
     queryFn: () => api.get<AdminDashboard>("/admin/dashboard").then((r) => r.data),
   });
@@ -62,9 +62,9 @@ export default function AdminDashboardPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Panel administratora</h1>
-        <div className="flex bg-gray-100 rounded-lg p-0.5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Panel administratora</h1>
+        <div className="flex bg-gray-100 rounded-lg p-0.5 w-fit">
           {(["7d", "14d", "30d"] as Period[]).map((p) => (
             <button
               key={p}
@@ -79,34 +79,44 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {cards.map((card) => {
-          const Icon = card.icon;
-          const content = (
-            <div className="bg-white border rounded-lg p-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className={`w-8 h-8 ${card.bg} rounded-lg flex items-center justify-center`}>
-                  <Icon className={`w-4 h-4 ${card.color}`} />
-                </div>
-                {"comp" in card && card.comp && <ChangeBadge comparison={card.comp} />}
-              </div>
-              <span className="text-2xl font-bold text-gray-900">{card.value.toLocaleString("pl-PL")}</span>
-              <p className="text-xs text-gray-500 mt-0.5">{card.label}</p>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+        {statsLoading ? (
+          [...Array(8)].map((_, i) => (
+            <div key={i} className="bg-white border rounded-lg p-3 sm:p-4 animate-pulse">
+              <div className="w-7 h-7 bg-gray-200 rounded-lg mb-2" />
+              <div className="h-7 bg-gray-200 rounded w-12 mb-1" />
+              <div className="h-3 bg-gray-100 rounded w-20" />
             </div>
-          );
-          return card.href ? (
-            <Link key={card.label} href={card.href}>{content}</Link>
-          ) : (
-            <div key={card.label}>{content}</div>
-          );
-        })}
+          ))
+        ) : (
+          cards.map((card) => {
+            const Icon = card.icon;
+            const content = (
+              <div className="bg-white border rounded-lg p-3 sm:p-4">
+                <div className="flex items-center justify-between mb-1 sm:mb-2">
+                  <div className={`w-7 h-7 sm:w-8 sm:h-8 ${card.bg} rounded-lg flex items-center justify-center`}>
+                    <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${card.color}`} />
+                  </div>
+                  {"comp" in card && card.comp && <ChangeBadge comparison={card.comp} />}
+                </div>
+                <span className="text-xl sm:text-2xl font-bold text-gray-900 block">{card.value.toLocaleString("pl-PL")}</span>
+                <p className="text-xs text-gray-500 mt-0.5 truncate">{card.label}</p>
+              </div>
+            );
+            return card.href ? (
+              <Link key={card.label} href={card.href}>{content}</Link>
+            ) : (
+              <div key={card.label}>{content}</div>
+            );
+          })
+        )}
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white border rounded-lg p-5">
-          <h3 className="text-sm font-semibold text-gray-700 mb-4">Nowi użytkownicy i oferty</h3>
-          <ResponsiveContainer width="100%" height={240}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        <div className="bg-white border rounded-lg p-4 sm:p-5">
+          <h3 className="text-sm font-semibold text-gray-700 mb-3 sm:mb-4">Nowi użytkownicy i oferty</h3>
+          <ResponsiveContainer width="100%" height={200}>
             <AreaChart data={chartData}>
               <defs>
                 <linearGradient id="colorUsers" x1="0" y1="0" x2="0" y2="1">
@@ -137,9 +147,9 @@ export default function AdminDashboardPage() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white border rounded-lg p-5">
-          <h3 className="text-sm font-semibold text-gray-700 mb-4">Aplikacje</h3>
-          <ResponsiveContainer width="100%" height={240}>
+        <div className="bg-white border rounded-lg p-4 sm:p-5">
+          <h3 className="text-sm font-semibold text-gray-700 mb-3 sm:mb-4">Aplikacje</h3>
+          <ResponsiveContainer width="100%" height={200}>
             <AreaChart data={chartData}>
               <defs>
                 <linearGradient id="colorApps" x1="0" y1="0" x2="0" y2="1">
@@ -182,7 +192,7 @@ export default function AdminDashboardPage() {
       )}
 
       {/* Quick nav */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <Link href="/panel/admin/moderacja" className="bg-white border rounded-lg p-5 hover:bg-gray-50 transition-colors group">
           <div className="flex items-center justify-between">
             <div>
@@ -209,6 +219,16 @@ export default function AdminDashboardPage() {
               <Briefcase className="w-6 h-6 text-green-600 mb-2" />
               <h3 className="font-semibold text-gray-900">Kategorie</h3>
               <p className="text-sm text-gray-500">Zarządzaj kategoriami ofert</p>
+            </div>
+            <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-gray-500 transition-colors" />
+          </div>
+        </Link>
+        <Link href="/panel/admin/baza-cv" className="bg-white border rounded-lg p-5 hover:bg-gray-50 transition-colors group">
+          <div className="flex items-center justify-between">
+            <div>
+              <FileSearch className="w-6 h-6 text-indigo-600 mb-2" />
+              <h3 className="font-semibold text-gray-900">Baza CV</h3>
+              <p className="text-sm text-gray-500">Przeglądaj CV kandydatów</p>
             </div>
             <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-gray-500 transition-colors" />
           </div>

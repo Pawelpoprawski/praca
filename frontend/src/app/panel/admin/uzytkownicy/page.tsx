@@ -2,8 +2,8 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Search, UserCheck, UserX, ChevronLeft, ChevronRight } from "lucide-react";
-import api from "@/services/api";
+import { Search, UserCheck, UserX, ChevronLeft, ChevronRight, Download } from "lucide-react";
+import api, { downloadCSV } from "@/services/api";
 import { formatDate } from "@/lib/utils";
 import type { User, PaginatedResponse } from "@/types/api";
 
@@ -19,6 +19,7 @@ export default function UsersPage() {
   const [role, setRole] = useState("");
   const [search, setSearch] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [exporting, setExporting] = useState(false);
 
   const { data, isLoading } = useQuery({
     queryKey: ["admin-users", page, role, searchQuery],
@@ -44,12 +45,32 @@ export default function UsersPage() {
     setPage(1);
   };
 
+  const handleExportCSV = async () => {
+    setExporting(true);
+    try {
+      await downloadCSV("/admin/export/users", `uzytkownicy_${new Date().toISOString().slice(0, 10)}.csv`);
+    } finally {
+      setExporting(false);
+    }
+  };
+
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Użytkownicy</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Użytkownicy</h1>
+        <button
+          onClick={handleExportCSV}
+          disabled={exporting}
+          className="flex items-center gap-2 px-4 py-2 text-sm font-medium border rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 w-fit"
+        >
+          <Download className="w-4 h-4" />
+          <span className="hidden sm:inline">{exporting ? "Eksportowanie..." : "Eksportuj CSV"}</span>
+          <span className="sm:hidden">CSV</span>
+        </button>
+      </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-4">
+      <div className="flex flex-col gap-3 mb-4">
         <form onSubmit={handleSearch} className="flex-1 flex gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -61,7 +82,7 @@ export default function UsersPage() {
             Szukaj
           </button>
         </form>
-        <div className="flex gap-2">
+        <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
           {[
             { value: "", label: "Wszyscy" },
             { value: "worker", label: "Pracownicy" },
@@ -69,7 +90,7 @@ export default function UsersPage() {
             { value: "admin", label: "Admini" },
           ].map((f) => (
             <button key={f.value} onClick={() => { setRole(f.value); setPage(1); }}
-              className={`px-3 py-1.5 text-sm rounded-lg border font-medium ${
+              className={`px-3 py-1.5 text-sm rounded-lg border font-medium whitespace-nowrap ${
                 role === f.value ? "bg-red-50 border-red-200 text-red-700" : "bg-white hover:bg-gray-50 text-gray-600"
               }`}>
               {f.label}
@@ -86,15 +107,15 @@ export default function UsersPage() {
         </div>
       ) : data?.data && data.data.length > 0 ? (
         <>
-          <div className="bg-white border rounded-lg overflow-hidden">
-            <table className="w-full text-sm">
+          <div className="bg-white border rounded-lg overflow-hidden overflow-x-auto">
+            <table className="w-full text-sm min-w-[600px]">
               <thead className="bg-gray-50 border-b">
                 <tr>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500">Użytkownik</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500">Rola</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500">Status</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500">Dołączył</th>
-                  <th className="text-right px-4 py-3 font-medium text-gray-500">Akcje</th>
+                  <th className="text-left px-3 sm:px-4 py-3 font-medium text-gray-500">Użytkownik</th>
+                  <th className="text-left px-3 sm:px-4 py-3 font-medium text-gray-500">Rola</th>
+                  <th className="text-left px-3 sm:px-4 py-3 font-medium text-gray-500">Status</th>
+                  <th className="text-left px-3 sm:px-4 py-3 font-medium text-gray-500">Dołączył</th>
+                  <th className="text-right px-3 sm:px-4 py-3 font-medium text-gray-500">Akcje</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
@@ -102,26 +123,26 @@ export default function UsersPage() {
                   const roleInfo = ROLE_LABELS[user.role] || { label: user.role, color: "bg-gray-100 text-gray-800" };
                   return (
                     <tr key={user.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3">
-                        <p className="font-medium text-gray-900">
+                      <td className="px-3 sm:px-4 py-3">
+                        <p className="font-medium text-gray-900 truncate max-w-[150px] sm:max-w-none">
                           {user.first_name} {user.last_name}
                         </p>
-                        <p className="text-gray-500 text-xs">{user.email}</p>
+                        <p className="text-gray-500 text-xs truncate max-w-[150px] sm:max-w-none">{user.email}</p>
                       </td>
-                      <td className="px-4 py-3">
-                        <span className={`text-xs px-2 py-0.5 rounded font-medium ${roleInfo.color}`}>
+                      <td className="px-3 sm:px-4 py-3">
+                        <span className={`text-xs px-2 py-0.5 rounded font-medium whitespace-nowrap ${roleInfo.color}`}>
                           {roleInfo.label}
                         </span>
                       </td>
-                      <td className="px-4 py-3">
-                        <span className={`text-xs px-2 py-0.5 rounded font-medium ${
+                      <td className="px-3 sm:px-4 py-3">
+                        <span className={`text-xs px-2 py-0.5 rounded font-medium whitespace-nowrap ${
                           user.is_active ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
                         }`}>
                           {user.is_active ? "Aktywny" : "Nieaktywny"}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-gray-500">{formatDate(user.created_at)}</td>
-                      <td className="px-4 py-3 text-right">
+                      <td className="px-3 sm:px-4 py-3 text-gray-500 whitespace-nowrap">{formatDate(user.created_at)}</td>
+                      <td className="px-3 sm:px-4 py-3 text-right">
                         {user.role !== "admin" && (
                           <button
                             onClick={() => toggleMutation.mutate({ userId: user.id, isActive: !user.is_active })}
@@ -132,6 +153,7 @@ export default function UsersPage() {
                                 : "text-green-600 hover:bg-green-50"
                             }`}
                             title={user.is_active ? "Dezaktywuj" : "Aktywuj"}
+                            aria-label={user.is_active ? `Dezaktywuj ${user.email}` : `Aktywuj ${user.email}`}
                           >
                             {user.is_active ? <UserX className="w-4 h-4" /> : <UserCheck className="w-4 h-4" />}
                           </button>

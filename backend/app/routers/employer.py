@@ -1,20 +1,25 @@
 import uuid
 import os
+import csv
+import io
 import math
 from datetime import date, datetime, timedelta, timezone
-from sqlalchemy import select, func
+from sqlalchemy import select, func, cast, Date
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, Query, status
+from fastapi import APIRouter, Depends, Request, UploadFile, File, HTTPException, Query, status
+from fastapi.responses import StreamingResponse
 from app.database import get_db
 from app.dependencies import get_current_employer
 from app.config import get_settings
 from app.core.exceptions import NotFoundError, ForbiddenError, QuotaExceededError
+from app.core.rate_limit import limiter
 from app.core.sanitize import sanitize_html
 from app.models.user import User
 from app.models.employer_profile import EmployerProfile
 from app.models.job_offer import JobOffer
 from app.models.application import Application
+from app.models.application_click import ApplicationClick
 from app.models.posting_quota import PostingQuota
 from app.models.system_setting import SystemSetting
 from app.schemas.job import JobCreateRequest, JobUpdateRequest, JobResponse
@@ -25,6 +30,8 @@ from app.schemas.employer import (
 from app.schemas.application import ApplicationStatusUpdate, CandidateResponse
 from app.schemas.common import PaginatedResponse, MessageResponse
 from app.services.email import send_status_change_notification
+from app.services.job_processor import process_single_text
+from pydantic import BaseModel, Field
 
 router = APIRouter(prefix="/employer", tags=["Panel pracodawcy"])
 settings = get_settings()
@@ -195,6 +202,24 @@ async def get_dashboard(
         .where(JobOffer.employer_id == profile.id, Application.status == "sent")
     )
 
+    # Total views across all employer's jobs
+    total_views = await db.scalar(
+        select(func.coalesce(func.sum(JobOffer.views_count), 0)).where(
+            JobOffer.employer_id == profile.id
+        )
+    )
+
+    # Application clicks by type
+    click_counts = await db.execute(
+        select(ApplicationClick.click_type, func.count().label("cnt"))
+        .select_from(ApplicationClick)
+        .join(JobOffer)
+        .where(JobOffer.employer_id == profile.id)
+        .group_by(ApplicationClick.click_type)
+    )
+    clicks_map = {row.click_type: row.cnt for row in click_counts}
+    total_clicks = sum(clicks_map.values())
+
     quota_result = await db.execute(
         select(PostingQuota).where(PostingQuota.employer_id == profile.id)
     )
@@ -205,10 +230,165 @@ async def get_dashboard(
         active_jobs=active_jobs or 0,
         total_applications=total_apps or 0,
         new_applications=new_apps or 0,
+        total_views=total_views or 0,
+        total_clicks=total_clicks,
+        clicks_by_type=clicks_map,
         quota_used=quota.used_count if quota else 0,
         quota_limit=limit,
         quota_reset_date=quota.period_end if quota else None,
     )
+
+
+# === WYKRESY (CHARTS) ===
+
+@router.get("/stats/charts")
+async def get_charts(
+    current_user: User = Depends(get_current_employer),
+    db: AsyncSession = Depends(get_db),
+):
+    """Dane do wykresów dla panelu pracodawcy."""
+    profile = await _get_employer_profile(current_user, db)
+    today = date.today()
+    start_date = today - timedelta(days=29)
+
+    # 1. Applications over time (last 30 days)
+    apps_q = await db.execute(
+        select(
+            cast(Application.created_at, Date).label("day"),
+            func.count().label("cnt"),
+        )
+        .select_from(Application)
+        .join(JobOffer)
+        .where(
+            JobOffer.employer_id == profile.id,
+            cast(Application.created_at, Date) >= start_date,
+        )
+        .group_by(cast(Application.created_at, Date))
+    )
+    apps_by_day = {row.day: row.cnt for row in apps_q}
+
+    applications_over_time = []
+    for i in range(29, -1, -1):
+        d = today - timedelta(days=i)
+        applications_over_time.append({
+            "date": d.isoformat(),
+            "count": apps_by_day.get(d, 0),
+        })
+
+    # 2. Top 5 jobs by applications
+    top_jobs_q = await db.execute(
+        select(
+            JobOffer.title,
+            JobOffer.views_count,
+            func.count(Application.id).label("app_count"),
+        )
+        .outerjoin(Application)
+        .where(JobOffer.employer_id == profile.id)
+        .group_by(JobOffer.id, JobOffer.title, JobOffer.views_count)
+        .order_by(func.count(Application.id).desc())
+        .limit(5)
+    )
+    top_jobs = [
+        {
+            "job_title": row.title,
+            "views": row.views_count or 0,
+            "applications": row.app_count,
+        }
+        for row in top_jobs_q
+    ]
+
+    # 3. Application status breakdown
+    status_q = await db.execute(
+        select(Application.status, func.count().label("cnt"))
+        .select_from(Application)
+        .join(JobOffer)
+        .where(JobOffer.employer_id == profile.id)
+        .group_by(Application.status)
+    )
+    status_map = {row.status: row.cnt for row in status_q}
+    application_status_breakdown = {
+        "pending": status_map.get("sent", 0),
+        "reviewed": status_map.get("viewed", 0),
+        "accepted": (
+            status_map.get("accepted", 0) + status_map.get("shortlisted", 0)
+        ),
+        "rejected": status_map.get("rejected", 0),
+    }
+
+    # 4. Monthly summary
+    total_jobs = await db.scalar(
+        select(func.count()).where(JobOffer.employer_id == profile.id)
+    )
+    total_applications = await db.scalar(
+        select(func.count())
+        .select_from(Application)
+        .join(JobOffer)
+        .where(JobOffer.employer_id == profile.id)
+    )
+    active_jobs = await db.scalar(
+        select(func.count()).where(
+            JobOffer.employer_id == profile.id, JobOffer.status == "active"
+        )
+    )
+
+    return {
+        "applications_over_time": applications_over_time,
+        "top_jobs": top_jobs,
+        "application_status_breakdown": application_status_breakdown,
+        "monthly_summary": {
+            "total_jobs": total_jobs or 0,
+            "total_applications": total_applications or 0,
+            "active_jobs": active_jobs or 0,
+        },
+    }
+
+
+# === AI PARSOWANIE OGŁOSZEŃ ===
+
+class ParseJobPostingRequest(BaseModel):
+    text: str = Field(min_length=50, max_length=15000, description="Tekst ogłoszenia do przeanalizowania")
+
+
+class ParseJobPostingResponse(BaseModel):
+    title: str | None = None
+    description: str | None = None
+    city: str | None = None
+    canton: str | None = None
+    contract_type: str | None = None
+    salary_min: int | None = None
+    salary_max: int | None = None
+    salary_type: str | None = None
+    is_remote: str | None = None
+    experience_min: int | None = None
+    requirements: list[str] = []
+    benefits: list[str] = []
+    languages: list[dict] = []
+    category_slug: str | None = None
+    car_required: bool = False
+    driving_license_required: bool = False
+    keywords: str | None = None
+
+
+@router.post("/parse-job-posting", response_model=ParseJobPostingResponse)
+@limiter.limit("10/hour")
+async def parse_job_posting(
+    request: Request,
+    data: ParseJobPostingRequest,
+    current_user: User = Depends(get_current_employer),
+):
+    """Przeanalizuj tekst ogłoszenia z innego portalu i zwróć ustrukturyzowane dane.
+
+    Limit: 10 żądań na godzinę na użytkownika.
+    """
+    result = await process_single_text(data.text)
+
+    if result is None:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Nie udało się przeanalizować ogłoszenia. Spróbuj ponownie lub wklej inny tekst.",
+        )
+
+    return ParseJobPostingResponse(**result)
 
 
 # === OGŁOSZENIA ===
@@ -250,7 +430,9 @@ async def list_my_jobs(
 
 
 @router.post("/jobs", response_model=JobResponse, status_code=status.HTTP_201_CREATED)
+@limiter.limit("10/hour")
 async def create_job(
+    request: Request,
     data: JobCreateRequest,
     current_user: User = Depends(get_current_employer),
     db: AsyncSession = Depends(get_db),
@@ -283,14 +465,15 @@ async def create_job(
         salary_max=data.salary_max,
         salary_type=data.salary_type,
         experience_min=data.experience_min,
-        work_permit_required=data.work_permit_required,
-        work_permit_sponsored=data.work_permit_sponsored,
         is_remote=data.is_remote,
+        car_required=data.car_required,
+        driving_license_required=data.driving_license_required,
         languages_required=[lr.model_dump() for lr in data.languages_required],
         contact_email=data.contact_email,
         apply_via=data.apply_via,
         external_url=data.external_url,
-        status="pending",
+        status="active",
+        published_at=datetime.now(timezone.utc),
         expires_at=datetime.now(timezone.utc) + timedelta(days=30),
     )
     db.add(job)
@@ -337,6 +520,45 @@ async def update_job(
         job.rejection_reason = None
 
     return job
+
+
+@router.get("/jobs/{job_id}/copy")
+async def copy_job(
+    job_id: str,
+    current_user: User = Depends(get_current_employer),
+    db: AsyncSession = Depends(get_db),
+):
+    """Return job data for duplication (pre-fill new job form)."""
+    profile = await _get_employer_profile(current_user, db)
+
+    result = await db.execute(
+        select(JobOffer)
+        .options(selectinload(JobOffer.category))
+        .where(JobOffer.id == job_id, JobOffer.employer_id == profile.id)
+    )
+    job = result.scalar_one_or_none()
+    if not job:
+        raise NotFoundError("Ogłoszenie nie zostało znalezione")
+
+    return {
+        "title": job.title,
+        "description": job.description,
+        "canton": job.canton,
+        "city": job.city,
+        "category_id": job.category_id,
+        "contract_type": job.contract_type,
+        "salary_min": job.salary_min,
+        "salary_max": job.salary_max,
+        "salary_type": job.salary_type,
+        "experience_min": job.experience_min,
+        "is_remote": job.is_remote,
+        "car_required": job.car_required,
+        "driving_license_required": job.driving_license_required,
+        "languages_required": job.languages_required or [],
+        "contact_email": job.contact_email,
+        "apply_via": job.apply_via,
+        "external_url": job.external_url,
+    }
 
 
 @router.delete("/jobs/{job_id}", response_model=MessageResponse)
@@ -419,6 +641,55 @@ async def list_candidates(
         )
         for app in applications
     ]
+
+
+@router.get("/jobs/{job_id}/export-candidates")
+async def export_candidates_csv(
+    job_id: str,
+    current_user: User = Depends(get_current_employer),
+    db: AsyncSession = Depends(get_db),
+):
+    """Eksportuj kandydatów na ofertę jako CSV."""
+    profile = await _get_employer_profile(current_user, db)
+
+    # Sprawdź czy oferta należy do tego pracodawcy
+    job_result = await db.execute(
+        select(JobOffer).where(JobOffer.id == job_id, JobOffer.employer_id == profile.id)
+    )
+    job = job_result.scalar_one_or_none()
+    if not job:
+        raise NotFoundError("Ogłoszenie nie zostało znalezione")
+
+    result = await db.execute(
+        select(Application)
+        .options(selectinload(Application.worker), selectinload(Application.cv_file))
+        .where(Application.job_offer_id == job_id)
+        .order_by(Application.created_at.desc())
+    )
+    applications = result.scalars().all()
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["id", "name", "email", "phone", "applied_at", "status", "cv_filename"])
+
+    for app in applications:
+        writer.writerow([
+            app.id,
+            app.worker.full_name if app.worker else "",
+            app.worker.email if app.worker else "",
+            app.worker.phone if app.worker else "",
+            app.created_at.isoformat() if app.created_at else "",
+            app.status,
+            app.cv_file.original_filename if app.cv_file else "",
+        ])
+
+    output.seek(0)
+    filename = f"kandydaci_{job.title[:30].replace(' ', '_')}_{date.today().isoformat()}.csv"
+    return StreamingResponse(
+        iter([output.getvalue()]),
+        media_type="text/csv",
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
 
 
 @router.put("/applications/{application_id}/status", response_model=MessageResponse)

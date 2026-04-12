@@ -24,7 +24,7 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       const refreshToken = localStorage.getItem("refresh_token");
@@ -50,5 +50,20 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+/**
+ * Pobierz plik CSV z backendu i uruchom download w przeglądarce.
+ */
+export async function downloadCSV(url: string, filename: string): Promise<void> {
+  const response = await api.get(url, { responseType: "blob" });
+  const blob = new Blob([response.data], { type: "text/csv;charset=utf-8;" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(link.href);
+}
 
 export default api;

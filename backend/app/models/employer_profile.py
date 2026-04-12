@@ -42,3 +42,6 @@ class EmployerProfile(Base):
     posting_quota: Mapped["PostingQuota | None"] = relationship(
         back_populates="employer", uselist=False, cascade="all, delete-orphan"
     )
+    reviews: Mapped[list["EmployerReview"]] = relationship(
+        back_populates="employer", cascade="all, delete-orphan"
+    )

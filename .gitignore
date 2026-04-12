@@ -29,3 +29,13 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Temp/generated files
+*.xlsx
+backend/test_uploads/
+backend/run_extraction_*.py
+backend/run_scraper.py
+frontend/tsconfig.tsbuildinfo
+sample-cv/
+ps-tools-master/
+NUL

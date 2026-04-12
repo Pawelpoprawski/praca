@@ -447,7 +447,7 @@ export default function CVPage() {
                 className="mt-0.5 h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
               />
               <span className="text-sm text-gray-700">
-                Wyrażam zgodę na udostępnienie mojego CV rekruterom na platformie PolacySzwajcaria.
+                Wyrażam zgodę na udostępnienie mojego CV rekruterom na platformie Praca w Szwajcarii.
                 Moje dane kontaktowe oraz treść CV będą widoczne dla zweryfikowanych pracodawców.
               </span>
             </label>

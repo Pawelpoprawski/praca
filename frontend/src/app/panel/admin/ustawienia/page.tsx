@@ -37,32 +37,38 @@ export default function SettingsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Ustawienia systemowe</h1>
+      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">Ustawienia systemowe</h1>
 
       {message.text && (
-        <div className={`px-4 py-3 rounded-lg mb-4 text-sm ${
-          message.type === "success" ? "bg-green-50 text-green-700" : "bg-red-50 text-red-600"
-        }`}>
+        <div
+          className={`px-4 py-3 rounded-lg mb-4 text-sm flex items-center gap-2 border ${
+            message.type === "success"
+              ? "bg-green-50 border-green-200 text-green-700"
+              : "bg-red-50 border-red-200 text-red-700"
+          }`}
+          role={message.type === "error" ? "alert" : "status"}
+        >
+          <span className="flex-shrink-0">{message.type === "success" ? "✓" : "⚠"}</span>
           {message.text}
         </div>
       )}
 
       <div className="bg-white border rounded-lg divide-y">
         {settings?.map((setting) => (
-          <div key={setting.id} className="px-5 py-4">
-            <div className="flex items-start justify-between">
-              <div className="min-w-0 flex-1 mr-4">
-                <p className="font-medium text-gray-900 text-sm">
+          <div key={setting.id} className="px-4 sm:px-5 py-4">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+              <div className="min-w-0 flex-1">
+                <p className="font-medium text-gray-900 text-sm break-words">
                   {setting.key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
                 </p>
                 {setting.description && (
-                  <p className="text-xs text-gray-500 mt-0.5">{setting.description}</p>
+                  <p className="text-xs text-gray-500 mt-0.5 break-words">{setting.description}</p>
                 )}
-                <p className="text-xs text-gray-400 mt-0.5">Klucz: {setting.key}</p>
+                <p className="text-xs text-gray-400 mt-0.5 break-all">Klucz: {setting.key}</p>
               </div>
 
               {editKey === setting.key ? (
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-2 items-center flex-wrap sm:flex-nowrap">
                   <input
                     type={setting.value_type === "int" ? "number" : "text"}
                     value={editValue}

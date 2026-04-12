@@ -52,17 +52,17 @@ export default function AdminCVPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Baza CV</h1>
+      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">Baza CV</h1>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
         {statCards.map((card) => (
-          <div key={card.label} className="bg-white border rounded-lg p-4">
+          <div key={card.label} className="bg-white border rounded-lg p-3 sm:p-4">
             <div className={`flex items-center gap-2 ${card.color} mb-1`}>
-              <FileText className="w-4 h-4" />
-              <span className="text-2xl font-bold">{card.value}</span>
+              <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="text-xl sm:text-2xl font-bold">{card.value}</span>
             </div>
-            <p className="text-xs text-gray-500">{card.label}</p>
+            <p className="text-xs text-gray-500 truncate">{card.label}</p>
           </div>
         ))}
       </div>
@@ -94,15 +94,15 @@ export default function AdminCVPage() {
       ) : data?.data && data.data.length > 0 ? (
         <>
           <div className="bg-white border rounded-lg overflow-hidden overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full text-sm min-w-[800px]">
               <thead className="bg-gray-50 border-b">
                 <tr>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500">Użytkownik</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500">Plik CV</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500">Status</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500">Dane z CV</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500">Języki</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500">Data</th>
+                  <th className="text-left px-3 sm:px-4 py-3 font-medium text-gray-500">Użytkownik</th>
+                  <th className="text-left px-3 sm:px-4 py-3 font-medium text-gray-500">Plik CV</th>
+                  <th className="text-left px-3 sm:px-4 py-3 font-medium text-gray-500">Status</th>
+                  <th className="text-left px-3 sm:px-4 py-3 font-medium text-gray-500">Dane z CV</th>
+                  <th className="text-left px-3 sm:px-4 py-3 font-medium text-gray-500">Języki</th>
+                  <th className="text-left px-3 sm:px-4 py-3 font-medium text-gray-500">Data</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
@@ -111,15 +111,15 @@ export default function AdminCVPage() {
                   const StatusIcon = statusInfo.icon;
                   return (
                     <tr key={cv.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3">
+                      <td className="px-3 sm:px-4 py-3">
                         <p className="font-medium text-gray-900">{cv.user_name || "—"}</p>
                         <p className="text-gray-500 text-xs">{cv.user_email}</p>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-3 sm:px-4 py-3">
                         <div className="flex items-center gap-2">
-                          <FileText className="w-4 h-4 text-gray-400" />
-                          <div>
-                            <p className="text-gray-900 truncate max-w-[200px]">{cv.original_filename}</p>
+                          <FileText className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                          <div className="min-w-0">
+                            <p className="text-gray-900 truncate max-w-[150px] sm:max-w-[200px]">{cv.original_filename}</p>
                             <p className="text-gray-400 text-xs">
                               {(cv.file_size / 1024).toFixed(0)} KB
                               {cv.is_active && (
@@ -129,13 +129,13 @@ export default function AdminCVPage() {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3">
-                        <span className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded font-medium ${statusInfo.color}`}>
+                      <td className="px-3 sm:px-4 py-3">
+                        <span className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded font-medium whitespace-nowrap ${statusInfo.color}`}>
                           <StatusIcon className="w-3 h-3" />
                           {statusInfo.label}
                         </span>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-3 sm:px-4 py-3">
                         {cv.extraction_status === "completed" ? (
                           <div className="space-y-0.5">
                             {cv.extracted_name && (
@@ -152,9 +152,9 @@ export default function AdminCVPage() {
                           <span className="text-gray-400 text-xs">—</span>
                         )}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-3 sm:px-4 py-3">
                         {cv.extracted_languages && cv.extracted_languages.length > 0 ? (
-                          <div className="flex flex-wrap gap-1">
+                          <div className="flex flex-wrap gap-1 max-w-[150px]">
                             {cv.extracted_languages.map((lang, i) => (
                               <span
                                 key={i}
@@ -169,7 +169,7 @@ export default function AdminCVPage() {
                           <span className="text-gray-400 text-xs">—</span>
                         )}
                       </td>
-                      <td className="px-4 py-3 text-gray-500 text-xs whitespace-nowrap">
+                      <td className="px-3 sm:px-4 py-3 text-gray-500 text-xs whitespace-nowrap">
                         {cv.created_at ? formatDate(cv.created_at) : "—"}
                       </td>
                     </tr>

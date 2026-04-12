@@ -44,6 +44,9 @@ class EmployerDashboard(BaseModel):
     active_jobs: int
     total_applications: int
     new_applications: int
+    total_views: int = 0
+    total_clicks: int = 0
+    clicks_by_type: dict[str, int] = {}
     quota_used: int
     quota_limit: int
     quota_reset_date: date | None

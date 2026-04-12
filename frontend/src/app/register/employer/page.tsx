@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { getRecaptchaToken } from "@/lib/recaptcha";
 
@@ -16,6 +17,8 @@ export default function RegisterEmployerPage() {
     company_name: "",
   });
   const [fieldErrors, setFieldErrors] = useState({ password: "", password2: "" });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -90,13 +93,15 @@ export default function RegisterEmployerPage() {
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-xl shadow-sm border p-8">
+        <div className="bg-white rounded-2xl shadow-xl border p-8 sm:p-10">
           <h1 className="text-2xl font-bold text-gray-900 text-center mb-6">
             Rejestracja - Pracodawca
           </h1>
 
           {error && (
-            <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm" role="alert">
+              {error}
+            </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -104,6 +109,7 @@ export default function RegisterEmployerPage() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Nazwa firmy</label>
               <input
                 type="text" required value={form.company_name}
+                autoComplete="organization"
                 onChange={(e) => setForm({ ...form, company_name: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
                 placeholder="np. SwissBau GmbH"
@@ -115,6 +121,7 @@ export default function RegisterEmployerPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Imię</label>
                 <input
                   type="text" required value={form.first_name}
+                  autoComplete="given-name"
                   onChange={(e) => setForm({ ...form, first_name: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
                 />
@@ -123,6 +130,7 @@ export default function RegisterEmployerPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Nazwisko</label>
                 <input
                   type="text" required value={form.last_name}
+                  autoComplete="family-name"
                   onChange={(e) => setForm({ ...form, last_name: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
                 />
@@ -133,6 +141,7 @@ export default function RegisterEmployerPage() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Email firmowy</label>
               <input
                 type="email" required value={form.email}
+                autoComplete="email"
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
               />
@@ -140,18 +149,29 @@ export default function RegisterEmployerPage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Hasło</label>
-              <input
-                type="password" required value={form.password}
-                onChange={(e) => {
-                  setForm({ ...form, password: e.target.value });
-                  validatePassword(e.target.value);
-                  if (form.password2) validatePassword2(form.password2, e.target.value);
-                }}
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 ${
-                  fieldErrors.password ? "border-red-300" : "border-gray-300"
-                }`}
-                placeholder="Min. 8 znaków"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"} required value={form.password}
+                  autoComplete="new-password"
+                  onChange={(e) => {
+                    setForm({ ...form, password: e.target.value });
+                    validatePassword(e.target.value);
+                    if (form.password2) validatePassword2(form.password2, e.target.value);
+                  }}
+                  className={`w-full px-4 py-2 pr-11 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 ${
+                    fieldErrors.password ? "border-red-300" : "border-gray-300"
+                  }`}
+                  placeholder="Min. 8 znaków"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  aria-label={showPassword ? "Ukryj hasło" : "Pokaż hasło"}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
               {fieldErrors.password && (
                 <p className="text-xs text-red-600 mt-1">{fieldErrors.password}</p>
               )}
@@ -159,16 +179,27 @@ export default function RegisterEmployerPage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Powtórz hasło</label>
-              <input
-                type="password" required value={form.password2}
-                onChange={(e) => {
-                  setForm({ ...form, password2: e.target.value });
-                  validatePassword2(e.target.value, form.password);
-                }}
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 ${
-                  fieldErrors.password2 ? "border-red-300" : "border-gray-300"
-                }`}
-              />
+              <div className="relative">
+                <input
+                  type={showPassword2 ? "text" : "password"} required value={form.password2}
+                  autoComplete="new-password"
+                  onChange={(e) => {
+                    setForm({ ...form, password2: e.target.value });
+                    validatePassword2(e.target.value, form.password);
+                  }}
+                  className={`w-full px-4 py-2 pr-11 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 ${
+                    fieldErrors.password2 ? "border-red-300" : "border-gray-300"
+                  }`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword2(!showPassword2)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  aria-label={showPassword2 ? "Ukryj hasło" : "Pokaż hasło"}
+                >
+                  {showPassword2 ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
               {fieldErrors.password2 && (
                 <p className="text-xs text-red-600 mt-1">{fieldErrors.password2}</p>
               )}
@@ -176,14 +207,14 @@ export default function RegisterEmployerPage() {
 
             <button
               type="submit" disabled={loading}
-              className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 font-semibold disabled:opacity-50 transition-colors"
+              className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {loading ? "Rejestracja..." : "Zarejestruj firmę"}
             </button>
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-4">
-            Masz już konto? <Link href="/login" className="text-red-600 hover:underline">Zaloguj się</Link>
+            Masz już konto? <Link href="/login" className="text-red-600 hover:underline font-medium">Zaloguj się</Link>
           </p>
         </div>
       </div>

@@ -3,7 +3,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import Link from "next/link";
-import { Plus, Eye, Edit, Trash2, XCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import { Plus, Eye, Edit, Trash2, XCircle, ChevronLeft, ChevronRight, Copy } from "lucide-react";
 import api from "@/services/api";
 import { CONTRACT_TYPES, formatDate, formatSalary } from "@/lib/utils";
 import type { JobOffer, PaginatedResponse } from "@/types/api";
@@ -41,18 +41,18 @@ export default function EmployerJobsPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Moje ogłoszenia</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Moje ogłoszenia</h1>
         <Link
           href="/panel/pracodawca/ogloszenia/nowe"
-          className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 text-sm font-medium flex items-center gap-2"
+          className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 text-sm font-medium flex items-center justify-center gap-2 w-fit"
         >
-          <Plus className="w-4 h-4" /> Nowe ogłoszenie
+          <Plus className="w-4 h-4" /> <span className="hidden sm:inline">Nowe ogłoszenie</span><span className="sm:hidden">Nowe</span>
         </Link>
       </div>
 
       {/* Filters */}
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-4 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
         {[
           { value: "", label: "Wszystkie" },
           { value: "active", label: "Aktywne" },
@@ -62,7 +62,7 @@ export default function EmployerJobsPage() {
           <button
             key={f.value}
             onClick={() => { setStatusFilter(f.value); setPage(1); }}
-            className={`px-3 py-1.5 text-sm rounded-lg border font-medium transition-colors ${
+            className={`px-3 py-1.5 text-sm rounded-lg border font-medium transition-colors whitespace-nowrap ${
               statusFilter === f.value
                 ? "bg-red-50 border-red-200 text-red-700"
                 : "bg-white hover:bg-gray-50 text-gray-600"
@@ -85,13 +85,13 @@ export default function EmployerJobsPage() {
             {data.data.map((job) => {
               const statusInfo = STATUS_LABELS[job.status] || { label: job.status, color: "bg-gray-100 text-gray-800" };
               return (
-                <div key={job.id} className="px-5 py-4">
-                  <div className="flex items-start justify-between">
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
+                <div key={job.id} className="px-4 sm:px-5 py-3 sm:py-4">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
                         <Link
                           href={`/panel/pracodawca/ogloszenia/${job.id}`}
-                          className="font-medium text-gray-900 hover:text-red-600 truncate"
+                          className="font-medium text-gray-900 hover:text-red-600 break-words"
                         >
                           {job.title}
                         </Link>
@@ -104,20 +104,21 @@ export default function EmployerJobsPage() {
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center gap-3 text-sm text-gray-500">
-                        <span>{CONTRACT_TYPES[job.contract_type] || job.contract_type}</span>
-                        <span>{formatSalary(job.salary_min, job.salary_max, job.salary_type)}</span>
-                        <span className="flex items-center gap-1">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:text-sm text-gray-500">
+                        <span className="whitespace-nowrap">{CONTRACT_TYPES[job.contract_type] || job.contract_type}</span>
+                        <span className="whitespace-nowrap">{formatSalary(job.salary_min, job.salary_max, job.salary_type)}</span>
+                        <span className="flex items-center gap-1 whitespace-nowrap">
                           <Eye className="w-3 h-3" /> {job.views_count}
                         </span>
-                        <span>{formatDate(job.created_at)}</span>
+                        <span className="whitespace-nowrap">{formatDate(job.created_at)}</span>
                       </div>
                     </div>
-                    <div className="flex gap-1 ml-4 flex-shrink-0">
+                    <div className="flex gap-1 flex-shrink-0">
                       <Link
                         href={`/panel/pracodawca/ogloszenia/${job.id}/kandydaci`}
                         className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg"
                         title="Kandydaci"
+                        aria-label="Przeglądaj kandydatów"
                       >
                         <Eye className="w-4 h-4" />
                       </Link>
@@ -125,14 +126,25 @@ export default function EmployerJobsPage() {
                         href={`/panel/pracodawca/ogloszenia/${job.id}`}
                         className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-lg"
                         title="Edytuj"
+                        aria-label="Edytuj ogłoszenie"
                       >
                         <Edit className="w-4 h-4" />
+                      </Link>
+                      <Link
+                        href={`/panel/pracodawca/ogloszenia/nowe?copy=${job.id}`}
+                        className="p-2 text-gray-400 hover:text-teal-600 hover:bg-teal-50 rounded-lg"
+                        title="Kopiuj ogłoszenie"
+                        aria-label="Kopiuj ogłoszenie"
+                      >
+                        <Copy className="w-4 h-4" />
                       </Link>
                       {job.status === "active" && (
                         <button
                           onClick={() => closeMutation.mutate(job.id)}
-                          className="p-2 text-gray-400 hover:text-yellow-600 hover:bg-yellow-50 rounded-lg"
+                          disabled={closeMutation.isPending}
+                          className="p-2 text-gray-400 hover:text-yellow-600 hover:bg-yellow-50 rounded-lg disabled:opacity-50"
                           title="Zamknij"
+                          aria-label="Zamknij ogłoszenie"
                         >
                           <XCircle className="w-4 h-4" />
                         </button>
@@ -143,8 +155,10 @@ export default function EmployerJobsPage() {
                             deleteMutation.mutate(job.id);
                           }
                         }}
-                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg"
+                        disabled={deleteMutation.isPending}
+                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg disabled:opacity-50"
                         title="Usuń"
+                        aria-label="Usuń ogłoszenie"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>

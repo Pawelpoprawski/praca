@@ -31,13 +31,13 @@ export async function generateMetadata({
 
   const description = company.description
     ? company.description.slice(0, 160)
-    : `${company.company_name} - profil firmy na PolacySzwajcaria. Zobacz oferty pracy.`;
+    : `${company.company_name} - profil firmy na Praca w Szwajcarii. Zobacz oferty pracy.`;
 
   return {
     title: company.company_name,
     description,
     openGraph: {
-      title: `${company.company_name} - PolacySzwajcaria`,
+      title: `${company.company_name} - Praca w Szwajcarii`,
       description,
       url: `${SITE_URL}/firmy/${slug}`,
       type: "profile",
@@ -66,12 +66,6 @@ export default async function CompanyPage({
     ...(company.logo_url && { logo: `${SITE_URL}${company.logo_url}` }),
     ...(company.website && { sameAs: [company.website] }),
     ...(company.description && { description: company.description }),
-    address: {
-      "@type": "PostalAddress",
-      ...(company.city && { addressLocality: company.city }),
-      ...(company.canton && { addressRegion: company.canton }),
-      addressCountry: "CH",
-    },
   };
 
   return (

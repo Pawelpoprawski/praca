@@ -88,7 +88,7 @@ class TestEmployerJobs:
         assert resp.status_code == 201
         data = resp.json()
         assert data["title"] == "New Test Position"
-        assert data["status"] == "pending"  # new jobs are pending moderation
+        assert data["status"] == "active"  # jobs are auto-activated (no moderation currently)
 
     async def test_create_job_worker_forbidden(self, client: AsyncClient, worker_token, category):
         resp = await client.post("/api/v1/employer/jobs", headers=auth_header(worker_token), json={

@@ -3,12 +3,16 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { MapPin, Clock, Briefcase, Globe, Shield, ArrowLeft, Send } from "lucide-react";
-import { useState } from "react";
+import { MapPin, Clock, Briefcase, Car, ArrowLeft, Send, Zap, ExternalLink } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 import api from "@/services/api";
 import { useAuthStore } from "@/store/authStore";
-import { formatSalary, formatDate, CONTRACT_TYPES, WORK_PERMITS } from "@/lib/utils";
-import type { JobOffer, Canton } from "@/types/api";
+import { formatSalary, formatDate, CONTRACT_TYPES } from "@/lib/utils";
+import { trackJobView } from "@/lib/viewHistory";
+import SimilarJobs from "@/components/jobs/SimilarJobs";
+import SaveJobButton from "@/components/jobs/SaveJobButton";
+import QuickApplyModal from "@/components/jobs/QuickApplyModal";
+import type { JobOffer, Canton, WorkerProfile } from "@/types/api";
 
 const LANG_NAMES: Record<string, string> = {
   de: "Niemiecki", fr: "Francuski", it: "Włoski", en: "Angielski",
@@ -27,6 +31,10 @@ export default function JobDetailClient({ initialJob }: Props) {
   const [applying, setApplying] = useState(false);
   const [applied, setApplied] = useState(false);
   const [error, setError] = useState("");
+  const [showQuickApply, setShowQuickApply] = useState(false);
+  const [quickApplySuccess, setQuickApplySuccess] = useState(false);
+
+  const isWorker = isAuthenticated && user?.role === "worker";
 
   const { data: job } = useQuery({
     queryKey: ["job", initialJob.id],
@@ -40,9 +48,32 @@ export default function JobDetailClient({ initialJob }: Props) {
     staleTime: 24 * 60 * 60 * 1000,
   });
 
+  // Fetch worker profile only if logged in as worker (for quick apply)
+  const { data: workerProfile } = useQuery({
+    queryKey: ["worker-profile"],
+    queryFn: () => api.get<WorkerProfile>("/worker/profile").then((r) => r.data),
+    enabled: isWorker,
+    staleTime: 5 * 60 * 1000,
+  });
+
   const cantonMap = cantons
     ? Object.fromEntries(cantons.map((c) => [c.value, c.label]))
     : {};
+
+  // Track view (localStorage + API for logged-in users)
+  const viewTracked = useRef(false);
+  useEffect(() => {
+    if (viewTracked.current) return;
+    viewTracked.current = true;
+    trackJobView(job.id, isAuthenticated);
+  }, [job.id, isAuthenticated]);
+
+  const hasCompleteCv = workerProfile?.has_cv ?? false;
+  const alreadyApplied = applied || quickApplySuccess;
+
+  const trackClick = (type: "portal" | "external" | "email") => {
+    api.post(`/jobs/${job.id}/apply-click?click_type=${type}`).catch(() => {});
+  };
 
   const handleApply = async () => {
     if (!isAuthenticated) {
@@ -60,6 +91,7 @@ export default function JobDetailClient({ initialJob }: Props) {
       await api.post(`/worker/jobs/${job.id}/apply`, {
         cover_letter: coverLetter || null,
       });
+      trackClick("portal");
       setApplied(true);
       setShowApply(false);
     } catch (err: any) {
@@ -69,60 +101,81 @@ export default function JobDetailClient({ initialJob }: Props) {
     }
   };
 
+  const handleQuickApplyClick = () => {
+    if (!isAuthenticated) {
+      router.push(`/login?redirect=/oferty/${job.id}`);
+      return;
+    }
+    setShowQuickApply(true);
+  };
+
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-36 lg:pb-8">
       <button
         onClick={() => router.back()}
-        className="flex items-center gap-1 text-gray-500 hover:text-gray-700 mb-6 text-sm"
+        className="flex items-center gap-1.5 text-gray-500 hover:text-gray-700 mb-5 text-sm font-medium transition-colors group"
       >
-        <ArrowLeft className="w-4 h-4" /> Powrót
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" /> Powrót do ofert
       </button>
 
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Main content */}
-        <div className="flex-1">
-          {job.is_featured && (
-            <span className="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded mb-3">
-              Wyróżnione
-            </span>
-          )}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              {job.is_featured && (
+                <span className="inline-block bg-gradient-to-r from-yellow-100 to-yellow-50 text-yellow-800 text-xs font-semibold px-2.5 py-1 rounded-lg mb-3 border border-yellow-200">
+                  Wyróżnione
+                </span>
+              )}
 
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-            {job.title}
-          </h1>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 leading-snug">
+                {job.title}
+              </h1>
+            </div>
+            <SaveJobButton jobId={job.id} size="md" className="mt-1 flex-shrink-0" />
+          </div>
 
           {job.employer && (
             <Link
               href={`/firmy/${job.employer.company_slug}`}
-              className="text-red-600 hover:underline font-medium"
+              className="text-red-600 hover:underline font-medium text-sm sm:text-base"
             >
               {job.employer.company_name}
               {job.employer.is_verified && " \u2713"}
             </Link>
           )}
 
-          <div className="flex flex-wrap gap-3 mt-4 text-sm text-gray-500">
-            <span className="flex items-center gap-1">
-              <MapPin className="w-4 h-4" />
+          {/* Salary — prominently shown on mobile below company name */}
+          {(job.salary_min || job.salary_max) && (
+            <p className="lg:hidden mt-3 text-xl font-bold text-gray-900">
+              {formatSalary(job.salary_min, job.salary_max, job.salary_type)}
+            </p>
+          )}
+
+          <div className="flex flex-wrap gap-2 sm:gap-3 mt-3 sm:mt-4 text-sm text-gray-500">
+            <span className="flex items-center gap-1 bg-gray-50 px-2.5 py-1.5 rounded-lg text-xs sm:text-sm">
+              <MapPin className="w-4 h-4 flex-shrink-0" />
               {cantonMap[job.canton] || job.canton}{job.city ? `, ${job.city}` : ""}
             </span>
-            <span className="flex items-center gap-1">
-              <Briefcase className="w-4 h-4" />
+            <span className="flex items-center gap-1 bg-blue-50 text-blue-700 px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium">
+              <Briefcase className="w-4 h-4 flex-shrink-0" />
               {CONTRACT_TYPES[job.contract_type] || job.contract_type}
             </span>
             {job.published_at && (
-              <span className="flex items-center gap-1">
-                <Clock className="w-4 h-4" />
+              <span className="flex items-center gap-1 bg-gray-50 px-2.5 py-1.5 rounded-lg text-xs sm:text-sm">
+                <Clock className="w-4 h-4 flex-shrink-0" />
                 {formatDate(job.published_at)}
               </span>
             )}
           </div>
 
-          <hr className="my-6" />
+          <hr className="my-5 sm:my-6" />
 
-          <div className="prose prose-gray max-w-none whitespace-pre-line text-gray-700">
-            {job.description}
-          </div>
+          <div
+            className="prose prose-gray max-w-none text-gray-700"
+            dangerouslySetInnerHTML={{ __html: job.description }}
+          />
 
           {/* Company info */}
           {job.employer && (
@@ -144,81 +197,99 @@ export default function JobDetailClient({ initialJob }: Props) {
         {/* Sidebar */}
         <aside className="lg:w-80 flex-shrink-0">
           <div className="bg-white border border-gray-200 rounded-xl p-6 lg:sticky lg:top-24 space-y-5">
-            {/* Apply button */}
-            {applied ? (
-              <div className="bg-green-50 text-green-700 px-4 py-3 rounded-lg text-center text-sm font-medium">
+            {/* Salary — top of sidebar, most prominent */}
+            <div className="pb-4 border-b border-gray-100">
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Wynagrodzenie</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {formatSalary(job.salary_min, job.salary_max, job.salary_type)}
+              </p>
+              <p className="text-sm text-gray-500 mt-0.5">{CONTRACT_TYPES[job.contract_type]}</p>
+            </div>
+
+            {/* Apply buttons */}
+            {job.apply_via === "external_url" && job.external_url ? (
+              <a
+                href={job.external_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackClick("external")}
+                className="w-full bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 font-semibold flex items-center justify-center gap-2 transition-colors"
+              >
+                <ExternalLink className="w-4 h-4" />
+                Aplikuj na stronie pracodawcy
+              </a>
+            ) : alreadyApplied ? (
+              <div className="bg-green-50 text-green-700 px-4 py-3 rounded-xl text-center text-sm font-medium">
                 Aplikacja wysłana!
               </div>
             ) : (
-              <button
-                onClick={() =>
-                  isAuthenticated ? setShowApply(!showApply) : router.push(`/login?redirect=/oferty/${job.id}`)
-                }
-                className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 font-semibold flex items-center justify-center gap-2"
-              >
-                <Send className="w-4 h-4" />
-                Aplikuj
-              </button>
+              <div className="space-y-3">
+                <button
+                  onClick={() =>
+                    isAuthenticated ? setShowApply(!showApply) : router.push(`/login?redirect=/oferty/${job.id}`)
+                  }
+                  className="w-full bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 font-semibold flex items-center justify-center gap-2 transition-colors"
+                >
+                  <Send className="w-4 h-4" />
+                  Aplikuj
+                </button>
+
+                {/* Quick Apply button - only for workers with CV */}
+                {isWorker && hasCompleteCv && (
+                  <button
+                    onClick={handleQuickApplyClick}
+                    className="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 font-semibold flex items-center justify-center gap-2 transition-colors"
+                  >
+                    <Zap className="w-4 h-4" />
+                    Aplikuj szybko
+                  </button>
+                )}
+              </div>
             )}
 
             {error && (
-              <div className="bg-red-50 text-red-600 px-3 py-2 rounded text-sm">{error}</div>
+              <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded-lg text-sm flex items-start gap-2" role="alert">
+                <span className="flex-shrink-0 mt-0.5">⚠</span>
+                <span>{error}</span>
+              </div>
             )}
 
             {/* Apply form */}
             {showApply && (
               <div className="space-y-3">
+                <label className="block text-sm font-medium text-gray-700">List motywacyjny</label>
                 <textarea
                   value={coverLetter}
                   onChange={(e) => setCoverLetter(e.target.value)}
-                  placeholder="List motywacyjny (opcjonalnie)..."
+                  placeholder="Napisz kilka słów o sobie (opcjonalnie)..."
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500 resize-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-red-500 resize-none"
                 />
                 <button
                   onClick={handleApply}
                   disabled={applying}
-                  className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 text-sm font-medium disabled:opacity-50"
+                  className="w-full bg-red-600 text-white py-2 rounded-xl hover:bg-red-700 text-sm font-medium disabled:opacity-50"
                 >
                   {applying ? "Wysyłanie..." : "Wyślij aplikację"}
                 </button>
               </div>
             )}
 
-            {/* Job details */}
-            <div className="space-y-4 text-sm">
-              <div>
-                <p className="text-gray-500">Wynagrodzenie</p>
-                <p className="font-semibold text-gray-900">
-                  {formatSalary(job.salary_min, job.salary_max, job.salary_type)}
-                </p>
-              </div>
-
-              <div>
-                <p className="text-gray-500">Typ umowy</p>
-                <p className="font-medium">{CONTRACT_TYPES[job.contract_type]}</p>
-              </div>
-
-              {job.is_remote !== "no" && (
-                <div className="flex items-center gap-2">
-                  <Globe className="w-4 h-4 text-gray-400" />
-                  <span>{job.is_remote === "yes" ? "Praca zdalna" : "Hybrydowo"}</span>
-                </div>
-              )}
-
-              {job.work_permit_required && (
+            {/* Job details (secondary info) */}
+            <div className="space-y-4 text-sm pt-1 border-t border-gray-100">
+              {(job.driving_license_required || job.car_required) && (
                 <div>
-                  <p className="text-gray-500">Wymagane pozwolenie</p>
-                  <p className="font-medium">
-                    {WORK_PERMITS[job.work_permit_required] || job.work_permit_required}
-                  </p>
-                </div>
-              )}
-
-              {job.work_permit_sponsored && (
-                <div className="flex items-center gap-2 text-green-600">
-                  <Shield className="w-4 h-4" />
-                  <span className="text-sm font-medium">Sponsorujemy pozwolenie</span>
+                  <p className="text-gray-500">Wymagania dodatkowe</p>
+                  {job.driving_license_required && (
+                    <p className="font-medium flex items-center gap-1">
+                      <Car className="w-4 h-4" /> Prawo jazdy
+                    </p>
+                  )}
+                  {job.car_required && (
+                    <p className="font-medium flex items-center gap-1">
+                      <Car className="w-4 h-4" /> Własny samochód
+                    </p>
+                  )}
                 </div>
               )}
 
@@ -258,19 +329,72 @@ export default function JobDetailClient({ initialJob }: Props) {
         </aside>
       </div>
 
+      {/* Similar jobs */}
+      <SimilarJobs jobId={job.id} />
+
       {/* Mobile fixed CTA bar */}
-      {!applied && (
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t p-4 z-10">
-          <button
-            onClick={() =>
-              isAuthenticated ? setShowApply(!showApply) : router.push(`/login?redirect=/oferty/${job.id}`)
-            }
-            className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 font-semibold flex items-center justify-center gap-2 transition-colors"
-          >
-            <Send className="w-4 h-4" />
-            Aplikuj
-          </button>
+      {!alreadyApplied && (
+        <div
+          className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg px-4 pt-3 z-10"
+          style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom, 0px))" }}
+        >
+          {/* Salary hint row */}
+          <div className="flex items-center justify-between mb-2.5">
+            <span className="text-xs text-gray-500 font-medium">Wynagrodzenie</span>
+            <span className="text-sm font-bold text-gray-900">
+              {formatSalary(job.salary_min, job.salary_max, job.salary_type)}
+            </span>
+          </div>
+          {job.apply_via === "external_url" && job.external_url ? (
+            <a
+              href={job.external_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackClick("external")}
+              className="w-full bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 font-semibold flex items-center justify-center gap-2 transition-colors text-sm"
+            >
+              <ExternalLink className="w-4 h-4" />
+              Aplikuj na stronie pracodawcy
+            </a>
+          ) : (
+            <div className="flex gap-2">
+              <button
+                onClick={() =>
+                  isAuthenticated ? setShowApply(!showApply) : router.push(`/login?redirect=/oferty/${job.id}`)
+                }
+                className="flex-1 bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 font-semibold flex items-center justify-center gap-2 transition-colors text-sm"
+              >
+                <Send className="w-4 h-4" />
+                Aplikuj
+              </button>
+              {isWorker && hasCompleteCv && (
+                <button
+                  onClick={handleQuickApplyClick}
+                  aria-label="Aplikuj szybko"
+                  className="bg-green-600 text-white py-3 px-4 rounded-xl hover:bg-green-700 font-semibold flex items-center justify-center gap-1.5 transition-colors text-sm"
+                >
+                  <Zap className="w-4 h-4" />
+                  <span>Szybko</span>
+                </button>
+              )}
+            </div>
+          )}
         </div>
+      )}
+
+      {/* Quick Apply Modal */}
+      {showQuickApply && workerProfile && (
+        <QuickApplyModal
+          jobId={job.id}
+          jobTitle={job.title}
+          companyName={job.employer?.company_name || ""}
+          profile={workerProfile}
+          onClose={() => setShowQuickApply(false)}
+          onSuccess={() => {
+            setShowQuickApply(false);
+            setQuickApplySuccess(true);
+          }}
+        />
       )}
     </div>
   );

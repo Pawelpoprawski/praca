@@ -45,7 +45,7 @@ export default function ApplicationsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Moje aplikacje</h1>
+      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">Moje aplikacje</h1>
 
       {data?.data && data.data.length > 0 ? (
         <>
@@ -59,25 +59,25 @@ export default function ApplicationsPage() {
               return (
                 <div
                   key={app.id}
-                  className="px-5 py-4 flex items-center justify-between"
+                  className="px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
                 >
-                  <div className="flex items-center gap-3 min-w-0">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
                     <div className="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
                       <Briefcase className="w-4 h-4 text-gray-500" />
                     </div>
                     <div className="min-w-0">
                       <Link
                         href={`/oferty/${app.job_offer_id}`}
-                        className="font-medium text-gray-900 hover:text-red-600 truncate block max-w-xs"
+                        className="font-medium text-gray-900 hover:text-red-600 break-words block"
                       >
                         {app.job_title || "Oferta pracy"}
                       </Link>
-                      <p className="text-sm text-gray-500 truncate max-w-xs">
+                      <p className="text-sm text-gray-500 truncate">
                         {app.company_name}
                       </p>
                     </div>
                   </div>
-                  <div className="text-right flex-shrink-0 ml-4">
+                  <div className="text-left sm:text-right flex-shrink-0">
                     <span
                       className={`inline-block text-xs px-2 py-0.5 rounded font-medium ${statusInfo.color}`}
                     >
