@@ -25,6 +25,7 @@ from app.models.category import Category
 from app.models.user import User
 from app.schemas.job import JobResponse, JobListResponse
 from app.schemas.common import PaginatedResponse, MessageResponse
+from app.services.lifetime_counter import get_lifetime_jobs_total
 
 router = APIRouter(prefix="/jobs", tags=["Oferty pracy"])
 
@@ -51,9 +52,11 @@ async def get_jobs_stats(db: AsyncSession = Depends(get_db)):
     unique_companies = (await db.execute(
         select(func.count(func.distinct(JobOffer.employer_id))).where(*active_filter)
     )).scalar_one()
+    total_jobs_lifetime = await get_lifetime_jobs_total(db)
     return {
         "total_jobs": int(total_jobs or 0),
         "unique_companies": int(unique_companies or 0),
+        "total_jobs_lifetime": total_jobs_lifetime,
     }
 
 

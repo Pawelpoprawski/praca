@@ -31,6 +31,7 @@ from app.schemas.application import ApplicationStatusUpdate, CandidateResponse
 from app.schemas.common import PaginatedResponse, MessageResponse
 from app.services.email import send_status_change_notification
 from app.services.job_processor import process_single_text
+from app.services.lifetime_counter import increment_lifetime_jobs_counter
 from pydantic import BaseModel, Field
 
 router = APIRouter(prefix="/employer", tags=["Panel pracodawcy"])
@@ -483,6 +484,7 @@ async def create_job(
         quota.used_count += 1
 
     await db.flush()
+    await increment_lifetime_jobs_counter(db)
     await db.refresh(job, ["employer", "category"])
 
     return job

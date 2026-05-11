@@ -107,7 +107,9 @@ export default function HomePage() {
   const { data: jobStats } = useQuery({
     queryKey: ["jobs-stats"],
     queryFn: () =>
-      api.get<{ total_jobs: number; unique_companies: number }>("/jobs/stats").then((r) => r.data),
+      api.get<{ total_jobs: number; unique_companies: number; total_jobs_lifetime: number }>(
+        "/jobs/stats"
+      ).then((r) => r.data),
     staleTime: 60 * 60 * 1000,
   });
 
@@ -404,10 +406,13 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
               {
-                title: "10+ lat doświadczenia",
-                desc: "Działamy na rynku szwajcarskim od 2015 roku — znamy specyfikę kantonów, kwestie permitów i oczekiwania pracodawców.",
-                stat: "8 430+",
-                statLabel: "Zatrudnionych specjalistów",
+                title: "Tysiące ofert pracy",
+                desc: "Codziennie publikujemy nowe ogłoszenia od pracodawców w Szwajcarii. Licznik rośnie z każdym dodanym ogłoszeniem — od początku istnienia portalu.",
+                stat:
+                  jobStats?.total_jobs_lifetime != null
+                    ? jobStats.total_jobs_lifetime.toLocaleString("pl-PL")
+                    : "—",
+                statLabel: "Opublikowanych ofert łącznie",
               },
               {
                 title: "Indywidualne podejście",

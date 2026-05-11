@@ -22,6 +22,7 @@ from app.models.job_offer import JobOffer
 from app.models.posting_quota import PostingQuota
 from app.models.user import User
 from app.services.job_ai import SWISS_CANTONS_MAP
+from app.services.lifetime_counter import increment_lifetime_jobs_counter
 
 logger = logging.getLogger(__name__)
 
@@ -422,6 +423,8 @@ async def process_jobs(
                 translation_status="pending",
             )
             db.add(job)
+            await db.flush()
+            await increment_lifetime_jobs_counter(db)
             await db.commit()
             result.added += 1
 
