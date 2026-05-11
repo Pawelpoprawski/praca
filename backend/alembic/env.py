@@ -13,6 +13,13 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
+# Nadpisz sqlalchemy.url z env zmiennej (DATABASE_URL_SYNC ma priorytet, fallback na DATABASE_URL)
+_env_url = os.getenv("DATABASE_URL_SYNC") or os.getenv("DATABASE_URL")
+if _env_url:
+    # Alembic uzywa sync drivera — usun '+asyncpg' jezeli dostalismy async URL
+    _env_url = _env_url.replace("+asyncpg", "")
+    config.set_main_option("sqlalchemy.url", _env_url)
+
 target_metadata = Base.metadata
 
 

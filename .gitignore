@@ -30,6 +30,12 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Deploy scripts (zawieraja hasla SSH, DB, klucze API)
+_deploy/
+*.tar.gz
+*.pem
+*.key
+
 # Temp/generated files
 *.xlsx
 backend/test_uploads/

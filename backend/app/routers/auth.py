@@ -109,11 +109,40 @@ async def register(request: Request, data: RegisterRequest, db: AsyncSession = D
 @router.post("/login", response_model=TokenResponse, dependencies=[Depends(verify_recaptcha)])
 @limiter.limit("5/minute")
 async def login(request: Request, data: LoginRequest, db: AsyncSession = Depends(get_db)):
-    """Logowanie - zwraca access token i refresh token."""
+    """Logowanie - zwraca access token i refresh token.
+
+    Brute-force protection:
+    - Po 5 nieudanych probach: lock na 15 min
+    - Po 10: lock na 1h
+    - Po 20: lock na 24h
+    """
     result = await db.execute(select(User).where(User.email == data.email.lower()))
     user = result.scalar_one_or_none()
 
+    now = datetime.now(timezone.utc)
+
+    # Konto zablokowane — sprawdz przed weryfikacja hasla
+    if user and user.locked_until and user.locked_until > now:
+        retry_seconds = int((user.locked_until - now).total_seconds())
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail=f"Konto chwilowo zablokowane (za duzo nieudanych prob). Sprobuj za {retry_seconds // 60} min.",
+            headers={"Retry-After": str(retry_seconds)},
+        )
+
     if not user or not verify_password(data.password, user.password_hash):
+        # Increment counter, lock przy progach
+        if user:
+            user.failed_login_attempts = (user.failed_login_attempts or 0) + 1
+            user.last_failed_login = now
+            attempts = user.failed_login_attempts
+            if attempts >= 20:
+                user.locked_until = now + timedelta(hours=24)
+            elif attempts >= 10:
+                user.locked_until = now + timedelta(hours=1)
+            elif attempts >= 5:
+                user.locked_until = now + timedelta(minutes=15)
+            await db.commit()
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Nieprawidłowy email lub hasło",
@@ -124,6 +153,12 @@ async def login(request: Request, data: LoginRequest, db: AsyncSession = Depends
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Konto zostało dezaktywowane",
         )
+
+    # Sukces — zresetuj licznik
+    user.failed_login_attempts = 0
+    user.locked_until = None
+    user.last_login = now
+    await db.commit()
 
     access_token = create_access_token(user.id, user.role)
     refresh_token = create_refresh_token(user.id)

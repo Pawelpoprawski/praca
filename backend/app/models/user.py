@@ -25,6 +25,12 @@ class User(Base):
     reset_token: Mapped[str | None] = mapped_column(String(255))
     reset_token_expires: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     last_login: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # Brute-force protection
+    failed_login_attempts: Mapped[int] = mapped_column(default=0, server_default="0", nullable=False)
+    locked_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    last_failed_login: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # Password change tracker (do invalidate refresh tokens after password reset)
+    password_changed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
