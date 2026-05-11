@@ -99,8 +99,10 @@ async def lifespan(app: FastAPI):
     await seed_database()
     logger.info("Database seeded")
 
-    from app.seed_data import seed_demo_data
-    await seed_demo_data()
+    # Demo dane (employers/jobs/workers) tylko poza produkcja
+    if os.getenv("ENVIRONMENT", "development").lower() != "production":
+        from app.seed_data import seed_demo_data
+        await seed_demo_data()
 
     start_scheduler()
 
