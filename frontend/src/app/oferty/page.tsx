@@ -337,9 +337,12 @@ function JobsContent() {
                 className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-[#E1002A] cursor-pointer transition-all bg-gray-50 focus:bg-white"
               >
                 <option value="">Wszystkie kategorie</option>
-                {categories?.map((c) => (
-                  <option key={c.id} value={c.id}>{c.name}</option>
-                ))}
+                {categories
+                  ?.slice()
+                  .sort((a, b) => a.name.localeCompare(b.name, "pl"))
+                  .map((c) => (
+                    <option key={c.id} value={c.id}>{c.name}</option>
+                  ))}
               </select>
             </div>
 
@@ -352,9 +355,12 @@ function JobsContent() {
                 className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-[#E1002A] cursor-pointer transition-all bg-gray-50 focus:bg-white"
               >
                 <option value="">Wszystkie kantony</option>
-                {cantons?.map((c) => (
-                  <option key={c.value} value={c.value}>{c.label}</option>
-                ))}
+                {cantons
+                  ?.slice()
+                  .sort((a, b) => a.label.localeCompare(b.label, "pl"))
+                  .map((c) => (
+                    <option key={c.value} value={c.value}>{c.label}</option>
+                  ))}
               </select>
             </div>
 

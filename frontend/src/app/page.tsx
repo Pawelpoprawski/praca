@@ -269,10 +269,10 @@ export default function HomePage() {
               <h2 className="font-display text-[1.6rem] font-bold text-[#0D2240] mb-1">Ekspertyza branżowa</h2>
               <p className="text-[#555]">Specjalizujemy się w rekrutacji dla kluczowych sektorów gospodarki szwajcarskiej</p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
               {categoriesLoading
                 ? [...Array(8)].map((_, i) => (
-                    <div key={i} className="bg-white border border-[#E0E3E8] rounded-lg p-6 animate-pulse">
+                    <div key={i} className="bg-white border border-[#E0E3E8] rounded-lg p-4 sm:p-6 animate-pulse">
                       <div className="h-4 bg-[#E0E3E8] rounded w-3/4" />
                     </div>
                   ))
@@ -282,13 +282,13 @@ export default function HomePage() {
                       <Link
                         key={cat.id}
                         href={`/oferty?category_id=${cat.id}`}
-                        className="hays-cat-card bg-white border border-[#E0E3E8] rounded-lg p-6 flex items-center gap-4 transition-all relative overflow-hidden no-underline"
+                        className="hays-cat-card bg-white border border-[#E0E3E8] rounded-lg p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 transition-all relative overflow-hidden no-underline min-h-[88px] sm:min-h-0"
                       >
-                        <div className="w-11 h-11 rounded-lg bg-[#F5F6F8] flex items-center justify-center flex-shrink-0">
+                        <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-[#F5F6F8] flex items-center justify-center flex-shrink-0">
                           <Icon className="w-5 h-5 text-[#0D2240]" />
                         </div>
-                        <div>
-                          <div className="font-display text-[0.95rem] font-semibold text-[#0D2240] leading-tight">
+                        <div className="min-w-0">
+                          <div className="font-display text-[0.85rem] sm:text-[0.95rem] font-semibold text-[#0D2240] leading-tight break-words">
                             {cat.name}
                           </div>
                         </div>
@@ -305,7 +305,7 @@ export default function HomePage() {
         <div className="flex justify-between items-end mb-6">
           <div>
             <span className="hays-red-line" />
-            <h2 className="font-display text-[1.6rem] font-bold text-[#0D2240]">Polecane stanowiska</h2>
+            <h2 className="font-display text-[1.6rem] font-bold text-[#0D2240]">Ostatnio dodane</h2>
           </div>
           <Link
             href="/oferty"

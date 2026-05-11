@@ -196,8 +196,8 @@ export default function JobDetailClient({ initialJob }: Props) {
           )}
         </div>
 
-        {/* Sidebar */}
-        <aside className="lg:w-80 flex-shrink-0">
+        {/* Sidebar — desktop only (mobile uses sticky bottom CTA bar) */}
+        <aside className="hidden lg:block lg:w-80 flex-shrink-0">
           <div className="bg-white border border-gray-200 rounded-xl p-6 lg:sticky lg:top-24 space-y-5">
             {/* Salary — top of sidebar, most prominent */}
             <div className="pb-4 border-b border-gray-100">

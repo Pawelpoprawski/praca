@@ -32,18 +32,18 @@ export default function Header() {
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="flex justify-between items-center h-[72px]">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 bg-[#E1002A] rounded flex items-center justify-center flex-shrink-0">
-                <svg viewBox="0 0 32 32" fill="white" className="w-5 h-5">
+            <Link href="/" className="flex items-center gap-2 sm:gap-3 group min-w-0">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-[#E1002A] rounded flex items-center justify-center flex-shrink-0">
+                <svg viewBox="0 0 32 32" fill="white" className="w-4 h-4 sm:w-5 sm:h-5">
                   <rect x="13" y="6" width="6" height="20" rx="1" />
                   <rect x="6" y="13" width="20" height="6" rx="1" />
                 </svg>
               </div>
-              <div className="hidden sm:block leading-tight">
-                <div className="font-display font-extrabold text-[1.4rem] text-[#0D2240]">
+              <div className="leading-tight min-w-0">
+                <div className="font-display font-extrabold text-[1.05rem] sm:text-[1.4rem] text-[#0D2240] whitespace-nowrap">
                   Praca <span className="text-[#E1002A]">w Szwajcarii</span>
                 </div>
-                <div className="text-[0.65rem] text-[#888] tracking-[0.05em] -mt-0.5">
+                <div className="hidden sm:block text-[0.65rem] text-[#888] tracking-[0.05em] -mt-0.5">
                   część portalu <span className="font-semibold">PolacySzwajcaria.com</span>
                 </div>
               </div>
