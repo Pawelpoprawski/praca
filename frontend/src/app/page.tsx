@@ -104,6 +104,13 @@ export default function HomePage() {
     staleTime: 24 * 60 * 60 * 1000,
   });
 
+  const { data: jobStats } = useQuery({
+    queryKey: ["jobs-stats"],
+    queryFn: () =>
+      api.get<{ total_jobs: number; unique_companies: number }>("/jobs/stats").then((r) => r.data),
+    staleTime: 60 * 60 * 1000,
+  });
+
   const cantonMap = cantons
     ? Object.fromEntries(cantons.map((c) => [c.value, c.label]))
     : {};
@@ -405,7 +412,7 @@ export default function HomePage() {
               {
                 title: "Indywidualne podejście",
                 desc: "Każdy kandydat otrzymuje opiekę dedykowanego konsultanta — od pierwszego kontaktu po pierwszy dzień w pracy.",
-                stat: "342",
+                stat: jobStats?.unique_companies != null ? jobStats.unique_companies.toLocaleString("pl-PL") : "—",
                 statLabel: "Partnerskich firm",
               },
               {

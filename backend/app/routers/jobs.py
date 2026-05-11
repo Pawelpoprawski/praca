@@ -38,6 +38,25 @@ SWISS_CANTONS = [
 ]
 
 
+@router.get("/stats")
+async def get_jobs_stats(db: AsyncSession = Depends(get_db)):
+    """Publiczne statystyki ofert pracy."""
+    active_filter = [
+        JobOffer.status == "active",
+        or_(JobOffer.expires_at.is_(None), JobOffer.expires_at > func.now()),
+    ]
+    total_jobs = (await db.execute(
+        select(func.count(JobOffer.id)).where(*active_filter)
+    )).scalar_one()
+    unique_companies = (await db.execute(
+        select(func.count(func.distinct(JobOffer.employer_id))).where(*active_filter)
+    )).scalar_one()
+    return {
+        "total_jobs": int(total_jobs or 0),
+        "unique_companies": int(unique_companies or 0),
+    }
+
+
 @router.get("", response_model=PaginatedResponse[JobListResponse])
 async def list_jobs(
     db: AsyncSession = Depends(get_db),
