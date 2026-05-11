@@ -69,7 +69,7 @@ export default function CandidatesPage() {
           <Link href="/panel/pracodawca/ogloszenia" className="p-2 hover:bg-gray-100 rounded-lg" aria-label="Powrót do ogłoszeń">
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <h1 className="text-2xl font-bold text-gray-900">Kandydaci</h1>
+          <h1 className="text-2xl font-bold font-display text-[#0D2240]">Kandydaci</h1>
           <span className="text-sm text-gray-500">({candidates?.length || 0})</span>
         </div>
         {candidates && candidates.length > 0 && (
@@ -106,7 +106,7 @@ export default function CandidatesPage() {
                       {candidate.worker_email && (
                         <div className="flex items-center gap-1 text-sm text-gray-500">
                           <Mail className="w-3 h-3" />
-                          <a href={`mailto:${candidate.worker_email}`} className="hover:text-red-600">
+                          <a href={`mailto:${candidate.worker_email}`} className="hover:text-[#E1002A]">
                             {candidate.worker_email}
                           </a>
                         </div>
@@ -144,7 +144,7 @@ export default function CandidatesPage() {
                         </button>
                         <button
                           onClick={() => statusMutation.mutate({ appId: candidate.id, status: "rejected" })}
-                          className="px-3 py-1 text-xs bg-red-50 text-red-700 border border-red-200 rounded-lg hover:bg-red-100 font-medium"
+                          className="px-3 py-1 text-xs bg-[#FFF0F3] text-[#B8001F] border border-[#FFC2CD] rounded-lg hover:bg-[#FFE0E6] font-medium"
                         >
                           Odrzuć
                         </button>

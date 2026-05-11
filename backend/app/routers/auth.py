@@ -107,7 +107,7 @@ async def register(request: Request, data: RegisterRequest, db: AsyncSession = D
 
 
 @router.post("/login", response_model=TokenResponse, dependencies=[Depends(verify_recaptcha)])
-@limiter.limit("10/minute")
+@limiter.limit("5/minute")
 async def login(request: Request, data: LoginRequest, db: AsyncSession = Depends(get_db)):
     """Logowanie - zwraca access token i refresh token."""
     result = await db.execute(select(User).where(User.email == data.email.lower()))
@@ -208,7 +208,7 @@ async def verify_email(token: str, db: AsyncSession = Depends(get_db)):
 
 
 @router.post("/forgot-password", response_model=MessageResponse, dependencies=[Depends(verify_recaptcha)])
-@limiter.limit("10/minute")
+@limiter.limit("5/hour")  # zaostrzony: brute-force resetow + spam mailowy
 async def forgot_password(request: Request, data: ForgotPasswordRequest, db: AsyncSession = Depends(get_db)):
     """Wysyła email z linkiem do resetu hasła."""
     result = await db.execute(select(User).where(User.email == data.email.lower()))
@@ -226,7 +226,8 @@ async def forgot_password(request: Request, data: ForgotPasswordRequest, db: Asy
 
 
 @router.post("/reset-password", response_model=MessageResponse)
-async def reset_password(data: ResetPasswordRequest, db: AsyncSession = Depends(get_db)):
+@limiter.limit("10/hour")  # brute-force tokenow
+async def reset_password(request: Request, data: ResetPasswordRequest, db: AsyncSession = Depends(get_db)):
     """Reset hasła przy użyciu tokena z emaila."""
     result = await db.execute(
         select(User).where(User.reset_token == data.token)

@@ -88,10 +88,10 @@ function SectionCard({
         className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors"
       >
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-red-50 rounded-lg flex items-center justify-center flex-shrink-0">
-            <Icon className="w-5 h-5 text-red-600" />
+          <div className="w-9 h-9 bg-[#FFF0F3] rounded-lg flex items-center justify-center flex-shrink-0">
+            <Icon className="w-5 h-5 text-[#E1002A]" />
           </div>
-          <h2 className="text-base font-semibold text-gray-900">{title}</h2>
+          <h2 className="text-base font-semibold font-display text-[#0D2240]">{title}</h2>
         </div>
         {open ? (
           <ChevronUp className="w-5 h-5 text-gray-400" />
@@ -136,7 +136,7 @@ function AIProgressBar() {
         />
       </div>
       <div className="flex items-center gap-2">
-        <Loader2 className="w-4 h-4 animate-spin text-red-600" />
+        <Loader2 className="w-4 h-4 animate-spin text-[#E1002A]" />
         <span className="text-sm text-gray-600 animate-pulse">
           {AI_STAGES[stage]}
         </span>
@@ -147,9 +147,9 @@ function AIProgressBar() {
 
 // --- Input styling helpers ---
 const inputClass =
-  "w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-shadow bg-white placeholder:text-gray-400";
+  "w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-[#E1002A] transition-shadow bg-white placeholder:text-gray-400";
 const selectClass =
-  "w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-shadow bg-white";
+  "w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-[#E1002A] transition-shadow bg-white";
 const labelClass = "block text-sm font-medium text-gray-700 mb-1.5";
 
 export default function NewJobPage() {
@@ -352,7 +352,7 @@ export default function NewJobPage() {
           <ArrowLeft className="w-5 h-5 text-gray-600" />
         </Link>
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+          <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240]">
             {copyId ? "Kopiuj ogłoszenie" : "Nowe ogłoszenie"}
           </h1>
           <p className="text-sm text-gray-500 mt-0.5">
@@ -363,18 +363,18 @@ export default function NewJobPage() {
 
       {/* AI Import Section */}
       <div className="mb-6">
-        <div className="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 rounded-xl overflow-hidden">
+        <div className="bg-gradient-to-r from-red-50 to-orange-50 border border-[#FFC2CD] rounded-xl overflow-hidden">
           <button
             type="button"
             onClick={() => setAiOpen(!aiOpen)}
             className="w-full flex items-center justify-between px-5 py-4 hover:from-red-100 hover:to-orange-100 transition-colors"
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 bg-[#E1002A] rounded-lg flex items-center justify-center flex-shrink-0">
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
               <div className="text-left">
-                <h2 className="text-base font-semibold text-gray-900">
+                <h2 className="text-base font-semibold font-display text-[#0D2240]">
                   Wczytaj za pomocą AI
                 </h2>
                 <p className="text-sm text-gray-600">
@@ -406,12 +406,12 @@ export default function NewJobPage() {
                 rows={10}
                 value={aiText}
                 onChange={(e) => setAiText(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 resize-y bg-white placeholder:text-gray-400"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-[#E1002A] resize-y bg-white placeholder:text-gray-400"
                 placeholder="Wklej tutaj pełną treść ogłoszenia o pracę..."
               />
 
               {aiError && (
-                <div className="flex items-start gap-2 bg-red-50 text-red-700 px-4 py-3 rounded-lg text-sm">
+                <div className="flex items-start gap-2 bg-[#FFF0F3] text-[#B8001F] px-4 py-3 rounded-lg text-sm">
                   <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
                   <span>{aiError}</span>
                 </div>
@@ -424,7 +424,7 @@ export default function NewJobPage() {
                   type="button"
                   onClick={handleAiParse}
                   disabled={aiText.trim().length < 50}
-                  className="bg-red-600 text-white px-5 py-2.5 rounded-lg hover:bg-red-700 font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transition-colors"
+                  className="bg-[#E1002A] text-white px-5 py-2.5 rounded-lg hover:bg-[#B8001F] font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transition-colors"
                 >
                   <Sparkles className="w-4 h-4" />
                   Analizuj i wypełnij formularz
@@ -460,7 +460,7 @@ export default function NewJobPage() {
 
       {/* Error */}
       {error && (
-        <div className="flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6 text-sm">
+        <div className="flex items-start gap-2 bg-[#FFF0F3] border border-[#FFC2CD] text-[#B8001F] px-4 py-3 rounded-xl mb-6 text-sm">
           <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
           <span>{error}</span>
         </div>
@@ -690,7 +690,7 @@ export default function NewJobPage() {
                       driving_license_required: e.target.checked,
                     })
                   }
-                  className="w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                  className="w-4 h-4 rounded border-gray-300 text-[#E1002A] focus:ring-[#E1002A]/20"
                 />
                 <span className="text-sm text-gray-700">
                   Wymagane prawo jazdy
@@ -708,7 +708,7 @@ export default function NewJobPage() {
                       car_required: e.target.checked,
                     })
                   }
-                  className="w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                  className="w-4 h-4 rounded border-gray-300 text-[#E1002A] focus:ring-[#E1002A]/20"
                 />
                 <span className="text-sm text-gray-700">
                   Wymagany samochód
@@ -761,7 +761,7 @@ export default function NewJobPage() {
                 <button
                   type="button"
                   onClick={() => removeLanguage(i)}
-                  className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  className="p-2 text-gray-400 hover:text-[#E1002A] hover:bg-[#FFF0F3] rounded-lg transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -770,7 +770,7 @@ export default function NewJobPage() {
             <button
               type="button"
               onClick={addLanguage}
-              className="text-sm text-red-600 hover:text-red-700 flex items-center gap-1.5 mt-2 font-medium transition-colors"
+              className="text-sm text-[#E1002A] hover:text-[#B8001F] flex items-center gap-1.5 mt-2 font-medium transition-colors"
             >
               <Plus className="w-4 h-4" /> Dodaj język
             </button>
@@ -831,7 +831,7 @@ export default function NewJobPage() {
             <button
               type="submit"
               disabled={mutation.isPending}
-              className="bg-red-600 text-white px-6 py-2.5 rounded-lg hover:bg-red-700 font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-colors w-full sm:w-auto"
+              className="bg-[#E1002A] text-white px-6 py-2.5 rounded-lg hover:bg-[#B8001F] font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-colors w-full sm:w-auto"
             >
               {mutation.isPending ? (
                 <>

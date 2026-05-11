@@ -1,94 +1,106 @@
 "use client";
 
 import Link from "next/link";
-import { Briefcase, User, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Briefcase, User, ArrowRight, Check } from "lucide-react";
 
 export default function RegisterPage() {
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-2xl">
-        <div className="text-center mb-12 animate-fade-in-up">
-          <h1 className="text-4xl font-bold text-gray-900 mb-3 tracking-tight">
+    <div className="min-h-[80vh] bg-[#F5F6F8] flex items-center justify-center px-4 py-16">
+      <div className="w-full max-w-3xl">
+        <div className="text-center mb-12">
+          <span className="hays-red-line mx-auto" />
+          <h1 className="font-display text-[2.2rem] md:text-[2.8rem] font-extrabold text-[#0D2240] mb-3 leading-tight">
             Utwórz konto
           </h1>
-          <p className="text-lg text-gray-500">
+          <p className="text-[1.05rem] text-[#555]">
             Wybierz typ konta, który Cię interesuje
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <Link
+          <RoleCard
             href="/register/worker"
-            className="bg-white border-2 border-gray-100 rounded-2xl p-8 hover:border-red-400 hover:shadow-2xl hover:shadow-red-500/10 hover:-translate-y-1 transition-all text-center group animate-fade-in-up delay-100"
-          >
-            <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-red-50 to-red-100 rounded-2xl flex items-center justify-center group-hover:from-red-100 group-hover:to-red-200 group-hover:scale-110 transition-all">
-              <User className="w-8 h-8 text-red-600" />
-            </div>
-            <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-red-600 transition-colors tracking-tight">
-              Szukam pracy
-            </h2>
-            <p className="text-sm text-gray-500 leading-relaxed mb-5">
-              Przeglądaj oferty, aplikuj, zarządzaj swoim CV
-            </p>
-            <ul className="text-xs text-gray-500 space-y-2 text-left">
-              <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-                Szybka aplikacja jednym kliknięciem
-              </li>
-              <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-                Darmowa analiza CV z AI
-              </li>
-              <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-                Alerty o nowych ofertach
-              </li>
-            </ul>
-            <div className="mt-6 inline-flex items-center gap-1 text-red-600 font-semibold text-sm group-hover:gap-2 transition-all">
-              Załóż konto <ArrowRight className="w-4 h-4" />
-            </div>
-          </Link>
-
-          <Link
+            badge="Dla kandydatów"
+            badgeStyle="red"
+            icon={<User className="w-7 h-7 text-[#E1002A]" />}
+            title="Szukam pracy"
+            desc="Przeglądaj oferty, aplikuj, zarządzaj swoim CV."
+            features={[
+              "Szybka aplikacja jednym kliknięciem",
+              "Darmowa analiza CV z AI",
+              "Alerty o nowych ofertach",
+            ]}
+            cta="Załóż konto pracownika"
+          />
+          <RoleCard
             href="/register/employer"
-            className="bg-white border-2 border-gray-100 rounded-2xl p-8 hover:border-red-400 hover:shadow-2xl hover:shadow-red-500/10 hover:-translate-y-1 transition-all text-center group animate-fade-in-up delay-200"
-          >
-            <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-red-50 to-red-100 rounded-2xl flex items-center justify-center group-hover:from-red-100 group-hover:to-red-200 group-hover:scale-110 transition-all">
-              <Briefcase className="w-8 h-8 text-red-600" />
-            </div>
-            <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-red-600 transition-colors tracking-tight">
-              Szukam pracowników
-            </h2>
-            <p className="text-sm text-gray-500 leading-relaxed mb-5">
-              Dodawaj ogłoszenia, przeglądaj kandydatów
-            </p>
-            <ul className="text-xs text-gray-500 space-y-2 text-left">
-              <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-                Publikuj ogłoszenia za darmo
-              </li>
-              <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-                Dostęp do bazy CV
-              </li>
-              <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-                Panel zarządzania kandydatami
-              </li>
-            </ul>
-            <div className="mt-6 inline-flex items-center gap-1 text-red-600 font-semibold text-sm group-hover:gap-2 transition-all">
-              Załóż konto <ArrowRight className="w-4 h-4" />
-            </div>
-          </Link>
+            badge="Dla pracodawców"
+            badgeStyle="navy"
+            icon={<Briefcase className="w-7 h-7 text-[#0D2240]" />}
+            title="Szukam pracowników"
+            desc="Dodawaj ogłoszenia, przeglądaj kandydatów."
+            features={[
+              "Publikuj ogłoszenia za darmo",
+              "Dostęp do bazy CV",
+              "Panel zarządzania kandydatami",
+            ]}
+            cta="Załóż konto pracodawcy"
+          />
         </div>
 
-        <p className="text-center text-base text-gray-500 mt-10 animate-fade-in-up delay-400">
+        <p className="text-center text-[#555] mt-10">
           Masz już konto?{" "}
-          <Link href="/login" className="text-red-600 hover:text-red-700 hover:underline font-bold transition-colors">
+          <Link href="/login" className="text-[#E1002A] hover:underline font-semibold">
             Zaloguj się
           </Link>
         </p>
       </div>
     </div>
+  );
+}
+
+function RoleCard({
+  href, badge, badgeStyle, icon, title, desc, features, cta,
+}: {
+  href: string;
+  badge: string;
+  badgeStyle: "red" | "navy";
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+  features: string[];
+  cta: string;
+}) {
+  const badgeClass = badgeStyle === "red"
+    ? "bg-[#FFF0F3] text-[#E1002A]"
+    : "bg-[#E8EDF4] text-[#0D2240]";
+
+  return (
+    <Link
+      href={href}
+      className="bg-white border border-[#E0E3E8] rounded-lg p-8 hover:border-[#E1002A] hover:shadow-[0_8px_32px_rgba(0,0,0,0.08)] transition-all group no-underline block"
+    >
+      <span className={`inline-block text-[0.72rem] font-semibold uppercase tracking-[0.1em] px-3 py-1 rounded mb-4 ${badgeClass}`}>
+        {badge}
+      </span>
+      <div className="w-14 h-14 rounded-lg bg-[#F5F6F8] flex items-center justify-center mb-5 group-hover:bg-[#FFF0F3] transition-colors">
+        {icon}
+      </div>
+      <h2 className="font-display text-[1.3rem] font-bold text-[#0D2240] mb-2 group-hover:text-[#E1002A] transition-colors">
+        {title}
+      </h2>
+      <p className="text-[#555] leading-[1.7] mb-5 text-[0.95rem]">{desc}</p>
+      <ul className="space-y-2 mb-6">
+        {features.map((f) => (
+          <li key={f} className="flex items-start gap-3 text-[0.88rem] text-[#555]">
+            <Check className="w-4 h-4 text-[#E1002A] flex-shrink-0 mt-0.5" />
+            <span>{f}</span>
+          </li>
+        ))}
+      </ul>
+      <div className="inline-flex items-center gap-2 text-[#E1002A] font-medium text-[0.9rem] group-hover:gap-3 transition-all">
+        {cta} <ArrowRight className="w-4 h-4" />
+      </div>
+    </Link>
   );
 }

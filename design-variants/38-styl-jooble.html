@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praca w Szwajcarii - Agregator Ofert</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ==================== RESET & BASE ==================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, Helvetica, sans-serif;
+            color: #333;
+            background: #fff;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.15s;
+        }
+
+        ul { list-style: none; }
+
+        /* ==================== VARIABLES ==================== */
+        :root {
+            --primary: #1976D2;
+            --primary-dark: #0d47a1;
+            --primary-light: #42a5f5;
+            --primary-pale: #e3f2fd;
+            --text: #202124;
+            --text-secondary: #5f6368;
+            --text-muted: #9aa0a6;
+            --border: #dadce0;
+            --bg: #ffffff;
+            --bg-gray: #f8f9fa;
+            --bg-hover: #f1f3f4;
+            --success: #0f9d58;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 2px 8px rgba(0,0,0,0.1);
+            --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
+            --shadow-search: 0 2px 5px 1px rgba(64,60,67,0.16);
+            --radius: 8px;
+            --radius-lg: 24px;
+            --radius-pill: 100px;
+            --max-width: 1100px;
+        }
+
+        /* ==================== HEADER ==================== */
+        .header {
+            border-bottom: 1px solid var(--border);
+            background: var(--bg);
+        }
+
+        .header-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 900;
+            font-size: 1.4rem;
+        }
+
+        .logo-praca {
+            color: var(--primary);
+        }
+
+        .logo-swiss {
+            color: #ea4335;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav a {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .nav a:hover {
+            color: var(--primary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 20px;
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: none;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn-text {
+            background: none;
+            color: var(--primary);
+            padding: 8px 12px;
+        }
+
+        .btn-text:hover {
+            background: var(--primary-pale);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-lg {
+            padding: 14px 32px;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-pale);
+            border-color: var(--primary);
+        }
+
+        /* ==================== HERO - MINIMAL ==================== */
+        .hero {
+            padding: 80px 24px 40px;
+            text-align: center;
+            background: var(--bg);
+        }
+
+        .hero-logo-big {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 32px;
+        }
+
+        .hero-logo-big .logo-praca {
+            color: var(--primary);
+        }
+
+        .hero-logo-big .logo-swiss {
+            color: #ea4335;
+        }
+
+        .hero-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        /* ==================== MASSIVE SEARCH BAR ==================== */
+        .search-container {
+            max-width: 680px;
+            margin: 0 auto 24px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 4px;
+            background: var(--bg);
+            transition: box-shadow 0.2s;
+        }
+
+        .search-bar:hover,
+        .search-bar:focus-within {
+            box-shadow: var(--shadow-search);
+            border-color: transparent;
+        }
+
+        .search-icon {
+            padding: 12px 14px 12px 18px;
+            display: flex;
+            align-items: center;
+            color: var(--text-muted);
+        }
+
+        .search-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-family: inherit;
+            font-size: 1.05rem;
+            color: var(--text);
+            padding: 12px 0;
+            background: transparent;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-divider {
+            width: 1px;
+            height: 28px;
+            background: var(--border);
+            margin: 0 4px;
+        }
+
+        .search-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            min-width: 180px;
+        }
+
+        .search-location svg {
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
+        }
+
+        .search-location input {
+            border: none;
+            outline: none;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: var(--text);
+            background: transparent;
+            width: 100%;
+        }
+
+        .search-location input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 12px 28px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+
+        .search-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .search-helpers {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .search-helper-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .search-helper-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .search-helper-tag:hover {
+            background: var(--primary-pale);
+            border-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        /* ==================== TRUST MESSAGE ==================== */
+        .trust-bar {
+            text-align: center;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .trust-message {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-pill);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .trust-message svg {
+            width: 18px;
+            height: 18px;
+            color: var(--success);
+        }
+
+        .trust-message strong {
+            color: var(--text);
+        }
+
+        /* ==================== CATEGORIES - TEXT LINKS ==================== */
+        .categories-section {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 20px 24px 60px;
+        }
+
+        .categories-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .categories-header h2 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .category-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            color: var(--primary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            border-radius: var(--radius);
+            transition: all 0.15s;
+            cursor: pointer;
+        }
+
+        .category-link:hover {
+            background: var(--primary-pale);
+        }
+
+        .category-link svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            opacity: 0.7;
+        }
+
+        .category-link .cat-count {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-left: auto;
+        }
+
+        /* ==================== DIVIDER ==================== */
+        .divider {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .divider hr {
+            border: none;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ==================== JOB RESULTS ==================== */
+        .jobs-section {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 40px 24px 60px;
+        }
+
+        .jobs-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .jobs-header h2 {
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .jobs-header .sort-select {
+            font-family: inherit;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 8px 14px;
+            background: var(--bg);
+            cursor: pointer;
+        }
+
+        .job-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .job-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            background: var(--bg);
+            transition: all 0.15s;
+            cursor: pointer;
+        }
+
+        .job-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: transparent;
+        }
+
+        .job-card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .job-card-left {
+            flex: 1;
+        }
+
+        .job-title {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .job-card:hover .job-title {
+            text-decoration: underline;
+        }
+
+        .job-company {
+            font-size: 0.88rem;
+            color: var(--text);
+            font-weight: 400;
+        }
+
+        .job-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .job-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+
+        .job-meta-item svg {
+            width: 14px;
+            height: 14px;
+            color: var(--text-muted);
+        }
+
+        .job-snippet {
+            margin-top: 10px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .job-card-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .job-salary {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .source-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-pill);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .source-badge svg {
+            width: 10px;
+            height: 10px;
+        }
+
+        .job-posted {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* ==================== MORE RESULTS ==================== */
+        .more-results {
+            text-align: center;
+            padding: 32px;
+        }
+
+        .more-results p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        /* ==================== CTA SECTION ==================== */
+        .cta-section {
+            background: var(--bg-gray);
+            padding: 60px 24px;
+        }
+
+        .cta-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .cta-inner svg {
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .cta-inner h2 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .cta-inner p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        .cta-email-form {
+            display: flex;
+            gap: 8px;
+            max-width: 460px;
+            margin: 0 auto;
+        }
+
+        .cta-email-form input {
+            flex: 1;
+            padding: 12px 18px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            outline: none;
+            transition: border 0.15s;
+        }
+
+        .cta-email-form input:focus {
+            border-color: var(--primary);
+        }
+
+        /* ==================== SOURCES SECTION ==================== */
+        .sources-section {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 60px 24px;
+            text-align: center;
+        }
+
+        .sources-section h2 {
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .sources-section p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        .sources-logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .source-logo {
+            padding: 12px 24px;
+            background: var(--bg-gray);
+            border-radius: var(--radius);
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        /* ==================== FOOTER ==================== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 24px 24px;
+            background: var(--bg);
+        }
+
+        .footer-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-top: 12px;
+            max-width: 260px;
+        }
+
+        .footer-col h4 {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-col ul li a {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-bottom p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--primary);
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+
+            .hero-logo-big {
+                font-size: 2.2rem;
+            }
+
+            .search-bar {
+                flex-direction: column;
+                border-radius: var(--radius);
+                gap: 0;
+            }
+
+            .search-divider {
+                width: 100%;
+                height: 1px;
+                margin: 0;
+            }
+
+            .search-location {
+                min-width: unset;
+            }
+
+            .search-btn {
+                width: 100%;
+                border-radius: 0 0 var(--radius) var(--radius);
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .job-card-top {
+                flex-direction: column;
+            }
+
+            .cta-email-form {
+                flex-direction: column;
+            }
+
+            .sources-logos {
+                gap: 16px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 24px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== HEADER ==================== -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="#" class="logo">
+                <span class="logo-praca">Praca</span><span class="logo-swiss">Swiss</span>
+            </a>
+            <nav class="nav">
+                <a href="#">Oferty pracy</a>
+                <a href="#">Kategorie</a>
+                <a href="#">Miasta</a>
+                <a href="#">Porownaj zarobki</a>
+            </nav>
+            <div class="header-right">
+                <button class="btn btn-text">Zaloguj sie</button>
+                <button class="btn btn-primary">Dla pracodawcow</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== HERO - MINIMAL ==================== -->
+    <section class="hero">
+        <div class="hero-logo-big">
+            <span class="logo-praca">Praca</span><span class="logo-swiss">Swiss</span>
+        </div>
+        <p class="hero-subtitle">Szukaj wsrod tysiecy ofert pracy w Szwajcarii</p>
+
+        <!-- MASSIVE SEARCH BAR -->
+        <div class="search-container">
+            <div class="search-bar">
+                <div class="search-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                    </svg>
+                </div>
+                <input type="text" class="search-input" placeholder="Stanowisko, firma lub slowo kluczowe...">
+                <div class="search-divider"></div>
+                <div class="search-location">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <input type="text" placeholder="Miasto, kanton...">
+                </div>
+                <button class="search-btn">Szukaj</button>
+            </div>
+
+            <div class="search-helpers">
+                <span class="search-helper-label">Popularne:</span>
+                <span class="search-helper-tag">Murarz</span>
+                <span class="search-helper-tag">Kucharz</span>
+                <span class="search-helper-tag">Kierowca C+E</span>
+                <span class="search-helper-tag">Opiekunka</span>
+                <span class="search-helper-tag">Magazynier</span>
+                <span class="search-helper-tag">Elektryk</span>
+            </div>
+        </div>
+
+        <!-- TRUST MESSAGE -->
+        <div class="trust-bar">
+            <div class="trust-message">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Agregujemy oferty z <strong>500+ portali</strong> pracy w Szwajcarii
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CATEGORIES ==================== -->
+    <section class="categories-section">
+        <div class="categories-header">
+            <h2>Szukaj po kategoriach</h2>
+        </div>
+        <div class="categories-grid">
+            <a href="#" class="category-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="22" height="16" rx="2"/><path d="M1 10h22"/><path d="M12 6v16"/></svg>
+                Budownictwo
+                <span class="cat-count">487</span>
+            </a>
+            <a href="#" class="category-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/></svg>
+                Gastronomia
+                <span class="cat-count">312</span>
+            </a>
+            <a href="#" class="category-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20"/><path d="M5 20V8l5-4v16"/><path d="M10 20V4l9 4v12"/></svg>
+                Produkcja
+                <span class="cat-count">256</span>
+            </a>
+            <a href="#" class="category-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                Transport
+                <span class="cat-count">198</span>
+            </a>
+            <a href="#" class="category-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                Opieka
+                <span class="cat-count">174</span>
+            </a>
+            <a href="#" class="category-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                IT
+                <span class="cat-count">143</span>
+            </a>
+            <a href="#" class="category-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                Finanse
+                <span class="cat-count">98</span>
+            </a>
+            <a href="#" class="category-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+                Handel
+                <span class="cat-count">87</span>
+            </a>
+        </div>
+    </section>
+
+    <div class="divider"><hr></div>
+
+    <!-- ==================== JOB RESULTS ==================== -->
+    <section class="jobs-section">
+        <div class="jobs-header">
+            <h2>Najnowsze oferty pracy w Szwajcarii</h2>
+            <select class="sort-select">
+                <option>Sortuj: Najnowsze</option>
+                <option>Sortuj: Najlepsze dopasowanie</option>
+                <option>Sortuj: Wynagrodzenie</option>
+            </select>
+        </div>
+
+        <div class="job-list">
+            <!-- Job 1 -->
+            <div class="job-card">
+                <div class="job-card-top">
+                    <div class="job-card-left">
+                        <div class="job-title">Murarz - praca na budowie w Zurychu</div>
+                        <div class="job-company">Helvetia Bau AG</div>
+                        <div class="job-meta">
+                            <div class="job-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Zurych
+                            </div>
+                            <div class="job-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+                                Pelny etat
+                            </div>
+                            <div class="job-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                2 godz. temu
+                            </div>
+                        </div>
+                        <div class="job-snippet">Poszukujemy doswiadczonego murarza do pracy na budowie rezydencji w centrum Zurychu. Wymagane minimum 3 lata doswiadczenia w murowaniu. Zapewniamy zakwaterowanie i transport na budowe.</div>
+                    </div>
+                    <div class="job-card-right">
+                        <div class="job-salary">6 200 - 7 500 CHF</div>
+                        <div class="source-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                            jobs.ch
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job 2 -->
+            <div class="job-card">
+                <div class="job-card-top">
+                    <div class="job-card-left">
+                        <div class="job-title">Kucharz w restauracji hotelowej</div>
+                        <div class="job-company">Grand Hotel Luzern</div>
+                        <div class="job-meta">
+                            <div class="job-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Lucerna
+                            </div>
+                            <div class="job-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+                                Pelny etat
+                            </div>
+                            <div class="job-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                5 godz. temu
+                            </div>
+                        </div>
+                        <div class="job-snippet">Hotel 5-gwiazdkowy w Lucernie poszukuje kucharza do restauracji serwujacej kuchnie miedzynarodowa. Praca zmianowa, mozliwosc zakwaterowania w hotelu pracowniczym.</div>
+                    </div>
+                    <div class="job-card-right">
+                        <div class="job-salary">5 400 - 6 800 CHF</div>
+                        <div class="source-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                            indeed.ch
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job 3 -->
+            <div class="job-card">
+                <div class="job-card-top">
+                    <div class="job-card-left">
+                        <div class="job-title">Kierowca miedzynarodowy C+E</div>
+                        <div class="job-company">Swiss Logistik GmbH</div>
+                        <div class="job-meta">
+                            <div class="job-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Berno
+                            </div>
+                            <div class="job-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+                                Pelny etat
+                            </div>
+                            <div class="job-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                1 dzien temu
+                            </div>
+                        </div>
+                        <div class="job-snippet">Firma logistyczna z Berna zatrudni kierowce miedzynarodowego z prawem jazdy C+E i certyfikatem ADR. Trasy: Szwajcaria-Niemcy-Austria-Polska. Nowoczesna flota pojazdow.</div>
+                    </div>
+                    <div class="job-card-right">
+                        <div class="job-salary">7 000 - 8 200 CHF</div>
+                        <div class="source-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                            jobscout24.ch
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="more-results">
+            <p>Wyswietlono 3 z 3 247 ofert pracy</p>
+            <button class="btn btn-outline btn-lg">Pokaz wiecej ofert</button>
+        </div>
+    </section>
+
+    <!-- ==================== CTA ==================== -->
+    <section class="cta-section">
+        <div class="cta-inner">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <h2>Otrzymuj oferty na email</h2>
+            <p>Zapisz sie na powiadomienia o nowych ofertach pracy. Wyslemy Ci najlepsze propozycje prosto na skrzynke.</p>
+            <div class="cta-email-form">
+                <input type="email" placeholder="Twoj adres email...">
+                <button class="btn btn-primary btn-lg">Zapisz sie</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SOURCES ==================== -->
+    <section class="sources-section">
+        <h2>Agregujemy oferty z najlepszych portali</h2>
+        <p>Nie musisz szukac na wielu stronach - robimy to za Ciebie</p>
+        <div class="sources-logos">
+            <div class="source-logo">jobs.ch</div>
+            <div class="source-logo">indeed.ch</div>
+            <div class="source-logo">jobscout24.ch</div>
+            <div class="source-logo">jobup.ch</div>
+            <div class="source-logo">monster.ch</div>
+            <div class="source-logo">linkedin.com</div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <span class="logo-praca">Praca</span><span class="logo-swiss">Swiss</span>
+                    </a>
+                    <p>Agregator ofert pracy w Szwajcarii. Przeszukujemy setki portali, zebys Ty nie musial.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Popularne kategorie</h4>
+                    <ul>
+                        <li><a href="#">Budownictwo</a></li>
+                        <li><a href="#">Gastronomia</a></li>
+                        <li><a href="#">Transport</a></li>
+                        <li><a href="#">Opieka</a></li>
+                        <li><a href="#">IT</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Popularne miasta</h4>
+                    <ul>
+                        <li><a href="#">Zurych</a></li>
+                        <li><a href="#">Genewa</a></li>
+                        <li><a href="#">Berno</a></li>
+                        <li><a href="#">Bazylea</a></li>
+                        <li><a href="#">Lucerna</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Informacje</h4>
+                    <ul>
+                        <li><a href="#">O nas</a></li>
+                        <li><a href="#">Kontakt</a></li>
+                        <li><a href="#">Dla pracodawcow</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>2024 PracaSwiss. Wszelkie prawa zastrzezone.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Regulamin</a>
+                    <a href="#">Polityka prywatnosci</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -23,7 +23,7 @@ export default function EmployerDashboardPage() {
 
   return (
     <div>
-      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
+      <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240] mb-6">
         Witaj, {user?.first_name || "Pracodawco"}!
       </h1>
 
@@ -89,7 +89,7 @@ export default function EmployerDashboardPage() {
       {/* Application clicks breakdown */}
       {dashboard && dashboard.total_clicks > 0 && (
         <div className="bg-white border rounded-lg p-5 mb-6">
-          <h2 className="font-semibold text-gray-900 mb-3">Rozbicie kliknięć „Aplikuj"</h2>
+          <h2 className="font-semibold font-display text-[#0D2240] mb-3">Rozbicie kliknięć „Aplikuj"</h2>
           <div className="grid grid-cols-3 gap-3">
             <div className="text-center p-3 bg-blue-50 rounded-lg">
               <p className="text-lg font-bold text-blue-700">{dashboard.clicks_by_type?.portal ?? 0}</p>
@@ -110,10 +110,10 @@ export default function EmployerDashboardPage() {
       {/* Quota info */}
       {quota && (
         <div className="bg-white border rounded-lg p-5 mb-6">
-          <h2 className="font-semibold text-gray-900 mb-3">Limit ogłoszeń</h2>
+          <h2 className="font-semibold font-display text-[#0D2240] mb-3">Limit ogłoszeń</h2>
           <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
             <div
-              className="bg-red-600 h-2 rounded-full transition-all"
+              className="bg-[#E1002A] h-2 rounded-full transition-all"
               style={{ width: `${Math.min(100, (quota.used_count / quota.monthly_limit) * 100)}%` }}
             />
           </div>
@@ -126,7 +126,7 @@ export default function EmployerDashboardPage() {
 
       {/* Charts */}
       <div className="mb-8">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Statystyki</h2>
+        <h2 className="text-lg font-semibold font-display text-[#0D2240] mb-4">Statystyki</h2>
         <EmployerCharts />
       </div>
 
@@ -134,10 +134,10 @@ export default function EmployerDashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         <Link
           href="/panel/pracodawca/ogloszenia/nowe"
-          className="bg-red-600 text-white rounded-lg p-5 hover:bg-red-700 transition-colors"
+          className="bg-[#E1002A] text-white rounded-lg p-5 hover:bg-[#B8001F] transition-colors"
         >
           <h3 className="font-semibold mb-1">Dodaj ogłoszenie</h3>
-          <p className="text-sm text-red-100">Opublikuj nową ofertę pracy</p>
+          <p className="text-sm text-white/85">Opublikuj nową ofertę pracy</p>
         </Link>
         <Link
           href="/panel/pracodawca/ogloszenia"

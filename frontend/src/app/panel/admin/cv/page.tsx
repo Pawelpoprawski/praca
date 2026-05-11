@@ -12,7 +12,7 @@ import type { PaginatedResponse, AdminCVItem, CVStats } from "@/types/api";
 
 const STATUS_BADGES: Record<string, { label: string; color: string; icon: typeof CheckCircle }> = {
   completed: { label: "Odczytano", color: "bg-green-100 text-green-800", icon: CheckCircle },
-  failed: { label: "Błąd", color: "bg-red-100 text-red-800", icon: XCircle },
+  failed: { label: "Błąd", color: "bg-[#FFE0E6] text-[#7A0014]", icon: XCircle },
   pending: { label: "Oczekuje", color: "bg-yellow-100 text-yellow-800", icon: Clock },
 };
 
@@ -47,12 +47,12 @@ export default function AdminCVPage() {
     { label: "Wszystkie CV", value: stats?.total ?? 0, color: "text-blue-600" },
     { label: "Aktywne", value: stats?.active ?? 0, color: "text-green-600" },
     { label: "Odczytane", value: stats?.extracted ?? 0, color: "text-emerald-600" },
-    { label: "Błędy", value: stats?.failed ?? 0, color: "text-red-600" },
+    { label: "Błędy", value: stats?.failed ?? 0, color: "text-[#E1002A]" },
   ];
 
   return (
     <div>
-      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">Baza CV</h1>
+      <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240] mb-6">Baza CV</h1>
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
@@ -76,10 +76,10 @@ export default function AdminCVPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Szukaj po nazwisku, emailu..."
-            className="w-full pl-10 pr-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full pl-10 pr-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20"
           />
         </div>
-        <button type="submit" className="px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700">
+        <button type="submit" className="px-4 py-2 bg-[#E1002A] text-white text-sm rounded-lg hover:bg-[#B8001F]">
           Szukaj
         </button>
       </form>

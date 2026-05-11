@@ -14,7 +14,7 @@ import type { CVReviewResponse, MessageResponse } from "@/types/api";
 
 function ScoreGauge({ score, previousScore }: { score: number; previousScore?: number | null }) {
   const getColor = (s: number) => {
-    if (s <= 3) return { stroke: "#dc2626", bg: "#fef2f2", text: "text-red-600" };
+    if (s <= 3) return { stroke: "#dc2626", bg: "#fef2f2", text: "text-[#E1002A]" };
     if (s <= 6) return { stroke: "#d97706", bg: "#fffbeb", text: "text-yellow-600" };
     return { stroke: "#16a34a", bg: "#f0fdf4", text: "text-green-600" };
   };
@@ -47,7 +47,7 @@ function ScoreGauge({ score, previousScore }: { score: number; previousScore?: n
       </div>
       {previousScore != null && previousScore !== score && (
         <div className={`mt-3 flex items-center gap-1 text-sm font-semibold ${
-          score > previousScore ? "text-green-600" : score < previousScore ? "text-red-600" : "text-gray-500"
+          score > previousScore ? "text-green-600" : score < previousScore ? "text-[#E1002A]" : "text-gray-500"
         }`}>
           <TrendingUp className="w-4 h-4" />
           {score > previousScore
@@ -185,7 +185,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center max-w-md mx-auto px-4">
           <XCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
-          <h2 className="text-xl font-bold text-gray-900 mb-2">Nie znaleziono analizy</h2>
+          <h2 className="text-xl font-bold font-display text-[#0D2240] mb-2">Nie znaleziono analizy</h2>
           <p className="text-gray-600 mb-6">
             Podana analiza CV nie istnieje lub wystąpił błąd.
           </p>
@@ -297,8 +297,8 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
           <FunnelProgressBar currentStep={1} />
 
           {/* Score */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 mb-6 text-center">
-            <h1 className="text-2xl font-bold text-gray-900 mb-6">
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8 mb-6 text-center">
+            <h1 className="text-2xl font-bold font-display text-[#0D2240] mb-6">
               Wynik analizy Twojego CV
             </h1>
             <ScoreGauge score={analysis.overall_score} previousScore={review.previous_score} />
@@ -330,8 +330,8 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
               items={analysis.missing}
               icon={XCircle}
               iconColor="text-red-500"
-              bgColor="bg-red-50/50"
-              borderColor="border-red-200"
+              bgColor="bg-[#FFF0F3]/50"
+              borderColor="border-[#FFC2CD]"
             />
             <AnalysisSection
               title="Porady na rynek szwajcarski"
@@ -378,7 +378,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                 </button>
               </div>
               {emailMutation.isError && (
-                <p className="text-red-600 text-sm mt-2">
+                <p className="text-[#E1002A] text-sm mt-2">
                   Nie udało się wysłać emaila. Spróbuj ponownie.
                 </p>
               )}
@@ -411,7 +411,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
 
           <button
             onClick={() => setFunnelStep(3)}
-            className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-4 rounded-xl font-bold text-lg hover:shadow-xl transition-all"
+            className="w-full flex items-center justify-center gap-2 bg-[#0D2240] text-white px-6 py-4 rounded-xl font-bold text-lg hover:shadow-xl transition-all"
           >
             Dalej
             <ArrowRight className="w-5 h-5" />
@@ -525,8 +525,8 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
         <div className="max-w-3xl mx-auto px-4 py-12">
           <FunnelProgressBar currentStep={3} />
 
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8">
+            <h2 className="text-2xl font-bold font-display text-[#0D2240] mb-2 text-center">
               Zostaw nam swoje CV
             </h2>
             <p className="text-gray-600 mb-8 text-center max-w-xl mx-auto">
@@ -674,7 +674,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                           <button
                             type="button"
                             onClick={() => removeLanguage(i)}
-                            className="px-3 py-3 text-red-500 hover:bg-red-50 rounded-xl transition-colors"
+                            className="px-3 py-3 text-red-500 hover:bg-[#FFF0F3] rounded-xl transition-colors"
                           >
                             <XCircle className="w-5 h-5" />
                           </button>
@@ -779,8 +779,8 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
               </div>
 
               {submitMutation.isError && (
-                <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-                  <p className="text-red-700 text-sm">
+                <div className="bg-[#FFF0F3] border border-[#FFC2CD] rounded-xl p-4">
+                  <p className="text-[#B8001F] text-sm">
                     {(() => {
                       const detail = (
                         submitMutation.error as {
@@ -815,7 +815,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                     !formData.phone ||
                     submitMutation.isPending
                       ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                      : "bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:shadow-xl"
+                      : "bg-[#0D2240] text-white hover:shadow-xl"
                   }
                 `}
               >
@@ -851,7 +851,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
         <div className="max-w-lg mx-auto px-4 w-full">
           <FunnelProgressBar currentStep="loading" />
 
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10">
+          <div className="bg-white rounded-lg shadow-xl border border-gray-100 p-8 md:p-10">
             <div className="flex justify-center mb-8">
               <div className="relative">
                 <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center animate-pulse">
@@ -864,7 +864,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
               </div>
             </div>
 
-            <h2 className="text-xl font-bold text-gray-900 text-center mb-2">
+            <h2 className="text-xl font-bold font-display text-[#0D2240] text-center mb-2">
               Przetwarzamy Twoje dane
             </h2>
             <p className="text-gray-500 text-center text-sm mb-8">
@@ -952,12 +952,12 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
         <div className="max-w-3xl mx-auto px-4 py-12">
           <FunnelProgressBar currentStep={4} />
 
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8 text-center">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
               <CheckCircle2 className="w-10 h-10 text-green-600" />
             </div>
 
-            <h1 className="text-3xl font-bold text-gray-900 mb-3">
+            <h1 className="text-3xl font-bold font-display text-[#0D2240] mb-3">
               Twoje CV zostało zapisane!
             </h1>
             <p className="text-lg text-gray-600 mb-2">
@@ -1000,7 +1000,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/oferty"
-                className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-4 rounded-xl font-bold hover:shadow-xl transition-all"
+                className="flex-1 flex items-center justify-center gap-2 bg-[#0D2240] text-white px-6 py-4 rounded-xl font-bold hover:shadow-xl transition-all"
               >
                 Przeglądaj oferty pracy
                 <ArrowRight className="w-5 h-5" />

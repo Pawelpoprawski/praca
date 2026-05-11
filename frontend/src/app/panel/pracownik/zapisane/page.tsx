@@ -33,7 +33,7 @@ export default function SavedJobsPage() {
   if (isLoading) {
     return (
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">Zapisane oferty</h1>
+        <h1 className="text-2xl font-bold font-display text-[#0D2240] mb-6">Zapisane oferty</h1>
         <div className="bg-white border rounded-lg divide-y">
           {Array.from({ length: 5 }).map((_, i) => (
             <div key={i} className="px-5 py-4 animate-pulse">
@@ -56,7 +56,7 @@ export default function SavedJobsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">
+      <h1 className="text-2xl font-bold font-display text-[#0D2240] mb-6">
         Zapisane oferty
         {data && data.total > 0 && (
           <span className="text-gray-400 text-lg font-normal ml-2">({data.total})</span>
@@ -79,11 +79,11 @@ export default function SavedJobsPage() {
                     href={`/oferty/${saved.job_offer_id}`}
                     className="flex items-center gap-3 min-w-0 flex-1"
                   >
-                    <div className="w-9 h-9 bg-red-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div className="w-9 h-9 bg-[#FFF0F3] rounded-lg flex items-center justify-center flex-shrink-0">
                       <Heart className="w-4 h-4 text-red-500 fill-current" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="font-medium text-gray-900 hover:text-red-600 truncate max-w-sm">
+                      <p className="font-medium text-gray-900 hover:text-[#E1002A] truncate max-w-sm">
                         {job.title}
                       </p>
                       <div className="flex items-center gap-3 text-sm text-gray-500">
@@ -112,7 +112,7 @@ export default function SavedJobsPage() {
                       disabled={removeMutation.isPending}
                       title="Usuń z ulubionych"
                       aria-label="Usuń z ulubionych"
-                      className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+                      className="p-2 text-gray-400 hover:text-red-500 hover:bg-[#FFF0F3] rounded-lg transition-colors disabled:opacity-50"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -156,7 +156,7 @@ export default function SavedJobsPage() {
           </p>
           <Link
             href="/oferty"
-            className="text-sm text-red-600 hover:underline"
+            className="text-sm text-[#E1002A] hover:underline"
           >
             Przeglądaj oferty pracy
           </Link>

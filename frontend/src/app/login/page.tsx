@@ -6,12 +6,12 @@ import { useState, Suspense } from "react";
 import { Eye, EyeOff, Shield, Briefcase, ArrowRight } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { getRecaptchaToken } from "@/lib/recaptcha";
+import { SocialButtons, SocialDivider } from "@/components/auth/SocialButtons";
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const login = useAuthStore((s) => s.login);
-  const user = useAuthStore((s) => s.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +22,6 @@ function LoginForm() {
     e.preventDefault();
     setError("");
     setLoading(true);
-
     try {
       const recaptchaToken = await getRecaptchaToken("login");
       await login(email, password, recaptchaToken);
@@ -30,8 +29,7 @@ function LoginForm() {
       if (redirect) {
         router.push(redirect);
       } else {
-        const store = useAuthStore.getState();
-        const role = store.user?.role;
+        const role = useAuthStore.getState().user?.role;
         if (role === "admin") router.push("/panel/admin");
         else if (role === "employer") router.push("/panel/pracodawca");
         else router.push("/panel/pracownik");
@@ -44,73 +42,67 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-5xl grid md:grid-cols-2 gap-0 md:gap-0">
-        {/* Left side - Branding */}
-        <div className="hidden md:flex flex-col justify-center bg-gradient-to-br from-red-600 via-red-700 to-red-900 rounded-l-2xl p-10 text-white relative overflow-hidden noise-overlay">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-40"></div>
-          {/* Swiss cross */}
-          <div className="absolute bottom-8 right-8 opacity-10">
-            <svg width="80" height="80" viewBox="0 0 32 32" fill="currentColor">
-              <rect x="13" y="6" width="6" height="20" rx="1" />
-              <rect x="6" y="13" width="20" height="6" rx="1" />
-            </svg>
-          </div>
+    <div className="min-h-[80vh] bg-[#F5F6F8] flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-5xl grid md:grid-cols-2 rounded-lg overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.08)]">
+        {/* Left — branding navy */}
+        <div className="hidden md:flex flex-col justify-center bg-[#0D2240] p-10 text-white relative overflow-hidden">
+          <div className="absolute inset-0 hays-pattern" />
+          <div className="absolute -right-[100px] -top-[100px] w-[400px] h-[400px] hays-red-glow" />
           <div className="relative z-10">
-            <h2 className="text-3xl font-bold mb-4 tracking-tight">Witaj z powrotem!</h2>
-            <p className="text-red-100 text-lg leading-relaxed mb-8">
+            <span className="hays-red-line" />
+            <h2 className="font-display text-[1.8rem] font-extrabold mb-4 leading-tight">
+              Witaj z powrotem
+            </h2>
+            <p className="text-white/85 text-[1rem] leading-[1.7] mb-8 max-w-[360px] font-light">
               Zaloguj się, aby przeglądać oferty, aplikować na stanowiska i zarządzać swoim profilem.
             </p>
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 text-red-100/90">
-                <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
+            <ul className="space-y-3">
+              <li className="flex items-center gap-3 text-white/80">
+                <div className="w-9 h-9 bg-[#E1002A] rounded flex items-center justify-center flex-shrink-0">
                   <Briefcase className="w-4 h-4" />
                 </div>
-                <span className="text-sm">Tysiące ofert pracy w Szwajcarii</span>
-              </div>
-              <div className="flex items-center gap-3 text-red-100/90">
-                <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <span className="text-[0.9rem]">Tysiące ofert pracy w Szwajcarii</span>
+              </li>
+              <li className="flex items-center gap-3 text-white/80">
+                <div className="w-9 h-9 bg-[#E1002A] rounded flex items-center justify-center flex-shrink-0">
                   <Shield className="w-4 h-4" />
                 </div>
-                <span className="text-sm">Bezpieczne i bezpłatne konto</span>
-              </div>
-            </div>
+                <span className="text-[0.9rem]">Bezpieczne i bezpłatne konto</span>
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* Right side - Form */}
-        <div className="bg-white rounded-2xl md:rounded-l-none md:rounded-r-2xl shadow-xl border border-gray-200 md:border-l-0 p-8 md:p-10 flex flex-col justify-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-1 tracking-tight">
+        {/* Right — form */}
+        <div className="bg-white p-8 md:p-10 flex flex-col justify-center">
+          <h1 className="font-display text-[2rem] font-extrabold text-[#0D2240] mb-1 leading-tight">
             Zaloguj się
           </h1>
-          <p className="text-gray-500 mb-8">Wprowadź swoje dane logowania</p>
+          <p className="text-[#888] mb-8">Wprowadź swoje dane logowania</p>
+
+          <SocialButtons mode="login" />
+          <SocialDivider />
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6 text-sm animate-scale-in" role="alert" aria-live="assertive">
+            <div className="bg-[#FFF0F3] border border-[#E1002A]/30 text-[#E1002A] px-4 py-3 rounded mb-6 text-sm" role="alert" aria-live="assertive">
               {error}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Email
-              </label>
+            <Field label="Email">
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="email"
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all bg-gray-50 focus:bg-white"
+                className="w-full px-4 py-3 border border-[#E0E3E8] rounded focus:outline-none focus:border-[#E1002A] focus:ring-2 focus:ring-[#E1002A]/20 transition-all"
                 placeholder="jan@example.com"
               />
-            </div>
+            </Field>
 
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Haslo
-              </label>
+            <Field label="Hasło">
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -118,22 +110,22 @@ function LoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
-                  className="w-full px-4 py-3 pr-11 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all bg-gray-50 focus:bg-white"
+                  className="w-full px-4 py-3 pr-11 border border-[#E0E3E8] rounded focus:outline-none focus:border-[#E1002A] focus:ring-2 focus:ring-[#E1002A]/20 transition-all"
                   placeholder="Min. 8 znaków"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#888] hover:text-[#0D2240] transition-colors"
                   aria-label={showPassword ? "Ukryj hasło" : "Pokaż hasło"}
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
-            </div>
+            </Field>
 
             <div className="flex items-center justify-end">
-              <Link href="/reset-password" className="text-sm text-gray-500 hover:text-red-600 font-medium transition-colors">
+              <Link href="/reset-password" className="text-sm text-[#888] hover:text-[#E1002A] font-medium transition-colors">
                 Zapomniałeś hasła?
               </Link>
             </div>
@@ -141,7 +133,7 @@ function LoginForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3.5 rounded-xl hover:shadow-lg hover:shadow-red-500/20 font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95 flex items-center justify-center gap-2"
+              className="w-full bg-[#E1002A] hover:bg-[#B8001F] text-white py-3.5 rounded font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>
@@ -157,32 +149,23 @@ function LoginForm() {
             </button>
           </form>
 
-          <div className="mt-8 text-center text-sm text-gray-600">
+          <div className="mt-8 text-center text-sm text-[#555]">
             Nie masz konta?{" "}
-            <Link href="/register" className="text-red-600 hover:text-red-700 hover:underline font-bold transition-colors">
+            <Link href="/register" className="text-[#E1002A] hover:underline font-semibold transition-colors">
               Zarejestruj się
             </Link>
           </div>
-        </div>
-      </div>
 
-      {/* Demo accounts - below the card on mobile */}
-      <div className="fixed bottom-4 left-4 right-4 md:static md:mt-6 md:max-w-5xl md:w-full">
-        <div className="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-xl p-4 shadow-lg md:shadow-sm">
-          <p className="text-xs font-semibold text-gray-500 mb-2">Konta demo (haslo: demo123):</p>
-          <div className="flex flex-wrap gap-2 text-xs">
-            <button type="button" onClick={() => { setEmail("jan.kowalski@gmail.com"); setPassword("demo123"); }}
-              className="bg-gray-50 hover:bg-red-50 hover:text-red-600 px-3 py-1.5 rounded-lg transition-all border border-gray-200 hover:border-red-200">
-              Pracownik
-            </button>
-            <button type="button" onClick={() => { setEmail("hr@swissbau.ch"); setPassword("demo123"); }}
-              className="bg-gray-50 hover:bg-red-50 hover:text-red-600 px-3 py-1.5 rounded-lg transition-all border border-gray-200 hover:border-red-200">
-              Pracodawca
-            </button>
-            <button type="button" onClick={() => { setEmail("admin@polacyszwajcaria.ch"); setPassword("admin-zmien-po-pierwszym-logowaniu"); }}
-              className="bg-gray-50 hover:bg-red-50 hover:text-red-600 px-3 py-1.5 rounded-lg transition-all border border-gray-200 hover:border-red-200">
-              Admin
-            </button>
+          {/* Demo accounts */}
+          <div className="mt-8 pt-6 border-t border-[#E0E3E8]">
+            <p className="text-[0.72rem] font-semibold text-[#888] uppercase tracking-[0.1em] mb-3">
+              Konta demo <span className="font-normal normal-case tracking-normal text-[#555]">(hasło: demo123)</span>
+            </p>
+            <div className="flex flex-wrap gap-2 text-xs">
+              <DemoBtn onClick={() => { setEmail("jan.kowalski@gmail.com"); setPassword("demo123"); }}>Pracownik</DemoBtn>
+              <DemoBtn onClick={() => { setEmail("hr@swissbau.ch"); setPassword("demo123"); }}>Pracodawca</DemoBtn>
+              <DemoBtn onClick={() => { setEmail("admin@praca-w-szwajcarii.ch"); setPassword("admin-zmien-po-pierwszym-logowaniu"); }}>Admin</DemoBtn>
+            </div>
           </div>
         </div>
       </div>
@@ -190,9 +173,30 @@ function LoginForm() {
   );
 }
 
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <span className="block text-sm font-medium text-[#0D2240] mb-2">{label}</span>
+      {children}
+    </label>
+  );
+}
+
+function DemoBtn({ children, onClick }: { children: React.ReactNode; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="bg-[#F5F6F8] hover:bg-[#FFF0F3] hover:text-[#E1002A] hover:border-[#E1002A] px-3 py-1.5 rounded transition-all border border-[#E0E3E8] text-[#555]"
+    >
+      {children}
+    </button>
+  );
+}
+
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center">Ładowanie...</div>}>
+    <Suspense fallback={<div className="p-8 text-center text-[#555]">Ładowanie…</div>}>
       <LoginForm />
     </Suspense>
   );

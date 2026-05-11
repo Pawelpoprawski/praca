@@ -58,7 +58,7 @@ export default function CompanyClient({ initialCompany }: Props) {
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold text-gray-900">{company.company_name}</h1>
+              <h1 className="text-2xl font-bold font-display text-[#0D2240]">{company.company_name}</h1>
               {company.is_verified && (
                 <BadgeCheck className="w-5 h-5 text-blue-500" />
               )}
@@ -66,7 +66,7 @@ export default function CompanyClient({ initialCompany }: Props) {
             {company.website && (
               <div className="mt-2">
                 <a href={company.website} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-sm text-red-600 hover:underline">
+                  className="inline-flex items-center gap-1 text-sm text-[#E1002A] hover:underline">
                   <Globe className="w-3 h-3" />
                   Strona www
                 </a>
@@ -83,7 +83,7 @@ export default function CompanyClient({ initialCompany }: Props) {
       </div>
 
       {/* Company jobs */}
-      <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+      <h2 className="text-lg font-semibold font-display text-[#0D2240] mb-4 flex items-center gap-2">
         <Briefcase className="w-5 h-5" />
         Oferty pracy ({jobsData?.total || 0})
       </h2>
@@ -112,7 +112,7 @@ export default function CompanyClient({ initialCompany }: Props) {
               <Link
                 key={job.id}
                 href={`/oferty/${job.id}`}
-                className="block bg-white border border-gray-200 rounded-xl p-4 hover:border-red-200 hover:shadow-md transition-all"
+                className="block bg-white border border-gray-200 rounded-xl p-4 hover:border-[#FFC2CD] hover:shadow-md transition-all"
               >
                 <div className="flex items-start justify-between">
                   <div>

@@ -83,7 +83,7 @@ export default function PanelLayout({ children }: { children: React.ReactNode })
       <div className="flex flex-col md:flex-row gap-4 md:gap-8">
         {/* Sidebar */}
         <aside className="md:w-56 flex-shrink-0">
-          <nav className="flex md:flex-col gap-1 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 md:bg-white md:border md:border-gray-100 md:rounded-2xl md:p-2 md:shadow-sm">
+          <nav className="flex md:flex-col gap-1 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 md:bg-white md:border md:border-gray-100 md:rounded-lg md:p-2 md:shadow-sm">
             {links.map((link) => {
               const isActive =
                 pathname === link.href ||
@@ -97,11 +97,11 @@ export default function PanelLayout({ children }: { children: React.ReactNode })
                   className={cn(
                     "flex flex-col md:flex-row items-center md:items-center gap-1 md:gap-3 px-2 md:px-3 py-2 md:py-2.5 rounded-lg md:rounded-xl text-xs md:text-sm font-medium transition-all whitespace-nowrap md:whitespace-normal min-w-[52px] md:min-w-0",
                     isActive
-                      ? "bg-red-50 text-red-700 md:shadow-sm"
+                      ? "bg-[#FFF0F3] text-[#B8001F] md:shadow-sm"
                       : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
                   )}
                 >
-                  <Icon className={cn("w-4 h-4 flex-shrink-0", isActive && "text-red-600")} />
+                  <Icon className={cn("w-4 h-4 flex-shrink-0", isActive && "text-[#E1002A]")} />
                   <span className="leading-tight text-center md:text-left">{link.label}</span>
                 </Link>
               );

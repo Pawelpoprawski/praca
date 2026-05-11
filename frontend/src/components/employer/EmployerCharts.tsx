@@ -91,7 +91,7 @@ export default function EmployerCharts() {
           <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center mb-2">
             <Briefcase className="w-4 h-4 text-blue-600" />
           </div>
-          <span className="text-2xl font-bold text-gray-900">
+          <span className="text-2xl font-bold text-[#0D2240]">
             {monthly_summary.total_jobs}
           </span>
           <p className="text-xs text-gray-500 mt-0.5">Wszystkie oferty</p>
@@ -100,16 +100,16 @@ export default function EmployerCharts() {
           <div className="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center mb-2">
             <TrendingUp className="w-4 h-4 text-green-600" />
           </div>
-          <span className="text-2xl font-bold text-gray-900">
+          <span className="text-2xl font-bold text-[#0D2240]">
             {monthly_summary.active_jobs}
           </span>
           <p className="text-xs text-gray-500 mt-0.5">Aktywne oferty</p>
         </div>
         <div className="bg-white border rounded-lg p-4">
-          <div className="w-8 h-8 bg-red-50 rounded-lg flex items-center justify-center mb-2">
-            <Users className="w-4 h-4 text-red-600" />
+          <div className="w-8 h-8 bg-[#FFF0F3] rounded-lg flex items-center justify-center mb-2">
+            <Users className="w-4 h-4 text-[#E1002A]" />
           </div>
-          <span className="text-2xl font-bold text-gray-900">
+          <span className="text-2xl font-bold text-[#0D2240]">
             {monthly_summary.total_applications}
           </span>
           <p className="text-xs text-gray-500 mt-0.5">Wszystkie aplikacje</p>

@@ -25,7 +25,7 @@ const NOTIFICATION_TYPE_COLORS: Record<string, string> = {
   application_status_changed: "bg-yellow-100 text-yellow-800",
   job_expiring: "bg-orange-100 text-orange-800",
   job_approved: "bg-green-100 text-green-800",
-  job_rejected: "bg-red-100 text-red-800",
+  job_rejected: "bg-[#FFE0E6] text-[#7A0014]",
   system: "bg-gray-100 text-gray-800",
 };
 
@@ -85,7 +85,7 @@ export default function NotificationsPage() {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <Bell className="w-6 h-6 text-gray-700" />
-          <h1 className="text-2xl font-bold text-gray-900">Powiadomienia</h1>
+          <h1 className="text-2xl font-bold font-display text-[#0D2240]">Powiadomienia</h1>
           {total > 0 && (
             <span className="text-sm text-gray-500">({total})</span>
           )}
@@ -94,7 +94,7 @@ export default function NotificationsPage() {
           <button
             onClick={() => markAllReadMutation.mutate()}
             disabled={markAllReadMutation.isPending}
-            className="flex items-center gap-2 text-sm text-red-600 hover:text-red-700 font-medium px-3 py-2 rounded-lg hover:bg-red-50 transition-colors"
+            className="flex items-center gap-2 text-sm text-[#E1002A] hover:text-[#B8001F] font-medium px-3 py-2 rounded-lg hover:bg-[#FFF0F3] transition-colors"
           >
             <CheckCheck className="w-4 h-4" />
             Oznacz wszystkie jako przeczytane
@@ -133,13 +133,13 @@ export default function NotificationsPage() {
               <div
                 key={n.id}
                 className={`px-5 py-4 flex items-start gap-4 hover:bg-gray-50 transition-colors ${
-                  !n.is_read ? "bg-red-50/30" : ""
+                  !n.is_read ? "bg-[#FFF0F3]/30" : ""
                 }`}
               >
                 {/* Unread indicator */}
                 <div className="pt-1.5 flex-shrink-0">
                   {!n.is_read ? (
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#E1002A]" />
                   ) : (
                     <div className="w-2.5 h-2.5" />
                   )}
@@ -185,7 +185,7 @@ export default function NotificationsPage() {
                   <button
                     onClick={() => deleteMutation.mutate(n.id)}
                     disabled={deleteMutation.isPending}
-                    className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors disabled:opacity-50"
+                    className="p-2 text-gray-400 hover:text-[#E1002A] rounded-lg hover:bg-[#FFF0F3] transition-colors disabled:opacity-50"
                     title="Usuń"
                     aria-label="Usuń powiadomienie"
                   >

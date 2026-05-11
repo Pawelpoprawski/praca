@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CompanyClient from "./CompanyClient";
 
-const API_URL = process.env.BACKEND_INTERNAL_URL || "http://127.0.0.1:8001";
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://polacyszwajcaria.ch";
+const API_URL = process.env.BACKEND_INTERNAL_URL || "http://127.0.0.1:8002";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://praca-w-szwajcarii.ch";
 
 async function getCompany(slug: string) {
   try {

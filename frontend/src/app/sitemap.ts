@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://polacyszwajcaria.ch";
-const API_URL = process.env.BACKEND_INTERNAL_URL || "http://127.0.0.1:8001";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://praca-w-szwajcarii.ch";
+const API_URL = process.env.BACKEND_INTERNAL_URL || "http://127.0.0.1:8002";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [

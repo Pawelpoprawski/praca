@@ -196,7 +196,7 @@ export default function SprawdzCVPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center">
         <div className="max-w-lg mx-auto px-4 w-full">
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10">
+          <div className="bg-white rounded-lg shadow-xl border border-gray-100 p-8 md:p-10">
             {/* Animated icon */}
             <div className="flex justify-center mb-8">
               <div className="relative">
@@ -207,7 +207,7 @@ export default function SprawdzCVPage() {
               </div>
             </div>
 
-            <h2 className="text-xl font-bold text-gray-900 text-center mb-2">
+            <h2 className="text-xl font-bold font-display text-[#0D2240] text-center mb-2">
               Analizujemy Twoje CV
             </h2>
             <p className="text-gray-500 text-center text-sm mb-8">
@@ -270,11 +270,11 @@ export default function SprawdzCVPage() {
             </div>
 
             {/* Swiss fun fact */}
-            <div className="bg-gradient-to-r from-red-50 to-red-100/50 border border-red-200 rounded-xl p-4">
-              <p className="text-xs font-semibold text-red-800 mb-1 flex items-center gap-1.5">
-                <span className="text-base">🇨🇭</span> Czy wiesz, że...
+            <div className="bg-gradient-to-r from-red-50 to-red-100/50 border border-[#FFC2CD] rounded-xl p-4">
+              <p className="text-xs font-semibold text-[#7A0014] mb-1 flex items-center gap-1.5">
+                <span className="text-base"></span> Czy wiesz, że...
               </p>
-              <p className="text-sm text-red-700 leading-relaxed transition-opacity duration-500">
+              <p className="text-sm text-[#B8001F] leading-relaxed transition-opacity duration-500">
                 {SWISS_FACTS[currentFact]}
               </p>
             </div>
@@ -292,7 +292,7 @@ export default function SprawdzCVPage() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
             <FileText className="w-8 h-8 text-blue-600" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+          <h1 className="text-3xl md:text-4xl font-bold font-display text-[#0D2240] mb-3">
             Sprawdź swoje CV za darmo
           </h1>
           <p className="text-lg text-gray-600 max-w-lg mx-auto">
@@ -316,7 +316,7 @@ export default function SprawdzCVPage() {
           onDragLeave={handleDragLeave}
           onClick={() => !file && fileInputRef.current?.click()}
           className={`
-            relative border-2 border-dashed rounded-2xl p-10 text-center transition-all cursor-pointer
+            relative border-2 border-dashed rounded-lg p-10 text-center transition-all cursor-pointer
             ${dragOver
               ? "border-blue-500 bg-blue-50 scale-[1.02]"
               : file
@@ -350,7 +350,7 @@ export default function SprawdzCVPage() {
                   setFile(null);
                   if (fileInputRef.current) fileInputRef.current.value = "";
                 }}
-                className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-red-100 hover:text-red-600 transition-colors"
+                className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-[#FFE0E6] hover:text-[#E1002A] transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -386,8 +386,8 @@ export default function SprawdzCVPage() {
 
         {/* Error */}
         {error && (
-          <div className="mt-4 bg-red-50 border border-red-200 rounded-xl p-4">
-            <p className="text-red-700 text-sm">{error}</p>
+          <div className="mt-4 bg-[#FFF0F3] border border-[#FFC2CD] rounded-xl p-4">
+            <p className="text-[#B8001F] text-sm">{error}</p>
           </div>
         )}
 
@@ -399,7 +399,7 @@ export default function SprawdzCVPage() {
             w-full mt-6 py-4 rounded-xl font-bold text-lg transition-all
             ${!file || uploading
               ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-              : "bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:shadow-xl hover:scale-[1.01] active:scale-[0.99]"
+              : "bg-[#0D2240] text-white hover:shadow-xl hover:scale-[1.01] active:scale-[0.99]"
             }
           `}
         >

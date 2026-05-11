@@ -3,15 +3,16 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { MapPin, Clock, Briefcase, Car, ArrowLeft, Send, Zap, ExternalLink } from "lucide-react";
+import { MapPin, Clock, Briefcase, Car, ArrowLeft, Send, Zap, ExternalLink, Mail } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import api from "@/services/api";
 import { useAuthStore } from "@/store/authStore";
-import { formatSalary, formatDate, CONTRACT_TYPES } from "@/lib/utils";
+import { formatSalary, formatDate, formatJobLocation, CONTRACT_TYPES } from "@/lib/utils";
 import { trackJobView } from "@/lib/viewHistory";
 import SimilarJobs from "@/components/jobs/SimilarJobs";
 import SaveJobButton from "@/components/jobs/SaveJobButton";
 import QuickApplyModal from "@/components/jobs/QuickApplyModal";
+import ExternalApplyModal from "@/components/jobs/ExternalApplyModal";
 import type { JobOffer, Canton, WorkerProfile } from "@/types/api";
 
 const LANG_NAMES: Record<string, string> = {
@@ -33,6 +34,7 @@ export default function JobDetailClient({ initialJob }: Props) {
   const [error, setError] = useState("");
   const [showQuickApply, setShowQuickApply] = useState(false);
   const [quickApplySuccess, setQuickApplySuccess] = useState(false);
+  const [showExternalApply, setShowExternalApply] = useState(false);
 
   const isWorker = isAuthenticated && user?.role === "worker";
 
@@ -129,7 +131,7 @@ export default function JobDetailClient({ initialJob }: Props) {
                 </span>
               )}
 
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 leading-snug">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-display text-[#0D2240] mb-2 leading-snug">
                 {job.title}
               </h1>
             </div>
@@ -139,7 +141,7 @@ export default function JobDetailClient({ initialJob }: Props) {
           {job.employer && (
             <Link
               href={`/firmy/${job.employer.company_slug}`}
-              className="text-red-600 hover:underline font-medium text-sm sm:text-base"
+              className="text-[#E1002A] hover:underline font-medium text-sm sm:text-base"
             >
               {job.employer.company_name}
               {job.employer.is_verified && " \u2713"}
@@ -156,7 +158,7 @@ export default function JobDetailClient({ initialJob }: Props) {
           <div className="flex flex-wrap gap-2 sm:gap-3 mt-3 sm:mt-4 text-sm text-gray-500">
             <span className="flex items-center gap-1 bg-gray-50 px-2.5 py-1.5 rounded-lg text-xs sm:text-sm">
               <MapPin className="w-4 h-4 flex-shrink-0" />
-              {cantonMap[job.canton] || job.canton}{job.city ? `, ${job.city}` : ""}
+              {formatJobLocation(job.canton, job.city, cantonMap)}
             </span>
             <span className="flex items-center gap-1 bg-blue-50 text-blue-700 px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium">
               <Briefcase className="w-4 h-4 flex-shrink-0" />
@@ -185,7 +187,7 @@ export default function JobDetailClient({ initialJob }: Props) {
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">O firmie</h3>
                 <Link
                   href={`/firmy/${job.employer.company_slug}`}
-                  className="text-red-600 hover:underline"
+                  className="text-[#E1002A] hover:underline"
                 >
                   Zobacz profil firmy &rarr;
                 </Link>
@@ -200,20 +202,28 @@ export default function JobDetailClient({ initialJob }: Props) {
             {/* Salary — top of sidebar, most prominent */}
             <div className="pb-4 border-b border-gray-100">
               <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Wynagrodzenie</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-[#0D2240]">
                 {formatSalary(job.salary_min, job.salary_max, job.salary_type)}
               </p>
               <p className="text-sm text-gray-500 mt-0.5">{CONTRACT_TYPES[job.contract_type]}</p>
             </div>
 
             {/* Apply buttons */}
-            {job.apply_via === "external_url" && job.external_url ? (
+            {job.apply_via === "email" && job.contact_email ? (
+              <button
+                onClick={() => { trackClick("email"); setShowExternalApply(true); }}
+                className="w-full bg-[#E1002A] text-white py-3 rounded hover:bg-[#B8001F] font-medium flex items-center justify-center gap-2 transition-colors"
+              >
+                <Mail className="w-4 h-4" />
+                Aplikuj — wyślij CV
+              </button>
+            ) : job.apply_via === "external_url" && job.external_url ? (
               <a
                 href={job.external_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackClick("external")}
-                className="w-full bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 font-semibold flex items-center justify-center gap-2 transition-colors"
+                className="w-full bg-[#E1002A] text-white py-3 rounded hover:bg-[#B8001F] font-medium flex items-center justify-center gap-2 transition-colors"
               >
                 <ExternalLink className="w-4 h-4" />
                 Aplikuj na stronie pracodawcy
@@ -228,7 +238,7 @@ export default function JobDetailClient({ initialJob }: Props) {
                   onClick={() =>
                     isAuthenticated ? setShowApply(!showApply) : router.push(`/login?redirect=/oferty/${job.id}`)
                   }
-                  className="w-full bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 font-semibold flex items-center justify-center gap-2 transition-colors"
+                  className="w-full bg-[#E1002A] text-white py-3 rounded-xl hover:bg-[#B8001F] font-semibold flex items-center justify-center gap-2 transition-colors"
                 >
                   <Send className="w-4 h-4" />
                   Aplikuj
@@ -248,7 +258,7 @@ export default function JobDetailClient({ initialJob }: Props) {
             )}
 
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded-lg text-sm flex items-start gap-2" role="alert">
+              <div className="bg-[#FFF0F3] border border-[#FFC2CD] text-[#B8001F] px-3 py-2.5 rounded-lg text-sm flex items-start gap-2" role="alert">
                 <span className="flex-shrink-0 mt-0.5">⚠</span>
                 <span>{error}</span>
               </div>
@@ -263,12 +273,12 @@ export default function JobDetailClient({ initialJob }: Props) {
                   onChange={(e) => setCoverLetter(e.target.value)}
                   placeholder="Napisz kilka słów o sobie (opcjonalnie)..."
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-red-500 resize-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20 resize-none"
                 />
                 <button
                   onClick={handleApply}
                   disabled={applying}
-                  className="w-full bg-red-600 text-white py-2 rounded-xl hover:bg-red-700 text-sm font-medium disabled:opacity-50"
+                  className="w-full bg-[#E1002A] text-white py-2 rounded-xl hover:bg-[#B8001F] text-sm font-medium disabled:opacity-50"
                 >
                   {applying ? "Wysyłanie..." : "Wyślij aplikację"}
                 </button>
@@ -319,11 +329,6 @@ export default function JobDetailClient({ initialJob }: Props) {
                   </p>
                 </div>
               )}
-
-              <div>
-                <p className="text-gray-500">Wyświetlenia</p>
-                <p className="font-medium">{job.views_count}</p>
-              </div>
             </div>
           </div>
         </aside>
@@ -351,7 +356,7 @@ export default function JobDetailClient({ initialJob }: Props) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackClick("external")}
-              className="w-full bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 font-semibold flex items-center justify-center gap-2 transition-colors text-sm"
+              className="w-full bg-[#E1002A] text-white py-3 rounded-xl hover:bg-[#B8001F] font-semibold flex items-center justify-center gap-2 transition-colors text-sm"
             >
               <ExternalLink className="w-4 h-4" />
               Aplikuj na stronie pracodawcy
@@ -362,7 +367,7 @@ export default function JobDetailClient({ initialJob }: Props) {
                 onClick={() =>
                   isAuthenticated ? setShowApply(!showApply) : router.push(`/login?redirect=/oferty/${job.id}`)
                 }
-                className="flex-1 bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 font-semibold flex items-center justify-center gap-2 transition-colors text-sm"
+                className="flex-1 bg-[#E1002A] text-white py-3 rounded-xl hover:bg-[#B8001F] font-semibold flex items-center justify-center gap-2 transition-colors text-sm"
               >
                 <Send className="w-4 h-4" />
                 Aplikuj
@@ -394,6 +399,17 @@ export default function JobDetailClient({ initialJob }: Props) {
             setShowQuickApply(false);
             setQuickApplySuccess(true);
           }}
+        />
+      )}
+
+      {/* External Apply Modal — dla ofert z apply_via='email' */}
+      {job.contact_email && (
+        <ExternalApplyModal
+          jobId={job.id}
+          jobTitle={job.title}
+          contactEmail={job.contact_email}
+          open={showExternalApply}
+          onClose={() => setShowExternalApply(false)}
         />
       )}
     </div>

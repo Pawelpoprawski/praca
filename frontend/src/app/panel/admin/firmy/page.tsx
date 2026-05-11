@@ -15,7 +15,7 @@ import type {
 const STATUS_BADGE: Record<string, string> = {
   active: "bg-green-100 text-green-700",
   pending: "bg-yellow-100 text-yellow-700",
-  rejected: "bg-red-100 text-red-700",
+  rejected: "bg-[#FFE0E6] text-[#B8001F]",
   expired: "bg-gray-100 text-gray-500",
 };
 
@@ -42,7 +42,7 @@ function QuotaDisplay({ limit, used, custom }: { limit: number | null; used: num
     return <span className="text-gray-400 text-sm">-</span>;
   }
   const pct = effectiveLimit > 0 ? Math.round((used / effectiveLimit) * 100) : 0;
-  const color = pct >= 90 ? "text-red-600" : pct >= 60 ? "text-yellow-600" : "text-green-600";
+  const color = pct >= 90 ? "text-[#E1002A]" : pct >= 60 ? "text-yellow-600" : "text-green-600";
   return (
     <span className={`text-sm font-medium ${color}`}>
       {used}/{effectiveLimit}
@@ -193,16 +193,16 @@ export default function AdminCompaniesPage() {
         </div>
       )}
       {errorMsg && (
-        <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center justify-between">
+        <div className="mb-4 bg-[#FFF0F3] border border-[#FFC2CD] text-[#B8001F] px-4 py-3 rounded-lg flex items-center justify-between">
           <span className="text-sm">{errorMsg}</span>
-          <button onClick={() => setErrorMsg(null)} className="text-red-500 hover:text-red-700 font-bold">&times;</button>
+          <button onClick={() => setErrorMsg(null)} className="text-red-500 hover:text-[#B8001F] font-bold">&times;</button>
         </div>
       )}
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4 mb-6">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2">
+          <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240] flex items-center gap-2">
             <Building2 className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
             Firmy
           </h1>
@@ -407,7 +407,7 @@ export default function AdminCompaniesPage() {
                     disabled={verifyMutation.isPending}
                     className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-colors ${
                       detail.is_verified
-                        ? "bg-red-50 text-red-600 hover:bg-red-100"
+                        ? "bg-[#FFF0F3] text-[#E1002A] hover:bg-[#FFE0E6]"
                         : "bg-green-50 text-green-600 hover:bg-green-100"
                     } disabled:opacity-50`}
                   >

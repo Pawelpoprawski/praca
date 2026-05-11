@@ -219,7 +219,7 @@ export default function AlertsPage() {
   if (isLoading) {
     return (
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">
+        <h1 className="text-2xl font-bold font-display text-[#0D2240] mb-6">
           Alerty o pracy
         </h1>
         <div className="space-y-3">
@@ -275,11 +275,11 @@ export default function AlertsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Alerty o pracy</h1>
+        <h1 className="text-2xl font-bold font-display text-[#0D2240]">Alerty o pracy</h1>
         {!showForm && canCreate && (
           <button
             onClick={openCreateForm}
-            className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 text-sm font-medium transition-colors"
+            className="flex items-center gap-2 bg-[#E1002A] text-white px-4 py-2 rounded-lg hover:bg-[#B8001F] text-sm font-medium transition-colors"
           >
             <Plus className="w-4 h-4" />
             Nowy alert
@@ -300,7 +300,7 @@ export default function AlertsPage() {
         </div>
       )}
       {error && (
-        <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-4 text-sm">
+        <div className="bg-[#FFF0F3] text-[#E1002A] px-4 py-3 rounded-lg mb-4 text-sm">
           {error}
         </div>
       )}
@@ -309,7 +309,7 @@ export default function AlertsPage() {
       {showForm && (
         <div className="bg-white border rounded-lg p-6 mb-6">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-lg font-semibold text-gray-800">
+            <h2 className="text-lg font-semibold font-display text-gray-800">
               {editingAlert ? "Edytuj alert" : "Nowy alert"}
             </h2>
             <button
@@ -330,8 +330,8 @@ export default function AlertsPage() {
                 <input
                   type="text"
                   {...register("name")}
-                  className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500 ${
-                    formErrors.name ? "border-red-500" : ""
+                  className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20 ${
+                    formErrors.name ? "border-[#E1002A]" : ""
                   }`}
                   placeholder='np. "Praca IT w Zurychu"'
                 />
@@ -405,7 +405,7 @@ export default function AlertsPage() {
                   type="number"
                   min={0}
                   {...register("min_salary")}
-                  className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20"
                   placeholder="np. 4000"
                 />
               </div>
@@ -417,7 +417,7 @@ export default function AlertsPage() {
                   type="number"
                   min={0}
                   {...register("max_salary")}
-                  className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20"
                   placeholder="np. 10000"
                 />
               </div>
@@ -431,7 +431,7 @@ export default function AlertsPage() {
                 <input
                   type="text"
                   {...register("keywords")}
-                  className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20"
                   placeholder='np. "Python developer"'
                 />
               </div>
@@ -456,7 +456,7 @@ export default function AlertsPage() {
                 type="checkbox"
                 id="permit_sponsorship"
                 {...register("permit_sponsorship")}
-                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                className="w-4 h-4 text-[#E1002A] border-gray-300 rounded focus:ring-[#E1002A]/20"
               />
               <label
                 htmlFor="permit_sponsorship"
@@ -472,7 +472,7 @@ export default function AlertsPage() {
                 disabled={
                   createMutation.isPending || updateMutation.isPending
                 }
-                className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 font-medium text-sm disabled:opacity-50 transition-colors"
+                className="bg-[#E1002A] text-white px-6 py-2 rounded-lg hover:bg-[#B8001F] font-medium text-sm disabled:opacity-50 transition-colors"
               >
                 {createMutation.isPending || updateMutation.isPending
                   ? "Zapisywanie..."
@@ -558,7 +558,7 @@ export default function AlertsPage() {
                       }
                     }}
                     title="Usuń"
-                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                    className="p-2 text-red-500 hover:bg-[#FFF0F3] rounded-lg transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -580,7 +580,7 @@ export default function AlertsPage() {
             </p>
             <button
               onClick={openCreateForm}
-              className="text-sm text-red-600 hover:underline font-medium"
+              className="text-sm text-[#E1002A] hover:underline font-medium"
             >
               Utwórz pierwszy alert
             </button>

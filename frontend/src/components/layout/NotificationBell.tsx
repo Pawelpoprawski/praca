@@ -115,7 +115,7 @@ export default function NotificationBell() {
       >
         <Bell className="w-5 h-5" />
         {unreadCount > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 bg-red-600 text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+          <span className="absolute -top-0.5 -right-0.5 bg-[#E1002A] text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
             {unreadCount > 99 ? "99+" : unreadCount}
           </span>
         )}
@@ -132,7 +132,7 @@ export default function NotificationBell() {
             {unreadCount > 0 && (
               <button
                 onClick={() => markAllReadMutation.mutate()}
-                className="text-xs text-red-600 hover:text-red-700 font-medium flex items-center gap-1 transition-colors"
+                className="text-xs text-[#E1002A] hover:text-[#B8001F] font-medium flex items-center gap-1 transition-colors"
                 disabled={markAllReadMutation.isPending}
               >
                 <CheckCheck className="w-3.5 h-3.5" />
@@ -148,7 +148,7 @@ export default function NotificationBell() {
                 <div
                   key={n.id}
                   className={`px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition-colors flex gap-3 ${
-                    !n.is_read ? "bg-red-50/40" : ""
+                    !n.is_read ? "bg-[#FFF0F3]/40" : ""
                   }`}
                 >
                   <span className="text-lg flex-shrink-0 mt-0.5">
@@ -190,7 +190,7 @@ export default function NotificationBell() {
                         e.stopPropagation();
                         deleteMutation.mutate(n.id);
                       }}
-                      className="p-1 text-gray-400 hover:text-red-600 transition-colors"
+                      className="p-1 text-gray-400 hover:text-[#E1002A] transition-colors"
                       title="Usuń"
                       aria-label="Usuń powiadomienie"
                     >
@@ -210,7 +210,7 @@ export default function NotificationBell() {
           <div className="px-4 py-2.5 border-t border-gray-100 bg-gray-50">
             <Link
               href="/panel/powiadomienia"
-              className="text-sm text-red-600 hover:text-red-700 font-medium block text-center transition-colors"
+              className="text-sm text-[#E1002A] hover:text-[#B8001F] font-medium block text-center transition-colors"
               onClick={() => setOpen(false)}
             >
               Zobacz wszystkie

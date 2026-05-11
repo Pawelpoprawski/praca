@@ -1,22 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { getRecaptchaToken } from "@/lib/recaptcha";
+import { AuthShell, Field, Input, PasswordInput, SubmitBtn, ErrorAlert, SuccessCard } from "@/components/auth/AuthUI";
+import { SocialButtons, SocialDivider } from "@/components/auth/SocialButtons";
 
 export default function RegisterWorkerPage() {
-  const router = useRouter();
   const register = useAuthStore((s) => s.register);
-  const [form, setForm] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    password2: "",
-  });
+  const [form, setForm] = useState({ first_name: "", last_name: "", email: "", password: "", password2: "" });
   const [fieldErrors, setFieldErrors] = useState({ password: "", password2: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
@@ -25,44 +18,21 @@ export default function RegisterWorkerPage() {
   const [success, setSuccess] = useState(false);
 
   const validatePassword = (value: string) => {
-    if (value.length > 0 && value.length < 8) {
-      setFieldErrors((prev) => ({ ...prev, password: "Hasło musi mieć min. 8 znaków" }));
-    } else {
-      setFieldErrors((prev) => ({ ...prev, password: "" }));
-    }
+    setFieldErrors((p) => ({ ...p, password: value.length > 0 && value.length < 8 ? "Hasło musi mieć min. 8 znaków" : "" }));
   };
-
   const validatePassword2 = (value: string, password: string) => {
-    if (value.length > 0 && value !== password) {
-      setFieldErrors((prev) => ({ ...prev, password2: "Hasła nie są identyczne" }));
-    } else {
-      setFieldErrors((prev) => ({ ...prev, password2: "" }));
-    }
+    setFieldErrors((p) => ({ ...p, password2: value.length > 0 && value !== password ? "Hasła nie są identyczne" : "" }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-
-    if (form.password !== form.password2) {
-      setError("Hasła nie są identyczne");
-      return;
-    }
-    if (form.password.length < 8) {
-      setError("Hasło musi mieć min. 8 znaków");
-      return;
-    }
-
+    if (form.password !== form.password2) { setError("Hasła nie są identyczne"); return; }
+    if (form.password.length < 8) { setError("Hasło musi mieć min. 8 znaków"); return; }
     setLoading(true);
     try {
       const recaptchaToken = await getRecaptchaToken("register");
-      await register({
-        email: form.email,
-        password: form.password,
-        role: "worker",
-        first_name: form.first_name,
-        last_name: form.last_name,
-      }, recaptchaToken);
+      await register({ email: form.email, password: form.password, role: "worker", first_name: form.first_name, last_name: form.last_name }, recaptchaToken);
       setSuccess(true);
     } catch (err: any) {
       setError(err.response?.data?.detail || "Wystąpił błąd rejestracji");
@@ -71,142 +41,44 @@ export default function RegisterWorkerPage() {
     }
   };
 
-  if (success) {
-    return (
-      <div className="min-h-[80vh] flex items-center justify-center px-4">
-        <div className="bg-white rounded-xl shadow-sm border p-8 max-w-md text-center">
-          <h2 className="text-xl font-bold text-gray-900 mb-3">Konto utworzone!</h2>
-          <p className="text-gray-600 mb-6">
-            Sprawdź swoją skrzynkę email, aby zweryfikować konto.
-          </p>
-          <Link
-            href="/login"
-            className="inline-block bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 font-medium transition-colors"
-          >
-            Przejdź do logowania
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  if (success) return <SuccessCard title="Konto utworzone" message="Sprawdź swoją skrzynkę email, aby zweryfikować konto." />;
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-xl border p-8 sm:p-10">
-          <h1 className="text-2xl font-bold text-gray-900 text-center mb-6">
-            Rejestracja - Pracownik
-          </h1>
-
-          {error && (
-            <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-4 text-sm">
-              {error}
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Imię</label>
-                <input
-                  type="text" required value={form.first_name}
-                  autoComplete="given-name"
-                  onChange={(e) => setForm({ ...form, first_name: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Nazwisko</label>
-                <input
-                  type="text" required value={form.last_name}
-                  autoComplete="family-name"
-                  onChange={(e) => setForm({ ...form, last_name: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-              <input
-                type="email" required value={form.email}
-                autoComplete="email"
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Hasło</label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"} required value={form.password}
-                  autoComplete="new-password"
-                  onChange={(e) => {
-                    setForm({ ...form, password: e.target.value });
-                    validatePassword(e.target.value);
-                    if (form.password2) validatePassword2(form.password2, e.target.value);
-                  }}
-                  className={`w-full px-4 py-2 pr-11 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 ${
-                    fieldErrors.password ? "border-red-300" : "border-gray-300"
-                  }`}
-                  placeholder="Min. 8 znaków"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                  aria-label={showPassword ? "Ukryj hasło" : "Pokaż hasło"}
-                >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </button>
-              </div>
-              {fieldErrors.password && (
-                <p className="text-xs text-red-600 mt-1">{fieldErrors.password}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Powtórz hasło</label>
-              <div className="relative">
-                <input
-                  type={showPassword2 ? "text" : "password"} required value={form.password2}
-                  autoComplete="new-password"
-                  onChange={(e) => {
-                    setForm({ ...form, password2: e.target.value });
-                    validatePassword2(e.target.value, form.password);
-                  }}
-                  className={`w-full px-4 py-2 pr-11 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 ${
-                    fieldErrors.password2 ? "border-red-300" : "border-gray-300"
-                  }`}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword2(!showPassword2)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                  aria-label={showPassword2 ? "Ukryj hasło" : "Pokaż hasło"}
-                >
-                  {showPassword2 ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </button>
-              </div>
-              {fieldErrors.password2 && (
-                <p className="text-xs text-red-600 mt-1">{fieldErrors.password2}</p>
-              )}
-            </div>
-
-            <button
-              type="submit" disabled={loading}
-              className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 font-semibold disabled:opacity-50 transition-colors"
-            >
-              {loading ? "Rejestracja..." : "Zarejestruj się"}
-            </button>
-          </form>
-
-          <p className="text-center text-sm text-gray-500 mt-4">
-            Masz już konto? <Link href="/login" className="text-red-600 hover:underline">Zaloguj się</Link>
-          </p>
+    <AuthShell title="Rejestracja — pracownik" subtitle="Załóż konto i aplikuj na oferty">
+      <SocialButtons mode="register" />
+      <SocialDivider />
+      {error && <ErrorAlert>{error}</ErrorAlert>}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <Field label="Imię">
+            <Input type="text" required value={form.first_name} autoComplete="given-name"
+              onChange={(e) => setForm({ ...form, first_name: e.target.value })} />
+          </Field>
+          <Field label="Nazwisko">
+            <Input type="text" required value={form.last_name} autoComplete="family-name"
+              onChange={(e) => setForm({ ...form, last_name: e.target.value })} />
+          </Field>
         </div>
-      </div>
-    </div>
+        <Field label="Email">
+          <Input type="email" required value={form.email} autoComplete="email"
+            onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="jan@example.com" />
+        </Field>
+        <Field label="Hasło" error={fieldErrors.password}>
+          <PasswordInput value={form.password} show={showPassword} onToggle={() => setShowPassword(!showPassword)}
+            onChange={(v) => { setForm({ ...form, password: v }); validatePassword(v); if (form.password2) validatePassword2(form.password2, v); }}
+            error={!!fieldErrors.password} placeholder="Min. 8 znaków" />
+        </Field>
+        <Field label="Powtórz hasło" error={fieldErrors.password2}>
+          <PasswordInput value={form.password2} show={showPassword2} onToggle={() => setShowPassword2(!showPassword2)}
+            onChange={(v) => { setForm({ ...form, password2: v }); validatePassword2(v, form.password); }}
+            error={!!fieldErrors.password2} />
+        </Field>
+        <SubmitBtn loading={loading} loadingLabel="Rejestracja…">Zarejestruj się</SubmitBtn>
+      </form>
+      <p className="text-center text-sm text-[#555] mt-6">
+        Masz już konto?{" "}
+        <Link href="/login" className="text-[#E1002A] hover:underline font-semibold">Zaloguj się</Link>
+      </p>
+    </AuthShell>
   );
 }

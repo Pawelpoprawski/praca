@@ -21,8 +21,10 @@ class Settings(BaseSettings):
 
     # Email (Resend)
     RESEND_API_KEY: str = ""
-    EMAIL_FROM: str = "PolacySzwajcaria <noreply@polacyszwajcaria.ch>"
+    EMAIL_FROM: str = "Praca w Szwajcarii <noreply@praca-w-szwajcarii.ch>"
     EMAIL_ENABLED: bool = False
+    # Test mode: gdy ustawione, wszystkie aplikacje zewnetrzne ida na ten email zamiast na contact_email z oferty
+    APPLICATION_TEST_RECIPIENT: str = ""
 
     # OpenAI
     OPENAI_API_KEY: str = ""
@@ -43,10 +45,19 @@ class Settings(BaseSettings):
     SCRAPER_JOBSPL_MINUTE: int = 0
 
     # Frontend
-    FRONTEND_URL: str = "http://localhost:3000"
+    FRONTEND_URL: str = "http://localhost:3002"
+
+    # OAuth — Google
+    GOOGLE_CLIENT_ID: str = "dummy-google-client-id"
+    GOOGLE_CLIENT_SECRET: str = "dummy-google-client-secret"
+    # OAuth — Facebook
+    FACEBOOK_CLIENT_ID: str = "dummy-facebook-client-id"
+    FACEBOOK_CLIENT_SECRET: str = "dummy-facebook-client-secret"
+    # Wspolny base URL do callbackow (backend public URL)
+    OAUTH_REDIRECT_BASE_URL: str = "http://localhost:8002"
 
     # Admin
-    FIRST_ADMIN_EMAIL: str = "admin@polacyszwajcaria.ch"
+    FIRST_ADMIN_EMAIL: str = "admin@praca-w-szwajcarii.ch"
     FIRST_ADMIN_PASSWORD: str = "admin-zmien-po-pierwszym-logowaniu"
 
     model_config = {"env_file": ".env", "extra": "ignore"}

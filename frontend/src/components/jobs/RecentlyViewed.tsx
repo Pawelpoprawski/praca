@@ -62,7 +62,7 @@ export default function RecentlyViewed({ maxItems = 5 }: RecentlyViewedProps) {
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+    <div className="bg-white border border-gray-200 rounded-lg p-5 shadow-sm">
       <div className="flex items-center gap-2 mb-4">
         <Clock className="w-4 h-4 text-gray-400" />
         <h3 className="font-semibold text-gray-900 text-sm">Ostatnio oglądane</h3>
@@ -87,7 +87,7 @@ export default function RecentlyViewed({ maxItems = 5 }: RecentlyViewedProps) {
       {isWorker && (
         <Link
           href="/panel/pracownik/historia"
-          className="block text-center text-xs text-red-600 hover:underline font-medium mt-3 pt-3 border-t border-gray-100"
+          className="block text-center text-xs text-[#E1002A] hover:underline font-medium mt-3 pt-3 border-t border-gray-100"
         >
           Zobacz wszystkie
         </Link>

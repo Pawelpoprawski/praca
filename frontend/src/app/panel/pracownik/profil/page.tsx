@@ -108,7 +108,7 @@ export default function WorkerProfilePage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Mój profil</h1>
+      <h1 className="text-2xl font-bold font-display text-[#0D2240] mb-6">Mój profil</h1>
 
       {success && (
         <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4 text-sm flex items-center gap-2" role="status">
@@ -117,7 +117,7 @@ export default function WorkerProfilePage() {
         </div>
       )}
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm flex items-center gap-2" role="alert">
+        <div className="bg-[#FFF0F3] border border-[#FFC2CD] text-[#B8001F] px-4 py-3 rounded-lg mb-4 text-sm flex items-center gap-2" role="alert">
           <span className="flex-shrink-0">⚠</span>
           {error}
         </div>
@@ -125,7 +125,7 @@ export default function WorkerProfilePage() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="bg-white border rounded-lg p-6 space-y-5">
         {/* Dane osobowe */}
-        <h2 className="text-lg font-semibold text-gray-800">Dane osobowe</h2>
+        <h2 className="text-lg font-semibold font-display text-gray-800">Dane osobowe</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -133,8 +133,8 @@ export default function WorkerProfilePage() {
             <input
               type="text"
               {...register("first_name")}
-              className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500 ${
-                errors.first_name ? "border-red-500" : ""
+              className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20 ${
+                errors.first_name ? "border-[#E1002A]" : ""
               }`}
             />
             {errors.first_name && (
@@ -146,8 +146,8 @@ export default function WorkerProfilePage() {
             <input
               type="text"
               {...register("last_name")}
-              className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500 ${
-                errors.last_name ? "border-red-500" : ""
+              className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20 ${
+                errors.last_name ? "border-[#E1002A]" : ""
               }`}
             />
             {errors.last_name && (
@@ -162,8 +162,8 @@ export default function WorkerProfilePage() {
             <input
               type="tel"
               {...register("phone")}
-              className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500 ${
-                errors.phone ? "border-red-500" : ""
+              className={`w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20 ${
+                errors.phone ? "border-[#E1002A]" : ""
               }`}
               placeholder="+41 79 123 45 67"
             />
@@ -184,14 +184,14 @@ export default function WorkerProfilePage() {
         </div>
 
         {/* Dane zawodowe */}
-        <h2 className="text-lg font-semibold text-gray-800 pt-2">Dane zawodowe</h2>
+        <h2 className="text-lg font-semibold font-display text-gray-800 pt-2">Dane zawodowe</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Kanton zamieszkania</label>
             <select
               {...register("canton")}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20"
             >
               <option value="">Wybierz...</option>
               {cantons?.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
@@ -201,7 +201,7 @@ export default function WorkerProfilePage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Pozwolenie na pracę</label>
             <select
               {...register("work_permit")}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20"
             >
               <option value="">Wybierz...</option>
               {Object.entries(WORK_PERMITS).map(([key, label]) => (
@@ -219,7 +219,7 @@ export default function WorkerProfilePage() {
               min={0}
               max={50}
               {...register("experience_years")}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20"
             />
           </div>
           <div>
@@ -227,7 +227,7 @@ export default function WorkerProfilePage() {
             <input
               type="text"
               {...register("industry")}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20"
               placeholder="np. Budownictwo"
             />
           </div>
@@ -238,7 +238,7 @@ export default function WorkerProfilePage() {
           <textarea
             rows={4}
             {...register("bio")}
-            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500 resize-none"
+            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20 resize-none"
             placeholder="Krótki opis doświadczenia i umiejętności..."
           />
         </div>
@@ -246,7 +246,7 @@ export default function WorkerProfilePage() {
         <button
           type="submit"
           disabled={mutation.isPending}
-          className="w-full sm:w-auto bg-red-600 text-white px-6 py-2.5 rounded-lg hover:bg-red-700 font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="w-full sm:w-auto bg-[#E1002A] text-white px-6 py-2.5 rounded-lg hover:bg-[#B8001F] font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {mutation.isPending ? "Zapisywanie..." : "Zapisz zmiany"}
         </button>

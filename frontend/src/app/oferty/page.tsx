@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Search, MapPin, SlidersHorizontal, X, Briefcase, ChevronLeft, ChevronRight, Clock } from "lucide-react";
 import { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import api from "@/services/api";
-import { formatSalary, formatDate, CONTRACT_TYPES } from "@/lib/utils";
+import { formatSalary, formatDate, formatJobLocation, CONTRACT_TYPES } from "@/lib/utils";
 import RecentlyViewed from "@/components/jobs/RecentlyViewed";
 import SaveJobButton from "@/components/jobs/SaveJobButton";
 import type { JobListItem, PaginatedResponse, Canton, CategoryBrief } from "@/types/api";
@@ -42,9 +42,9 @@ function JobsContent() {
 
   const q = searchParams.get("q") || "";
   const canton = searchParams.get("canton") || "";
-  const contractType = searchParams.get("contract_type") || "";
   const categoryId = searchParams.get("category_id") || "";
   const recruiterType = searchParams.get("recruiter_type") || "";
+  const requireGerman = searchParams.get("language") === "de";
   const page = parseInt(searchParams.get("page") || "1");
 
   // Autocomplete
@@ -104,15 +104,15 @@ function JobsContent() {
   }, [showFilters]);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["jobs", q, canton, contractType, categoryId, recruiterType, page],
+    queryKey: ["jobs", q, canton, categoryId, recruiterType, requireGerman, page],
     queryFn: () =>
       api.get<PaginatedResponse<JobListItem>>("/jobs", {
         params: {
           q: q || undefined,
           canton: canton || undefined,
-          contract_type: contractType || undefined,
           category_id: categoryId || undefined,
           recruiter_type: recruiterType || undefined,
+          language: requireGerman ? "de" : undefined,
           page,
           per_page: 20,
         },
@@ -156,15 +156,15 @@ function JobsContent() {
     ? Object.fromEntries(cantons.map((c) => [c.value, c.label]))
     : {};
 
-  const hasFilters = q || canton || contractType || categoryId || recruiterType;
-  const activeFilterCount = [q, canton, contractType, categoryId, recruiterType].filter(Boolean).length;
+  const hasFilters = q || canton || categoryId || recruiterType || requireGerman;
+  const activeFilterCount = [q, canton, categoryId, recruiterType, requireGerman].filter(Boolean).length;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
       {/* Page header */}
       <div className="flex items-center justify-between mb-6 sm:mb-8">
         <div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-display text-[#0D2240] tracking-tight">
             Oferty pracy
           </h1>
           {data && (
@@ -177,7 +177,7 @@ function JobsContent() {
           onClick={() => setShowFilters(!showFilters)}
           className={`md:hidden flex items-center gap-2 px-4 py-2.5 border rounded-xl text-sm font-medium transition-all active:scale-95 ${
             hasFilters
-              ? "bg-red-600 border-red-600 text-white shadow-md shadow-red-500/20"
+              ? "bg-[#E1002A] border-red-600 text-white shadow-md shadow-red-500/20"
               : "bg-white border-gray-200 hover:bg-gray-50 hover:shadow-md"
           }`}
           aria-expanded={showFilters}
@@ -186,7 +186,7 @@ function JobsContent() {
           <SlidersHorizontal className="w-4 h-4" />
           Filtry
           {activeFilterCount > 0 && (
-            <span className="bg-white text-red-600 text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center leading-none">
+            <span className="bg-white text-[#E1002A] text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center leading-none">
               {activeFilterCount}
             </span>
           )}
@@ -229,12 +229,12 @@ function JobsContent() {
                 >
                   <ChevronLeft className="w-5 h-5 text-gray-600" />
                 </button>
-                <h2 className="text-lg font-bold text-gray-900">Filtry wyszukiwania</h2>
+                <h2 className="text-lg font-bold font-display text-[#0D2240]">Filtry wyszukiwania</h2>
               </div>
               {hasFilters && (
                 <button
                   onClick={clearFilters}
-                  className="text-sm text-red-600 font-semibold hover:text-red-700"
+                  className="text-sm text-[#E1002A] font-semibold hover:text-[#B8001F]"
                 >
                   Wyczyść
                 </button>
@@ -243,7 +243,7 @@ function JobsContent() {
           </div>
 
           {/* Filter fields */}
-          <div className="p-5 md:p-0 space-y-5 md:bg-white md:border md:border-gray-100 md:rounded-2xl md:shadow-sm md:p-5">
+          <div className="p-5 md:p-0 space-y-5 md:bg-white md:border md:border-gray-100 md:rounded-lg md:shadow-sm md:p-5">
             {/* Szukaj */}
             <div ref={suggestionsRef}>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -280,7 +280,7 @@ function JobsContent() {
                       setShowSuggestions(false);
                     }
                   }}
-                  className="w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all bg-gray-50 focus:bg-white"
+                  className="w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-[#E1002A] transition-all bg-gray-50 focus:bg-white"
                 />
                 {searchInput && (
                   <button
@@ -305,7 +305,7 @@ function JobsContent() {
                         type="button"
                         onMouseDown={() => selectSuggestion(s)}
                         className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
-                          i === activeSuggestion ? "bg-red-50 text-red-700" : "text-gray-700 hover:bg-gray-50"
+                          i === activeSuggestion ? "bg-[#FFF0F3] text-[#B8001F]" : "text-gray-700 hover:bg-gray-50"
                         }`}
                       >
                         {s}
@@ -321,7 +321,7 @@ function JobsContent() {
                   setShowSuggestions(false);
                   updateFilter("q", searchInput);
                 }}
-                className="md:hidden w-full mt-2 bg-red-600 text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-red-700 transition-colors flex items-center justify-center gap-2"
+                className="md:hidden w-full mt-2 bg-[#E1002A] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-[#B8001F] transition-colors flex items-center justify-center gap-2"
               >
                 <Search className="w-4 h-4" />
                 Szukaj
@@ -334,7 +334,7 @@ function JobsContent() {
               <select
                 value={categoryId}
                 onChange={(e) => updateFilter("category_id", e.target.value)}
-                className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 cursor-pointer transition-all bg-gray-50 focus:bg-white"
+                className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-[#E1002A] cursor-pointer transition-all bg-gray-50 focus:bg-white"
               >
                 <option value="">Wszystkie kategorie</option>
                 {categories?.map((c) => (
@@ -349,26 +349,11 @@ function JobsContent() {
               <select
                 value={canton}
                 onChange={(e) => updateFilter("canton", e.target.value)}
-                className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 cursor-pointer transition-all bg-gray-50 focus:bg-white"
+                className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-[#E1002A] cursor-pointer transition-all bg-gray-50 focus:bg-white"
               >
                 <option value="">Wszystkie kantony</option>
                 {cantons?.map((c) => (
                   <option key={c.value} value={c.value}>{c.label}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Typ umowy */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Typ umowy</label>
-              <select
-                value={contractType}
-                onChange={(e) => updateFilter("contract_type", e.target.value)}
-                className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 cursor-pointer transition-all bg-gray-50 focus:bg-white"
-              >
-                <option value="">Wszystkie typy</option>
-                {Object.entries(CONTRACT_TYPES).map(([key, label]) => (
-                  <option key={key} value={key}>{label}</option>
                 ))}
               </select>
             </div>
@@ -379,7 +364,7 @@ function JobsContent() {
               <select
                 value={recruiterType}
                 onChange={(e) => updateFilter("recruiter_type", e.target.value)}
-                className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 cursor-pointer transition-all bg-gray-50 focus:bg-white"
+                className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-[#E1002A] cursor-pointer transition-all bg-gray-50 focus:bg-white"
               >
                 <option value="">Wszyscy</option>
                 <option value="polish">Polski rekruter</option>
@@ -387,10 +372,26 @@ function JobsContent() {
               </select>
             </div>
 
+            {/* Wymagany niemiecki */}
+            <div>
+              <label className="flex items-start gap-2.5 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  checked={requireGerman}
+                  onChange={(e) => updateFilter("language", e.target.checked ? "de" : "")}
+                  className="mt-0.5 w-4 h-4 rounded border-gray-300 text-[#E1002A] focus:ring-2 focus:ring-[#E1002A]/30 cursor-pointer accent-[#E1002A]"
+                />
+                <span className="text-sm text-gray-700 group-hover:text-[#0D2240] transition-colors leading-tight">
+                  <span className="font-semibold">Wymagany niemiecki</span>
+                  <span className="block text-xs text-gray-500 mt-0.5">Pokaż tylko oferty z niemieckim</span>
+                </span>
+              </label>
+            </div>
+
             {hasFilters && (
               <button
                 onClick={clearFilters}
-                className="hidden md:block w-full text-sm text-red-600 hover:text-red-700 hover:underline font-semibold transition-colors"
+                className="hidden md:block w-full text-sm text-[#E1002A] hover:text-[#B8001F] hover:underline font-semibold transition-colors"
               >
                 Wyczyść filtry
               </button>
@@ -409,10 +410,10 @@ function JobsContent() {
         <div className="flex-1 min-w-0">
           {/* Active filters summary bar (mobile only) */}
           {hasFilters && (
-            <div className="md:hidden flex flex-wrap items-center gap-2 mb-4 p-3 bg-red-50/80 border border-red-100 rounded-xl">
-              <span className="text-xs font-semibold text-red-700 mr-1">Aktywne filtry:</span>
+            <div className="md:hidden flex flex-wrap items-center gap-2 mb-4 p-3 bg-[#FFF0F3]/80 border border-red-100 rounded-xl">
+              <span className="text-xs font-semibold text-[#B8001F] mr-1">Aktywne filtry:</span>
               {q && (
-                <span className="inline-flex items-center gap-1 bg-white border border-red-200 text-red-700 text-xs font-medium px-2.5 py-1 rounded-lg">
+                <span className="inline-flex items-center gap-1 bg-white border border-[#FFC2CD] text-[#B8001F] text-xs font-medium px-2.5 py-1 rounded-lg">
                   Szukaj: {q}
                   <button
                     onClick={() => { setSearchInput(""); updateFilter("q", ""); }}
@@ -424,7 +425,7 @@ function JobsContent() {
                 </span>
               )}
               {canton && cantonMap[canton] && (
-                <span className="inline-flex items-center gap-1 bg-white border border-red-200 text-red-700 text-xs font-medium px-2.5 py-1 rounded-lg">
+                <span className="inline-flex items-center gap-1 bg-white border border-[#FFC2CD] text-[#B8001F] text-xs font-medium px-2.5 py-1 rounded-lg">
                   {cantonMap[canton]}
                   <button
                     onClick={() => updateFilter("canton", "")}
@@ -435,20 +436,8 @@ function JobsContent() {
                   </button>
                 </span>
               )}
-              {contractType && CONTRACT_TYPES[contractType] && (
-                <span className="inline-flex items-center gap-1 bg-white border border-red-200 text-red-700 text-xs font-medium px-2.5 py-1 rounded-lg">
-                  {CONTRACT_TYPES[contractType]}
-                  <button
-                    onClick={() => updateFilter("contract_type", "")}
-                    aria-label={`Usuń filtr: ${CONTRACT_TYPES[contractType]}`}
-                    className="ml-0.5 hover:text-red-900"
-                  >
-                    <X className="w-3 h-3" />
-                  </button>
-                </span>
-              )}
               {recruiterType && (
-                <span className="inline-flex items-center gap-1 bg-white border border-red-200 text-red-700 text-xs font-medium px-2.5 py-1 rounded-lg">
+                <span className="inline-flex items-center gap-1 bg-white border border-[#FFC2CD] text-[#B8001F] text-xs font-medium px-2.5 py-1 rounded-lg">
                   {recruiterType === "polish" ? "Polski rekruter" : "Szwajcarski rekruter"}
                   <button
                     onClick={() => updateFilter("recruiter_type", "")}
@@ -459,9 +448,21 @@ function JobsContent() {
                   </button>
                 </span>
               )}
+              {requireGerman && (
+                <span className="inline-flex items-center gap-1 bg-white border border-[#FFC2CD] text-[#B8001F] text-xs font-medium px-2.5 py-1 rounded-lg">
+                  Niemiecki wymagany
+                  <button
+                    onClick={() => updateFilter("language", "")}
+                    aria-label="Usuń filtr: niemiecki wymagany"
+                    className="ml-0.5 hover:text-red-900"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
               <button
                 onClick={clearFilters}
-                className="ml-auto text-xs text-red-600 font-semibold hover:text-red-800 underline"
+                className="ml-auto text-xs text-[#E1002A] font-semibold hover:text-[#7A0014] underline"
               >
                 Wyczyść
               </button>
@@ -481,13 +482,13 @@ function JobsContent() {
                   <Link
                     key={job.id}
                     href={`/oferty/${job.id}`}
-                    className="block bg-white border border-gray-100 rounded-xl p-4 sm:p-5 hover:shadow-lg hover:border-red-200 hover:-translate-y-0.5 transition-all group card-hover"
+                    className="block bg-white border border-gray-100 rounded-xl p-4 sm:p-5 hover:shadow-lg hover:border-[#FFC2CD] hover:-translate-y-0.5 transition-all group card-hover"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between sm:gap-6">
                       {/* Left: avatar + title, company, tags */}
                       <div className="flex items-start gap-3 flex-1 min-w-0">
                         {/* Company initial avatar */}
-                        <div className="hidden sm:flex w-10 h-10 bg-gradient-to-br from-gray-100 to-gray-50 rounded-xl items-center justify-center flex-shrink-0 border border-gray-100 group-hover:border-red-200 transition-colors">
+                        <div className="hidden sm:flex w-10 h-10 bg-gradient-to-br from-gray-100 to-gray-50 rounded-xl items-center justify-center flex-shrink-0 border border-gray-100 group-hover:border-[#FFC2CD] transition-colors">
                           <span className="text-sm font-bold text-gray-500">
                             {(job.employer?.company_name || "?")[0].toUpperCase()}
                           </span>
@@ -498,7 +499,7 @@ function JobsContent() {
                               Wyróżnione
                             </span>
                           )}
-                          <h2 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-red-600 transition-colors leading-snug line-clamp-2">
+                          <h2 className="text-base sm:text-lg font-bold font-display text-[#0D2240] group-hover:text-[#E1002A] transition-colors leading-snug line-clamp-2">
                             {job.title}
                           </h2>
                           {job.employer?.company_name && (
@@ -515,13 +516,13 @@ function JobsContent() {
                           <div className="flex flex-wrap gap-1.5 mt-2 sm:mt-2.5 text-xs text-gray-600">
                             <span className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-md">
                               <MapPin className="w-3 h-3 flex-shrink-0" />
-                              <span>{cantonMap[job.canton] || job.canton}{job.city ? `, ${job.city}` : ""}</span>
+                              <span>{formatJobLocation(job.canton, job.city, cantonMap)}</span>
                             </span>
                             <span className="bg-blue-50 text-blue-700 px-2 py-1 rounded-md font-medium">
                               {CONTRACT_TYPES[job.contract_type] || job.contract_type}
                             </span>
                             {job.recruiter_type === "polish" && (
-                              <span className="bg-red-50 text-red-700 px-2 py-1 rounded-md font-bold">PL</span>
+                              <span className="bg-[#FFF0F3] text-[#B8001F] px-2 py-1 rounded-md font-bold">PL</span>
                             )}
                             {job.recruiter_type === "swiss" && (
                               <span className="bg-sky-50 text-sky-700 px-2 py-1 rounded-md font-bold">CH</span>
@@ -603,7 +604,7 @@ function JobsContent() {
                           aria-current={p === page ? "page" : undefined}
                           className={`min-w-[36px] px-3 py-2 rounded-xl text-sm font-semibold transition-all ${
                             p === page
-                              ? "bg-red-600 text-white shadow-md shadow-red-500/20"
+                              ? "bg-[#E1002A] text-white shadow-md shadow-red-500/20"
                               : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 border border-transparent hover:border-gray-200"
                           }`}
                         >
@@ -631,8 +632,8 @@ function JobsContent() {
               )}
             </>
           ) : (
-            <div className="text-center py-16 sm:py-20 bg-gradient-to-br from-gray-50 to-white rounded-2xl border-2 border-dashed border-gray-200">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-2xl flex items-center justify-center">
+            <div className="text-center py-16 sm:py-20 bg-[#F5F6F8] rounded-lg border-2 border-dashed border-gray-200">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-lg flex items-center justify-center">
                 <Briefcase className="w-8 h-8 text-gray-400" />
               </div>
               <p className="text-lg sm:text-xl font-bold text-gray-700 mb-2">
@@ -646,7 +647,7 @@ function JobsContent() {
               {hasFilters && (
                 <button
                   onClick={clearFilters}
-                  className="inline-flex items-center gap-2 bg-red-600 text-white px-5 py-2.5 rounded-xl hover:bg-red-700 font-semibold text-sm transition-colors"
+                  className="inline-flex items-center gap-2 bg-[#E1002A] text-white px-5 py-2.5 rounded-xl hover:bg-[#B8001F] font-semibold text-sm transition-colors"
                 >
                   <X className="w-4 h-4" />
                   Wyczyść filtry

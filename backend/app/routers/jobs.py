@@ -1,9 +1,17 @@
 import math
+import os
+import re
+import uuid
 from datetime import datetime, timezone, timedelta
 from sqlalchemy import select, func, or_, cast, String
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import APIRouter, Depends, Query, status
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, Request, UploadFile, status
+
+from app.config import get_settings
+from app.core.rate_limit import limiter
+from app.core.recaptcha import verify_recaptcha
+from app.services.email import send_external_application
 from app.database import get_db
 from app.dependencies import get_optional_user
 from app.core.exceptions import NotFoundError
@@ -11,6 +19,7 @@ from app.models.job_offer import JobOffer
 from app.models.job_view import JobView
 from app.models.search_log import SearchLog
 from app.models.application_click import ApplicationClick
+from app.models.external_application import ExternalApplication
 from app.models.employer_profile import EmployerProfile
 from app.models.category import Category
 from app.models.user import User
@@ -201,7 +210,9 @@ async def popular_searches(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/suggestions")
+@limiter.limit("60/minute")
 async def job_suggestions(
+    request: Request,
     q: str = Query(..., min_length=2, max_length=100),
     db: AsyncSession = Depends(get_db),
 ):
@@ -447,3 +458,160 @@ async def record_apply_click(
     db.add(click)
 
     return MessageResponse(message="OK")
+
+
+# ── External application (no-login form, sends email with CV) ────────────────
+
+_PHONE_RE = re.compile(r"^\+?[\d\s\-\(\)]{7,30}$")
+_EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+
+
+@router.post("/{job_id}/apply-external", response_model=MessageResponse, status_code=status.HTTP_201_CREATED)
+@limiter.limit("5/hour")
+async def apply_external(
+    request: Request,
+    job_id: str,
+    first_name: str = Form(..., min_length=1, max_length=100),
+    last_name: str = Form(..., min_length=1, max_length=100),
+    email: str = Form(..., max_length=255),
+    phone: str = Form(..., max_length=30),
+    rodo_consent: bool = Form(...),
+    cv: UploadFile = File(...),
+    db: AsyncSession = Depends(get_db),
+    _: None = Depends(verify_recaptcha),
+):
+    """No-login application form. Sends email with CV attachment to employer.
+
+    Test mode: jeżeli ustawione `APPLICATION_TEST_RECIPIENT`, mail idzie na ten
+    adres zamiast na `job.contact_email`. Pozwala bezpiecznie testować bez
+    wysyłki na realne adresy pracodawców.
+    """
+    # 1. Walidacja oferty
+    result = await db.execute(
+        select(JobOffer)
+        .options(selectinload(JobOffer.employer))
+        .where(JobOffer.id == job_id, JobOffer.status == "active")
+    )
+    job = result.scalar_one_or_none()
+    if not job:
+        raise NotFoundError("Oferta nie została znaleziona")
+
+    if job.apply_via != "email" or not job.contact_email:
+        raise HTTPException(status_code=400, detail="Ta oferta nie obsługuje aplikacji przez email")
+
+    # 2. Wymagana zgoda RODO
+    if not rodo_consent:
+        raise HTTPException(
+            status_code=400,
+            detail="Wymagana zgoda na przetwarzanie danych osobowych (RODO).",
+        )
+
+    # 3. Walidacja danych
+    first_name = first_name.strip()
+    last_name = last_name.strip()
+    email = email.strip().lower()
+    phone = phone.strip()
+
+    if not _EMAIL_RE.match(email):
+        raise HTTPException(status_code=400, detail="Nieprawidłowy format email")
+    if not _PHONE_RE.match(phone):
+        raise HTTPException(status_code=400, detail="Nieprawidłowy format numeru telefonu")
+
+    # 3. Walidacja CV
+    settings = get_settings()
+    max_bytes = settings.MAX_CV_SIZE_MB * 1024 * 1024
+    cv_bytes = await cv.read()
+    if len(cv_bytes) == 0:
+        raise HTTPException(status_code=400, detail="Plik CV jest pusty")
+    if len(cv_bytes) > max_bytes:
+        raise HTTPException(status_code=400, detail=f"CV przekracza maksymalny rozmiar {settings.MAX_CV_SIZE_MB} MB")
+
+    cv_filename = (cv.filename or "cv.pdf")[:200]
+    # Sanityzuj nazwe pliku — usun path traversal i znaki specjalne
+    cv_filename = os.path.basename(cv_filename).replace("\x00", "")
+    ext_match = re.search(r"\.(pdf|docx?|odt|txt|rtf)$", cv_filename, re.IGNORECASE)
+    if not ext_match:
+        raise HTTPException(status_code=400, detail="Dozwolone formaty CV: PDF, DOC, DOCX, ODT, TXT, RTF")
+    ext = ext_match.group(1).lower()
+
+    # Walidacja magic bytes (zapobiega upload skryptu z fake-rozszerzeniem .pdf)
+    _MAGIC_BYTES = {
+        "pdf":  [b"%PDF-"],
+        "doc":  [b"\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"],  # OLE / Compound File
+        "docx": [b"PK\x03\x04"],  # ZIP (Office Open XML)
+        "odt":  [b"PK\x03\x04"],  # ZIP
+        "rtf":  [b"{\\rtf"],
+        "txt":  None,  # txt nie ma stabilnych magic bytes — wystarczy ze nie jest binarny
+    }
+    expected_magic = _MAGIC_BYTES.get(ext)
+    if expected_magic:
+        head = cv_bytes[:16]
+        if not any(head.startswith(m) for m in expected_magic):
+            raise HTTPException(
+                status_code=400,
+                detail=f"Plik nie wyglada na prawdziwy {ext.upper()} (niezgodne magic bytes)",
+            )
+
+    # 4. Zapisz CV na dysku — UUID name, uploads/cv/external/
+    storage_dir = os.path.join(settings.UPLOAD_DIR, "cv", "external")
+    os.makedirs(storage_dir, exist_ok=True)
+    storage_filename = f"{uuid.uuid4()}.{ext}"
+    storage_path = os.path.join(storage_dir, storage_filename)
+    try:
+        with open(storage_path, "wb") as fh:
+            fh.write(cv_bytes)
+    except OSError as e:
+        raise HTTPException(status_code=500, detail=f"Nie udało się zapisać pliku CV: {e}") from e
+
+    # 5. Adresat — test mode lub realny
+    recipient = settings.APPLICATION_TEST_RECIPIENT or job.contact_email
+
+    # 6. Wyślij maila
+    company_name = job.employer.company_name if job.employer else None
+    success = send_external_application(
+        to=recipient,
+        job_title=job.title,
+        job_id=str(job.id),
+        company_name=company_name,
+        applicant_first_name=first_name,
+        applicant_last_name=last_name,
+        applicant_email=email,
+        applicant_phone=phone,
+        cv_filename=cv_filename,
+        cv_bytes=cv_bytes,
+    )
+
+    if not success:
+        # Cleanup pliku jeśli mail nie poszedł
+        try:
+            os.remove(storage_path)
+        except OSError:
+            pass
+        raise HTTPException(status_code=502, detail="Nie udało się wysłać aplikacji. Spróbuj ponownie później.")
+
+    # 7. Zapisz rekord aplikacji w bazie (snapshot oferty + dane kandydata + ścieżka do CV)
+    site_url = settings.FRONTEND_URL.rstrip("/")
+    application = ExternalApplication(
+        job_offer_id=str(job.id),
+        job_title=job.title[:255],
+        job_url=f"{site_url}/oferty/{job.id}",
+        first_name=first_name[:100],
+        last_name=last_name[:100],
+        email=email[:255],
+        phone=phone[:30],
+        cv_original_filename=cv_filename,
+        cv_storage_path=storage_path,
+        cv_size_bytes=len(cv_bytes),
+        sent_to=recipient[:255],
+    )
+    db.add(application)
+
+    # 8. Zarejestruj klik
+    click = ApplicationClick(
+        job_offer_id=job_id,
+        click_type="email",
+        user_id=None,
+    )
+    db.add(click)
+
+    return MessageResponse(message="Aplikacja wysłana — pracodawca odpisze na podany adres email")

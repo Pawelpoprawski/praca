@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praca w Szwajcarii - Portal kariery</title>
+    <style>
+        /* === RESET === */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: rgba(0,0,0,0.9);
+            background-color: #f3f2ef;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* === VARIABLES === */
+        :root {
+            --linkedin-blue: #0A66C2;
+            --linkedin-dark: #004182;
+            --linkedin-light: #e8f0fe;
+            --text-primary: rgba(0,0,0,0.9);
+            --text-secondary: rgba(0,0,0,0.6);
+            --text-tertiary: rgba(0,0,0,0.45);
+            --bg-page: #f3f2ef;
+            --bg-white: #ffffff;
+            --border: #e0dfdc;
+            --border-light: #eae9e6;
+            --success-green: #057642;
+            --success-bg: #e8f5e9;
+            --shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+            --shadow-hover: 0 0 0 1px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.1);
+            --radius: 8px;
+            --max-width: 1128px;
+            --transition: 0.2s ease;
+        }
+
+        /* === HEADER === */
+        .header {
+            background: var(--bg-white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.08);
+        }
+
+        .header-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 16px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logo-box {
+            width: 34px;
+            height: 34px;
+            background: var(--linkedin-blue);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-box svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .logo-text span {
+            color: var(--linkedin-blue);
+        }
+
+        .header-search {
+            display: flex;
+            align-items: center;
+            background: #eef3f8;
+            border-radius: 4px;
+            padding: 0 12px;
+            height: 34px;
+            margin-left: 12px;
+            width: 280px;
+        }
+
+        .header-search svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--text-secondary);
+            margin-right: 8px;
+        }
+
+        .header-search input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 13px;
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .header-search input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 0 16px;
+            height: 52px;
+            justify-content: center;
+            color: var(--text-tertiary);
+            font-size: 11px;
+            font-weight: 400;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: color var(--transition);
+        }
+
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .nav-item:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--text-primary);
+        }
+
+        .header-cta {
+            padding: 6px 16px;
+            border: 1px solid var(--linkedin-blue);
+            border-radius: 20px;
+            color: var(--linkedin-blue);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            background: transparent;
+            font-family: inherit;
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+
+        .header-cta:hover {
+            background: rgba(10,102,194,0.08);
+            border-width: 2px;
+            padding: 5px 15px;
+        }
+
+        /* === HERO === */
+        .hero {
+            background: linear-gradient(180deg, #e8f0fe 0%, #dce8f8 40%, var(--bg-page) 100%);
+            padding: 48px 16px 56px;
+        }
+
+        .hero-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.2px;
+            line-height: 1.25;
+        }
+
+        .hero-subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .hero-search {
+            max-width: 720px;
+            margin: 0 auto;
+            display: flex;
+            gap: 8px;
+            align-items: stretch;
+        }
+
+        .hero-search-field {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0 14px;
+            height: 48px;
+            transition: border-color var(--transition);
+        }
+
+        .hero-search-field:focus-within {
+            border-color: var(--linkedin-blue);
+            box-shadow: 0 0 0 1px var(--linkedin-blue);
+        }
+
+        .hero-search-field svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--text-tertiary);
+            flex-shrink: 0;
+        }
+
+        .hero-search-field input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--text-primary);
+            background: transparent;
+        }
+
+        .hero-search-field input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .hero-search-btn {
+            height: 48px;
+            padding: 0 28px;
+            background: var(--linkedin-blue);
+            color: white;
+            border: none;
+            border-radius: 24px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background var(--transition);
+            white-space: nowrap;
+        }
+
+        .hero-search-btn:hover {
+            background: var(--linkedin-dark);
+        }
+
+        /* === SUGGESTED SEARCHES === */
+        .suggested {
+            max-width: 720px;
+            margin: 20px auto 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .suggested-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .suggested-pill {
+            padding: 6px 14px;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .suggested-pill:hover {
+            border-color: var(--linkedin-blue);
+            color: var(--linkedin-blue);
+            background: var(--linkedin-light);
+        }
+
+        /* === MAIN LAYOUT === */
+        .main-layout {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 24px 16px 64px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 24px;
+        }
+
+        /* === SIDEBAR (FILTERS) === */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .filter-card {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+
+        .filter-card h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 14px;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .filter-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            flex-shrink: 0;
+            background: var(--bg-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-checkbox.checked {
+            background: var(--linkedin-blue);
+            border-color: var(--linkedin-blue);
+        }
+
+        .filter-checkbox.checked svg {
+            width: 12px;
+            height: 12px;
+            fill: white;
+        }
+
+        .filter-count {
+            margin-left: auto;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        /* === CATEGORIES (in sidebar) === */
+        .category-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color var(--transition);
+        }
+
+        .category-item:hover {
+            color: var(--linkedin-blue);
+        }
+
+        .category-item svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .category-item .filter-count {
+            margin-left: auto;
+        }
+
+        /* === JOBS LIST === */
+        .jobs-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .jobs-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .jobs-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .jobs-header span {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .job-card {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            cursor: pointer;
+            transition: box-shadow var(--transition);
+        }
+
+        .job-card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .job-card-top {
+            display: flex;
+            gap: 14px;
+        }
+
+        .job-card-logo {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius);
+            background: #f8f8f8;
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .job-card-logo svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--text-tertiary);
+        }
+
+        .job-card-info {
+            flex: 1;
+        }
+
+        .job-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--linkedin-blue);
+            margin-bottom: 2px;
+            transition: text-decoration var(--transition);
+        }
+
+        .job-card:hover .job-card-title {
+            text-decoration: underline;
+        }
+
+        .job-card-company {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .job-card-location {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .job-card-location svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--text-tertiary);
+        }
+
+        .job-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .job-card-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-easy-apply {
+            background: var(--success-bg);
+            color: var(--success-green);
+        }
+
+        .badge-easy-apply svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--success-green);
+        }
+
+        .badge-promoted {
+            background: #fff3e0;
+            color: #b36b00;
+        }
+
+        .job-card-salary {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .job-card-time {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-left: auto;
+        }
+
+        .job-card-tags {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .job-card-tag {
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            background: var(--bg-page);
+            color: var(--text-secondary);
+        }
+
+        /* === CTA === */
+        .cta-section {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 16px 64px;
+        }
+
+        .cta-card {
+            background: var(--linkedin-blue);
+            border-radius: var(--radius);
+            padding: 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 50%;
+        }
+
+        .cta-card h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .cta-card p {
+            font-size: 16px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 28px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-btns {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn-cta-white {
+            padding: 12px 28px;
+            background: white;
+            color: var(--linkedin-blue);
+            border: none;
+            border-radius: 24px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .btn-cta-white:hover {
+            background: #f0f0f0;
+        }
+
+        .btn-cta-ghost {
+            padding: 12px 28px;
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 24px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .btn-cta-ghost:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+        }
+
+        /* === FOOTER === */
+        .footer {
+            background: #1b1f23;
+            color: rgba(255,255,255,0.5);
+            padding: 48px 16px 24px;
+        }
+
+        .footer-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand .logo-text {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .footer-brand p {
+            font-size: 13px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.35);
+        }
+
+        .footer h4 {
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 14px;
+        }
+
+        .footer ul {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer a {
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+            transition: color var(--transition);
+        }
+
+        .footer a:hover {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: rgba(255,255,255,0.25);
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-bottom-links a {
+            font-size: 12px;
+            color: rgba(255,255,255,0.25);
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .header-search {
+                width: 200px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .hero-search {
+                flex-direction: column;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 24px;
+            }
+
+            .cta-card {
+                padding: 32px 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header-search {
+                display: none;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="header-left">
+                <a href="#" class="logo">
+                    <div class="logo-box">
+                        <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+                    </div>
+                    <span class="logo-text">Praca<span>CH</span></span>
+                </a>
+                <div class="header-search">
+                    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    <input type="text" placeholder="Szukaj">
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#" class="nav-item active">
+                    <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+                    Praca
+                </a>
+                <a href="#" class="nav-item">
+                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    Siec
+                </a>
+                <a href="#" class="nav-item">
+                    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+                    Wiadomosci
+                </a>
+                <a href="#" class="nav-item">
+                    <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                    Powiadomienia
+                </a>
+            </nav>
+            <button class="header-cta">Dodaj CV</button>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <h1>Znajdz wymarzona prace w Szwajcarii</h1>
+            <p class="hero-subtitle">Tysiace ofert od zaufanych pracodawcow</p>
+            <div class="hero-search">
+                <div class="hero-search-field">
+                    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    <input type="text" placeholder="Tytul stanowiska lub firma">
+                </div>
+                <div class="hero-search-field">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    <input type="text" placeholder="Lokalizacja">
+                </div>
+                <button class="hero-search-btn">Szukaj</button>
+            </div>
+            <div class="suggested">
+                <span class="suggested-label">Sugerowane:</span>
+                <span class="suggested-pill">Budownictwo</span>
+                <span class="suggested-pill">Gastronomia</span>
+                <span class="suggested-pill">Produkcja</span>
+                <span class="suggested-pill">Transport</span>
+                <span class="suggested-pill">Opieka</span>
+                <span class="suggested-pill">IT</span>
+                <span class="suggested-pill">Finanse</span>
+                <span class="suggested-pill">Handel</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN LAYOUT -->
+    <div class="main-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="filter-card">
+                <h3>Kategorie</h3>
+                <div class="filter-options">
+                    <label class="category-item">
+                        <svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        Budownictwo
+                        <span class="filter-count">342</span>
+                    </label>
+                    <label class="category-item">
+                        <svg viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg>
+                        Gastronomia
+                        <span class="filter-count">218</span>
+                    </label>
+                    <label class="category-item">
+                        <svg viewBox="0 0 24 24"><path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3h7z"/></svg>
+                        Produkcja
+                        <span class="filter-count">195</span>
+                    </label>
+                    <label class="category-item">
+                        <svg viewBox="0 0 24 24"><path d="M18 18.5c-1.44 0-2.79.38-3.97 1.02L12 17.5l-2.03 2.02A8.997 8.997 0 006 18.5C3.24 18.5 1 20.74 1 23.5h22c0-2.76-2.24-5-5-5z"/></svg>
+                        Transport
+                        <span class="filter-count">156</span>
+                    </label>
+                    <label class="category-item">
+                        <svg viewBox="0 0 24 24"><path d="M17.5 12c-1.93 0-3.5 1.57-3.5 3.5s1.57 3.5 3.5 3.5 3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5z"/></svg>
+                        Opieka
+                        <span class="filter-count">134</span>
+                    </label>
+                    <label class="category-item">
+                        <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+                        IT
+                        <span class="filter-count">89</span>
+                    </label>
+                    <label class="category-item">
+                        <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                        Finanse
+                        <span class="filter-count">67</span>
+                    </label>
+                    <label class="category-item">
+                        <svg viewBox="0 0 24 24"><path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2z"/></svg>
+                        Handel
+                        <span class="filter-count">112</span>
+                    </label>
+                </div>
+            </div>
+            <div class="filter-card">
+                <h3>Typ zatrudnienia</h3>
+                <div class="filter-options">
+                    <label class="filter-option">
+                        <span class="filter-checkbox checked">
+                            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        </span>
+                        Pelny etat
+                        <span class="filter-count">1 842</span>
+                    </label>
+                    <label class="filter-option">
+                        <span class="filter-checkbox"></span>
+                        Niepelny etat
+                        <span class="filter-count">312</span>
+                    </label>
+                    <label class="filter-option">
+                        <span class="filter-checkbox"></span>
+                        Kontrakt (B2B)
+                        <span class="filter-count">283</span>
+                    </label>
+                </div>
+            </div>
+            <div class="filter-card">
+                <h3>Doswiadczenie</h3>
+                <div class="filter-options">
+                    <label class="filter-option">
+                        <span class="filter-checkbox"></span>
+                        Poczatkujacy
+                        <span class="filter-count">456</span>
+                    </label>
+                    <label class="filter-option">
+                        <span class="filter-checkbox"></span>
+                        Sredniozaawansowany
+                        <span class="filter-count">1 204</span>
+                    </label>
+                    <label class="filter-option">
+                        <span class="filter-checkbox"></span>
+                        Senior
+                        <span class="filter-count">777</span>
+                    </label>
+                </div>
+            </div>
+        </aside>
+
+        <!-- JOBS -->
+        <section class="jobs-section">
+            <div class="jobs-header">
+                <h2>Oferty pracy dla Ciebie</h2>
+                <span>2 437 wynikow</span>
+            </div>
+
+            <!-- Job 1 -->
+            <div class="job-card">
+                <div class="job-card-top">
+                    <div class="job-card-logo">
+                        <svg viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>
+                    </div>
+                    <div class="job-card-info">
+                        <div class="job-card-title">Murarz / Tynkarz</div>
+                        <div class="job-card-company">Bau Meister GmbH</div>
+                        <div class="job-card-location">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            Zurych, ZH (na miejscu)
+                        </div>
+                    </div>
+                </div>
+                <div class="job-card-meta">
+                    <span class="job-card-badge badge-easy-apply">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        Latwa aplikacja
+                    </span>
+                    <span class="job-card-salary">6 200 CHF / mies.</span>
+                    <span class="job-card-time">2 godz. temu</span>
+                </div>
+                <div class="job-card-tags">
+                    <span class="job-card-tag">Budownictwo</span>
+                    <span class="job-card-tag">Pelny etat</span>
+                    <span class="job-card-tag">B2B</span>
+                </div>
+            </div>
+
+            <!-- Job 2 -->
+            <div class="job-card">
+                <div class="job-card-top">
+                    <div class="job-card-logo">
+                        <svg viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg>
+                    </div>
+                    <div class="job-card-info">
+                        <div class="job-card-title">Kucharz / Szef kuchni</div>
+                        <div class="job-card-company">Hotel Bellevue Palace</div>
+                        <div class="job-card-location">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            Berno, BE (na miejscu)
+                        </div>
+                    </div>
+                </div>
+                <div class="job-card-meta">
+                    <span class="job-card-badge badge-easy-apply">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        Latwa aplikacja
+                    </span>
+                    <span class="job-card-badge badge-promoted">Promowane</span>
+                    <span class="job-card-salary">5 800 CHF / mies.</span>
+                    <span class="job-card-time">5 godz. temu</span>
+                </div>
+                <div class="job-card-tags">
+                    <span class="job-card-tag">Gastronomia</span>
+                    <span class="job-card-tag">Pelny etat</span>
+                    <span class="job-card-tag">Zakwaterowanie</span>
+                </div>
+            </div>
+
+            <!-- Job 3 -->
+            <div class="job-card">
+                <div class="job-card-top">
+                    <div class="job-card-logo">
+                        <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+                    </div>
+                    <div class="job-card-info">
+                        <div class="job-card-title">Frontend Developer (React)</div>
+                        <div class="job-card-company">SwissTech Solutions AG</div>
+                        <div class="job-card-location">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            Genewa, GE (Zdalnie / Hybrydowo)
+                        </div>
+                    </div>
+                </div>
+                <div class="job-card-meta">
+                    <span class="job-card-badge badge-easy-apply">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        Latwa aplikacja
+                    </span>
+                    <span class="job-card-salary">12 000 CHF / mies.</span>
+                    <span class="job-card-time">1 dzien temu</span>
+                </div>
+                <div class="job-card-tags">
+                    <span class="job-card-tag">IT</span>
+                    <span class="job-card-tag">Remote</span>
+                    <span class="job-card-tag">React</span>
+                    <span class="job-card-tag">TypeScript</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-card">
+            <h2>Dolacz do naszej spolecznosci</h2>
+            <p>Tysiace polskich specjalistow juz pracuje w Szwajcarii. Utworz profil i zacznij aplikowac.</p>
+            <div class="cta-btns">
+                <button class="btn-cta-white">Dolacz za darmo</button>
+                <button class="btn-cta-ghost">Dla pracodawcow</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo-text">Praca<span style="color:#0A66C2">CH</span></div>
+                    <p>Laczacy polskich specjalistow z pracodawcami w Szwajcarii. Profesjonalny portal kariery.</p>
+                </div>
+                <div>
+                    <h4>Pracownicy</h4>
+                    <ul>
+                        <li><a href="#">Szukaj ofert</a></li>
+                        <li><a href="#">Dodaj CV</a></li>
+                        <li><a href="#">Porady kariery</a></li>
+                        <li><a href="#">Wynagrodzenia</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Pracodawcy</h4>
+                    <ul>
+                        <li><a href="#">Dodaj ogloszenie</a></li>
+                        <li><a href="#">Cennik</a></li>
+                        <li><a href="#">Baza kandydatow</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Informacje</h4>
+                    <ul>
+                        <li><a href="#">O nas</a></li>
+                        <li><a href="#">Kontakt</a></li>
+                        <li><a href="#">Regulamin</a></li>
+                        <li><a href="#">Prywatnosc</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2026 PracaCH. Wszystkie prawa zastrzezone.</span>
+                <div class="footer-bottom-links">
+                    <a href="#">Regulamin</a>
+                    <a href="#">Prywatnosc</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

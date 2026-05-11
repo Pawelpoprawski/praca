@@ -2,16 +2,35 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-primary-50: #FEF2F2;
-  --color-primary-100: #FEE2E2;
-  --color-primary-200: #FECACA;
-  --color-primary-500: #EF4444;
-  --color-primary-600: #DC2626;
-  --color-primary-700: #B91C1C;
-  --color-primary-900: #7F1D1D;
+  /* Hays-style corporate red */
+  --color-primary-50: #FFF0F3;
+  --color-primary-100: #FFE0E6;
+  --color-primary-200: #FFC2CD;
+  --color-primary-500: #E1002A;
+  --color-primary-600: #E1002A;
+  --color-primary-700: #B8001F;
+  --color-primary-900: #7A0014;
+
+  /* Navy */
+  --color-navy-50: #F0F4F9;
+  --color-navy-100: #E8EDF4;
+  --color-navy-500: #2A5080;
+  --color-navy-600: #1A3A5C;
+  --color-navy-700: #0D2240;
+  --color-navy-800: #08182E;
+  --color-navy-900: #050F1F;
+
+  /* Brand tokens */
+  --color-hays-red: #E1002A;
+  --color-hays-red-dark: #B8001F;
+  --color-hays-red-light: #FFF0F3;
+  --color-hays-navy: #0D2240;
+  --color-hays-navy-light: #1A3A5C;
+  --color-hays-navy-lighter: #2A5080;
+  --color-hays-gold: #C5A253;
 
   --font-sans: var(--font-body), system-ui, -apple-system, sans-serif;
-  --font-display: var(--font-display), system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-display), Georgia, serif;
 }
 
 * {
@@ -21,15 +40,17 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: #F9FAFB;
-  color: #1F2937;
+  background-color: #FFFFFF;
+  color: #1A1A1A;
+  line-height: 1.6;
 }
 
 /* Display font for headings */
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-family: var(--font-display);
   text-rendering: optimizeLegibility;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.01em;
+  font-weight: 700;
 }
 
 h4, h5, h6 {
@@ -51,7 +72,7 @@ html {
   position: absolute;
   top: -100%;
   left: 0;
-  background: #DC2626;
+  background: #E1002A;
   color: white;
   padding: 8px 16px;
   font-weight: 600;
@@ -69,7 +90,7 @@ a:focus-visible,
 button:focus-visible,
 [role="button"]:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid #DC2626;
+  outline: 2px solid #E1002A;
   outline-offset: 2px;
 }
 
@@ -270,7 +291,96 @@ textarea:focus-visible {
   background: #9CA3AF;
 }
 
-/* Reduced motion */
+/* ============================================
+   HAYS-STYLE PATTERNS & ACCENTS
+   ============================================ */
+
+/* Geometric diagonal pattern for navy backgrounds */
+.hays-pattern {
+  background-image:
+    linear-gradient(30deg, transparent 48%, rgba(255,255,255,0.03) 48%, rgba(255,255,255,0.03) 52%, transparent 52%),
+    linear-gradient(150deg, transparent 48%, rgba(255,255,255,0.03) 48%, rgba(255,255,255,0.03) 52%, transparent 52%),
+    linear-gradient(60deg, transparent 48%, rgba(255,255,255,0.02) 48%, rgba(255,255,255,0.02) 52%, transparent 52%);
+  background-size: 80px 80px;
+}
+
+/* Red glow for hero corner */
+.hays-red-glow {
+  background: radial-gradient(circle, rgba(225, 0, 42, 0.15), transparent 70%);
+}
+
+/* Red accent line above section headings */
+.hays-red-line {
+  display: block;
+  width: 48px;
+  height: 3px;
+  background: #E1002A;
+  margin-bottom: 16px;
+}
+
+/* Hays-style shadow drop on the salary book */
+.hays-book-shadow {
+  box-shadow: 8px 8px 0 #E1002A;
+}
+
+/* Spacing helpers (Tailwind v4 compat) */
+.py-15 { padding-top: 60px; padding-bottom: 60px; }
+.gap-15 { gap: 60px; }
+
+/* Category card with red left-stripe on hover */
+.hays-cat-card {
+  position: relative;
+  cursor: pointer;
+}
+.hays-cat-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: #E1002A;
+  transform: scaleY(0);
+  transition: transform 0.2s;
+}
+.hays-cat-card:hover::before { transform: scaleY(1); }
+.hays-cat-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+/* Job card hover */
+.hays-job-card {
+  cursor: pointer;
+}
+.hays-job-card:hover {
+  border-color: #E1002A;
+  box-shadow: 0 4px 16px rgba(225, 0, 42, 0.08);
+}
+
+/* Header nav link with red underline on hover */
+.hays-nav-link {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #555555;
+  padding: 8px 0;
+  position: relative;
+  transition: color 0.2s;
+  text-decoration: none !important;
+}
+.hays-nav-link:hover { color: #0D2240; }
+.hays-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #E1002A;
+  transition: width 0.2s;
+}
+.hays-nav-link:hover::after { width: 100%; }
+
+/* ============================================
+   Reduced motion
+   ============================================ */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

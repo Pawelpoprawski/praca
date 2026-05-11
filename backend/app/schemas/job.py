@@ -90,7 +90,7 @@ class JobResponse(BaseModel):
     id: str
     title: str
     description: str
-    canton: str
+    canton: str | None = None
     city: str | None
     contract_type: str
     salary_min: float | None
@@ -104,6 +104,7 @@ class JobResponse(BaseModel):
     languages_required: list[LanguageRequirement]
     apply_via: str
     external_url: str | None
+    contact_email: str | None = None
     status: str
     views_count: int
     is_featured: bool
@@ -128,7 +129,7 @@ class JobResponse(BaseModel):
 class JobListResponse(BaseModel):
     id: str
     title: str
-    canton: str
+    canton: str | None = None
     city: str | None
     contract_type: str
     salary_min: float | None

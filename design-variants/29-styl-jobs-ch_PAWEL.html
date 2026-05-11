@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praca w Szwajcarii - Jobs.ch Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --red: #DC0018;
+            --red-dark: #b00014;
+            --red-light: #ff1a35;
+            --red-bg: #fef2f3;
+            --white: #ffffff;
+            --gray-bg: #F5F5F5;
+            --gray-50: #fafafa;
+            --gray-100: #f0f0f0;
+            --gray-200: #e5e5e5;
+            --gray-300: #d4d4d4;
+            --gray-400: #a3a3a3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+            --blue: #0066cc;
+            --blue-bg: #f0f6ff;
+            --green: #16a34a;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-lg: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--gray-900);
+            background: var(--gray-bg);
+            line-height: 1.6;
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
+        .logo-text span {
+            color: var(--red);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--gray-600);
+            font-weight: 600;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: var(--red);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 18px;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-red {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .btn-red:hover {
+            background: var(--red-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--gray-300);
+            color: var(--gray-700);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        .btn-lg {
+            padding: 12px 28px;
+            font-size: 15px;
+        }
+
+        .btn-xl {
+            padding: 16px 36px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--red);
+            font-weight: 700;
+        }
+
+        .btn-white:hover {
+            background: var(--gray-50);
+        }
+
+        .btn-ghost-white {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.4);
+            color: var(--white);
+        }
+
+        .btn-ghost-white:hover {
+            border-color: white;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* ========== STATS BAR ========== */
+        .stats-bar {
+            background: var(--gray-800);
+            color: var(--white);
+        }
+
+        .stats-bar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            height: 44px;
+            font-size: 13px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stat-item strong {
+            color: var(--red-light);
+            font-weight: 700;
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            background: var(--white);
+            padding: 56px 24px 64px;
+        }
+
+        .hero-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--gray-900);
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .hero h1 span {
+            color: var(--red);
+        }
+
+        .hero-sub {
+            font-size: 18px;
+            color: var(--gray-500);
+            margin-bottom: 36px;
+            font-weight: 400;
+        }
+
+        /* ========== SEARCH ========== */
+        .search-wrapper {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .search-bar {
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: 6px;
+            display: flex;
+            transition: border-color 0.2s;
+        }
+
+        .search-bar:focus-within {
+            border-color: var(--red);
+        }
+
+        .search-field {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+        }
+
+        .search-field svg {
+            width: 20px;
+            height: 20px;
+            color: var(--gray-400);
+            flex-shrink: 0;
+        }
+
+        .search-field input {
+            border: none;
+            outline: none;
+            font-family: inherit;
+            font-size: 15px;
+            width: 100%;
+            color: var(--gray-900);
+        }
+
+        .search-field input::placeholder {
+            color: var(--gray-400);
+        }
+
+        .search-sep {
+            width: 1px;
+            margin: 8px 0;
+            background: var(--gray-200);
+        }
+
+        .search-submit {
+            background: var(--red);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 10px 28px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+
+        .search-submit:hover {
+            background: var(--red-dark);
+        }
+
+        .search-suggestions {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .search-suggestion {
+            background: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 13px;
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .search-suggestion:hover {
+            border-color: var(--red);
+            color: var(--red);
+            background: var(--red-bg);
+        }
+
+        /* ========== CATEGORIES ========== */
+        .categories {
+            padding: 56px 24px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+
+        .section-header h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
+        .section-header a {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--red);
+            text-decoration: none;
+        }
+
+        .section-header a:hover {
+            text-decoration: underline;
+        }
+
+        .categories-grid {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .category-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .category-card:hover {
+            border-color: var(--red);
+            box-shadow: var(--shadow-md);
+        }
+
+        .category-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gray-100);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .category-card:hover .category-icon {
+            background: var(--red-bg);
+        }
+
+        .category-icon svg {
+            width: 22px;
+            height: 22px;
+            color: var(--gray-600);
+        }
+
+        .category-card:hover .category-icon svg {
+            color: var(--red);
+        }
+
+        .category-info h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 2px;
+        }
+
+        .category-info span {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        /* ========== JOBS ========== */
+        .jobs {
+            padding: 0 24px 56px;
+        }
+
+        .jobs-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        .jobs-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .job-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .job-card:hover {
+            border-color: var(--red);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .job-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-sm);
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--gray-700);
+            flex-shrink: 0;
+        }
+
+        .job-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .job-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .job-company {
+            font-size: 13px;
+            color: var(--gray-500);
+            margin-bottom: 8px;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 16px;
+        }
+
+        .job-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .job-meta-item svg {
+            width: 14px;
+            height: 14px;
+            color: var(--gray-400);
+        }
+
+        .job-right {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .job-salary {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .job-time {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .jobs-cta {
+            text-align: center;
+        }
+
+        /* ========== REVIEWS ========== */
+        .reviews {
+            padding: 56px 24px;
+            background: var(--white);
+        }
+
+        .reviews-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .review-card {
+            background: var(--gray-bg);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s;
+        }
+
+        .review-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gray-600);
+        }
+
+        .review-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .review-company {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .review-stars {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 8px;
+        }
+
+        .review-stars svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .review-text {
+            font-size: 13px;
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* ========== SALARY WIDGET ========== */
+        .salary-widget {
+            padding: 56px 24px;
+        }
+
+        .salary-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        .salary-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: 36px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .salary-left h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+        }
+
+        .salary-left p {
+            font-size: 15px;
+            color: var(--gray-500);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .salary-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .salary-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .salary-bar-label {
+            width: 110px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-700);
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .salary-bar-track {
+            flex: 1;
+            height: 24px;
+            background: var(--gray-100);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .salary-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .salary-bar-fill.bar-red { background: var(--red); }
+        .salary-bar-fill.bar-gray { background: var(--gray-600); }
+
+        /* ========== CTA ========== */
+        .cta {
+            padding: 64px 24px;
+            background: var(--red);
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .cta p {
+            font-size: 16px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 28px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: var(--gray-900);
+            color: rgba(255,255,255,0.55);
+            padding: 48px 24px 24px;
+        }
+
+        .footer-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 36px;
+            margin-bottom: 36px;
+        }
+
+        .footer-brand .logo-text {
+            color: var(--white);
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .footer-brand p {
+            font-size: 13px;
+            line-height: 1.7;
+            max-width: 260px;
+        }
+
+        .footer-col h4 {
+            color: var(--white);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 14px;
+        }
+
+        .footer-col a {
+            display: block;
+            color: rgba(255,255,255,0.45);
+            text-decoration: none;
+            font-size: 13px;
+            padding: 3px 0;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: var(--red-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 10px;
+        }
+
+        .footer-social a {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            background: rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .footer-social a:hover {
+            background: var(--red);
+        }
+
+        .footer-social svg {
+            width: 14px;
+            height: 14px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .categories-grid { grid-template-columns: repeat(2, 1fr); }
+            .reviews-grid { grid-template-columns: 1fr; }
+            .salary-card { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav { display: none; }
+            .stats-bar-inner { flex-direction: column; gap: 4px; height: auto; padding: 10px 0; }
+            .stat-divider { display: none; }
+            .hero h1 { font-size: 28px; }
+            .search-bar { flex-direction: column; }
+            .search-sep { width: 100%; height: 1px; margin: 0; }
+            .search-submit { width: 100%; }
+            .categories-grid { grid-template-columns: 1fr; }
+            .job-card { flex-direction: column; align-items: flex-start; }
+            .job-right { text-align: left; }
+            .cta h2 { font-size: 24px; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="header">
+    <div class="container">
+        <div class="header-inner">
+            <a href="#" class="logo">
+                <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="6" fill="#DC0018"/>
+                    <rect x="8" y="13" width="16" height="6" rx="1" fill="white"/>
+                    <rect x="13" y="8" width="6" height="16" rx="1" fill="white"/>
+                </svg>
+                <div class="logo-text">Praca<span>Swiss</span></div>
+            </a>
+
+            <nav class="nav">
+                <a href="#">Oferty pracy</a>
+                <a href="#">Firmy</a>
+                <a href="#">Wynagrodzenia</a>
+                <a href="#">Opinie</a>
+                <a href="#">Porady</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="#" class="btn btn-outline">Zaloguj</a>
+                <a href="#" class="btn btn-red">Dodaj oferte</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ========== STATS BAR ========== -->
+<div class="stats-bar">
+    <div class="container">
+        <div class="stats-bar-inner">
+            <span class="stat-item"><strong>2 347</strong> aktualnych ofert pracy</span>
+            <span class="stat-divider"></span>
+            <span class="stat-item"><strong>412</strong> zarejestrowanych firm</span>
+            <span class="stat-divider"></span>
+            <span class="stat-item"><strong>26</strong> kantonow</span>
+            <span class="stat-divider"></span>
+            <span class="stat-item"><strong>48</strong> nowych ofert dzis</span>
+        </div>
+    </div>
+</div>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+    <div class="hero-inner">
+        <h1>Pokochaj to, <span>co robisz</span></h1>
+        <p class="hero-sub">Znajdz wymarzona prace w Szwajcarii - kraju, ktory docenia specjalistow</p>
+
+        <div class="search-wrapper">
+            <div class="search-bar">
+                <div class="search-field">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" placeholder="Stanowisko, umiejetnosc lub firma...">
+                </div>
+                <div class="search-sep"></div>
+                <div class="search-field">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <input type="text" placeholder="Kanton lub miasto...">
+                </div>
+                <button class="search-submit">Szukaj</button>
+            </div>
+
+            <div class="search-suggestions">
+                <a href="#" class="search-suggestion">Murarz</a>
+                <a href="#" class="search-suggestion">Kucharz</a>
+                <a href="#" class="search-suggestion">Kierowca C+E</a>
+                <a href="#" class="search-suggestion">Elektryk</a>
+                <a href="#" class="search-suggestion">Zurych</a>
+                <a href="#" class="search-suggestion">Berno</a>
+                <a href="#" class="search-suggestion">Genewa</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== CATEGORIES ========== -->
+<section class="categories">
+    <div class="container">
+        <div class="section-header">
+            <h2>Kategorie ofert</h2>
+            <a href="#">Zobacz wszystkie</a>
+        </div>
+
+        <div class="categories-grid">
+            <a href="#" class="category-card">
+                <div class="category-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 22h20M6 22V6l-2 2M6 6l6-4 6 4M18 22V6l2 2"/><rect x="10" y="10" width="4" height="6" rx="1"/></svg>
+                </div>
+                <div class="category-info"><h3>Budownictwo</h3><span>234 oferty</span></div>
+            </a>
+            <a href="#" class="category-card">
+                <div class="category-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                </div>
+                <div class="category-info"><h3>Gastronomia</h3><span>189 ofert</span></div>
+            </a>
+            <a href="#" class="category-card">
+                <div class="category-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 20a2 2 0 002 2h16a2 2 0 002-2V8l-7 5V8l-7 5V4a2 2 0 00-2-2H4a2 2 0 00-2 2v16z"/></svg>
+                </div>
+                <div class="category-info"><h3>Produkcja</h3><span>156 ofert</span></div>
+            </a>
+            <a href="#" class="category-card">
+                <div class="category-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                </div>
+                <div class="category-info"><h3>Transport</h3><span>143 oferty</span></div>
+            </a>
+            <a href="#" class="category-card">
+                <div class="category-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                </div>
+                <div class="category-info"><h3>Opieka</h3><span>98 ofert</span></div>
+            </a>
+            <a href="#" class="category-card">
+                <div class="category-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                </div>
+                <div class="category-info"><h3>IT</h3><span>87 ofert</span></div>
+            </a>
+            <a href="#" class="category-card">
+                <div class="category-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                </div>
+                <div class="category-info"><h3>Finanse</h3><span>64 oferty</span></div>
+            </a>
+            <a href="#" class="category-card">
+                <div class="category-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </div>
+                <div class="category-info"><h3>Handel</h3><span>112 ofert</span></div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ========== JOBS ========== -->
+<section class="jobs">
+    <div class="jobs-inner">
+        <div class="section-header">
+            <h2>Najnowsze oferty</h2>
+            <a href="#">Wszystkie oferty</a>
+        </div>
+
+        <div class="jobs-list">
+            <a href="#" class="job-card">
+                <div class="job-logo">AB</div>
+                <div class="job-info">
+                    <div class="job-title">Murarz / Tynkarz - projekty komercyjne</div>
+                    <div class="job-company">Alpine Bau AG</div>
+                    <div class="job-meta">
+                        <span class="job-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Zurych</span>
+                        <span class="job-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg> Pelny etat</span>
+                        <span class="job-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Od zaraz</span>
+                    </div>
+                </div>
+                <div class="job-right">
+                    <div class="job-salary">CHF 6 200</div>
+                    <div class="job-time">2h temu</div>
+                </div>
+            </a>
+
+            <a href="#" class="job-card">
+                <div class="job-logo">SH</div>
+                <div class="job-info">
+                    <div class="job-title">Szef kuchni - hotel 5*</div>
+                    <div class="job-company">Swiss Hospitality SA</div>
+                    <div class="job-meta">
+                        <span class="job-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Lozanna</span>
+                        <span class="job-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg> Pelny etat</span>
+                        <span class="job-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Od 1 maja</span>
+                    </div>
+                </div>
+                <div class="job-right">
+                    <div class="job-salary">CHF 5 800</div>
+                    <div class="job-time">5h temu</div>
+                </div>
+            </a>
+
+            <a href="#" class="job-card">
+                <div class="job-logo">TL</div>
+                <div class="job-info">
+                    <div class="job-title">Kierowca C+E - transport miedzynarodowy</div>
+                    <div class="job-company">TransLogic GmbH</div>
+                    <div class="job-meta">
+                        <span class="job-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Bazylea</span>
+                        <span class="job-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg> Pelny etat</span>
+                        <span class="job-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Natychmiast</span>
+                    </div>
+                </div>
+                <div class="job-right">
+                    <div class="job-salary">CHF 6 500</div>
+                    <div class="job-time">1 dzien temu</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="jobs-cta">
+            <a href="#" class="btn btn-red btn-lg">Wszystkie oferty pracy</a>
+        </div>
+    </div>
+</section>
+
+<!-- ========== REVIEWS ========== -->
+<section class="reviews">
+    <div class="reviews-inner">
+        <div class="section-header">
+            <h2>Opinie o pracodawcach</h2>
+            <a href="#">Wszystkie opinie</a>
+        </div>
+
+        <div class="reviews-grid">
+            <a href="#" class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">MK</div>
+                    <div>
+                        <div class="review-name">Marek K.</div>
+                        <div class="review-company">Alpine Bau AG</div>
+                    </div>
+                </div>
+                <div class="review-stars">
+                    <svg viewBox="0 0 24 24" fill="#DC0018"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="#DC0018"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="#DC0018"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="#DC0018"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="#d4d4d4"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <div class="review-text">Swietna firma. Terminowe wyplaty, dobra organizacja pracy. Polecam kazdemu murarzowi.</div>
+            </a>
+
+            <a href="#" class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">AW</div>
+                    <div>
+                        <div class="review-name">Anna W.</div>
+                        <div class="review-company">Swiss Hospitality SA</div>
+                    </div>
+                </div>
+                <div class="review-stars">
+                    <svg viewBox="0 0 24 24" fill="#DC0018"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="#DC0018"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="#DC0018"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="#DC0018"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="#DC0018"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <div class="review-text">Profesjonalny hotel, fantastyczny zespol. Zakwaterowanie i wyzywienie w cenie. Goraco polecam!</div>
+            </a>
+
+            <a href="#" class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">PJ</div>
+                    <div>
+                        <div class="review-name">Piotr J.</div>
+                        <div class="review-company">TransLogic GmbH</div>
+                    </div>
+                </div>
+                <div class="review-stars">
+                    <svg viewBox="0 0 24 24" fill="#DC0018"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="#DC0018"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="#DC0018"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="#DC0018"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="#d4d4d4"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <div class="review-text">Dobre trasy, nowoczesny tabor. Wynagrodzenie zawsze na czas. Jedyny minus - duzo czasu z dala od domu.</div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ========== SALARY WIDGET ========== -->
+<section class="salary-widget">
+    <div class="salary-inner">
+        <div class="salary-card">
+            <div class="salary-left">
+                <h2>Porownaj wynagrodzenia</h2>
+                <p>Sprawdz, ile zarabiaja specjalisci w roznych branzach w Szwajcarii. Dane na podstawie aktualnych ofert.</p>
+                <a href="#" class="btn btn-red btn-lg">Pelny raport wynagrodzen</a>
+            </div>
+            <div class="salary-right">
+                <div class="salary-bars">
+                    <div class="salary-bar-item">
+                        <span class="salary-bar-label">IT</span>
+                        <div class="salary-bar-track">
+                            <div class="salary-bar-fill bar-red" style="width:95%">CHF 9 200</div>
+                        </div>
+                    </div>
+                    <div class="salary-bar-item">
+                        <span class="salary-bar-label">Finanse</span>
+                        <div class="salary-bar-track">
+                            <div class="salary-bar-fill bar-red" style="width:85%">CHF 8 100</div>
+                        </div>
+                    </div>
+                    <div class="salary-bar-item">
+                        <span class="salary-bar-label">Budownictwo</span>
+                        <div class="salary-bar-track">
+                            <div class="salary-bar-fill bar-gray" style="width:68%">CHF 6 200</div>
+                        </div>
+                    </div>
+                    <div class="salary-bar-item">
+                        <span class="salary-bar-label">Gastronomia</span>
+                        <div class="salary-bar-track">
+                            <div class="salary-bar-fill bar-gray" style="width:58%">CHF 5 400</div>
+                        </div>
+                    </div>
+                    <div class="salary-bar-item">
+                        <span class="salary-bar-label">Transport</span>
+                        <div class="salary-bar-track">
+                            <div class="salary-bar-fill bar-gray" style="width:72%">CHF 6 500</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="cta">
+    <h2>Zacznij nowy rozdzial kariery</h2>
+    <p>Stworz profil, dodaj CV i pozwol pracodawcom Cie znalezc.</p>
+    <div class="cta-buttons">
+        <a href="#" class="btn btn-white btn-xl">Zaloz konto za darmo</a>
+        <a href="#" class="btn btn-ghost-white btn-xl">Dowiedz sie wiecej</a>
+    </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo-text" style="color:white;font-size:18px;">Praca<span style="color:#DC0018">Swiss</span></div>
+                <p>Szwajcarski standard rekrutacji dla polskich specjalistow. Czysto, prosto, funkcjonalnie.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Kandydaci</h4>
+                <a href="#">Szukaj ofert</a>
+                <a href="#">Stworz profil</a>
+                <a href="#">Porownaj wynagrodzenia</a>
+                <a href="#">Opinie o firmach</a>
+            </div>
+            <div class="footer-col">
+                <h4>Pracodawcy</h4>
+                <a href="#">Dodaj oferte</a>
+                <a href="#">Cennik</a>
+                <a href="#">Baza CV</a>
+                <a href="#">Kontakt</a>
+            </div>
+            <div class="footer-col">
+                <h4>Informacje</h4>
+                <a href="#">O nas</a>
+                <a href="#">Regulamin</a>
+                <a href="#">Prywatnosc</a>
+                <a href="#">Pomoc</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>2026 PracaSwiss. Wszelkie prawa zastrzezone.</span>
+            <div class="footer-social">
+                <a href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                <a href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                <a href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

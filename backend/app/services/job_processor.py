@@ -49,6 +49,23 @@ class RawJobData:
     recruiter_type: str | None = None
 
 
+# Mapping firm o znanym, stałym emailu rekrutacyjnym.
+# Klucz = znormalizowana nazwa firmy (lowercase, stripped). Wartość = email.
+# Sprawdzane przy każdym scrape — nadpisuje contact_email i apply_via.
+KNOWN_COMPANY_EMAILS: dict[str, str] = {
+    "rol-job hliwa":  "info@rol-jobhliwa.ch",
+    "icarrer 24":     "recruitment@icareer24.com",
+    "icareer 24":     "recruitment@icareer24.com",  # alias gdyby zmieniono pisownię
+}
+
+
+def _resolve_company_email(company_name: str | None) -> str | None:
+    """Zwraca standardowy email rekrutacyjny firmy lub None."""
+    if not company_name:
+        return None
+    return KNOWN_COMPANY_EMAILS.get(company_name.strip().lower())
+
+
 # ── Sync result tracking ────────────────────────────────────────────────
 
 
@@ -110,7 +127,7 @@ CITY_TO_CANTON: dict[str, str] = {
     # Obwalden
     "sarnen": "obwalden",
     # Nidwalden
-    "stans": "nidwalden",
+    "nidwalden": "nidwalden", "stans": "nidwalden",
     # Glarus
     "glarus": "glarus",
     # Zug
@@ -120,8 +137,8 @@ CITY_TO_CANTON: dict[str, str] = {
     "fribourg": "fribourg", "fryburg": "fribourg", "freiburg": "fribourg",
     "bulle": "fribourg", "murten": "fribourg", "villars-sur-glâne": "fribourg",
     # Solothurn
-    "solothurn": "solothurn", "olten": "solothurn", "grenchen": "solothurn",
-    "zuchwil": "solothurn",
+    "solothurn": "solothurn", "solura": "solothurn", "soleure": "solothurn",
+    "olten": "solothurn", "grenchen": "solothurn", "zuchwil": "solothurn",
     # Basel-Stadt
     "basel": "basel-stadt", "bazylea": "basel-stadt",
     # Basel-Landschaft
@@ -142,15 +159,18 @@ CITY_TO_CANTON: dict[str, str] = {
     "wil": "st-gallen", "gossau sg": "st-gallen", "rorschach": "st-gallen",
     "buchs sg": "st-gallen", "uzwil": "st-gallen", "flawil": "st-gallen",
     # Graubünden
+    "graubunden": "graubunden", "graubünden": "graubunden", "gryzonia": "graubunden",
     "chur": "graubunden", "davos": "graubunden", "st. moritz": "graubunden",
     "landquart": "graubunden", "ilanz": "graubunden",
     # Aargau
+    "aargau": "aargau", "argowia": "aargau", "aargovia": "aargau",
     "aarau": "aargau", "wettingen": "aargau", "baden": "aargau",
     "lenzburg": "aargau", "brugg": "aargau", "oftringen": "aargau",
     "zofingen": "aargau", "rheinfelden": "aargau", "möhlin": "aargau",
     "wohlen": "aargau", "spreitenbach": "aargau", "windisch": "aargau",
     "obersiggenthal": "aargau", "suhr": "aargau",
     # Thurgau
+    "thurgau": "thurgau", "turgowia": "thurgau", "turgawia": "thurgau",
     "frauenfeld": "thurgau", "kreuzlingen": "thurgau", "arbon": "thurgau",
     "amriswil": "thurgau", "weinfelden": "thurgau",
     # Ticino
@@ -174,6 +194,37 @@ CITY_TO_CANTON: dict[str, str] = {
     "meyrin": "geneve", "onex": "geneve", "thônex": "geneve",
     # Jura
     "delémont": "jura", "porrentruy": "jura",
+    # ── Aliasy nazw kantonow (gdy feed daje region zamiast miasta) ────────
+    "kanton zurich": "zurich", "kanton zürich": "zurich", "zurich region": "zurich",
+    "kanton bern": "bern", "kanton berne": "bern",
+    "kanton luzern": "luzern", "kanton lucerne": "luzern",
+    "kanton uri": "uri",
+    "kanton schwyz": "schwyz",
+    "kanton obwalden": "obwalden",
+    "kanton nidwalden": "nidwalden",
+    "kanton glarus": "glarus",
+    "kanton zug": "zug",
+    "kanton fribourg": "fribourg", "kanton freiburg": "fribourg",
+    "kanton solothurn": "solothurn", "kanton soleure": "solothurn",
+    "basel-stadt": "basel-stadt", "basel stadt": "basel-stadt", "kanton basel-stadt": "basel-stadt",
+    "basel-land": "basel-landschaft", "basel land": "basel-landschaft",
+    "baselland": "basel-landschaft", "basel-landschaft": "basel-landschaft",
+    "kanton basel-landschaft": "basel-landschaft",
+    "kanton schaffhausen": "schaffhausen",
+    "kanton appenzell ausserrhoden": "appenzell-ausserrhoden",
+    "kanton appenzell innerrhoden": "appenzell-innerrhoden",
+    "kanton st. gallen": "st-gallen", "kanton st gallen": "st-gallen", "st-gallen": "st-gallen",
+    "kanton graubünden": "graubunden", "kanton graubunden": "graubunden", "graubünden": "graubunden",
+    "graubunden": "graubunden", "grisons": "graubunden",
+    "kanton aargau": "aargau",
+    "kanton thurgau": "thurgau",
+    "kanton ticino": "ticino", "ticino": "ticino", "tessin": "ticino",
+    "kanton vaud": "vaud", "vaud": "vaud", "waadt": "vaud",
+    "kanton valais": "valais", "valais": "valais", "wallis": "valais",
+    "kanton neuchâtel": "neuchatel", "kanton neuchatel": "neuchatel",
+    "neuchâtel": "neuchatel", "neuenburg": "neuchatel",
+    "kanton geneve": "geneve", "kanton genève": "geneve", "kanton genewa": "geneve",
+    "kanton jura": "jura", "jura": "jura",
 }
 
 
@@ -325,8 +376,8 @@ async def process_jobs(
             # Get or create employer
             employer = await get_or_create_employer(db, raw.company_name)
 
-            # Resolve canton from raw city
-            canton = _resolve_canton_from_city(raw.city) or "zurich"
+            # Resolve canton from raw city (NULL = Cała Szwajcaria do czasu AI extraction)
+            canton = _resolve_canton_from_city(raw.city)
 
             # Build description from raw parts
             description = raw.description or ""
@@ -343,6 +394,10 @@ async def process_jobs(
             salary_min = _safe_int(raw.salary_from)
             salary_max = _safe_int(raw.salary_to)
 
+            # Reguła: znane firmy maja staly email rekrutacyjny.
+            # Jezeli match w mappingu - apply_via='email', inaczej external_url do oryginalu.
+            known_email = _resolve_company_email(raw.company_name)
+
             # Create job offer — raw data, no AI
             job = JobOffer(
                 employer_id=employer.id,
@@ -356,7 +411,8 @@ async def process_jobs(
                 salary_type="monthly",
                 salary_currency=raw.salary_currency or "CHF",
                 is_remote="no",
-                apply_via="external_url",
+                apply_via="email" if known_email else "external_url",
+                contact_email=known_email,
                 external_url=raw.url,
                 source_id=raw.source_id,
                 source_name=raw.source_name,

@@ -10,7 +10,7 @@ import type { User, PaginatedResponse } from "@/types/api";
 const ROLE_LABELS: Record<string, { label: string; color: string }> = {
   worker: { label: "Pracownik", color: "bg-blue-100 text-blue-800" },
   employer: { label: "Pracodawca", color: "bg-purple-100 text-purple-800" },
-  admin: { label: "Admin", color: "bg-red-100 text-red-800" },
+  admin: { label: "Admin", color: "bg-[#FFE0E6] text-[#7A0014]" },
 };
 
 export default function UsersPage() {
@@ -57,7 +57,7 @@ export default function UsersPage() {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Użytkownicy</h1>
+        <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240]">Użytkownicy</h1>
         <button
           onClick={handleExportCSV}
           disabled={exporting}
@@ -76,9 +76,9 @@ export default function UsersPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}
               placeholder="Szukaj po email lub nazwisku..."
-              className="w-full pl-10 pr-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500" />
+              className="w-full pl-10 pr-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20" />
           </div>
-          <button type="submit" className="px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700">
+          <button type="submit" className="px-4 py-2 bg-[#E1002A] text-white text-sm rounded-lg hover:bg-[#B8001F]">
             Szukaj
           </button>
         </form>
@@ -91,7 +91,7 @@ export default function UsersPage() {
           ].map((f) => (
             <button key={f.value} onClick={() => { setRole(f.value); setPage(1); }}
               className={`px-3 py-1.5 text-sm rounded-lg border font-medium whitespace-nowrap ${
-                role === f.value ? "bg-red-50 border-red-200 text-red-700" : "bg-white hover:bg-gray-50 text-gray-600"
+                role === f.value ? "bg-[#FFF0F3] border-[#FFC2CD] text-[#B8001F]" : "bg-white hover:bg-gray-50 text-gray-600"
               }`}>
               {f.label}
             </button>
@@ -136,7 +136,7 @@ export default function UsersPage() {
                       </td>
                       <td className="px-3 sm:px-4 py-3">
                         <span className={`text-xs px-2 py-0.5 rounded font-medium whitespace-nowrap ${
-                          user.is_active ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                          user.is_active ? "bg-green-100 text-green-800" : "bg-[#FFE0E6] text-[#7A0014]"
                         }`}>
                           {user.is_active ? "Aktywny" : "Nieaktywny"}
                         </span>
@@ -149,7 +149,7 @@ export default function UsersPage() {
                             disabled={toggleMutation.isPending}
                             className={`p-1.5 rounded-lg ${
                               user.is_active
-                                ? "text-red-600 hover:bg-red-50"
+                                ? "text-[#E1002A] hover:bg-[#FFF0F3]"
                                 : "text-green-600 hover:bg-green-50"
                             }`}
                             title={user.is_active ? "Dezaktywuj" : "Aktywuj"}

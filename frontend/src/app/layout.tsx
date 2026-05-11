@@ -1,15 +1,23 @@
 import type { Metadata } from "next";
-import { DM_Sans, Outfit } from "next/font/google";
+import { Roboto, Roboto_Slab } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Providers from "./providers";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-const dmSans = DM_Sans({ subsets: ["latin", "latin-ext"], variable: "--font-body" });
-const outfit = Outfit({ subsets: ["latin", "latin-ext"], variable: "--font-display" });
+const roboto = Roboto({
+  subsets: ["latin", "latin-ext"],
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-body",
+});
+const robotoSlab = Roboto_Slab({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-display",
+});
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://polacyszwajcaria.ch";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://praca-w-szwajcarii.ch";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -37,10 +45,14 @@ export const metadata: Metadata = {
     title: "Praca w Szwajcarii - Portal pracy dla Polaków",
     description: "Znajdź wymarzoną pracę w Szwajcarii. Portal pracy dla polskojęzycznych pracowników i pracodawców.",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: process.env.NEXT_PUBLIC_NOINDEX === "false"
+    ? { index: true, follow: true }
+    : {
+        index: false,
+        follow: false,
+        nocache: true,
+        googleBot: { index: false, follow: false },
+      },
 };
 
 const jsonLd = [
@@ -108,7 +120,7 @@ export default function RootLayout({
           />
         ))}
       </head>
-      <body className={`${dmSans.variable} ${outfit.variable} font-sans min-h-screen flex flex-col`}>
+      <body className={`${roboto.variable} ${robotoSlab.variable} font-sans min-h-screen flex flex-col`}>
         <a href="#main-content" className="skip-to-content">
           Przejdź do treści
         </a>

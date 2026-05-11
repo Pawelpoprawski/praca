@@ -2,13 +2,15 @@ import os
 import uuid
 import logging
 
-from fastapi import APIRouter, Depends, File, Form, UploadFile
+from fastapi import APIRouter, Depends, File, Form, Request, UploadFile
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import get_settings
 from app.database import get_db
 from app.dependencies import get_optional_user
+from app.core.rate_limit import limiter
+from app.core.recaptcha import verify_recaptcha
 from app.core.exceptions import NotFoundError, BadRequestError
 from app.models.user import User
 from app.models.cv_review import CVReview
@@ -44,12 +46,15 @@ def _get_upload_dir() -> str:
 
 
 @router.post("/analyze", response_model=CVReviewResponse)
+@limiter.limit("3/hour")
 async def analyze_cv(
+    request: Request,
     file: UploadFile = File(...),
     email: str | None = Form(None),
     previous_review_id: str | None = Form(None),
     current_user: User | None = Depends(get_optional_user),
     db: AsyncSession = Depends(get_db),
+    _: None = Depends(verify_recaptcha),
 ):
     """Upload and analyze a CV file using AI."""
     # Validate file type
@@ -215,7 +220,7 @@ async def send_review_email(
     html = f"""
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
         <div style="text-align:center;margin-bottom:30px;">
-            <h1 style="color:#dc2626;margin-bottom:5px;">PolacySzwajcaria</h1>
+            <h1 style="color:#dc2626;margin-bottom:5px;">Praca w Szwajcarii</h1>
             <h2 style="color:#1f2937;">Wyniki analizy Twojego CV</h2>
         </div>
 
@@ -251,13 +256,13 @@ async def send_review_email(
 
         <div style="text-align:center;margin-top:30px;padding-top:20px;border-top:1px solid #e5e7eb;">
             <p style="color:#6b7280;font-size:12px;">
-                Ta wiadomość została wysłana przez PolacySzwajcaria.ch
+                Ta wiadomość została wysłana przez praca-w-szwajcarii.ch
             </p>
         </div>
     </div>
     """
 
-    success = _send_email(body.email, "Wyniki analizy CV - PolacySzwajcaria", html)
+    success = _send_email(body.email, "Wyniki analizy CV - Praca w Szwajcarii", html)
     if not success:
         raise BadRequestError("Nie udało się wysłać emaila. Spróbuj ponownie.")
 

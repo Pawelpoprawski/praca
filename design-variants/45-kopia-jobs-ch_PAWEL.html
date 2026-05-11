@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praca w Szwajcarii - Znajdz prace w Szwajcarii | Jobs.ch Style</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ========================================
+           RESET & BASE
+           ======================================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #333333;
+            background-color: #F5F5F5;
+            line-height: 1.5;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.15s ease;
+        }
+
+        a:hover {
+            color: #DC0018;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        input, select {
+            font-family: inherit;
+            font-size: inherit;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        /* ========================================
+           LAYOUT UTILITIES
+           ======================================== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .container-wide {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========================================
+           HEADER
+           ======================================== */
+        .header {
+            background: #FFFFFF;
+            border-bottom: 1px solid #E0E0E0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 64px;
+        }
+
+        .header__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .header__left {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .header__logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1A1A1A;
+            white-space: nowrap;
+        }
+
+        .header__logo svg {
+            flex-shrink: 0;
+        }
+
+        .header__nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .header__nav a {
+            font-size: 15px;
+            font-weight: 500;
+            color: #555555;
+            padding: 4px 0;
+            position: relative;
+        }
+
+        .header__nav a:hover {
+            color: #1A1A1A;
+        }
+
+        .header__nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #DC0018;
+            transition: width 0.2s ease;
+        }
+
+        .header__nav a:hover::after {
+            width: 100%;
+        }
+
+        .header__right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header__lang {
+            font-size: 14px;
+            color: #777;
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .header__lang:hover {
+            background: #F5F5F5;
+            color: #333;
+        }
+
+        .header__login {
+            font-size: 14px;
+            font-weight: 600;
+            color: #DC0018;
+            padding: 8px 20px;
+            border: 2px solid #DC0018;
+            border-radius: 6px;
+            transition: all 0.15s ease;
+        }
+
+        .header__login:hover {
+            background: #DC0018;
+            color: #FFFFFF;
+        }
+
+        .header__register {
+            font-size: 14px;
+            font-weight: 600;
+            color: #FFFFFF;
+            padding: 8px 20px;
+            background: #DC0018;
+            border-radius: 6px;
+            border: 2px solid #DC0018;
+            transition: all 0.15s ease;
+        }
+
+        .header__register:hover {
+            background: #B50014;
+            border-color: #B50014;
+        }
+
+        /* ========================================
+           HERO SECTION
+           ======================================== */
+        .hero {
+            background: #FFFFFF;
+            padding: 48px 0 40px;
+            border-bottom: 1px solid #E8E8E8;
+        }
+
+        .hero__content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero__title {
+            font-size: 34px;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .hero__stats {
+            font-size: 15px;
+            color: #777777;
+            margin-bottom: 32px;
+            font-weight: 400;
+        }
+
+        .hero__stats span {
+            font-weight: 600;
+            color: #555555;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            align-items: stretch;
+            background: #FFFFFF;
+            border: 1px solid #DDDDDD;
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 760px;
+            margin: 0 auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .search-bar__field {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            border-right: 1px solid #EEEEEE;
+            min-height: 52px;
+        }
+
+        .search-bar__field:last-of-type {
+            border-right: none;
+        }
+
+        .search-bar__field svg {
+            flex-shrink: 0;
+            margin-right: 10px;
+            color: #999999;
+        }
+
+        .search-bar__field input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 15px;
+            color: #333333;
+            background: transparent;
+        }
+
+        .search-bar__field input::placeholder {
+            color: #AAAAAA;
+        }
+
+        .search-bar__btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 28px;
+            background: #DC0018;
+            color: #FFFFFF;
+            font-size: 15px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: background 0.15s ease;
+            min-height: 52px;
+            gap: 8px;
+        }
+
+        .search-bar__btn:hover {
+            background: #B50014;
+        }
+
+        .search-bar__btn svg {
+            flex-shrink: 0;
+        }
+
+        /* Quick Filters */
+        .quick-filters {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .quick-filters__label {
+            font-size: 13px;
+            color: #999999;
+            font-weight: 500;
+        }
+
+        .quick-filter {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 14px;
+            border: 1px solid #DDDDDD;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #555555;
+            background: #FFFFFF;
+            transition: all 0.15s ease;
+        }
+
+        .quick-filter:hover {
+            border-color: #DC0018;
+            color: #DC0018;
+            background: #FFF5F5;
+        }
+
+        .quick-filter svg {
+            flex-shrink: 0;
+        }
+
+        .quick-filter--active {
+            border-color: #DC0018;
+            color: #DC0018;
+            background: #FFF5F5;
+        }
+
+        /* ========================================
+           MAIN CONTENT AREA
+           ======================================== */
+        .main {
+            padding: 32px 0 64px;
+        }
+
+        .main__layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        /* ========================================
+           SIDEBAR FILTERS
+           ======================================== */
+        .sidebar {
+            background: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            padding: 20px;
+            position: sticky;
+            top: 88px;
+        }
+
+        .sidebar__title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar__title svg {
+            color: #777;
+        }
+
+        .filter-group {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #F0F0F0;
+        }
+
+        .filter-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .filter-group__label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #555555;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .filter-group__select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #DDDDDD;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #333;
+            background: #FFFFFF;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+        }
+
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #444444;
+        }
+
+        .filter-checkbox:last-child {
+            margin-bottom: 0;
+        }
+
+        .filter-checkbox input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #DC0018;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .filter-checkbox__count {
+            margin-left: auto;
+            font-size: 12px;
+            color: #AAAAAA;
+            font-weight: 500;
+        }
+
+        .filter-group__show-more {
+            font-size: 13px;
+            color: #DC0018;
+            font-weight: 600;
+            margin-top: 8px;
+            display: inline-block;
+        }
+
+        .filter-group__show-more:hover {
+            text-decoration: underline;
+        }
+
+        /* Sidebar CTA */
+        .sidebar__cta {
+            background: #F9F9F9;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 24px;
+            border: 1px solid #EEEEEE;
+        }
+
+        .sidebar__cta-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sidebar__cta-text {
+            font-size: 13px;
+            color: #777;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .sidebar__cta-input {
+            display: flex;
+            gap: 0;
+        }
+
+        .sidebar__cta-input input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid #DDD;
+            border-radius: 6px 0 0 6px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .sidebar__cta-input input:focus {
+            border-color: #DC0018;
+        }
+
+        .sidebar__cta-input button {
+            padding: 8px 14px;
+            background: #DC0018;
+            color: #FFF;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 0 6px 6px 0;
+            white-space: nowrap;
+            transition: background 0.15s ease;
+        }
+
+        .sidebar__cta-input button:hover {
+            background: #B50014;
+        }
+
+        /* ========================================
+           JOB LISTINGS
+           ======================================== */
+        .listings {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .listings__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .listings__count {
+            font-size: 14px;
+            color: #777777;
+        }
+
+        .listings__count strong {
+            color: #1A1A1A;
+            font-weight: 700;
+        }
+
+        .listings__sort {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #777;
+        }
+
+        .listings__sort select {
+            padding: 6px 10px;
+            border: 1px solid #DDD;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #333;
+            background: #FFF;
+        }
+
+        /* Job Card */
+        .job-card {
+            background: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            padding: 20px 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            transition: box-shadow 0.2s ease, transform 0.15s ease;
+            margin-bottom: 8px;
+            border: 1px solid transparent;
+            position: relative;
+        }
+
+        .job-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+            border-color: #E8E8E8;
+        }
+
+        .job-card--featured {
+            border-left: 3px solid #DC0018;
+        }
+
+        .job-card__logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background: #F0F0F0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid #EEEEEE;
+            overflow: hidden;
+        }
+
+        .job-card__logo--blue { background: #E8F0FE; color: #3B7DDD; }
+        .job-card__logo--green { background: #E6F7ED; color: #1A8C4E; }
+        .job-card__logo--orange { background: #FFF3E0; color: #E67E22; }
+        .job-card__logo--purple { background: #F3E8FF; color: #8B5CF6; }
+        .job-card__logo--red { background: #FFE8E8; color: #DC0018; }
+        .job-card__logo--teal { background: #E0F7FA; color: #00897B; }
+
+        .job-card__logo svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .job-card__body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .job-card__title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .job-card__title:hover {
+            color: #DC0018;
+        }
+
+        .job-card__company {
+            font-size: 14px;
+            color: #777777;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .job-card__meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .job-card__meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            color: #888888;
+        }
+
+        .job-card__meta-item svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+            color: #AAAAAA;
+        }
+
+        .job-card__tags {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .job-card__tag {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .job-card__tag--quick {
+            background: #E6F7ED;
+            color: #1A8C4E;
+        }
+
+        .job-card__tag--new {
+            background: #E8F0FE;
+            color: #3B7DDD;
+        }
+
+        .job-card__tag--top {
+            background: #FFF3E0;
+            color: #E67E22;
+        }
+
+        .job-card__tag--remote {
+            background: #F3E8FF;
+            color: #8B5CF6;
+        }
+
+        .job-card__salary {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1A8C4E;
+            margin-top: 6px;
+        }
+
+        .job-card__actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .job-card__bookmark {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #CCCCCC;
+            transition: all 0.15s ease;
+        }
+
+        .job-card__bookmark:hover {
+            color: #DC0018;
+            background: #FFF5F5;
+        }
+
+        .job-card__bookmark svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .job-card__time {
+            font-size: 12px;
+            color: #AAAAAA;
+            white-space: nowrap;
+        }
+
+        /* ========================================
+           PAGINATION
+           ======================================== */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 32px;
+        }
+
+        .pagination__btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #555555;
+            transition: all 0.15s ease;
+        }
+
+        .pagination__btn:hover {
+            background: #EEEEEE;
+            color: #1A1A1A;
+        }
+
+        .pagination__btn--active {
+            background: #DC0018;
+            color: #FFFFFF;
+        }
+
+        .pagination__btn--active:hover {
+            background: #B50014;
+            color: #FFFFFF;
+        }
+
+        .pagination__btn--arrow {
+            color: #999999;
+        }
+
+        .pagination__btn--arrow:hover {
+            color: #333333;
+        }
+
+        /* ========================================
+           EMPLOYERS SECTION
+           ======================================== */
+        .employers {
+            padding: 48px 0;
+            background: #FFFFFF;
+            border-top: 1px solid #E8E8E8;
+        }
+
+        .employers__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+
+        .employers__title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1A1A1A;
+        }
+
+        .employers__link {
+            font-size: 14px;
+            font-weight: 600;
+            color: #DC0018;
+        }
+
+        .employers__link:hover {
+            text-decoration: underline;
+        }
+
+        .employers__grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        .employer-card {
+            background: #FFFFFF;
+            border: 1px solid #EEEEEE;
+            border-radius: 8px;
+            padding: 20px 16px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .employer-card:hover {
+            border-color: #DDD;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+
+        .employer-card__logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 10px;
+            background: #F5F5F5;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #EEEEEE;
+        }
+
+        .employer-card__name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 4px;
+        }
+
+        .employer-card__rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            margin-bottom: 6px;
+        }
+
+        .employer-card__rating svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .employer-card__rating-value {
+            font-size: 12px;
+            color: #777;
+            margin-left: 4px;
+            font-weight: 500;
+        }
+
+        .employer-card__jobs {
+            font-size: 12px;
+            color: #DC0018;
+            font-weight: 600;
+        }
+
+        /* ========================================
+           ALERT CTA BANNER
+           ======================================== */
+        .alert-banner {
+            background: #FFFFFF;
+            border-top: 1px solid #E8E8E8;
+            padding: 48px 0;
+        }
+
+        .alert-banner__inner {
+            max-width: 640px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .alert-banner__icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #FFF5F5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: #DC0018;
+        }
+
+        .alert-banner__title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+        }
+
+        .alert-banner__text {
+            font-size: 15px;
+            color: #777777;
+            margin-bottom: 20px;
+        }
+
+        .alert-banner__form {
+            display: flex;
+            gap: 0;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .alert-banner__form input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #DDD;
+            border-radius: 8px 0 0 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .alert-banner__form input:focus {
+            border-color: #DC0018;
+        }
+
+        .alert-banner__form button {
+            padding: 12px 24px;
+            background: #DC0018;
+            color: #FFF;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 0 8px 8px 0;
+            transition: background 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .alert-banner__form button:hover {
+            background: #B50014;
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        .footer {
+            background: #2D2D2D;
+            color: #CCCCCC;
+            padding: 48px 0 0;
+        }
+
+        .footer__grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #444444;
+        }
+
+        .footer__col-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #FFFFFF;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 16px;
+        }
+
+        .footer__col ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer__col ul li a {
+            font-size: 14px;
+            color: #AAAAAA;
+            transition: color 0.15s ease;
+        }
+
+        .footer__col ul li a:hover {
+            color: #FFFFFF;
+        }
+
+        .footer__bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+        }
+
+        .footer__copy {
+            font-size: 13px;
+            color: #888888;
+        }
+
+        .footer__powered {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #777777;
+        }
+
+        .footer__powered svg {
+            opacity: 0.5;
+        }
+
+        .footer__socials {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer__social {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #444444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #CCCCCC;
+            transition: all 0.15s ease;
+        }
+
+        .footer__social:hover {
+            background: #DC0018;
+            color: #FFFFFF;
+        }
+
+        .footer__social svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 1024px) {
+            .main__layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static;
+                display: none;
+            }
+            .employers__grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header__nav {
+                display: none;
+            }
+            .hero__title {
+                font-size: 26px;
+            }
+            .search-bar {
+                flex-direction: column;
+                border-radius: 8px;
+            }
+            .search-bar__field {
+                border-right: none;
+                border-bottom: 1px solid #EEE;
+            }
+            .employers__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         HEADER
+         ========================================== -->
+    <header class="header">
+        <div class="container-wide header__inner">
+            <div class="header__left">
+                <a href="#" class="header__logo">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                        <rect width="28" height="28" rx="4" fill="#DC0018"/>
+                        <rect x="12" y="6" width="4" height="16" rx="1" fill="#FFFFFF"/>
+                        <rect x="6" y="12" width="16" height="4" rx="1" fill="#FFFFFF"/>
+                    </svg>
+                    Praca w Szwajcarii
+                </a>
+                <nav class="header__nav">
+                    <a href="#">Znajdz prace</a>
+                    <a href="#">Firmy</a>
+                    <a href="#">Wynagrodzenia</a>
+                    <a href="#">Rekruter</a>
+                </nav>
+            </div>
+            <div class="header__right">
+                <a href="#" class="header__lang">PL / DE</a>
+                <a href="#" class="header__login">Zaloguj sie</a>
+                <a href="#" class="header__register">Rejestracja</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         HERO
+         ========================================== -->
+    <section class="hero">
+        <div class="container hero__content">
+            <h1 class="hero__title">Kochaj to co robisz!</h1>
+            <p class="hero__stats"><span>7'240</span> ofert pracy | <span>3'180</span> firm rekrutujacych</p>
+
+            <div class="search-bar">
+                <div class="search-bar__field">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" placeholder="Czego szukasz? Stanowisko, firma...">
+                </div>
+                <div class="search-bar__field">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <input type="text" placeholder="Gdzie? Miasto, kanton...">
+                </div>
+                <button class="search-bar__btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    Szukaj
+                </button>
+            </div>
+
+            <div class="quick-filters">
+                <span class="quick-filters__label">Popularne:</span>
+                <a href="#" class="quick-filter quick-filter--active">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
+                    Quick Apply
+                </a>
+                <a href="#" class="quick-filter">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    Praca zdalna
+                </a>
+                <a href="#" class="quick-filter">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    Nowosc
+                </a>
+                <a href="#" class="quick-filter">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    Pelny etat
+                </a>
+                <a href="#" class="quick-filter">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    Miedzynarodowe
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         MAIN: SIDEBAR + LISTINGS
+         ========================================== -->
+    <main class="main">
+        <div class="container-wide main__layout">
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <h2 class="sidebar__title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+                    Filtry
+                </h2>
+
+                <div class="filter-group">
+                    <div class="filter-group__label">Lokalizacja</div>
+                    <select class="filter-group__select">
+                        <option>Cala Szwajcaria</option>
+                        <option>Zurych</option>
+                        <option>Berno</option>
+                        <option>Bazylea</option>
+                        <option>Genewa</option>
+                        <option>Lozanna</option>
+                        <option>Lucerna</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-group__label">Branza</div>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> IT i technologia
+                        <span class="filter-checkbox__count">1'240</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> Finanse i bankowosc
+                        <span class="filter-checkbox__count">890</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> Przemysl i produkcja
+                        <span class="filter-checkbox__count">760</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> Gastronomia i hotelarstwo
+                        <span class="filter-checkbox__count">620</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> Budownictwo
+                        <span class="filter-checkbox__count">540</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> Opieka zdrowotna
+                        <span class="filter-checkbox__count">480</span>
+                    </label>
+                    <a href="#" class="filter-group__show-more">Pokaz wiecej (+12)</a>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-group__label">Wymiar pracy</div>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> 100%
+                        <span class="filter-checkbox__count">3'420</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> 80-100%
+                        <span class="filter-checkbox__count">2'180</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> 60-80%
+                        <span class="filter-checkbox__count">980</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> 40-60%
+                        <span class="filter-checkbox__count">340</span>
+                    </label>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-group__label">Jezyk</div>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> Niemiecki
+                        <span class="filter-checkbox__count">4'120</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> Francuski
+                        <span class="filter-checkbox__count">1'850</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> Angielski
+                        <span class="filter-checkbox__count">3'200</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> Wloski
+                        <span class="filter-checkbox__count">420</span>
+                    </label>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-group__label">Typ umowy</div>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> Stala
+                        <span class="filter-checkbox__count">5'100</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> Tymczasowa
+                        <span class="filter-checkbox__count">1'480</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> Freelance
+                        <span class="filter-checkbox__count">320</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox"> Staz
+                        <span class="filter-checkbox__count">180</span>
+                    </label>
+                </div>
+
+                <div class="sidebar__cta">
+                    <div class="sidebar__cta-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC0018" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        Utwórz alert
+                    </div>
+                    <p class="sidebar__cta-text">Otrzymuj powiadomienia o nowych ofertach pasujacych do Twoich kryteriów.</p>
+                    <div class="sidebar__cta-input">
+                        <input type="email" placeholder="Twój e-mail">
+                        <button>Utworz</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Listings -->
+            <div class="listings">
+                <div class="listings__header">
+                    <p class="listings__count"><strong>7'240</strong> ofert pracy znalezionych</p>
+                    <div class="listings__sort">
+                        Sortuj:
+                        <select>
+                            <option>Trafnosc</option>
+                            <option>Data dodania</option>
+                            <option>Wynagrodzenie</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Job Card 1 -->
+                <a href="#" class="job-card job-card--featured">
+                    <div class="job-card__logo job-card__logo--blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <div class="job-card__body">
+                        <h3 class="job-card__title">Senior Frontend Developer (React/TypeScript)</h3>
+                        <p class="job-card__company">Credit Suisse Technology AG</p>
+                        <div class="job-card__meta">
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Zurych
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                80-100%
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                2 godziny temu
+                            </span>
+                        </div>
+                        <div class="job-card__tags">
+                            <span class="job-card__tag job-card__tag--quick">Quick Apply</span>
+                            <span class="job-card__tag job-card__tag--new">Nowosc</span>
+                        </div>
+                        <div class="job-card__salary">CHF 120'000 - 150'000 / rok</div>
+                    </div>
+                    <div class="job-card__actions">
+                        <button class="job-card__bookmark">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                        </button>
+                        <span class="job-card__time">2 godz.</span>
+                    </div>
+                </a>
+
+                <!-- Job Card 2 -->
+                <a href="#" class="job-card">
+                    <div class="job-card__logo job-card__logo--green">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <div class="job-card__body">
+                        <h3 class="job-card__title">Elektryk przemyslowy - montaz instalacji</h3>
+                        <p class="job-card__company">ABB Schweiz AG</p>
+                        <div class="job-card__meta">
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Baden, Argowia
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                100%
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                5 godzin temu
+                            </span>
+                        </div>
+                        <div class="job-card__tags">
+                            <span class="job-card__tag job-card__tag--quick">Quick Apply</span>
+                        </div>
+                        <div class="job-card__salary">CHF 75'000 - 90'000 / rok</div>
+                    </div>
+                    <div class="job-card__actions">
+                        <button class="job-card__bookmark">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                        </button>
+                        <span class="job-card__time">5 godz.</span>
+                    </div>
+                </a>
+
+                <!-- Job Card 3 -->
+                <a href="#" class="job-card">
+                    <div class="job-card__logo job-card__logo--orange">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="job-card__body">
+                        <h3 class="job-card__title">Kierownik zmiany - produkcja spozywcza</h3>
+                        <p class="job-card__company">Nestlé Suisse S.A.</p>
+                        <div class="job-card__meta">
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Vevey, Vaud
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                100%
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                Wczoraj
+                            </span>
+                        </div>
+                        <div class="job-card__tags">
+                            <span class="job-card__tag job-card__tag--top">Promowane</span>
+                        </div>
+                    </div>
+                    <div class="job-card__actions">
+                        <button class="job-card__bookmark">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                        </button>
+                        <span class="job-card__time">1 dzien</span>
+                    </div>
+                </a>
+
+                <!-- Job Card 4 -->
+                <a href="#" class="job-card">
+                    <div class="job-card__logo job-card__logo--purple">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    </div>
+                    <div class="job-card__body">
+                        <h3 class="job-card__title">Ksiegowy / Ksiegowa - rachunkowosc miedzynarodowa</h3>
+                        <p class="job-card__company">PwC Switzerland</p>
+                        <div class="job-card__meta">
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Genewa
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                80-100%
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                Wczoraj
+                            </span>
+                        </div>
+                        <div class="job-card__tags">
+                            <span class="job-card__tag job-card__tag--remote">Hybrydowa</span>
+                        </div>
+                        <div class="job-card__salary">CHF 95'000 - 115'000 / rok</div>
+                    </div>
+                    <div class="job-card__actions">
+                        <button class="job-card__bookmark">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                        </button>
+                        <span class="job-card__time">1 dzien</span>
+                    </div>
+                </a>
+
+                <!-- Job Card 5 -->
+                <a href="#" class="job-card">
+                    <div class="job-card__logo job-card__logo--red">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    </div>
+                    <div class="job-card__body">
+                        <h3 class="job-card__title">Kucharz / Kucharka - kuchnia srodziemnomorska</h3>
+                        <p class="job-card__company">Grand Hotel Zermatterhof</p>
+                        <div class="job-card__meta">
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Zermatt, Valais
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                100%
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                2 dni temu
+                            </span>
+                        </div>
+                        <div class="job-card__tags">
+                            <span class="job-card__tag job-card__tag--quick">Quick Apply</span>
+                            <span class="job-card__tag job-card__tag--new">Nowosc</span>
+                        </div>
+                        <div class="job-card__salary">CHF 5'200 - 6'400 / miesiac + zakwaterowanie</div>
+                    </div>
+                    <div class="job-card__actions">
+                        <button class="job-card__bookmark">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                        </button>
+                        <span class="job-card__time">2 dni</span>
+                    </div>
+                </a>
+
+                <!-- Job Card 6 -->
+                <a href="#" class="job-card">
+                    <div class="job-card__logo job-card__logo--teal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <div class="job-card__body">
+                        <h3 class="job-card__title">Pielegniarka / Pielegniarz - oddział intensywnej terapii</h3>
+                        <p class="job-card__company">Universitatsspital Zurich</p>
+                        <div class="job-card__meta">
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Zurych
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                80-100%
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                3 dni temu
+                            </span>
+                        </div>
+                        <div class="job-card__tags">
+                            <span class="job-card__tag job-card__tag--top">Promowane</span>
+                        </div>
+                        <div class="job-card__salary">CHF 85'000 - 100'000 / rok</div>
+                    </div>
+                    <div class="job-card__actions">
+                        <button class="job-card__bookmark">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                        </button>
+                        <span class="job-card__time">3 dni</span>
+                    </div>
+                </a>
+
+                <!-- Job Card 7 -->
+                <a href="#" class="job-card">
+                    <div class="job-card__logo job-card__logo--blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    </div>
+                    <div class="job-card__body">
+                        <h3 class="job-card__title">Magazynier z uprawnieniami na wózek widlowy</h3>
+                        <p class="job-card__company">DHL Supply Chain Switzerland</p>
+                        <div class="job-card__meta">
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Bazylea
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                100%
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                3 dni temu
+                            </span>
+                        </div>
+                        <div class="job-card__tags">
+                            <span class="job-card__tag job-card__tag--quick">Quick Apply</span>
+                        </div>
+                        <div class="job-card__salary">CHF 4'800 - 5'600 / miesiac</div>
+                    </div>
+                    <div class="job-card__actions">
+                        <button class="job-card__bookmark">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                        </button>
+                        <span class="job-card__time">3 dni</span>
+                    </div>
+                </a>
+
+                <!-- Job Card 8 -->
+                <a href="#" class="job-card">
+                    <div class="job-card__logo job-card__logo--green">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    </div>
+                    <div class="job-card__body">
+                        <h3 class="job-card__title">Inzynier mechanik - projektowanie maszyn CNC</h3>
+                        <p class="job-card__company">Bystronic Laser AG</p>
+                        <div class="job-card__meta">
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Niederonz, Berno
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                100%
+                            </span>
+                            <span class="job-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                4 dni temu
+                            </span>
+                        </div>
+                        <div class="job-card__salary">CHF 95'000 - 120'000 / rok</div>
+                    </div>
+                    <div class="job-card__actions">
+                        <button class="job-card__bookmark">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                        </button>
+                        <span class="job-card__time">4 dni</span>
+                    </div>
+                </a>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="pagination__btn pagination__btn--arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <button class="pagination__btn pagination__btn--active">1</button>
+                    <button class="pagination__btn">2</button>
+                    <button class="pagination__btn">3</button>
+                    <button class="pagination__btn">4</button>
+                    <button class="pagination__btn">5</button>
+                    <span style="color:#999;padding:0 4px;">...</span>
+                    <button class="pagination__btn">48</button>
+                    <button class="pagination__btn pagination__btn--arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ==========================================
+         EMPLOYERS SECTION
+         ========================================== -->
+    <section class="employers">
+        <div class="container-wide">
+            <div class="employers__header">
+                <h2 class="employers__title">Poznaj pracodawców</h2>
+                <a href="#" class="employers__link">Zobacz wszystkich pracodawców &rarr;</a>
+            </div>
+            <div class="employers__grid">
+                <a href="#" class="employer-card">
+                    <div class="employer-card__logo" style="background:#E8F0FE;color:#3B7DDD;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <div class="employer-card__name">Novartis AG</div>
+                    <div class="employer-card__rating">
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#E0E0E0" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <span class="employer-card__rating-value">4.2</span>
+                    </div>
+                    <div class="employer-card__jobs">142 oferty</div>
+                </a>
+                <a href="#" class="employer-card">
+                    <div class="employer-card__logo" style="background:#E6F7ED;color:#1A8C4E;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    </div>
+                    <div class="employer-card__name">Roche Holding AG</div>
+                    <div class="employer-card__rating">
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <span class="employer-card__rating-value">4.5</span>
+                    </div>
+                    <div class="employer-card__jobs">98 ofert</div>
+                </a>
+                <a href="#" class="employer-card">
+                    <div class="employer-card__logo" style="background:#FFF3E0;color:#E67E22;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <div class="employer-card__name">UBS Group AG</div>
+                    <div class="employer-card__rating">
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#E0E0E0" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <span class="employer-card__rating-value">3.9</span>
+                    </div>
+                    <div class="employer-card__jobs">87 ofert</div>
+                </a>
+                <a href="#" class="employer-card">
+                    <div class="employer-card__logo" style="background:#F3E8FF;color:#8B5CF6;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    </div>
+                    <div class="employer-card__name">Zurich Insurance</div>
+                    <div class="employer-card__rating">
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#E0E0E0" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <span class="employer-card__rating-value">4.0</span>
+                    </div>
+                    <div class="employer-card__jobs">65 ofert</div>
+                </a>
+                <a href="#" class="employer-card">
+                    <div class="employer-card__logo" style="background:#FFE8E8;color:#DC0018;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <div class="employer-card__name">Swiss Re AG</div>
+                    <div class="employer-card__rating">
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="#F5A623" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <span class="employer-card__rating-value">4.6</span>
+                    </div>
+                    <div class="employer-card__jobs">54 oferty</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         ALERT BANNER
+         ========================================== -->
+    <section class="alert-banner">
+        <div class="container">
+            <div class="alert-banner__inner">
+                <div class="alert-banner__icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                </div>
+                <h2 class="alert-banner__title">Nie przegap idealnej oferty</h2>
+                <p class="alert-banner__text">Utworz alert e-mailowy i otrzymuj powiadomienia o nowych ofertach pracy dopasowanych do Twoich kryteriów wyszukiwania.</p>
+                <div class="alert-banner__form">
+                    <input type="email" placeholder="Twój adres e-mail">
+                    <button>Utwórz alert</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         FOOTER
+         ========================================== -->
+    <footer class="footer">
+        <div class="container-wide">
+            <div class="footer__grid">
+                <div class="footer__col">
+                    <div class="footer__col-title">Dla kandydatów</div>
+                    <ul>
+                        <li><a href="#">Szukaj ofert pracy</a></li>
+                        <li><a href="#">Profil zawodowy</a></li>
+                        <li><a href="#">Alerty e-mailowe</a></li>
+                        <li><a href="#">Porównanie wynagrodzen</a></li>
+                        <li><a href="#">Porady kariery</a></li>
+                        <li><a href="#">Kreator CV</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <div class="footer__col-title">Dla pracodawców</div>
+                    <ul>
+                        <li><a href="#">Opublikuj oferte</a></li>
+                        <li><a href="#">Wyszukaj kandydatów</a></li>
+                        <li><a href="#">Cennik uslug</a></li>
+                        <li><a href="#">Employer Branding</a></li>
+                        <li><a href="#">Raporty rynkowe</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <div class="footer__col-title">O nas</div>
+                    <ul>
+                        <li><a href="#">O Praca w Szwajcarii</a></li>
+                        <li><a href="#">Zespól</a></li>
+                        <li><a href="#">Kariera u nas</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Kontakt</a></li>
+                        <li><a href="#">Centrum pomocy</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <div class="footer__col-title">Informacje prawne</div>
+                    <ul>
+                        <li><a href="#">Regulamin</a></li>
+                        <li><a href="#">Polityka prywatnosci</a></li>
+                        <li><a href="#">Pliki cookies</a></li>
+                        <li><a href="#">Ustawienia cookies</a></li>
+                        <li><a href="#">Impressum</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <div class="footer__copy">&copy; 2026 Praca w Szwajcarii. Wszelkie prawa zastrzezone.</div>
+                <div class="footer__socials">
+                    <a href="#" class="footer__social">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                    </a>
+                    <a href="#" class="footer__social">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="#" class="footer__social">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                </div>
+                <div class="footer__powered">
+                    <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="4" fill="#DC0018"/><rect x="12" y="6" width="4" height="16" rx="1" fill="#FFF"/><rect x="6" y="12" width="16" height="4" rx="1" fill="#FFF"/></svg>
+                    Powered by Praca w Szwajcarii
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

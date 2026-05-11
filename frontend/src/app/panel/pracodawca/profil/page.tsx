@@ -88,7 +88,7 @@ export default function EmployerProfilePage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Profil firmy</h1>
+      <h1 className="text-2xl font-bold font-display text-[#0D2240] mb-6">Profil firmy</h1>
 
       {success && (
         <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4 text-sm flex items-center gap-2" role="status">
@@ -97,7 +97,7 @@ export default function EmployerProfilePage() {
         </div>
       )}
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm flex items-center gap-2" role="alert">
+        <div className="bg-[#FFF0F3] border border-[#FFC2CD] text-[#B8001F] px-4 py-3 rounded-lg mb-4 text-sm flex items-center gap-2" role="alert">
           <span className="flex-shrink-0">⚠</span>
           {error}
         </div>
@@ -105,7 +105,7 @@ export default function EmployerProfilePage() {
 
       {/* Logo */}
       <div className="bg-white border rounded-lg p-6 mb-6">
-        <h2 className="font-semibold text-gray-900 mb-4">Logo firmy</h2>
+        <h2 className="font-semibold font-display text-[#0D2240] mb-4">Logo firmy</h2>
         <div className="flex items-center gap-4">
           <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
             {profile?.logo_url ? (
@@ -133,25 +133,25 @@ export default function EmployerProfilePage() {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Nazwa firmy</label>
           <input type="text" value={form.company_name} onChange={(e) => setForm({ ...form, company_name: e.target.value })}
-            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500" />
+            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20" />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Opis firmy</label>
           <textarea rows={4} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}
-            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500 resize-none"
+            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20 resize-none"
             placeholder="Krótki opis Twojej firmy..." />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Strona internetowa</label>
           <input type="url" value={form.website} onChange={(e) => setForm({ ...form, website: e.target.value })}
-            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20"
             placeholder="https://..." />
         </div>
 
         <button type="submit" disabled={mutation.isPending}
-          className="w-full sm:w-auto bg-red-600 text-white px-6 py-2.5 rounded-lg hover:bg-red-700 font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+          className="w-full sm:w-auto bg-[#E1002A] text-white px-6 py-2.5 rounded-lg hover:bg-[#B8001F] font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
           {mutation.isPending ? "Zapisywanie..." : "Zapisz zmiany"}
         </button>
       </form>

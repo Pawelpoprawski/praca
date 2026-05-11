@@ -23,7 +23,7 @@ function StatusBadge({ status }: { status: string }) {
     active: "bg-green-100 text-green-700",
     pending: "bg-yellow-100 text-yellow-700",
     expired: "bg-gray-100 text-gray-600",
-    rejected: "bg-red-100 text-red-700",
+    rejected: "bg-[#FFE0E6] text-[#B8001F]",
   };
   return (
     <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${colors[status] || "bg-gray-100 text-gray-600"}`}>
@@ -92,7 +92,7 @@ export default function AdminOfertyPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2">
+          <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240] flex items-center gap-2">
             <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600" />
             Przegladarka ofert
           </h1>

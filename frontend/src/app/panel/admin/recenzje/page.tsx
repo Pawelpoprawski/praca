@@ -42,7 +42,7 @@ export default function AdminReviewsPage() {
 
   return (
     <div>
-      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
+      <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240] mb-6">
         Moderacja recenzji
       </h1>
 
@@ -61,7 +61,7 @@ export default function AdminReviewsPage() {
             }}
             className={`px-3 py-1.5 text-sm rounded-lg border font-medium transition-colors whitespace-nowrap ${
               statusFilter === f.value
-                ? "bg-red-50 border-red-200 text-red-700"
+                ? "bg-[#FFF0F3] border-[#FFC2CD] text-[#B8001F]"
                 : "bg-white hover:bg-gray-50 text-gray-600"
             }`}
           >
@@ -100,7 +100,7 @@ export default function AdminReviewsPage() {
                             ? "bg-yellow-100 text-yellow-800"
                             : review.status === "approved"
                               ? "bg-green-100 text-green-800"
-                              : "bg-red-100 text-red-800"
+                              : "bg-[#FFE0E6] text-[#7A0014]"
                         }`}
                       >
                         {review.status === "pending"
@@ -145,7 +145,7 @@ export default function AdminReviewsPage() {
                             })
                           }
                           disabled={moderateMutation.isPending}
-                          className="p-2 text-red-600 hover:bg-red-50 rounded-lg"
+                          className="p-2 text-[#E1002A] hover:bg-[#FFF0F3] rounded-lg"
                           title="Odrzuc"
                         >
                           <X className="w-4 h-4" />
@@ -164,7 +164,7 @@ export default function AdminReviewsPage() {
                           }
                         }}
                         disabled={deleteMutation.isPending}
-                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg"
+                        className="p-2 text-gray-400 hover:text-[#E1002A] hover:bg-[#FFF0F3] rounded-lg"
                         title="Usun"
                       >
                         <Trash2 className="w-4 h-4" />

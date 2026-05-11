@@ -70,8 +70,8 @@ export default function SaveJobButton({ jobId, className, size = "md" }: SaveJob
         "rounded-full transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50",
         btnSize,
         isSaved
-          ? "text-red-500 hover:text-red-600 bg-red-50 hover:bg-red-100"
-          : "text-gray-400 hover:text-red-500 bg-gray-50 hover:bg-red-50",
+          ? "text-red-500 hover:text-[#E1002A] bg-[#FFF0F3] hover:bg-[#FFE0E6]"
+          : "text-gray-400 hover:text-red-500 bg-gray-50 hover:bg-[#FFF0F3]",
         animating && "scale-125",
         className,
       )}

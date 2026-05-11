@@ -34,7 +34,7 @@ function ProgressBar({ step }: { step: number }) {
                 step > s.num
                   ? "bg-green-500 text-white"
                   : step === s.num
-                  ? "bg-red-600 text-white"
+                  ? "bg-[#E1002A] text-white"
                   : "bg-gray-200 text-gray-500"
               }`}
             >
@@ -55,7 +55,7 @@ function ProgressBar({ step }: { step: number }) {
 
 function ScoreCircle({ score }: { score: number }) {
   const color = score >= 70 ? "text-green-500" : score >= 40 ? "text-yellow-500" : "text-red-500";
-  const bg = score >= 70 ? "border-green-200 bg-green-50" : score >= 40 ? "border-yellow-200 bg-yellow-50" : "border-red-200 bg-red-50";
+  const bg = score >= 70 ? "border-green-200 bg-green-50" : score >= 40 ? "border-yellow-200 bg-yellow-50" : "border-[#FFC2CD] bg-[#FFF0F3]";
   return (
     <div className={`w-24 h-24 rounded-full border-4 ${bg} flex flex-col items-center justify-center mx-auto mb-4`}>
       <span className={`text-2xl font-bold ${color}`}>{score}</span>
@@ -186,14 +186,14 @@ export default function CVPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Moje CV</h1>
+      <h1 className="text-2xl font-bold font-display text-[#0D2240] mb-6">Moje CV</h1>
 
       {message.text && (
         <div
           className={`px-4 py-3 rounded-lg mb-4 text-sm ${
             message.type === "success"
               ? "bg-green-50 text-green-700"
-              : "bg-red-50 text-red-600"
+              : "bg-[#FFF0F3] text-[#E1002A]"
           }`}
         >
           {message.text}
@@ -210,8 +210,8 @@ export default function CVPage() {
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center">
-                      <FileText className="w-5 h-5 text-red-600" />
+                    <div className="w-10 h-10 bg-[#FFF0F3] rounded-lg flex items-center justify-center">
+                      <FileText className="w-5 h-5 text-[#E1002A]" />
                     </div>
                     <div>
                       <p className="font-medium text-gray-900">{profile.cv_filename}</p>
@@ -232,7 +232,7 @@ export default function CVPage() {
                     <button
                       onClick={() => deleteMutation.mutate()}
                       disabled={deleteMutation.isPending}
-                      className="px-4 py-2 text-sm text-red-600 border border-red-200 rounded-lg hover:bg-red-50 font-medium disabled:opacity-50"
+                      className="px-4 py-2 text-sm text-[#E1002A] border border-[#FFC2CD] rounded-lg hover:bg-[#FFF0F3] font-medium disabled:opacity-50"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -281,7 +281,7 @@ export default function CVPage() {
                     setStep(2);
                     analyzeMutation.mutate();
                   }}
-                  className="w-full mt-2 px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium flex items-center justify-center gap-2"
+                  className="w-full mt-2 px-4 py-3 bg-[#E1002A] text-white rounded-lg hover:bg-[#B8001F] font-medium flex items-center justify-center gap-2"
                 >
                   Kontynuuj <ChevronRight className="w-4 h-4" />
                 </button>
@@ -289,7 +289,7 @@ export default function CVPage() {
             ) : (
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:border-red-300 hover:bg-red-50/30 transition-colors"
+                className="border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:border-[#E1002A]/40 hover:bg-[#FFF0F3]/30 transition-colors"
               >
                 {uploadMutation.isPending ? (
                   <div className="animate-pulse">
@@ -313,13 +313,13 @@ export default function CVPage() {
           <div>
             {analyzeMutation.isPending ? (
               <div className="text-center py-8">
-                <div className="animate-spin w-12 h-12 border-4 border-red-200 border-t-red-600 rounded-full mx-auto mb-4" />
+                <div className="animate-spin w-12 h-12 border-4 border-[#FFC2CD] border-t-red-600 rounded-full mx-auto mb-4" />
                 <p className="text-gray-700 font-semibold text-lg mb-2">Analizujemy Twoje CV...</p>
                 <p className="text-sm text-gray-500">AI sprawdza Twoje doświadczenie, umiejętności i formatowanie</p>
                 <div className="mt-4 flex items-center justify-center gap-2">
-                  <div className="w-2 h-2 bg-red-600 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                  <div className="w-2 h-2 bg-red-600 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                  <div className="w-2 h-2 bg-red-600 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                  <div className="w-2 h-2 bg-[#E1002A] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                  <div className="w-2 h-2 bg-[#E1002A] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                  <div className="w-2 h-2 bg-[#E1002A] rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
                 </div>
               </div>
             ) : analysis ? (
@@ -341,12 +341,12 @@ export default function CVPage() {
 
                 {analysis.weaknesses.length > 0 && (
                   <div className="mb-4">
-                    <h3 className="text-sm font-semibold text-red-700 mb-2 flex items-center gap-1">
+                    <h3 className="text-sm font-semibold text-[#B8001F] mb-2 flex items-center gap-1">
                       <AlertTriangle className="w-4 h-4" /> Do poprawy
                     </h3>
                     <ul className="space-y-1">
                       {analysis.weaknesses.map((w, i) => (
-                        <li key={i} className="text-sm text-red-700 bg-red-50 px-3 py-2 rounded-lg">{w}</li>
+                        <li key={i} className="text-sm text-[#B8001F] bg-[#FFF0F3] px-3 py-2 rounded-lg">{w}</li>
                       ))}
                     </ul>
                   </div>
@@ -367,7 +367,7 @@ export default function CVPage() {
 
                 <button
                   onClick={() => setStep(3)}
-                  className="w-full mt-4 px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium flex items-center justify-center gap-2"
+                  className="w-full mt-4 px-4 py-3 bg-[#E1002A] text-white rounded-lg hover:bg-[#B8001F] font-medium flex items-center justify-center gap-2"
                 >
                   Dalej <ChevronRight className="w-4 h-4" />
                 </button>
@@ -378,7 +378,7 @@ export default function CVPage() {
                 <p className="text-gray-600">Nie udało się przeanalizować CV</p>
                 <button
                   onClick={() => { setStep(1); }}
-                  className="mt-4 text-sm text-red-600 hover:underline"
+                  className="mt-4 text-sm text-[#E1002A] hover:underline"
                 >
                   Wróć do przesyłania
                 </button>
@@ -390,7 +390,7 @@ export default function CVPage() {
         {/* STEP 3: Decision */}
         {step === 3 && (
           <div className="text-center py-4">
-            <h2 className="text-lg font-bold text-gray-900 mb-2">Co chcesz zrobić?</h2>
+            <h2 className="text-lg font-bold font-display text-[#0D2240] mb-2">Co chcesz zrobić?</h2>
             <p className="text-sm text-gray-500 mb-6">
               Możesz przesłać nowe CV lub kontynuować z obecnym
             </p>
@@ -406,7 +406,7 @@ export default function CVPage() {
               </button>
               <button
                 onClick={() => setStep(4)}
-                className="flex-1 px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-3 bg-[#E1002A] text-white rounded-lg hover:bg-[#B8001F] font-medium flex items-center justify-center gap-2"
               >
                 Kontynuuj <ChevronRight className="w-4 h-4" />
               </button>
@@ -418,8 +418,8 @@ export default function CVPage() {
         {step === 4 && (
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <ShieldCheck className="w-5 h-5 text-red-600" />
-              <h2 className="text-lg font-bold text-gray-900">Udostępnij CV rekruterom</h2>
+              <ShieldCheck className="w-5 h-5 text-[#E1002A]" />
+              <h2 className="text-lg font-bold font-display text-[#0D2240]">Udostępnij CV rekruterom</h2>
             </div>
             <p className="text-sm text-gray-500 mb-6">
               Twoje CV trafi do bazy dostępnej dla zweryfikowanych rekruterów w Szwajcarii.
@@ -434,7 +434,7 @@ export default function CVPage() {
                 value={jobPreferences}
                 onChange={(e) => setJobPreferences(e.target.value)}
                 placeholder="Np. szukam pracy w IT, najchętniej zdalnie, kanton Zurych lub Berno..."
-                className="w-full border rounded-lg px-3 py-2 text-sm h-24 resize-none focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                className="w-full border rounded-lg px-3 py-2 text-sm h-24 resize-none focus:outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-transparent"
                 maxLength={2000}
               />
             </div>
@@ -444,7 +444,7 @@ export default function CVPage() {
                 type="checkbox"
                 checked={consent}
                 onChange={(e) => setConsent(e.target.checked)}
-                className="mt-0.5 h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                className="mt-0.5 h-4 w-4 rounded border-gray-300 text-[#E1002A] focus:ring-[#E1002A]/20"
               />
               <span className="text-sm text-gray-700">
                 Wyrażam zgodę na udostępnienie mojego CV rekruterom na platformie Praca w Szwajcarii.
@@ -462,7 +462,7 @@ export default function CVPage() {
               <button
                 onClick={() => consentMutation.mutate()}
                 disabled={!consent || consentMutation.isPending}
-                className="flex-1 px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-3 bg-[#E1002A] text-white rounded-lg hover:bg-[#B8001F] font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {consentMutation.isPending ? "Zapisywanie..." : "Udostępnij CV"}
                 {!consentMutation.isPending && <ShieldCheck className="w-4 h-4" />}
@@ -477,7 +477,7 @@ export default function CVPage() {
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="w-8 h-8 text-green-600" />
             </div>
-            <h2 className="text-lg font-bold text-gray-900 mb-2">CV udostępnione!</h2>
+            <h2 className="text-lg font-bold font-display text-[#0D2240] mb-2">CV udostępnione!</h2>
             <p className="text-sm text-gray-500 mb-6">
               Twoje CV jest teraz dostępne dla rekruterów. Możesz w każdej chwili
               zaktualizować swoje CV lub cofnąć zgodę.

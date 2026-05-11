@@ -11,7 +11,7 @@ import type { JobOffer, PaginatedResponse } from "@/types/api";
 const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   pending: { label: "Oczekuje", color: "bg-yellow-100 text-yellow-800" },
   active: { label: "Aktywne", color: "bg-green-100 text-green-800" },
-  rejected: { label: "Odrzucone", color: "bg-red-100 text-red-800" },
+  rejected: { label: "Odrzucone", color: "bg-[#FFE0E6] text-[#7A0014]" },
   closed: { label: "Zamknięte", color: "bg-gray-100 text-gray-800" },
   expired: { label: "Wygasłe", color: "bg-gray-100 text-gray-600" },
 };
@@ -42,10 +42,10 @@ export default function EmployerJobsPage() {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Moje ogłoszenia</h1>
+        <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240]">Moje ogłoszenia</h1>
         <Link
           href="/panel/pracodawca/ogloszenia/nowe"
-          className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 text-sm font-medium flex items-center justify-center gap-2 w-fit"
+          className="bg-[#E1002A] text-white px-4 py-2 rounded-lg hover:bg-[#B8001F] text-sm font-medium flex items-center justify-center gap-2 w-fit"
         >
           <Plus className="w-4 h-4" /> <span className="hidden sm:inline">Nowe ogłoszenie</span><span className="sm:hidden">Nowe</span>
         </Link>
@@ -64,7 +64,7 @@ export default function EmployerJobsPage() {
             onClick={() => { setStatusFilter(f.value); setPage(1); }}
             className={`px-3 py-1.5 text-sm rounded-lg border font-medium transition-colors whitespace-nowrap ${
               statusFilter === f.value
-                ? "bg-red-50 border-red-200 text-red-700"
+                ? "bg-[#FFF0F3] border-[#FFC2CD] text-[#B8001F]"
                 : "bg-white hover:bg-gray-50 text-gray-600"
             }`}
           >
@@ -91,7 +91,7 @@ export default function EmployerJobsPage() {
                       <div className="flex flex-wrap items-center gap-2 mb-1">
                         <Link
                           href={`/panel/pracodawca/ogloszenia/${job.id}`}
-                          className="font-medium text-gray-900 hover:text-red-600 break-words"
+                          className="font-medium text-gray-900 hover:text-[#E1002A] break-words"
                         >
                           {job.title}
                         </Link>
@@ -156,7 +156,7 @@ export default function EmployerJobsPage() {
                           }
                         }}
                         disabled={deleteMutation.isPending}
-                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg disabled:opacity-50"
+                        className="p-2 text-gray-400 hover:text-[#E1002A] hover:bg-[#FFF0F3] rounded-lg disabled:opacity-50"
                         title="Usuń"
                         aria-label="Usuń ogłoszenie"
                       >
@@ -190,7 +190,7 @@ export default function EmployerJobsPage() {
       ) : (
         <div className="bg-white border rounded-lg px-5 py-12 text-center">
           <p className="text-gray-500 mb-2">Nie masz jeszcze żadnych ogłoszeń</p>
-          <Link href="/panel/pracodawca/ogloszenia/nowe" className="text-sm text-red-600 hover:underline">
+          <Link href="/panel/pracodawca/ogloszenia/nowe" className="text-sm text-[#E1002A] hover:underline">
             Dodaj pierwsze ogłoszenie
           </Link>
         </div>

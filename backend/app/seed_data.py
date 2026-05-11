@@ -518,7 +518,7 @@ async def seed_demo_data():
                 apply_via="portal",
                 status="active",
                 published_at=now - published_offset,
-                expires_at=now + timedelta(days=30),
+                expires_at=None,
                 views_count=(12 - i) * 7 + 3,  # decreasing views
             )
             db.add(job)

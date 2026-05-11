@@ -27,6 +27,50 @@ export function formatDate(date: string): string {
   return d.toLocaleDateString("pl-PL");
 }
 
+/**
+ * Sformatuj lokalizację jako "Miasto, Kanton" z deduplikacją:
+ *  - jeśli brak kantonu i miasta → "Cała Szwajcaria" (fallback dla ofert bez precyzji geo)
+ *  - jeśli city pusty/None → tylko nazwa kantonu
+ *  - jeśli city to fragment "Cała" / "całej" / "Inne" → tylko nazwa kantonu
+ *  - jeśli city == nazwa kantonu (po normalizacji case-insensitive) → tylko kanton
+ *  - inaczej "City, Canton"
+ */
+export function formatJobLocation(
+  canton: string | null | undefined,
+  city: string | null | undefined,
+  cantonMap: Record<string, string> = {},
+): string {
+  const cantonName = canton ? (cantonMap[canton] || canton) : "";
+  const cleanCity = (city || "").trim();
+
+  // Brak danych geo → fallback dla ofert dotyczących całego kraju
+  if (!cantonName && !cleanCity) return "Cała Szwajcaria";
+
+  // Brak miasta → tylko kanton
+  if (!cleanCity) return cantonName;
+
+  // Fragmenty błędnie wyciągnięte przez AI ("Cała Szwajcaria" rozbite na "Cała")
+  const cityLower = cleanCity.toLowerCase();
+  const FRAGMENTS = ["cała", "cala", "całej", "calej", "inne lokalizacje", "inne", "ck"];
+  if (FRAGMENTS.includes(cityLower) || cityLower.length < 3) {
+    return cantonName;
+  }
+
+  // "okolice X" — zostaw samo "okolice X" (już niesie info regionu, kanton zbędny)
+  if (cityLower.startsWith("okolic")) {
+    return cleanCity;
+  }
+
+  // City pokrywa się z kantonem (różne pisownia: "Berno" vs "bern", "Zug" vs "zug")
+  const cantonLower = cantonName.toLowerCase();
+  if (cityLower === cantonLower) return cantonName;
+  // "Berno" zawiera "bern" -> duplikat
+  if (cantonLower.length >= 3 && cityLower.includes(cantonLower)) return cantonName;
+  if (cityLower.length >= 3 && cantonLower.includes(cityLower)) return cantonName;
+
+  return cantonName ? `${cleanCity}, ${cantonName}` : cleanCity;
+}
+
 export const CONTRACT_TYPES: Record<string, string> = {
   full_time: "Pełny etat",
   part_time: "Część etatu",

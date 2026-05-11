@@ -48,7 +48,7 @@ export default function ViewedJobsHistoryPage() {
     <div>
       <div className="flex items-center gap-3 mb-6">
         <Clock className="w-6 h-6 text-gray-400" />
-        <h1 className="text-2xl font-bold text-gray-900">Ostatnio oglądane oferty</h1>
+        <h1 className="text-2xl font-bold font-display text-[#0D2240]">Ostatnio oglądane oferty</h1>
       </div>
 
       {isLoading ? (
@@ -63,7 +63,7 @@ export default function ViewedJobsHistoryPage() {
             <Link
               key={job.id}
               href={`/oferty/${job.id}`}
-              className="block bg-white border border-gray-200 rounded-xl p-5 hover:shadow-lg hover:border-red-300 hover:-translate-y-0.5 transition-all group"
+              className="block bg-white border border-gray-200 rounded-xl p-5 hover:shadow-lg hover:border-[#E1002A]/40 hover:-translate-y-0.5 transition-all group"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
@@ -72,7 +72,7 @@ export default function ViewedJobsHistoryPage() {
                       Wyróżnione
                     </span>
                   )}
-                  <h2 className="text-lg font-bold text-gray-900 group-hover:text-red-600 transition-colors line-clamp-1">
+                  <h2 className="text-lg font-bold font-display text-[#0D2240] group-hover:text-[#E1002A] transition-colors line-clamp-1">
                     {job.title}
                   </h2>
                   <p className="text-sm text-gray-500 mt-1 truncate">
@@ -112,7 +112,7 @@ export default function ViewedJobsHistoryPage() {
           </p>
           <Link
             href="/oferty"
-            className="text-red-600 hover:underline font-medium text-sm"
+            className="text-[#E1002A] hover:underline font-medium text-sm"
           >
             Przeglądaj oferty
           </Link>

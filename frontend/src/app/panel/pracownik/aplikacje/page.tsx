@@ -45,7 +45,7 @@ export default function ApplicationsPage() {
 
   return (
     <div>
-      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">Moje aplikacje</h1>
+      <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240] mb-6">Moje aplikacje</h1>
 
       {data?.data && data.data.length > 0 ? (
         <>
@@ -68,7 +68,7 @@ export default function ApplicationsPage() {
                     <div className="min-w-0">
                       <Link
                         href={`/oferty/${app.job_offer_id}`}
-                        className="font-medium text-gray-900 hover:text-red-600 break-words block"
+                        className="font-medium text-gray-900 hover:text-[#E1002A] break-words block"
                       >
                         {app.job_title || "Oferta pracy"}
                       </Link>
@@ -126,7 +126,7 @@ export default function ApplicationsPage() {
           </p>
           <Link
             href="/oferty"
-            className="text-sm text-red-600 hover:underline"
+            className="text-sm text-[#E1002A] hover:underline"
           >
             Przeglądaj oferty pracy
           </Link>

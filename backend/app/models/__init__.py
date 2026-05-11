@@ -17,6 +17,7 @@ from app.models.cv_review import CVReview
 from app.models.cv_database import CVDatabase
 from app.models.application_click import ApplicationClick
 from app.models.activity_log import ActivityLog
+from app.models.external_application import ExternalApplication
 
 __all__ = [
     "User",
@@ -38,4 +39,5 @@ __all__ = [
     "CVDatabase",
     "ApplicationClick",
     "ActivityLog",
+    "ExternalApplication",
 ]

@@ -46,7 +46,7 @@ export default function SimilarJobs({ jobId }: SimilarJobsProps) {
   if (isLoading) {
     return (
       <section className="mt-10">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Podobne oferty</h2>
+        <h2 className="text-xl font-bold font-display text-[#0D2240] mb-4">Podobne oferty</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[...Array(3)].map((_, i) => (
             <SimilarJobSkeleton key={i} />
@@ -62,20 +62,20 @@ export default function SimilarJobs({ jobId }: SimilarJobsProps) {
 
   return (
     <section className="mt-10">
-      <h2 className="text-xl font-bold text-gray-900 mb-4">Podobne oferty</h2>
+      <h2 className="text-xl font-bold font-display text-[#0D2240] mb-4">Podobne oferty</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {jobs.map((job) => (
           <Link
             key={job.id}
             href={`/oferty/${job.id}`}
-            className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg hover:border-red-300 hover:-translate-y-0.5 transition-all group"
+            className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg hover:border-[#E1002A]/40 hover:-translate-y-0.5 transition-all group"
           >
             {job.is_featured && (
               <span className="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-0.5 rounded mb-2">
                 Wyróżnione
               </span>
             )}
-            <h3 className="font-semibold text-gray-900 group-hover:text-red-600 transition-colors line-clamp-2 text-sm">
+            <h3 className="font-semibold text-gray-900 group-hover:text-[#E1002A] transition-colors line-clamp-2 text-sm">
               {job.title}
             </h3>
             {job.employer && (

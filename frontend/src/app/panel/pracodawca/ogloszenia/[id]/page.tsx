@@ -120,7 +120,7 @@ export default function EditJobPage() {
     return (
       <div className="text-center py-12">
         <p className="text-gray-500">Ogłoszenie nie zostało znalezione</p>
-        <Link href="/panel/pracodawca/ogloszenia" className="text-sm text-red-600 hover:underline mt-2 block">
+        <Link href="/panel/pracodawca/ogloszenia" className="text-sm text-[#E1002A] hover:underline mt-2 block">
           Wróć do listy
         </Link>
       </div>
@@ -133,14 +133,14 @@ export default function EditJobPage() {
         <Link href="/panel/pracodawca/ogloszenia" className="p-2 hover:bg-gray-100 rounded-lg">
           <ArrowLeft className="w-5 h-5" />
         </Link>
-        <h1 className="text-2xl font-bold text-gray-900">Edytuj ogłoszenie</h1>
+        <h1 className="text-2xl font-bold font-display text-[#0D2240]">Edytuj ogłoszenie</h1>
       </div>
 
       {success && <div className="bg-green-50 text-green-700 px-4 py-3 rounded-lg mb-4 text-sm">{success}</div>}
-      {error && <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>}
+      {error && <div className="bg-[#FFF0F3] text-[#E1002A] px-4 py-3 rounded-lg mb-4 text-sm">{error}</div>}
 
       {job.status === "rejected" && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
+        <div className="bg-[#FFF0F3] border border-[#FFC2CD] text-[#B8001F] px-4 py-3 rounded-lg mb-4 text-sm">
           To ogłoszenie zostało odrzucone. Po edycji zostanie ponownie wysłane do moderacji.
         </div>
       )}
@@ -149,13 +149,13 @@ export default function EditJobPage() {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Tytuł stanowiska *</label>
           <input type="text" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })}
-            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500" />
+            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20" />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Opis stanowiska *</label>
           <textarea rows={6} required value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}
-            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500 resize-none" />
+            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20 resize-none" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -190,7 +190,7 @@ export default function EditJobPage() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Miasto</label>
             <input type="text" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500" />
+              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20" />
           </div>
         </div>
 
@@ -198,12 +198,12 @@ export default function EditJobPage() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Wynagrodzenie od (CHF)</label>
             <input type="number" min={0} value={form.salary_min} onChange={(e) => setForm({ ...form, salary_min: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500" />
+              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Wynagrodzenie do (CHF)</label>
             <input type="number" min={0} value={form.salary_max} onChange={(e) => setForm({ ...form, salary_max: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500" />
+              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Okres</label>
@@ -222,19 +222,19 @@ export default function EditJobPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Min. doświadczenie (lata)</label>
             <input type="number" min={0} max={50} value={form.experience_min}
               onChange={(e) => setForm({ ...form, experience_min: parseInt(e.target.value) || 0 })}
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500" />
+              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20" />
           </div>
           <div className="flex items-end gap-6">
             <label className="flex items-center gap-2 px-3 py-2">
               <input type="checkbox" checked={form.driving_license_required}
                 onChange={(e) => setForm({ ...form, driving_license_required: e.target.checked })}
-                className="rounded border-gray-300 text-red-600 focus:ring-red-500" />
+                className="rounded border-gray-300 text-[#E1002A] focus:ring-[#E1002A]/20" />
               <span className="text-sm text-gray-700">Wymagane prawo jazdy</span>
             </label>
             <label className="flex items-center gap-2 px-3 py-2">
               <input type="checkbox" checked={form.car_required}
                 onChange={(e) => setForm({ ...form, car_required: e.target.checked })}
-                className="rounded border-gray-300 text-red-600 focus:ring-red-500" />
+                className="rounded border-gray-300 text-[#E1002A] focus:ring-[#E1002A]/20" />
               <span className="text-sm text-gray-700">Wymagany samochód</span>
             </label>
           </div>
@@ -244,7 +244,7 @@ export default function EditJobPage() {
         <div>
           <div className="flex items-center justify-between mb-2">
             <label className="block text-sm font-medium text-gray-700">Wymagane języki</label>
-            <button type="button" onClick={addLanguage} className="text-sm text-red-600 hover:text-red-700 flex items-center gap-1">
+            <button type="button" onClick={addLanguage} className="text-sm text-[#E1002A] hover:text-[#B8001F] flex items-center gap-1">
               <Plus className="w-3 h-3" /> Dodaj język
             </button>
           </div>
@@ -264,7 +264,7 @@ export default function EditJobPage() {
               }} className="px-3 py-2 border rounded-lg text-sm outline-none">
                 {LANG_LEVELS.map((l) => <option key={l} value={l}>{l}</option>)}
               </select>
-              <button type="button" onClick={() => removeLanguage(i)} className="p-2 text-gray-400 hover:text-red-600">
+              <button type="button" onClick={() => removeLanguage(i)} className="p-2 text-gray-400 hover:text-[#E1002A]">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -273,7 +273,7 @@ export default function EditJobPage() {
 
         <div className="flex gap-3 pt-2">
           <button type="submit" disabled={mutation.isPending}
-            className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 font-medium text-sm disabled:opacity-50">
+            className="bg-[#E1002A] text-white px-6 py-2 rounded-lg hover:bg-[#B8001F] font-medium text-sm disabled:opacity-50">
             {mutation.isPending ? "Zapisywanie..." : "Zapisz zmiany"}
           </button>
           <Link href="/panel/pracodawca/ogloszenia" className="px-6 py-2 border rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">

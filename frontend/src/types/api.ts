@@ -66,6 +66,7 @@ export interface JobOffer {
   languages_required: LanguageRequirement[];
   apply_via: string;
   external_url: string | null;
+  contact_email: string | null;
   status: string;
   views_count: number;
   is_featured: boolean;

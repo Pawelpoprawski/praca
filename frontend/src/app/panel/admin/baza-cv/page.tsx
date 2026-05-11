@@ -66,7 +66,7 @@ function ExtractedDataView({ data }: { data: Record<string, unknown> }) {
 function ScoreBadge({ score }: { score: number | null }) {
   if (score == null) return <span className="text-gray-400 text-sm">-</span>;
   const color =
-    score <= 3 ? "bg-red-100 text-red-700" :
+    score <= 3 ? "bg-[#FFE0E6] text-[#B8001F]" :
     score <= 6 ? "bg-yellow-100 text-yellow-700" :
     "bg-green-100 text-green-700";
   return (
@@ -185,16 +185,16 @@ export default function AdminCVDatabasePage() {
     <div>
       {/* Download error banner */}
       {downloadError && (
-        <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center justify-between">
+        <div className="mb-4 bg-[#FFF0F3] border border-[#FFC2CD] text-[#B8001F] px-4 py-3 rounded-lg flex items-center justify-between">
           <span className="text-sm">{downloadError}</span>
-          <button onClick={() => setDownloadError(null)} className="text-red-500 hover:text-red-700 font-bold">&times;</button>
+          <button onClick={() => setDownloadError(null)} className="text-red-500 hover:text-[#B8001F] font-bold">&times;</button>
         </div>
       )}
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4 mb-6">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2">
+          <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240] flex items-center gap-2">
             <Users className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
             Baza CV
           </h1>

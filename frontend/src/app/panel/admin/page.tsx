@@ -24,7 +24,7 @@ function ChangeBadge({ comparison }: { comparison: PeriodComparison | undefined 
   if (isZero) return <span className="text-xs text-gray-400 ml-1">0%</span>;
 
   return (
-    <span className={`inline-flex items-center gap-0.5 text-xs font-medium ml-1 ${isUp ? "text-green-600" : "text-red-600"}`}>
+    <span className={`inline-flex items-center gap-0.5 text-xs font-medium ml-1 ${isUp ? "text-green-600" : "text-[#E1002A]"}`}>
       {isUp ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
       {isUp ? "+" : ""}{pct}%
     </span>
@@ -56,14 +56,14 @@ export default function AdminDashboardPage() {
     { label: "Oferty", value: stats?.total_jobs ?? 0, icon: Briefcase, color: "text-gray-600", bg: "bg-gray-50", comp: c?.jobs[period] },
     { label: "Aktywne oferty", value: stats?.active_jobs ?? 0, icon: Briefcase, color: "text-green-600", bg: "bg-green-50" },
     { label: "Do moderacji", value: stats?.pending_jobs ?? 0, icon: Clock, color: "text-yellow-600", bg: "bg-yellow-50", href: "/panel/admin/moderacja" },
-    { label: "Aplikacje", value: stats?.total_applications ?? 0, icon: Send, color: "text-red-600", bg: "bg-red-50", comp: c?.applications[period] },
+    { label: "Aplikacje", value: stats?.total_applications ?? 0, icon: Send, color: "text-[#E1002A]", bg: "bg-[#FFF0F3]", comp: c?.applications[period] },
     { label: "Wyświetlenia", value: trends?.total_views ?? 0, icon: Eye, color: "text-indigo-600", bg: "bg-indigo-50" },
   ];
 
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Panel administratora</h1>
+        <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240]">Panel administratora</h1>
         <div className="flex bg-gray-100 rounded-lg p-0.5 w-fit">
           {(["7d", "14d", "30d"] as Period[]).map((p) => (
             <button
@@ -99,7 +99,7 @@ export default function AdminDashboardPage() {
                   </div>
                   {"comp" in card && card.comp && <ChangeBadge comparison={card.comp} />}
                 </div>
-                <span className="text-xl sm:text-2xl font-bold text-gray-900 block">{card.value.toLocaleString("pl-PL")}</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#0D2240] block">{card.value.toLocaleString("pl-PL")}</span>
                 <p className="text-xs text-gray-500 mt-0.5 truncate">{card.label}</p>
               </div>
             );

@@ -25,7 +25,7 @@ class JobOffer(Base):
     )
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
-    canton: Mapped[str] = mapped_column(String(50), nullable=False, index=True)
+    canton: Mapped[str | None] = mapped_column(String(50), nullable=True, index=True)
     cantons: Mapped[list | None] = mapped_column(JSON)
     city: Mapped[str | None] = mapped_column(String(100))
     contract_type: Mapped[str] = mapped_column(String(30), nullable=False)

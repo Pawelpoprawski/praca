@@ -191,7 +191,7 @@ async def check_job_alerts():
             from app.services.email import _send_email
             success = _send_email(
                 user.email,
-                f"Nowe oferty pracy: {alert.name} ({len(matching_jobs)}) - PolacySzwajcaria",
+                f"Nowe oferty pracy: {alert.name} ({len(matching_jobs)}) - Praca w Szwajcarii",
                 html,
             )
 

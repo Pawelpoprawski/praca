@@ -21,7 +21,7 @@ from app.services.job_ai import SWISS_CANTONS_MAP, CATEGORY_SLUGS
 logger = logging.getLogger(__name__)
 
 # Bump this to trigger re-extraction of all jobs
-EXTRACTION_VERSION = 5
+EXTRACTION_VERSION = 6
 
 MAX_EXTRACTION_ATTEMPTS = 3
 
@@ -42,23 +42,22 @@ Zwroc JSON z polami:
   "per_diem": "<dzienna dieta/Spesen w CHF jako liczba, np. 16 lub 20, null jesli brak>",
   "experience_min": "<lata doswiadczenia jako liczba, 0 jesli brak wymagan>",
   "hours_per_week": "<godziny tygodniowo jako liczba, np. 42 lub 45, null jesli brak>",
-  "city": "<miasto lub region, np. 'Zurych', 'okolice Zug', null>",
-  "canton_raw": "<GLOWNY kanton szwajcarski (po polsku) lub null>",
-  "cantons_raw": ["<lista WSZYSTKICH kantonow po polsku jesli praca w kilku regionach>"],
+  "city": "<KONKRETNE miasto, np. 'Wadenswil', 'Sursee', 'Lachen'. NIE wpisuj nazwy kantonu (Zurich, Bern...). NIE wpisuj fragmentow 'Cała Szwajcaria'/'Inne lokalizacje'/'cała'. Jezeli oferta dotyczy calego kantonu bez konkretnego miasta — null. 'okolice X' tylko gdy X to MIASTO, nie kanton.>",
+  "canton_raw": "<DOKLADNIE JEDNA z 26 nazw szwajcarskich kantonow (po polsku): Zurych | Berno | Lucerna | Uri | Schwyz | Obwalden | Nidwalden | Glarus | Zug | Fribourg | Solura | Bazylea-Miasto | Bazylea-Okręg | Szafuza | Appenzell-Ausserrhoden | Appenzell-Innerrhoden | St. Gallen | Gryzonia | Argowia | Turgowia | Ticino | Vaud | Wallis | Neuchatel | Genewa | Jura. NULL w 2 przypadkach: a) oferta dotyczy 'calej Szwajcarii'/wielu kantonow bez glownego, b) brak danych geo. ZASADA: jeden konkretny kanton albo NULL — nie wybieraj 'glownego' z listy 3-4 kantonow, wtedy zwroc NULL.>",
   "required_skills": ["<umiejetnosc 1>", "<umiejetnosc 2>"],
   "nice_to_have_skills": ["<opcjonalna umiejetnosc>"],
   "languages": [{{"lang": "<pl|de|fr|it|en|hr|ro|hu|sr|ru|tr|pt|es>", "level": "<A1|A2|B1|B2|C1|C2>"}}],
-  "driving_license_required": "<true jesli wymagane prawo jazdy>",
-  "car_required": "<true jesli wymagany wlasny samochod>",
-  "own_tools_required": "<true jesli wymagane wlasne narzedzia>",
+  "driving_license_required": "<true TYLKO jesli opis jednoznacznie wymaga prawa jazdy (np. 'wymagane prawo jazdy kat. B', 'Fuhrerschein erforderlich'). Brak wzmianki = false. NIE zgaduj!>",
+  "car_required": "<true TYLKO jesli opis jednoznacznie wymaga wlasnego samochodu (np. 'wlasny samochod wymagany', 'eigenes Auto'). Brak wzmianki = false. NIE zgaduj!>",
+  "own_tools_required": "<true TYLKO jesli opis jednoznacznie wymaga wlasnych narzedzi. Brak wzmianki = false. NIE zgaduj!>",
   "education_required": "<wymagane wyksztalcenie/kwalifikacje lub null>",
   "certifications_required": ["<konkretny certyfikat: 'spawalniczy MIG/TIG', 'VCA/BHP', 'PSA/PPE'>"],
-  "cv_german_required": "<true jesli wymagane CV po niemiecku>",
-  "accommodation_provided": "<true jesli pracodawca zapewnia zakwaterowanie>",
-  "accommodation_organized": "<true jesli pracodawca pomaga znalezc/organizuje mieszkanie>",
-  "accommodation_deducted": "<true jesli koszt zakwaterowania potracany z wyplaty>",
-  "relocation_support": "<true jesli pomoc z formalnosciami/pozwoleniami/kontem/wyjazdem>",
-  "coordinator_support": "<true jesli polskojezyczny koordynator/opiekun>",
+  "cv_german_required": "<true TYLKO gdy w opisie jednoznacznie pisze 'CV po niemiecku/Lebenslauf'. Brak wzmianki = false.>",
+  "accommodation_provided": "<true TYLKO gdy opis jednoznacznie mowi 'zapewniamy zakwaterowanie/mieszkanie/Unterkunft'. Brak wzmianki = false.>",
+  "accommodation_organized": "<true TYLKO gdy opis pisze o organizacji/pomocy znalezienia mieszkania. Brak wzmianki = false.>",
+  "accommodation_deducted": "<true TYLKO gdy opis pisze ze koszt zakwaterowania potracany z wyplaty. Brak wzmianki = false.>",
+  "relocation_support": "<true TYLKO gdy opis jednoznacznie wspomina o pomocy z relokacja/formalnosciami/pozwoleniami. Brak wzmianki = false.>",
+  "coordinator_support": "<true TYLKO gdy opis wspomina o polskojezycznym koordynatorze/opiekunie. Brak wzmianki = false.>",
   "start_date_text": "<termin rozpoczecia: 'od zaraz', 'marzec 2026' lub null>",
   "contract_duration": "<czas trwania: '3 miesiace', 'nieokreslony', 'sezonowy' lub null>",
   "trial_period": "<okres probny: '3 miesiace', '1 miesiac' lub null — NIE mylij z contract_duration!>",
@@ -69,6 +68,7 @@ Zwroc JSON z polami:
 }}
 
 Zasady:
+- WSZYSTKIE pola boolean (true/false): default = FALSE. Zwracaj true TYLKO gdy konkretny tekst opisu to potwierdza. NIE ZGADUJ. NIE WNIOSKUJ. NIE DOMYSLAJ SIE. Lepiej false niz halucynacja.
 - Domyslnie contract_type="full_time"
 - salary: "33.50-36 CHF/h brutto" -> salary_min=33.5, salary_max=36, salary_type="hourly"
 - salary: "2800 CHF netto" -> salary_min=2800, salary_type="monthly"
@@ -76,8 +76,7 @@ Zasady:
 - hours_per_week: "45 godzin tygodniowo" -> 45. Bez konkretnej liczby -> null
 - contract_duration: "nieokreslony", "12 miesiecy", "sezonowy". Nie mylij z trial_period!
 - trial_period: "okres probny 3 miesiace" -> "3 miesiace"
-- cantons_raw: "region Luzern / Zurich / Zug" -> ["Lucerna", "Zurych", "Zug"]. Jeden kanton -> lista z jednym
-- canton_raw: glowny kanton (pierwszy z cantons_raw)
+- canton_raw: JEDEN konkretny kanton albo NULL. Nie wybieraj "glownego" z listy kilku kantonow — wtedy NULL ("Cala Szwajcaria").
 - languages: jesli "wymagany niemiecki" bez poziomu -> domyslnie B1
 - accommodation_organized: true nawet gdy koszt po stronie pracownika
 - seniority_level: null dla wiekszosci prac fizycznych
@@ -143,7 +142,7 @@ def _resolve_canton(canton_raw: str | None, city_name: str | None = None) -> str
 # ── AI call ───────────────────────────────────────────────────────────
 
 
-async def _call_extraction_ai(title: str, company: str, description: str) -> dict | None:
+async def _call_extraction_ai(title: str, company: str, description: str, job_id: str | None = None) -> dict | None:
     """Call OpenAI with job extraction prompt. Returns parsed dict or None."""
     settings = get_settings()
 
@@ -163,7 +162,7 @@ async def _call_extraction_ai(title: str, company: str, description: str) -> dic
         client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
 
         response = await client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-5.4-nano",
             messages=[
                 {
                     "role": "system",
@@ -175,7 +174,7 @@ async def _call_extraction_ai(title: str, company: str, description: str) -> dic
                 {"role": "user", "content": prompt},
             ],
             temperature=0.2,
-            max_tokens=4000,
+            max_completion_tokens=4000,
             response_format={"type": "json_object"},
         )
 
@@ -183,6 +182,20 @@ async def _call_extraction_ai(title: str, company: str, description: str) -> dic
         if not content:
             logger.error("Empty AI response for job extraction")
             return None
+
+        # Track tokens
+        try:
+            from app.services.ai_usage import track_usage
+            if response.usage:
+                track_usage(
+                    service="extraction",
+                    model=response.model or "gpt-4o-mini",
+                    prompt_tokens=response.usage.prompt_tokens,
+                    completion_tokens=response.usage.completion_tokens,
+                    job_id=job_id,
+                )
+        except Exception as e:
+            logger.error(f"track_usage failed: {e}")
 
         return json.loads(content)
 
@@ -295,12 +308,6 @@ def _validate_extraction(data: dict) -> dict:
         certifications_required = []
     certifications_required = [c for c in certifications_required if isinstance(c, str) and c.strip()][:10]
 
-    # Multi-canton support
-    cantons_raw = data.get("cantons_raw") or []
-    if not isinstance(cantons_raw, list):
-        cantons_raw = [str(cantons_raw)] if cantons_raw else []
-    cantons_raw = [str(c).strip() for c in cantons_raw if c and str(c).strip()][:10]
-
     trial_period = data.get("trial_period")
     if trial_period:
         trial_period = str(trial_period).strip()[:100]
@@ -311,7 +318,6 @@ def _validate_extraction(data: dict) -> dict:
         "contract_type": contract_type,
         "city": data.get("city"),
         "canton_raw": data.get("canton_raw"),
-        "cantons_raw": cantons_raw,
         "salary_min": _safe_number(data.get("salary_min")),
         "salary_max": _safe_number(data.get("salary_max")),
         "salary_type": salary_type,
@@ -367,25 +373,14 @@ def map_extraction_to_job(job: JobOffer, data: dict) -> None:
     if data["salary_type"]:
         job.salary_type = data["salary_type"]
 
-    # Resolve canton from AI response
+    # Resolve canton from AI response (single canton or NULL = Cała Szwajcaria)
     canton = _resolve_canton(data.get("canton_raw"), data.get("city"))
+    # NIE nadpisuj scraped city/canton wartoscia NULL — zachowaj dane ze scrapera
     if canton:
         job.canton = canton
+    job.cantons = None  # multi-canton deprecated
     if data.get("city"):
         job.city = data["city"][:100]
-
-    # Multi-canton: resolve all cantons from cantons_raw list
-    cantons_raw = data.get("cantons_raw") or []
-    if cantons_raw:
-        resolved_cantons = []
-        for cr in cantons_raw:
-            rc = _resolve_canton(cr)
-            if rc and rc not in resolved_cantons:
-                resolved_cantons.append(rc)
-        if resolved_cantons:
-            job.cantons = resolved_cantons
-            if not canton and resolved_cantons:
-                job.canton = resolved_cantons[0]
 
     job.seniority_level = data.get("seniority_level")
     job.accommodation_provided = data.get("accommodation_provided", False)
@@ -481,6 +476,7 @@ async def extract_single_job(job_id: str, session_factory=None) -> bool:
             title=job.title,
             company=company_name,
             description=raw_text,
+            job_id=str(job.id),
         )
 
         if ai_data is None:

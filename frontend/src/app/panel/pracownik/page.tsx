@@ -28,7 +28,7 @@ export default function WorkerDashboard() {
 
   return (
     <div>
-      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
+      <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240] mb-6">
         Witaj, {user?.first_name || "Pracowniku"}!
       </h1>
 
@@ -67,7 +67,7 @@ export default function WorkerDashboard() {
               <p className="text-xs text-gray-500 truncate">Zaakceptowane</p>
             </div>
             <div className="bg-white border rounded-lg p-3 sm:p-4">
-              <div className="flex items-center gap-2 text-red-600 mb-1">
+              <div className="flex items-center gap-2 text-[#E1002A] mb-1">
                 <XCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 <span className="text-xl sm:text-2xl font-bold">{stats.rejected}</span>
               </div>
@@ -80,8 +80,8 @@ export default function WorkerDashboard() {
       {/* Recent applications */}
       <div className="bg-white border rounded-lg">
         <div className="px-5 py-4 border-b flex justify-between items-center">
-          <h2 className="font-semibold text-gray-900">Ostatnie aplikacje</h2>
-          <Link href="/panel/pracownik/aplikacje" className="text-sm text-red-600 hover:underline">
+          <h2 className="font-semibold font-display text-[#0D2240]">Ostatnie aplikacje</h2>
+          <Link href="/panel/pracownik/aplikacje" className="text-sm text-[#E1002A] hover:underline">
             Zobacz wszystkie
           </Link>
         </div>
@@ -120,7 +120,7 @@ export default function WorkerDashboard() {
         ) : (
           <div className="px-5 py-8 text-center text-gray-500 text-sm">
             Nie masz jeszcze żadnych aplikacji.{" "}
-            <Link href="/oferty" className="text-red-600 hover:underline">Przeglądaj oferty</Link>
+            <Link href="/oferty" className="text-[#E1002A] hover:underline">Przeglądaj oferty</Link>
           </div>
         )}
       </div>

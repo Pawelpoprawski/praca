@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praca w Szwajcarii - Oferty pracy dla Polakow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #1A1A1A;
+            background-color: #FFFFFF;
+            line-height: 1.5;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s ease;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        button, input, select {
+            font-family: inherit;
+            font-size: inherit;
+            border: none;
+            outline: none;
+        }
+
+        /* ===== UTILITIES ===== */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: #FFFFFF;
+            border-bottom: 1px solid #E5E5E5;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header__logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 22px;
+            font-weight: 900;
+            color: #00A85F;
+            letter-spacing: -0.5px;
+            flex-shrink: 0;
+        }
+
+        .header__logo svg {
+            width: 28px;
+            height: 28px;
+            fill: #00A85F;
+        }
+
+        .header__nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .header__nav a {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1A1A1A;
+            padding: 4px 0;
+            position: relative;
+        }
+
+        .header__nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00A85F;
+            transition: width 0.25s ease;
+        }
+
+        .header__nav a:hover {
+            color: #00A85F;
+        }
+
+        .header__nav a:hover::after {
+            width: 100%;
+        }
+
+        .header__actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header__link {
+            font-size: 14px;
+            font-weight: 700;
+            color: #6B6B6B;
+        }
+
+        .header__link:hover {
+            color: #00A85F;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn--primary {
+            background: #00A85F;
+            color: #FFFFFF;
+            padding: 10px 24px;
+            font-size: 14px;
+        }
+
+        .btn--primary:hover {
+            background: #008F50;
+            box-shadow: 0 2px 8px rgba(0, 168, 95, 0.3);
+        }
+
+        .btn--outline {
+            background: transparent;
+            color: #00A85F;
+            border: 2px solid #00A85F;
+            padding: 8px 22px;
+            font-size: 14px;
+        }
+
+        .btn--outline:hover {
+            background: #00A85F;
+            color: #FFFFFF;
+        }
+
+        .btn--small {
+            padding: 6px 16px;
+            font-size: 13px;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: #F4F5F7;
+            padding: 56px 0 48px;
+        }
+
+        .hero__title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero__subtitle {
+            text-align: center;
+            font-size: 16px;
+            color: #6B6B6B;
+            margin-bottom: 32px;
+            font-weight: 400;
+        }
+
+        .search-bar {
+            max-width: 780px;
+            margin: 0 auto;
+            background: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .search-bar__field {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            gap: 10px;
+            border-right: 1px solid #E5E5E5;
+            min-height: 56px;
+        }
+
+        .search-bar__field:last-of-type {
+            border-right: none;
+        }
+
+        .search-bar__field svg {
+            width: 20px;
+            height: 20px;
+            fill: #6B6B6B;
+            flex-shrink: 0;
+        }
+
+        .search-bar__input {
+            width: 100%;
+            background: none;
+            font-size: 14px;
+            color: #1A1A1A;
+        }
+
+        .search-bar__input::placeholder {
+            color: #9E9E9E;
+        }
+
+        .search-bar__btn {
+            background: #00A85F;
+            color: #FFFFFF;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 0 32px;
+            min-height: 56px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border: none;
+            flex-shrink: 0;
+        }
+
+        .search-bar__btn:hover {
+            background: #008F50;
+        }
+
+        /* ===== POPULAR SEARCHES ===== */
+        .popular {
+            max-width: 780px;
+            margin: 20px auto 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .popular__label {
+            font-size: 13px;
+            color: #6B6B6B;
+            font-weight: 700;
+        }
+
+        .popular__pill {
+            display: inline-block;
+            padding: 6px 14px;
+            background: #FFFFFF;
+            border: 1px solid #D9D9D9;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #6B6B6B;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .popular__pill:hover {
+            border-color: #00A85F;
+            color: #00A85F;
+            background: #F0FFF6;
+        }
+
+        /* ===== CATEGORIES ===== */
+        .categories {
+            padding: 56px 0;
+            background: #FFFFFF;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: #6B6B6B;
+            margin-bottom: 32px;
+        }
+
+        .categories__grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .category-card {
+            background: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .category-card:hover {
+            border-color: #00A85F;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .category-card__icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            background: #F0FFF6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .category-card__icon svg {
+            width: 22px;
+            height: 22px;
+            fill: #00A85F;
+        }
+
+        .category-card__text {
+            min-width: 0;
+        }
+
+        .category-card__name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 2px;
+        }
+
+        .category-card__count {
+            font-size: 12px;
+            color: #6B6B6B;
+        }
+
+        /* ===== JOB LISTINGS ===== */
+        .listings {
+            padding: 56px 0;
+            background: #F4F5F7;
+        }
+
+        .listings__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .listings__header .section-title {
+            margin-bottom: 0;
+        }
+
+        .listings__sort {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #6B6B6B;
+        }
+
+        .listings__sort select {
+            background: #FFFFFF;
+            border: 1px solid #D9D9D9;
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-size: 13px;
+            color: #1A1A1A;
+            cursor: pointer;
+        }
+
+        .listings__count {
+            font-size: 14px;
+            color: #6B6B6B;
+            margin-bottom: 16px;
+        }
+
+        .job-card {
+            background: #FFFFFF;
+            border-bottom: 1px solid #E5E5E5;
+            padding: 20px 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            transition: background 0.15s ease;
+            cursor: pointer;
+        }
+
+        .job-card:first-child {
+            border-radius: 8px 8px 0 0;
+        }
+
+        .job-card:last-child {
+            border-radius: 0 0 8px 8px;
+            border-bottom: none;
+        }
+
+        .job-card:hover {
+            background: #FAFBFC;
+        }
+
+        .job-card__logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background: #E8E8E8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #FFFFFF;
+            flex-shrink: 0;
+        }
+
+        .job-card__logo--green { background: #00A85F; }
+        .job-card__logo--blue { background: #3B82F6; }
+        .job-card__logo--purple { background: #8B5CF6; }
+        .job-card__logo--orange { background: #F59E0B; }
+        .job-card__logo--red { background: #EF4444; }
+        .job-card__logo--teal { background: #14B8A6; }
+
+        .job-card__body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .job-card__title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .job-card__title:hover {
+            color: #00A85F;
+        }
+
+        .job-card__company {
+            font-size: 13px;
+            color: #6B6B6B;
+            margin-bottom: 8px;
+        }
+
+        .job-card__meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .job-card__tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: #6B6B6B;
+            background: #F4F5F7;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .job-card__tag svg {
+            width: 14px;
+            height: 14px;
+            fill: #6B6B6B;
+        }
+
+        .job-card__salary {
+            font-size: 14px;
+            font-weight: 700;
+            color: #00A85F;
+        }
+
+        .job-card__right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .job-card__time {
+            font-size: 12px;
+            color: #9E9E9E;
+        }
+
+        .job-card__apply {
+            background: #00A85F;
+            color: #FFFFFF;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border: none;
+            white-space: nowrap;
+        }
+
+        .job-card__apply:hover {
+            background: #008F50;
+        }
+
+        .job-card__bookmark {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .job-card__bookmark svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: #9E9E9E;
+            stroke-width: 2;
+            transition: stroke 0.2s ease;
+        }
+
+        .job-card__bookmark:hover svg {
+            stroke: #00A85F;
+        }
+
+        /* ===== PROMOTED BADGE ===== */
+        .job-card--promoted {
+            border-left: 3px solid #00A85F;
+        }
+
+        .job-card__promoted-badge {
+            font-size: 10px;
+            font-weight: 700;
+            color: #00A85F;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        /* ===== PAGINATION ===== */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 32px;
+        }
+
+        .pagination__btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: #6B6B6B;
+            background: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pagination__btn:hover {
+            border-color: #00A85F;
+            color: #00A85F;
+        }
+
+        .pagination__btn--active {
+            background: #00A85F;
+            color: #FFFFFF;
+            border-color: #00A85F;
+        }
+
+        .pagination__btn--active:hover {
+            background: #008F50;
+            color: #FFFFFF;
+        }
+
+        .pagination__btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* ===== CTA BANNER ===== */
+        .cta-banner {
+            background: #00A85F;
+            padding: 56px 0;
+        }
+
+        .cta-banner__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .cta-banner__text h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 8px;
+        }
+
+        .cta-banner__text p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .cta-banner__btn {
+            background: #FFFFFF;
+            color: #00A85F;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            white-space: nowrap;
+        }
+
+        .cta-banner__btn:hover {
+            background: #F0FFF6;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ===== TRUST SECTION ===== */
+        .trust {
+            padding: 48px 0;
+            background: #FFFFFF;
+        }
+
+        .trust__grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            text-align: center;
+        }
+
+        .trust__item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .trust__icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #F0FFF6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .trust__icon svg {
+            width: 26px;
+            height: 26px;
+            fill: #00A85F;
+        }
+
+        .trust__number {
+            font-size: 28px;
+            font-weight: 900;
+            color: #1A1A1A;
+        }
+
+        .trust__label {
+            font-size: 13px;
+            color: #6B6B6B;
+        }
+
+        /* ===== NEWSLETTER ===== */
+        .newsletter {
+            padding: 48px 0;
+            background: #F4F5F7;
+        }
+
+        .newsletter__inner {
+            max-width: 560px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .newsletter__title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 8px;
+        }
+
+        .newsletter__desc {
+            font-size: 14px;
+            color: #6B6B6B;
+            margin-bottom: 24px;
+        }
+
+        .newsletter__form {
+            display: flex;
+            gap: 8px;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        .newsletter__input {
+            flex: 1;
+            padding: 12px 16px;
+            background: #FFFFFF;
+            border: 1px solid #D9D9D9;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .newsletter__input:focus {
+            border-color: #00A85F;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #1A1A1A;
+            padding: 56px 0 24px;
+            color: #FFFFFF;
+        }
+
+        .footer__grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer__brand {
+            font-size: 20px;
+            font-weight: 900;
+            color: #00A85F;
+            margin-bottom: 12px;
+        }
+
+        .footer__brand-desc {
+            font-size: 13px;
+            color: #9E9E9E;
+            line-height: 1.6;
+            max-width: 280px;
+        }
+
+        .footer__col-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer__links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer__links a {
+            font-size: 13px;
+            color: #9E9E9E;
+            transition: color 0.2s ease;
+        }
+
+        .footer__links a:hover {
+            color: #00A85F;
+        }
+
+        .footer__bottom {
+            border-top: 1px solid #333333;
+            padding-top: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer__copyright {
+            font-size: 12px;
+            color: #6B6B6B;
+        }
+
+        .footer__social {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer__social a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #333333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .footer__social a:hover {
+            background: #00A85F;
+        }
+
+        .footer__social svg {
+            width: 16px;
+            height: 16px;
+            fill: #FFFFFF;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .categories__grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .footer__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .trust__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header__nav {
+                display: none;
+            }
+            .hero__title {
+                font-size: 28px;
+            }
+            .search-bar {
+                flex-direction: column;
+            }
+            .search-bar__field {
+                border-right: none;
+                border-bottom: 1px solid #E5E5E5;
+                width: 100%;
+            }
+            .search-bar__btn {
+                width: 100%;
+            }
+            .categories__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .job-card {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .job-card__right {
+                flex-direction: row;
+                align-items: center;
+                width: 100%;
+                justify-content: space-between;
+            }
+            .cta-banner__inner {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer__grid {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .categories__grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter__form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="container">
+            <a href="#" class="header__logo">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                Praca w Szwajcarii
+            </a>
+            <nav class="header__nav">
+                <a href="#">Oferty pracy</a>
+                <a href="#">Pracodawcy</a>
+                <a href="#">Porady</a>
+                <a href="#">Dla firm</a>
+            </nav>
+            <div class="header__actions">
+                <a href="#" class="header__link">Dodaj CV</a>
+                <a href="#" class="btn btn--primary">Zaloguj sie</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero__title">Oferty pracy w Szwajcarii</h1>
+            <p class="hero__subtitle">Znajdz idealna prace wsrod tysiecy ofert od sprawdzonych pracodawcow</p>
+            <div class="search-bar">
+                <div class="search-bar__field">
+                    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    <input type="text" class="search-bar__input" placeholder="Stanowisko, firma, slowo kluczowe">
+                </div>
+                <div class="search-bar__field">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    <input type="text" class="search-bar__input" placeholder="Lokalizacja">
+                </div>
+                <button class="search-bar__btn">Szukaj</button>
+            </div>
+            <div class="popular">
+                <span class="popular__label">Popularne:</span>
+                <a href="#" class="popular__pill">Budowlanka</a>
+                <a href="#" class="popular__pill">Kierowca C+E</a>
+                <a href="#" class="popular__pill">Spawacz</a>
+                <a href="#" class="popular__pill">Elektryk</a>
+                <a href="#" class="popular__pill">Opiekun/ka</a>
+                <a href="#" class="popular__pill">Magazynier</a>
+                <a href="#" class="popular__pill">Zurich</a>
+                <a href="#" class="popular__pill">Berno</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CATEGORIES ===== -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Popularne kategorie</h2>
+            <p class="section-subtitle">Przegladaj oferty wedlug branzy</p>
+            <div class="categories__grid">
+                <a href="#" class="category-card">
+                    <div class="category-card__icon">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+                    </div>
+                    <div class="category-card__text">
+                        <div class="category-card__name">Budownictwo</div>
+                        <div class="category-card__count">342 oferty</div>
+                    </div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-card__icon">
+                        <svg viewBox="0 0 24 24"><path d="M18 16h-2v-1H8v1H6v-1H2v5h20v-5h-4v1zm2-8h-3V5c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v3H4c-1.1 0-2 .9-2 2v4h4v-2h2v2h8v-2h2v2h4v-4c0-1.1-.9-2-2-2zm-5 0H9V5h6v3z"/></svg>
+                    </div>
+                    <div class="category-card__text">
+                        <div class="category-card__name">Produkcja</div>
+                        <div class="category-card__count">289 ofert</div>
+                    </div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-card__icon">
+                        <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                    </div>
+                    <div class="category-card__text">
+                        <div class="category-card__name">Transport</div>
+                        <div class="category-card__count">178 ofert</div>
+                    </div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-card__icon">
+                        <svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
+                    </div>
+                    <div class="category-card__text">
+                        <div class="category-card__name">Edukacja</div>
+                        <div class="category-card__count">94 oferty</div>
+                    </div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-card__icon">
+                        <svg viewBox="0 0 24 24"><path d="M7 5h10v2h2V3c0-1.1-.9-2-2-2H7c-1.1 0-2 .9-2 2v4h2V5zm8.41 11.59L20 12l-4.59-4.59L14 8.83 17.17 12 14 15.17l1.41 1.42zM10 15.17L6.83 12 10 8.83 8.59 7.41 4 12l4.59 4.59L10 15.17zM17 19H7v-2H5v4c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2v-4h-2v2z"/></svg>
+                    </div>
+                    <div class="category-card__text">
+                        <div class="category-card__name">IT / Programowanie</div>
+                        <div class="category-card__count">156 ofert</div>
+                    </div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-card__icon">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>
+                    </div>
+                    <div class="category-card__text">
+                        <div class="category-card__name">Medycyna</div>
+                        <div class="category-card__count">112 ofert</div>
+                    </div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-card__icon">
+                        <svg viewBox="0 0 24 24"><path d="M11 9c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm8 0c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zM2 17.5c0-2.33 4.67-3.5 7-3.5.73 0 1.72.16 2.72.43C10.04 15.35 9 16.67 9 17.5V20H2v-2.5zm14 .5v2h-6v-2c0-1.92 2.94-3.5 6-3.5s6 1.58 6 3.5v2h-6z"/></svg>
+                    </div>
+                    <div class="category-card__text">
+                        <div class="category-card__name">Opieka / Pomoc domowa</div>
+                        <div class="category-card__count">203 oferty</div>
+                    </div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-card__icon">
+                        <svg viewBox="0 0 24 24"><path d="M7 14c-1.66 0-3-1.34-3-3 0-1.31.84-2.41 2-2.83V4.5C6 3.12 7.12 2 8.5 2S11 3.12 11 4.5v3.67c1.16.42 2 1.52 2 2.83 0 1.66-1.34 3-3 3H7zm9-2v4h4v-4h-4zm-2-2h8v8h-8v-8zm2-6v4h4V4h-4zm-2-2h8v8h-8V2z"/></svg>
+                    </div>
+                    <div class="category-card__text">
+                        <div class="category-card__name">Gastronomia / Hotelarstwo</div>
+                        <div class="category-card__count">167 ofert</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== JOB LISTINGS ===== -->
+    <section class="listings">
+        <div class="container">
+            <div class="listings__header">
+                <h2 class="section-title">Najnowsze oferty pracy</h2>
+                <div class="listings__sort">
+                    <span>Sortuj:</span>
+                    <select>
+                        <option>Najnowsze</option>
+                        <option>Wynagrodzenie malejaco</option>
+                        <option>Wynagrodzenie rosnaco</option>
+                    </select>
+                </div>
+            </div>
+            <p class="listings__count">Znaleziono <strong>1 247</strong> ofert pracy</p>
+
+            <!-- Job 1 - Promoted -->
+            <div class="job-card job-card--promoted">
+                <div class="job-card__logo job-card__logo--green">S</div>
+                <div class="job-card__body">
+                    <span class="job-card__promoted-badge">Promowane</span>
+                    <a href="#" class="job-card__title">Monter konstrukcji stalowych</a>
+                    <div class="job-card__company">Swiss Steel Solutions AG</div>
+                    <div class="job-card__meta">
+                        <span class="job-card__tag">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            Zurich
+                        </span>
+                        <span class="job-card__tag">Umowa o prace</span>
+                        <span class="job-card__tag">Pelny etat</span>
+                        <span class="job-card__salary">od 5 800 CHF</span>
+                    </div>
+                </div>
+                <div class="job-card__right">
+                    <button class="job-card__bookmark" title="Zapisz">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                    </button>
+                    <button class="job-card__apply">Aplikuj</button>
+                    <span class="job-card__time">2 godz. temu</span>
+                </div>
+            </div>
+
+            <!-- Job 2 -->
+            <div class="job-card">
+                <div class="job-card__logo job-card__logo--blue">A</div>
+                <div class="job-card__body">
+                    <a href="#" class="job-card__title">Elektryk przemyslowy</a>
+                    <div class="job-card__company">Alpine Electro GmbH</div>
+                    <div class="job-card__meta">
+                        <span class="job-card__tag">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            Berno
+                        </span>
+                        <span class="job-card__tag">Umowa o prace</span>
+                        <span class="job-card__tag">Pelny etat</span>
+                        <span class="job-card__salary">od 6 200 CHF</span>
+                    </div>
+                </div>
+                <div class="job-card__right">
+                    <button class="job-card__bookmark" title="Zapisz">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                    </button>
+                    <button class="job-card__apply">Aplikuj</button>
+                    <span class="job-card__time">5 godz. temu</span>
+                </div>
+            </div>
+
+            <!-- Job 3 -->
+            <div class="job-card">
+                <div class="job-card__logo job-card__logo--purple">H</div>
+                <div class="job-card__body">
+                    <a href="#" class="job-card__title">Opiekunka osob starszych</a>
+                    <div class="job-card__company">HelvetaCare AG</div>
+                    <div class="job-card__meta">
+                        <span class="job-card__tag">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            Lucerna
+                        </span>
+                        <span class="job-card__tag">Zlecenie</span>
+                        <span class="job-card__tag">Zmianowa</span>
+                        <span class="job-card__salary">od 4 500 CHF</span>
+                    </div>
+                </div>
+                <div class="job-card__right">
+                    <button class="job-card__bookmark" title="Zapisz">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                    </button>
+                    <button class="job-card__apply">Aplikuj</button>
+                    <span class="job-card__time">8 godz. temu</span>
+                </div>
+            </div>
+
+            <!-- Job 4 -->
+            <div class="job-card">
+                <div class="job-card__logo job-card__logo--orange">B</div>
+                <div class="job-card__body">
+                    <a href="#" class="job-card__title">Kierowca C+E - transport miedzynarodowy</a>
+                    <div class="job-card__company">Bernina Logistics SA</div>
+                    <div class="job-card__meta">
+                        <span class="job-card__tag">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            Bazylea
+                        </span>
+                        <span class="job-card__tag">Umowa o prace</span>
+                        <span class="job-card__tag">Pelny etat</span>
+                        <span class="job-card__salary">od 5 400 CHF</span>
+                    </div>
+                </div>
+                <div class="job-card__right">
+                    <button class="job-card__bookmark" title="Zapisz">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                    </button>
+                    <button class="job-card__apply">Aplikuj</button>
+                    <span class="job-card__time">1 dzien temu</span>
+                </div>
+            </div>
+
+            <!-- Job 5 -->
+            <div class="job-card">
+                <div class="job-card__logo job-card__logo--red">M</div>
+                <div class="job-card__body">
+                    <a href="#" class="job-card__title">Spawacz MIG/MAG/TIG</a>
+                    <div class="job-card__company">MetalPro Schweiz AG</div>
+                    <div class="job-card__meta">
+                        <span class="job-card__tag">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            Winterthur
+                        </span>
+                        <span class="job-card__tag">Umowa o prace</span>
+                        <span class="job-card__tag">Pelny etat</span>
+                        <span class="job-card__salary">od 5 900 CHF</span>
+                    </div>
+                </div>
+                <div class="job-card__right">
+                    <button class="job-card__bookmark" title="Zapisz">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                    </button>
+                    <button class="job-card__apply">Aplikuj</button>
+                    <span class="job-card__time">1 dzien temu</span>
+                </div>
+            </div>
+
+            <!-- Job 6 -->
+            <div class="job-card">
+                <div class="job-card__logo job-card__logo--teal">G</div>
+                <div class="job-card__body">
+                    <a href="#" class="job-card__title">Kucharz / Kucharka - kuchnia europejska</a>
+                    <div class="job-card__company">Grand Hotel Zermatt</div>
+                    <div class="job-card__meta">
+                        <span class="job-card__tag">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            Zermatt
+                        </span>
+                        <span class="job-card__tag">Umowa o prace</span>
+                        <span class="job-card__tag">Zakwaterowanie</span>
+                        <span class="job-card__salary">od 4 800 CHF</span>
+                    </div>
+                </div>
+                <div class="job-card__right">
+                    <button class="job-card__bookmark" title="Zapisz">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                    </button>
+                    <button class="job-card__apply">Aplikuj</button>
+                    <span class="job-card__time">2 dni temu</span>
+                </div>
+            </div>
+
+            <!-- Job 7 -->
+            <div class="job-card">
+                <div class="job-card__logo job-card__logo--green">N</div>
+                <div class="job-card__body">
+                    <a href="#" class="job-card__title">Pracownik magazynowy z wozkiem widlowym</a>
+                    <div class="job-card__company">NovaTrans Logistik AG</div>
+                    <div class="job-card__meta">
+                        <span class="job-card__tag">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            Genewa
+                        </span>
+                        <span class="job-card__tag">Tymczasowa</span>
+                        <span class="job-card__tag">Pelny etat</span>
+                        <span class="job-card__salary">od 4 600 CHF</span>
+                    </div>
+                </div>
+                <div class="job-card__right">
+                    <button class="job-card__bookmark" title="Zapisz">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                    </button>
+                    <button class="job-card__apply">Aplikuj</button>
+                    <span class="job-card__time">2 dni temu</span>
+                </div>
+            </div>
+
+            <!-- Job 8 -->
+            <div class="job-card">
+                <div class="job-card__logo job-card__logo--blue">P</div>
+                <div class="job-card__body">
+                    <a href="#" class="job-card__title">Malarz - prace wykanczeniowe</a>
+                    <div class="job-card__company">PräzisionsBau GmbH</div>
+                    <div class="job-card__meta">
+                        <span class="job-card__tag">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            St. Gallen
+                        </span>
+                        <span class="job-card__tag">Umowa o prace</span>
+                        <span class="job-card__tag">Pelny etat</span>
+                        <span class="job-card__salary">od 5 100 CHF</span>
+                    </div>
+                </div>
+                <div class="job-card__right">
+                    <button class="job-card__bookmark" title="Zapisz">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                    </button>
+                    <button class="job-card__apply">Aplikuj</button>
+                    <span class="job-card__time">3 dni temu</span>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <nav class="pagination">
+                <a href="#" class="pagination__btn">
+                    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                </a>
+                <a href="#" class="pagination__btn pagination__btn--active">1</a>
+                <a href="#" class="pagination__btn">2</a>
+                <a href="#" class="pagination__btn">3</a>
+                <a href="#" class="pagination__btn">4</a>
+                <a href="#" class="pagination__btn">5</a>
+                <span class="pagination__btn" style="border:none;background:none;">...</span>
+                <a href="#" class="pagination__btn">42</a>
+                <a href="#" class="pagination__btn">
+                    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                </a>
+            </nav>
+        </div>
+    </section>
+
+    <!-- ===== TRUST ===== -->
+    <section class="trust">
+        <div class="container">
+            <div class="trust__grid">
+                <div class="trust__item">
+                    <div class="trust__icon">
+                        <svg viewBox="0 0 24 24"><path d="M18 16h-2v-1H8v1H6v-1H2v5h20v-5h-4v1zm2-8h-3V5c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v3H4c-1.1 0-2 .9-2 2v4h4v-2h2v2h8v-2h2v2h4v-4c0-1.1-.9-2-2-2zm-5 0H9V5h6v3z"/></svg>
+                    </div>
+                    <div class="trust__number">5 000+</div>
+                    <div class="trust__label">Aktywnych ofert pracy</div>
+                </div>
+                <div class="trust__item">
+                    <div class="trust__icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>
+                    </div>
+                    <div class="trust__number">800+</div>
+                    <div class="trust__label">Zaufanych pracodawcow</div>
+                </div>
+                <div class="trust__item">
+                    <div class="trust__icon">
+                        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    </div>
+                    <div class="trust__number">25 000+</div>
+                    <div class="trust__label">Zarejestrowanych uzytkownikow</div>
+                </div>
+                <div class="trust__item">
+                    <div class="trust__icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <div class="trust__number">26</div>
+                    <div class="trust__label">Kantonow w Szwajcarii</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA BANNER ===== -->
+    <section class="cta-banner">
+        <div class="container">
+            <div class="cta-banner__inner">
+                <div class="cta-banner__text">
+                    <h2>Szukasz pracownikow?</h2>
+                    <p>Dodaj ogloszenie i dotrzej do tysiecy kandydatow z Polski gotowych do pracy w Szwajcarii.</p>
+                </div>
+                <button class="cta-banner__btn">Dodaj ogloszenie</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEWSLETTER ===== -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter__inner">
+                <h2 class="newsletter__title">Otrzymuj najnowsze oferty</h2>
+                <p class="newsletter__desc">Zapisz sie na newsletter i nie przegap zadnej oferty pracy w Szwajcarii</p>
+                <form class="newsletter__form">
+                    <input type="email" class="newsletter__input" placeholder="Twoj adres e-mail">
+                    <button type="submit" class="btn btn--primary">Zapisz sie</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div>
+                    <div class="footer__brand">Praca w Szwajcarii</div>
+                    <p class="footer__brand-desc">Najwiekszy polski portal z ofertami pracy w Szwajcarii. Pomagamy Polakom znalezc legalna i dobrze platna prace u sprawdzonych pracodawcow.</p>
+                </div>
+                <div>
+                    <div class="footer__col-title">Dla pracownikow</div>
+                    <div class="footer__links">
+                        <a href="#">Oferty pracy</a>
+                        <a href="#">Szukaj wg lokalizacji</a>
+                        <a href="#">Szukaj wg branzy</a>
+                        <a href="#">Porady zawodowe</a>
+                        <a href="#">Kalkulator zarobkow</a>
+                    </div>
+                </div>
+                <div>
+                    <div class="footer__col-title">Dla pracodawcow</div>
+                    <div class="footer__links">
+                        <a href="#">Dodaj ogloszenie</a>
+                        <a href="#">Cennik</a>
+                        <a href="#">Baza kandydatow</a>
+                        <a href="#">Panel pracodawcy</a>
+                    </div>
+                </div>
+                <div>
+                    <div class="footer__col-title">Informacje</div>
+                    <div class="footer__links">
+                        <a href="#">O nas</a>
+                        <a href="#">Kontakt</a>
+                        <a href="#">Regulamin</a>
+                        <a href="#">Polityka prywatnosci</a>
+                        <a href="#">Blog</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <span class="footer__copyright">2024-2026 Praca w Szwajcarii. Wszelkie prawa zastrzezone.</span>
+                <div class="footer__social">
+                    <a href="#" title="Facebook">
+                        <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+                    </a>
+                    <a href="#" title="LinkedIn">
+                        <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                    </a>
+                    <a href="#" title="Instagram">
+                        <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

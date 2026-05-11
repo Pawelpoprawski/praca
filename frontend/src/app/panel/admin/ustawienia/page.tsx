@@ -37,14 +37,14 @@ export default function SettingsPage() {
 
   return (
     <div>
-      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">Ustawienia systemowe</h1>
+      <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240] mb-6">Ustawienia systemowe</h1>
 
       {message.text && (
         <div
           className={`px-4 py-3 rounded-lg mb-4 text-sm flex items-center gap-2 border ${
             message.type === "success"
               ? "bg-green-50 border-green-200 text-green-700"
-              : "bg-red-50 border-red-200 text-red-700"
+              : "bg-[#FFF0F3] border-[#FFC2CD] text-[#B8001F]"
           }`}
           role={message.type === "error" ? "alert" : "status"}
         >
@@ -73,7 +73,7 @@ export default function SettingsPage() {
                     type={setting.value_type === "int" ? "number" : "text"}
                     value={editValue}
                     onChange={(e) => setEditValue(e.target.value)}
-                    className="w-40 px-3 py-1.5 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500"
+                    className="w-40 px-3 py-1.5 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20"
                   />
                   <button
                     onClick={() => updateMutation.mutate({ key: setting.key, value: editValue })}

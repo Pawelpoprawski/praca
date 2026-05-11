@@ -24,7 +24,7 @@ function StatCard({
           <Icon className="w-5 h-5" />
         </div>
         <div>
-          <p className="text-2xl font-bold text-gray-900">{value}</p>
+          <p className="text-2xl font-bold text-[#0D2240]">{value}</p>
           <p className="text-xs text-gray-500">{label}</p>
         </div>
       </div>
@@ -92,7 +92,7 @@ export default function AdminEkstrakcjaPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2">
+        <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240] flex items-center gap-2">
           <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600" />
           Ekstrakcja AI
         </h1>
@@ -110,7 +110,7 @@ export default function AdminEkstrakcjaPage() {
       {/* CV Section */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-800">Ekstrakcja CV</h2>
+          <h2 className="text-lg font-semibold font-display text-gray-800">Ekstrakcja CV</h2>
           <button
             onClick={() => runCv.mutate()}
             disabled={runCv.isPending || cvRunning || (status?.cv.pending === 0)}
@@ -148,7 +148,7 @@ export default function AdminEkstrakcjaPage() {
             label="Bledy"
             value={status?.cv.failed ?? 0}
             icon={XCircle}
-            color="bg-red-100 text-red-700"
+            color="bg-[#FFE0E6] text-[#B8001F]"
           />
         </div>
 
@@ -171,7 +171,7 @@ export default function AdminEkstrakcjaPage() {
       {/* Jobs Section */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-800">Ekstrakcja ofert pracy</h2>
+          <h2 className="text-lg font-semibold font-display text-gray-800">Ekstrakcja ofert pracy</h2>
           <button
             onClick={() => runJobs.mutate()}
             disabled={runJobs.isPending || jobsRunning || (status?.jobs.pending === 0)}

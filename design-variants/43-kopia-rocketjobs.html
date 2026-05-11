@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Praca w Szwajcarii - Oferty pracy dla Polakow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-primary: #121212;
+  --color-secondary: #616161;
+  --color-tertiary: #9E9E9E;
+  --color-white: #FFFFFF;
+  --color-bg-light: #FAFAFA;
+  --color-border: #EEEEEE;
+  --color-orange: #FF6240;
+  --color-pink: #FF413F;
+  --color-violet: #783FD9;
+  --color-blue: #573FFF;
+  --font-family: 'Archivo', sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--color-primary);
+  background: var(--color-white);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===================== HEADER ===================== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 80px;
+  background: var(--color-white);
+  box-shadow: 0px 1px 0px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+}
+
+.header-inner {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.header-logo svg {
+  width: 36px;
+  height: 36px;
+}
+
+.header-logo-text {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: -0.5px;
+}
+
+.header-logo-text span {
+  background: linear-gradient(90deg, var(--color-orange), var(--color-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-nav a {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-secondary);
+  padding: 8px 16px;
+  border-radius: 100px;
+  transition: all 0.2s ease;
+}
+
+.header-nav a:hover {
+  color: var(--color-primary);
+  background: rgba(0,0,0,0.04);
+}
+
+.header-nav a.active {
+  color: var(--color-primary);
+  background: rgba(0,0,0,0.06);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 20px;
+  border: 1px solid var(--color-border);
+  background: rgba(0,0,0,0.08);
+  border-radius: 100px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-secondary:hover {
+  background: rgba(0,0,0,0.12);
+  border-color: rgba(0,0,0,0.15);
+}
+
+.btn-gradient {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 12px 24px;
+  background: linear-gradient(90deg, #FF6240, #FF413F, #783FD9, #573FFF);
+  border: none;
+  border-radius: 100px;
+  font-family: var(--font-family);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-white);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-gradient:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.btn-gradient:active {
+  transform: scale(0.96);
+}
+
+/* ===================== HERO ===================== */
+.hero-wrapper {
+  padding-top: 112px;
+  padding-bottom: 0;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 40px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 80px 40px 64px;
+  background: hsla(0,0%,96%,1);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: -100px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,98,64,0.33) 0%, transparent 70%);
+  animation: blobMove1 10s linear infinite alternate;
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  right: -60px;
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(120,63,217,0.3) 0%, transparent 70%);
+  animation: blobMove2 10s linear infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes blobMove1 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(200px, 120px); }
+}
+
+@keyframes blobMove2 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-180px, -100px); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 864px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-violet);
+  margin-bottom: 24px;
+}
+
+.hero-badge svg {
+  width: 16px;
+  height: 16px;
+}
+
+.hero h1 {
+  font-size: 52px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  color: var(--color-primary);
+  margin-bottom: 16px;
+}
+
+.hero h1 .gradient-text {
+  background: linear-gradient(90deg, var(--color-orange), var(--color-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-secondary);
+  max-width: 600px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+}
+
+/* ===================== SEARCH BAR ===================== */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  background: var(--color-white);
+  border-radius: 100px;
+  box-shadow: 0px 4px 20px rgba(0,0,0,0.06);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.search-input-group {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  height: 48px;
+  background: var(--color-bg-light);
+  border-radius: 100px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.search-input-group:focus-within {
+  border-color: rgba(0,0,0,0.1);
+}
+
+.search-input-group svg {
+  width: 20px;
+  height: 20px;
+  color: var(--color-tertiary);
+  flex-shrink: 0;
+}
+
+.search-input-group input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-family);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-primary);
+  outline: none;
+}
+
+.search-input-group input::placeholder {
+  color: var(--color-tertiary);
+}
+
+.search-bar .btn-gradient {
+  flex-shrink: 0;
+  padding: 12px 32px;
+}
+
+/* ===================== STATS ===================== */
+.stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 32px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: -0.5px;
+}
+
+.stat-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-tertiary);
+  margin-top: 2px;
+}
+
+/* ===================== CATEGORIES ===================== */
+.section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 64px 40px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--color-primary);
+}
+
+.section-subtitle {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-secondary);
+  margin-top: 4px;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.category-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--color-bg-light);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid transparent;
+}
+
+.category-card:hover {
+  background: var(--color-white);
+  box-shadow: 0px 1px 5px rgba(0,0,0,0.02), 0px 4px 16px rgba(0,0,0,0.06);
+  border-color: rgba(0,0,0,0.03);
+}
+
+.category-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.category-card:hover .category-icon {
+  transform: scale(1.15);
+}
+
+.category-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.category-icon.orange { background: rgba(255,98,64,0.12); color: #FF6240; }
+.category-icon.pink { background: rgba(255,65,63,0.12); color: #FF413F; }
+.category-icon.violet { background: rgba(120,63,217,0.12); color: #783FD9; }
+.category-icon.blue { background: rgba(87,63,255,0.12); color: #573FFF; }
+.category-icon.green { background: rgba(0,180,100,0.12); color: #00B464; }
+.category-icon.teal { background: rgba(0,150,199,0.12); color: #0096C7; }
+.category-icon.amber { background: rgba(255,160,0,0.12); color: #FFA000; }
+.category-icon.rose { background: rgba(233,30,99,0.12); color: #E91E63; }
+
+.category-info {
+  min-width: 0;
+}
+
+.category-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 2px;
+}
+
+.category-count {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-tertiary);
+}
+
+/* ===================== JOB CARDS ===================== */
+.jobs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.job-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+  background: var(--color-white);
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.job-card:hover {
+  border-color: rgba(0,0,0,0.1);
+  box-shadow: 0px 2px 12px rgba(0,0,0,0.06);
+}
+
+.job-card:active {
+  transform: scale(0.99);
+}
+
+.job-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--color-secondary);
+}
+
+.job-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.job-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.job-company {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-secondary);
+  margin-bottom: 8px;
+}
+
+.job-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.job-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.job-tag.orange { background: rgba(255,98,64,0.1); color: #D84315; }
+.job-tag.pink { background: rgba(255,65,63,0.1); color: #C62828; }
+.job-tag.violet { background: rgba(120,63,217,0.1); color: #6A1B9A; }
+.job-tag.blue { background: rgba(87,63,255,0.1); color: #283593; }
+.job-tag.green { background: rgba(0,180,100,0.1); color: #1B5E20; }
+.job-tag.teal { background: rgba(0,150,199,0.1); color: #006064; }
+
+.job-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.job-salary {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+.job-salary-currency {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-tertiary);
+}
+
+.job-location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-tertiary);
+}
+
+.job-location svg {
+  width: 14px;
+  height: 14px;
+}
+
+.job-time {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-tertiary);
+}
+
+/* ===================== EMPLOYERS SECTION ===================== */
+.employers-section {
+  background: var(--color-bg-light);
+  border-radius: 40px;
+  max-width: 1280px;
+  margin: 0 auto 64px;
+  padding: 64px 40px;
+}
+
+.employers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.employer-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 32px 20px;
+  background: var(--color-white);
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.employer-card:hover {
+  box-shadow: 0px 2px 12px rgba(0,0,0,0.06);
+  border-color: rgba(0,0,0,0.1);
+}
+
+.employer-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: var(--color-bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-secondary);
+}
+
+.employer-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 4px;
+}
+
+.employer-industry {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-tertiary);
+  margin-bottom: 12px;
+}
+
+.employer-openings {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-violet);
+}
+
+/* ===================== HOW IT WORKS ===================== */
+.how-it-works {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px 80px;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.step-card {
+  padding: 32px;
+  background: var(--color-bg-light);
+  border-radius: 24px;
+  position: relative;
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--color-orange), var(--color-violet));
+  color: var(--color-white);
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.step-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+
+.step-desc {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-secondary);
+  line-height: 1.6;
+}
+
+/* ===================== CTA BANNER ===================== */
+.cta-banner {
+  max-width: 1280px;
+  margin: 0 auto 80px;
+  padding: 0 40px;
+}
+
+.cta-inner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 32px;
+  padding: 64px;
+  text-align: center;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+.cta-inner::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,98,64,0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-inner::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: -40px;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(120,63,217,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-inner h2 {
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--color-white);
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
+  letter-spacing: -0.5px;
+}
+
+.cta-inner p {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-inner .btn-gradient {
+  position: relative;
+  z-index: 2;
+  height: 52px;
+  padding: 14px 40px;
+  font-size: 16px;
+}
+
+/* ===================== NEWSLETTER ===================== */
+.newsletter-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px 80px;
+  text-align: center;
+}
+
+.newsletter-box {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.newsletter-box h3 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+
+.newsletter-box p {
+  font-size: 15px;
+  color: var(--color-secondary);
+  margin-bottom: 24px;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 12px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.newsletter-form input {
+  flex: 1;
+  height: 48px;
+  padding: 0 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.newsletter-form input:focus {
+  border-color: var(--color-violet);
+}
+
+/* ===================== FOOTER ===================== */
+.footer {
+  background: var(--color-white);
+  border-top: 1px solid rgba(0,0,0,0.05);
+  padding: 48px 40px 32px;
+}
+
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-brand-logo svg {
+  width: 28px;
+  height: 28px;
+}
+
+.footer-brand-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.footer-brand-desc {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-secondary);
+  max-width: 300px;
+  line-height: 1.6;
+}
+
+.footer-col-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.footer-col ul {
+  list-style: none;
+}
+
+.footer-col ul li {
+  margin-bottom: 8px;
+}
+
+.footer-col ul li a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-col ul li a:hover {
+  color: var(--color-primary);
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.footer-copyright {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-tertiary);
+}
+
+.footer-socials {
+  display: flex;
+  gap: 16px;
+}
+
+.footer-socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--color-bg-light);
+  color: var(--color-secondary);
+  transition: all 0.2s ease;
+}
+
+.footer-socials a:hover {
+  background: rgba(0,0,0,0.08);
+  color: var(--color-primary);
+}
+
+.footer-socials a svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 1024px) {
+  .categories-grid { grid-template-columns: repeat(2, 1fr); }
+  .employers-grid { grid-template-columns: repeat(2, 1fr); }
+  .steps-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .header { padding: 0 20px; height: 64px; }
+  .header-nav { display: none; }
+  .hero-wrapper { padding-left: 12px; padding-right: 12px; padding-top: 88px; }
+  .hero { padding: 48px 20px 40px; border-radius: 24px; }
+  .hero h1 { font-size: 32px; }
+  .hero p { font-size: 16px; }
+  .search-bar { flex-direction: column; padding: 12px; }
+  .search-input-group { width: 100%; }
+  .search-bar .btn-gradient { width: 100%; }
+  .stats-row { flex-direction: column; gap: 16px; }
+  .section { padding: 40px 20px; }
+  .categories-grid { grid-template-columns: 1fr; }
+  .employers-grid { grid-template-columns: 1fr; }
+  .employers-section { border-radius: 24px; padding: 40px 20px; }
+  .job-card { flex-direction: column; align-items: flex-start; }
+  .job-meta { flex-direction: row; align-items: center; }
+  .cta-inner { padding: 40px 24px; }
+  .cta-inner h2 { font-size: 24px; }
+  .newsletter-form { flex-direction: column; }
+  .footer { padding: 32px 20px 24px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="header-logo">
+      <svg viewBox="0 0 36 36" fill="none">
+        <rect width="36" height="36" rx="10" fill="url(#logo-grad)"/>
+        <path d="M10 18C10 13.58 13.58 10 18 10C22.42 10 26 13.58 26 18L22 18C22 15.79 20.21 14 18 14C15.79 14 14 15.79 14 18C14 20.21 15.79 22 18 22V26C13.58 26 10 22.42 10 18Z" fill="white"/>
+        <circle cx="22" cy="22" r="4" fill="white" fill-opacity="0.6"/>
+        <defs><linearGradient id="logo-grad" x1="0" y1="0" x2="36" y2="36"><stop stop-color="#FF6240"/><stop offset="1" stop-color="#573FFF"/></linearGradient></defs>
+      </svg>
+      <span class="header-logo-text">Praca<span>Szwajcaria</span></span>
+    </a>
+
+    <nav class="header-nav">
+      <a href="#" class="active">Oferty pracy</a>
+      <a href="#">Kategorie</a>
+      <a href="#">Pracodawcy</a>
+      <a href="#">Blog</a>
+      <a href="#">O nas</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="#" class="btn-secondary">Zaloguj sie</a>
+      <a href="#" class="btn-gradient" style="height:40px; padding:8px 20px; font-size:14px;">Dodaj CV</a>
+    </div>
+  </div>
+</header>
+
+<!-- ====== HERO ====== -->
+<div class="hero-wrapper">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 1L10.1 5.9L15 6.5L11.4 10L12.3 15L8 12.6L3.7 15L4.6 10L1 6.5L5.9 5.9L8 1Z" fill="currentColor"/></svg>
+        Ponad 2 400 aktualnych ofert
+      </div>
+      <h1>Znajdz wymarzona<br><span class="gradient-text">prace w Szwajcarii</span></h1>
+      <p>Najlepsze oferty pracy dla polskich specjalistow w Szwajcarii. Wysokie zarobki, legalne zatrudnienie, wsparcie na kazdym etapie.</p>
+
+      <div class="search-bar">
+        <div class="search-input-group">
+          <svg viewBox="0 0 20 20" fill="none"><circle cx="8.5" cy="8.5" r="6" stroke="currentColor" stroke-width="2"/><path d="M13 13L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input type="text" placeholder="Stanowisko, np. spawacz, elektryk...">
+        </div>
+        <div class="search-input-group">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M10 2C6.13 2 3 5.13 3 9C3 14.25 10 19 10 19C10 19 17 14.25 17 9C17 5.13 13.87 2 10 2ZM10 11.5C8.62 11.5 7.5 10.38 7.5 9C7.5 7.62 8.62 6.5 10 6.5C11.38 6.5 12.5 7.62 12.5 9C12.5 10.38 11.38 11.5 10 11.5Z" fill="currentColor"/></svg>
+          <input type="text" placeholder="Lokalizacja, np. Zurich, Berno...">
+        </div>
+        <button class="btn-gradient">Szukaj</button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-value">2 437</div>
+          <div class="stat-label">Aktywnych ofert</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">318</div>
+          <div class="stat-label">Pracodawcow</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">12 840</div>
+          <div class="stat-label">Zatrudnionych</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">CHF 5 200</div>
+          <div class="stat-label">Srednia pensja</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== CATEGORIES ====== -->
+<section class="section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Popularne kategorie</h2>
+      <p class="section-subtitle">Przegladaj oferty wedlug branz</p>
+    </div>
+    <a href="#" class="btn-secondary">
+      Wszystkie kategorie
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+
+  <div class="categories-grid">
+    <a href="#" class="category-card">
+      <div class="category-icon orange">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M14 6L14 3.5C14 2.67 13.33 2 12.5 2H11.5C10.67 2 10 2.67 10 3.5V6M4 6H20V10C20 10 18 12 12 12C6 12 4 10 4 10V6ZM6 12V19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="category-info">
+        <div class="category-name">Budownictwo</div>
+        <div class="category-count">487 ofert</div>
+      </div>
+    </a>
+    <a href="#" class="category-card">
+      <div class="category-icon violet">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="category-info">
+        <div class="category-name">Produkcja</div>
+        <div class="category-count">356 ofert</div>
+      </div>
+    </a>
+    <a href="#" class="category-card">
+      <div class="category-icon green">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M22 12H18L15 21L9 3L6 12H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="category-info">
+        <div class="category-name">Medycyna</div>
+        <div class="category-count">298 ofert</div>
+      </div>
+    </a>
+    <a href="#" class="category-card">
+      <div class="category-icon blue">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 21H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 17V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="category-info">
+        <div class="category-name">IT i Technologia</div>
+        <div class="category-count">245 ofert</div>
+      </div>
+    </a>
+    <a href="#" class="category-card">
+      <div class="category-icon teal">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22Z" stroke="currentColor" stroke-width="2"/><path d="M2 12H22" stroke="currentColor" stroke-width="2"/><path d="M12 2C14.5 4.73 16 8.24 16 12C16 15.76 14.5 19.27 12 22C9.5 19.27 8 15.76 8 12C8 8.24 9.5 4.73 12 2Z" stroke="currentColor" stroke-width="2"/></svg>
+      </div>
+      <div class="category-info">
+        <div class="category-name">Hotelarstwo</div>
+        <div class="category-count">234 ofert</div>
+      </div>
+    </a>
+    <a href="#" class="category-card">
+      <div class="category-icon amber">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M14.7 6.3C14.3 5.9 13.7 5.9 13.3 6.3L4 15.6V20H8.4L17.7 10.7C18.1 10.3 18.1 9.7 17.7 9.3L14.7 6.3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 22H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="category-info">
+        <div class="category-name">Gastronomia</div>
+        <div class="category-count">198 ofert</div>
+      </div>
+    </a>
+    <a href="#" class="category-card">
+      <div class="category-icon rose">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M17 21V19C17 16.79 15.21 15 13 15H5C2.79 15 1 16.79 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M23 21V19C23 17.36 21.93 15.96 20.46 15.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16.46 3.5C17.93 3.96 19 5.36 19 7C19 8.64 17.93 10.04 16.46 10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="category-info">
+        <div class="category-name">Opieka i Zdrowie</div>
+        <div class="category-count">176 ofert</div>
+      </div>
+    </a>
+    <a href="#" class="category-card">
+      <div class="category-icon pink">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 15C4 15 5 14 8 14C11 14 13 16 16 16C19 16 20 15 20 15V3C20 3 19 4 16 4C13 4 11 2 8 2C5 2 4 3 4 3V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 22V15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="category-info">
+        <div class="category-name">Logistyka</div>
+        <div class="category-count">164 ofert</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ====== JOB OFFERS ====== -->
+<section class="section" style="padding-top: 0;">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Najnowsze oferty</h2>
+      <p class="section-subtitle">Sprawdz najswiezsze ogloszenia</p>
+    </div>
+    <a href="#" class="btn-secondary">
+      Wszystkie oferty
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+
+  <div class="jobs-grid">
+    <a href="#" class="job-card">
+      <div class="job-logo">AB</div>
+      <div class="job-content">
+        <div class="job-title">Spawacz MAG/MIG - Kanton Zurych</div>
+        <div class="job-company">Alpine Bau GmbH</div>
+        <div class="job-tags">
+          <span class="job-tag orange">Budownictwo</span>
+          <span class="job-tag green">Umowa o prace</span>
+          <span class="job-tag blue">Zakwaterowanie</span>
+        </div>
+      </div>
+      <div class="job-meta">
+        <div class="job-salary">6 200 - 7 800 <span class="job-salary-currency">CHF/mies.</span></div>
+        <div class="job-location">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M7 1C4.51 1 2.5 3.01 2.5 5.5C2.5 9.38 7 13 7 13C7 13 11.5 9.38 11.5 5.5C11.5 3.01 9.49 1 7 1Z" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="5.5" r="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          Zurych, Szwajcaria
+        </div>
+        <div class="job-time">2 godz. temu</div>
+      </div>
+    </a>
+
+    <a href="#" class="job-card">
+      <div class="job-logo">SM</div>
+      <div class="job-content">
+        <div class="job-title">Elektryk przemyslowy z uprawnieniami SEP</div>
+        <div class="job-company">Swiss Montage AG</div>
+        <div class="job-tags">
+          <span class="job-tag violet">Produkcja</span>
+          <span class="job-tag green">Umowa o prace</span>
+          <span class="job-tag teal">Pelny etat</span>
+        </div>
+      </div>
+      <div class="job-meta">
+        <div class="job-salary">5 800 - 7 200 <span class="job-salary-currency">CHF/mies.</span></div>
+        <div class="job-location">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M7 1C4.51 1 2.5 3.01 2.5 5.5C2.5 9.38 7 13 7 13C7 13 11.5 9.38 11.5 5.5C11.5 3.01 9.49 1 7 1Z" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="5.5" r="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          Berno, Szwajcaria
+        </div>
+        <div class="job-time">5 godz. temu</div>
+      </div>
+    </a>
+
+    <a href="#" class="job-card">
+      <div class="job-logo">HC</div>
+      <div class="job-content">
+        <div class="job-title">Pielegniarka / Pielegniarz - Klinika prywatna</div>
+        <div class="job-company">HelvetiaCare SA</div>
+        <div class="job-tags">
+          <span class="job-tag pink">Medycyna</span>
+          <span class="job-tag green">Umowa o prace</span>
+          <span class="job-tag blue">Zakwaterowanie</span>
+        </div>
+      </div>
+      <div class="job-meta">
+        <div class="job-salary">5 500 - 6 800 <span class="job-salary-currency">CHF/mies.</span></div>
+        <div class="job-location">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M7 1C4.51 1 2.5 3.01 2.5 5.5C2.5 9.38 7 13 7 13C7 13 11.5 9.38 11.5 5.5C11.5 3.01 9.49 1 7 1Z" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="5.5" r="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          Genewa, Szwajcaria
+        </div>
+        <div class="job-time">8 godz. temu</div>
+      </div>
+    </a>
+
+    <a href="#" class="job-card">
+      <div class="job-logo">TI</div>
+      <div class="job-content">
+        <div class="job-title">Kucharz - Hotel 5* w Alpach</div>
+        <div class="job-company">Top Gastro International</div>
+        <div class="job-tags">
+          <span class="job-tag orange">Gastronomia</span>
+          <span class="job-tag green">Sezonowa</span>
+          <span class="job-tag blue">Zakwaterowanie</span>
+        </div>
+      </div>
+      <div class="job-meta">
+        <div class="job-salary">4 800 - 5 600 <span class="job-salary-currency">CHF/mies.</span></div>
+        <div class="job-location">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M7 1C4.51 1 2.5 3.01 2.5 5.5C2.5 9.38 7 13 7 13C7 13 11.5 9.38 11.5 5.5C11.5 3.01 9.49 1 7 1Z" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="5.5" r="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          Zermatt, Szwajcaria
+        </div>
+        <div class="job-time">12 godz. temu</div>
+      </div>
+    </a>
+
+    <a href="#" class="job-card">
+      <div class="job-logo">DS</div>
+      <div class="job-content">
+        <div class="job-title">Operator CNC - Frezarka 5-osiowa</div>
+        <div class="job-company">Deutsch-Swiss Precision AG</div>
+        <div class="job-tags">
+          <span class="job-tag violet">Produkcja</span>
+          <span class="job-tag green">Umowa o prace</span>
+          <span class="job-tag teal">Pelny etat</span>
+        </div>
+      </div>
+      <div class="job-meta">
+        <div class="job-salary">6 000 - 7 500 <span class="job-salary-currency">CHF/mies.</span></div>
+        <div class="job-location">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M7 1C4.51 1 2.5 3.01 2.5 5.5C2.5 9.38 7 13 7 13C7 13 11.5 9.38 11.5 5.5C11.5 3.01 9.49 1 7 1Z" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="5.5" r="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          Bazylea, Szwajcaria
+        </div>
+        <div class="job-time">1 dzien temu</div>
+      </div>
+    </a>
+
+    <a href="#" class="job-card">
+      <div class="job-logo">LP</div>
+      <div class="job-content">
+        <div class="job-title">Kierowca C+E - Transport miedzynarodowy</div>
+        <div class="job-company">LogiPol Transport SA</div>
+        <div class="job-tags">
+          <span class="job-tag teal">Logistyka</span>
+          <span class="job-tag green">Umowa o prace</span>
+          <span class="job-tag orange">Diety</span>
+        </div>
+      </div>
+      <div class="job-meta">
+        <div class="job-salary">5 400 - 6 900 <span class="job-salary-currency">CHF/mies.</span></div>
+        <div class="job-location">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M7 1C4.51 1 2.5 3.01 2.5 5.5C2.5 9.38 7 13 7 13C7 13 11.5 9.38 11.5 5.5C11.5 3.01 9.49 1 7 1Z" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="5.5" r="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          Lucerna, Szwajcaria
+        </div>
+        <div class="job-time">1 dzien temu</div>
+      </div>
+    </a>
+  </div>
+
+  <div style="text-align:center; margin-top:32px;">
+    <a href="#" class="btn-gradient">Pokaz wszystkie oferty</a>
+  </div>
+</section>
+
+<!-- ====== EMPLOYERS ====== -->
+<div class="employers-section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Zaufani pracodawcy</h2>
+      <p class="section-subtitle">Firmy, ktore regularnie zatrudniaja Polakow</p>
+    </div>
+    <a href="#" class="btn-secondary">
+      Wszyscy pracodawcy
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+
+  <div class="employers-grid">
+    <div class="employer-card">
+      <div class="employer-logo">AB</div>
+      <div class="employer-name">Alpine Bau GmbH</div>
+      <div class="employer-industry">Budownictwo</div>
+      <div class="employer-openings">32 otwarte pozycje</div>
+    </div>
+    <div class="employer-card">
+      <div class="employer-logo">SM</div>
+      <div class="employer-name">Swiss Montage AG</div>
+      <div class="employer-industry">Produkcja i montaz</div>
+      <div class="employer-openings">24 otwarte pozycje</div>
+    </div>
+    <div class="employer-card">
+      <div class="employer-logo">HC</div>
+      <div class="employer-name">HelvetiaCare SA</div>
+      <div class="employer-industry">Sluzba zdrowia</div>
+      <div class="employer-openings">18 otwartych pozycji</div>
+    </div>
+    <div class="employer-card">
+      <div class="employer-logo">TG</div>
+      <div class="employer-name">Top Gastro Int.</div>
+      <div class="employer-industry">Gastronomia i hotelarstwo</div>
+      <div class="employer-openings">15 otwartych pozycji</div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== HOW IT WORKS ====== -->
+<section class="how-it-works">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Jak to dziala?</h2>
+      <p class="section-subtitle">Trzy proste kroki do pracy w Szwajcarii</p>
+    </div>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-number">1</div>
+      <div class="step-title">Stworz profil i dodaj CV</div>
+      <div class="step-desc">Zarejestruj sie za darmo, uzupelnij swoj profil zawodowy i wgraj aktualne CV. Nasz system automatycznie dopasuje Twoje umiejetnosci do dostepnych ofert.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-number">2</div>
+      <div class="step-title">Przegladaj i aplikuj</div>
+      <div class="step-desc">Przeszukuj setki zweryfikowanych ofert pracy od szwajcarskich pracodawcow. Filtruj po branzy, lokalizacji, zarobkach i typie umowy. Aplikuj jednym kliknieciem.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-number">3</div>
+      <div class="step-title">Rozpocznij prace</div>
+      <div class="step-desc">Po akceptacji przez pracodawce otrzymasz wsparcie w formalnosciach - pozwolenie na prace, ubezpieczenie, zakwaterowanie. Spokojnie rozpocznij nowa kariere.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CTA BANNER ====== -->
+<div class="cta-banner">
+  <div class="cta-inner">
+    <h2>Jestes pracodawca?</h2>
+    <p>Dodaj oferte pracy i dotrzyj do tysiecy polskich specjalistow gotowych do pracy w Szwajcarii.</p>
+    <a href="#" class="btn-gradient">Dodaj oferte za darmo</a>
+  </div>
+</div>
+
+<!-- ====== NEWSLETTER ====== -->
+<section class="newsletter-section">
+  <div class="newsletter-box">
+    <h3>Nie przegap nowych ofert</h3>
+    <p>Zapisz sie na powiadomienia i otrzymuj najlepsze oferty pracy prosto na maila.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="Twoj adres e-mail">
+      <button class="btn-gradient" style="flex-shrink:0;">Zapisz sie</button>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-logo">
+          <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+            <rect width="36" height="36" rx="10" fill="url(#logo-grad2)"/>
+            <path d="M10 18C10 13.58 13.58 10 18 10C22.42 10 26 13.58 26 18L22 18C22 15.79 20.21 14 18 14C15.79 14 14 15.79 14 18C14 20.21 15.79 22 18 22V26C13.58 26 10 22.42 10 18Z" fill="white"/>
+            <circle cx="22" cy="22" r="4" fill="white" fill-opacity="0.6"/>
+            <defs><linearGradient id="logo-grad2" x1="0" y1="0" x2="36" y2="36"><stop stop-color="#FF6240"/><stop offset="1" stop-color="#573FFF"/></linearGradient></defs>
+          </svg>
+          <span class="footer-brand-name">PracaSzwajcaria</span>
+        </div>
+        <p class="footer-brand-desc">Laczmy polskich specjalistow z najlepszymi pracodawcami w Szwajcarii. Legalne zatrudnienie, godne warunki, wysokie zarobki.</p>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">Dla pracownikow</div>
+        <ul>
+          <li><a href="#">Oferty pracy</a></li>
+          <li><a href="#">Kategorie</a></li>
+          <li><a href="#">Pracodawcy</a></li>
+          <li><a href="#">Stworz CV</a></li>
+          <li><a href="#">Poradnik pracy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">Dla pracodawcow</div>
+        <ul>
+          <li><a href="#">Dodaj oferte</a></li>
+          <li><a href="#">Cennik</a></li>
+          <li><a href="#">Baza CV</a></li>
+          <li><a href="#">Panel pracodawcy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">Informacje</div>
+        <ul>
+          <li><a href="#">O nas</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Kontakt</a></li>
+          <li><a href="#">Polityka prywatnosci</a></li>
+          <li><a href="#">Regulamin</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copyright">2026 PracaSzwajcaria. Wszelkie prawa zastrzezone.</div>
+      <div class="footer-socials">
+        <a href="#">
+          <svg viewBox="0 0 18 18" fill="none"><path d="M9.54 7.18H13.5V9.18H9.54V16H7.08V9.18H3V7.18H7.08V6.06C7.08 4.78 7.38 3.82 8 3.16C8.64 2.5 9.54 2.16 10.72 2.16H13.5V4.16H11.22C10.78 4.16 10.46 4.28 10.28 4.52C10.1 4.74 10 5.1 10 5.58V7.18H9.54Z" fill="currentColor"/></svg>
+        </a>
+        <a href="#">
+          <svg viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="4" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="9" r="3.5" stroke="currentColor" stroke-width="1.5"/><circle cx="13" cy="5" r="1" fill="currentColor"/></svg>
+        </a>
+        <a href="#">
+          <svg viewBox="0 0 18 18" fill="none"><path d="M2 4.5C2 3.12 3.12 2 4.5 2H6.75L8.25 5.25L6.38 6.38C7.23 8.08 8.67 9.52 10.37 10.37L11.5 8.5L14.75 10V12.25C14.75 13.63 13.63 14.75 12.25 14.75C7.14 14.47 2.28 9.61 2 4.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#">
+          <svg viewBox="0 0 18 18" fill="none"><path d="M3 3H7.5L9 7.5L7 9C7.8 10.9 9.6 12.7 11.5 13.5L13.5 11.5L16 13V15.5C16 16.33 15.33 17 14.5 17C8 16.72 2 10.5 2 4.5C2 3.67 2.67 3 3.5 3H3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

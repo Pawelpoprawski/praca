@@ -9,9 +9,9 @@ import type { PaginatedResponse, ActivityLogEntry } from "@/types/api";
 const EVENT_TYPE_LABELS: Record<string, { label: string; color: string }> = {
   cv_submitted: { label: "CV dodane", color: "bg-blue-100 text-blue-700" },
   cv_extraction_completed: { label: "CV ekstrakcja OK", color: "bg-green-100 text-green-700" },
-  cv_extraction_failed: { label: "CV ekstrakcja fail", color: "bg-red-100 text-red-700" },
+  cv_extraction_failed: { label: "CV ekstrakcja fail", color: "bg-[#FFE0E6] text-[#B8001F]" },
   job_ai_extracted: { label: "Oferta AI OK", color: "bg-green-100 text-green-700" },
-  job_extraction_failed: { label: "Oferta AI fail", color: "bg-red-100 text-red-700" },
+  job_extraction_failed: { label: "Oferta AI fail", color: "bg-[#FFE0E6] text-[#B8001F]" },
   job_created: { label: "Oferta dodana", color: "bg-indigo-100 text-indigo-700" },
   scraper_sync: { label: "Scraper sync", color: "bg-purple-100 text-purple-700" },
 };
@@ -53,7 +53,7 @@ export default function AdminLogiPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2">
+          <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240] flex items-center gap-2">
             <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
             Logi aktywnosci
           </h1>

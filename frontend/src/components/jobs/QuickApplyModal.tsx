@@ -56,12 +56,12 @@ export default function QuickApplyModal({
       />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 overflow-hidden">
+      <div className="relative bg-white rounded-lg shadow-2xl max-w-lg w-full mx-4 overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b bg-gradient-to-r from-green-50 to-emerald-50">
           <div className="flex items-center gap-2">
             <Zap className="w-5 h-5 text-green-600" />
-            <h2 className="text-lg font-bold text-gray-900">Szybka aplikacja</h2>
+            <h2 className="text-lg font-bold font-display text-[#0D2240]">Szybka aplikacja</h2>
           </div>
           <button
             onClick={onClose}
@@ -131,7 +131,7 @@ export default function QuickApplyModal({
 
           {/* Error */}
           {mutation.isError && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2.5 rounded-lg text-sm flex items-start gap-2" role="alert">
+            <div className="bg-[#FFF0F3] border border-[#FFC2CD] text-[#B8001F] px-4 py-2.5 rounded-lg text-sm flex items-start gap-2" role="alert">
               <span className="flex-shrink-0 mt-0.5">⚠</span>
               <span>{(mutation.error as any)?.response?.data?.detail || "Wystąpił błąd podczas wysyłania aplikacji"}</span>
             </div>

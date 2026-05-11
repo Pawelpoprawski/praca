@@ -76,7 +76,7 @@ export default function ReviewSection({ companySlug }: Props) {
 
   return (
     <div className="mt-6">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+      <h2 className="text-lg font-semibold font-display text-[#0D2240] mb-4 flex items-center gap-2">
         <MessageSquare className="w-5 h-5" />
         Recenzje
         {reviewsData && reviewsData.total_reviews > 0 && (
@@ -89,7 +89,7 @@ export default function ReviewSection({ companySlug }: Props) {
       {/* Average rating summary */}
       {reviewsData && reviewsData.avg_rating !== null && (
         <div className="bg-white border rounded-lg p-4 mb-4 flex items-center gap-4">
-          <div className="text-3xl font-bold text-gray-900">
+          <div className="text-3xl font-bold text-[#0D2240]">
             {reviewsData.avg_rating.toFixed(1)}
           </div>
           <div>
@@ -110,7 +110,7 @@ export default function ReviewSection({ companySlug }: Props) {
       {isWorker && !showForm && (
         <button
           onClick={() => setShowForm(true)}
-          className="mb-4 px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2"
+          className="mb-4 px-4 py-2 bg-[#E1002A] text-white text-sm font-medium rounded-lg hover:bg-[#B8001F] transition-colors flex items-center gap-2"
         >
           <Send className="w-4 h-4" />
           Napisz recenzje
@@ -144,7 +144,7 @@ export default function ReviewSection({ companySlug }: Props) {
               rows={4}
               maxLength={2000}
               placeholder="Podziel sie swoim doswiadczeniem z ta firma..."
-              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500 resize-none"
+              className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20 resize-none"
             />
             <p className="text-xs text-gray-400 mt-1">
               {comment.length}/2000 znakow
@@ -152,14 +152,14 @@ export default function ReviewSection({ companySlug }: Props) {
           </div>
 
           {formError && (
-            <p className="text-sm text-red-600 mb-3">{formError}</p>
+            <p className="text-sm text-[#E1002A] mb-3">{formError}</p>
           )}
 
           <div className="flex gap-2">
             <button
               type="submit"
               disabled={createReview.isPending}
-              className="px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors"
+              className="px-4 py-2 bg-[#E1002A] text-white text-sm rounded-lg hover:bg-[#B8001F] disabled:opacity-50 transition-colors"
             >
               {createReview.isPending ? "Wysylanie..." : "Wyslij recenzje"}
             </button>
@@ -185,7 +185,7 @@ export default function ReviewSection({ companySlug }: Props) {
 
       {!isAuthenticated && (
         <p className="text-sm text-gray-500 mb-4">
-          <a href="/login" className="text-red-600 hover:underline">
+          <a href="/login" className="text-[#E1002A] hover:underline">
             Zaloguj sie
           </a>{" "}
           jako pracownik, aby dodac recenzje.

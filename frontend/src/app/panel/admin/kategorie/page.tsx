@@ -60,11 +60,11 @@ export default function CategoriesPage() {
 
   return (
     <div>
-      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">Kategorie</h1>
+      <h1 className="text-xl sm:text-2xl font-bold font-display text-[#0D2240] mb-6">Kategorie</h1>
 
       {message.text && (
         <div className={`px-4 py-3 rounded-lg mb-4 text-sm ${
-          message.type === "success" ? "bg-green-50 text-green-700" : "bg-red-50 text-red-600"
+          message.type === "success" ? "bg-green-50 text-green-700" : "bg-[#FFF0F3] text-[#E1002A]"
         }`}>
           {message.text}
         </div>
@@ -76,16 +76,16 @@ export default function CategoriesPage() {
           <label className="block text-sm font-medium text-gray-700 mb-1">Nowa kategoria</label>
           <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)}
             placeholder="Nazwa kategorii"
-            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500" />
+            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20" />
         </div>
         <div className="sm:w-32">
           <label className="block text-sm font-medium text-gray-700 mb-1">Ikona</label>
           <input type="text" value={newIcon} onChange={(e) => setNewIcon(e.target.value)}
             placeholder="np. wrench"
-            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-red-500" />
+            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/20" />
         </div>
         <button type="submit" disabled={createMutation.isPending || !newName.trim()}
-          className="px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 disabled:opacity-50 flex items-center justify-center gap-1 w-full sm:w-auto">
+          className="px-4 py-2 bg-[#E1002A] text-white text-sm rounded-lg hover:bg-[#B8001F] disabled:opacity-50 flex items-center justify-center gap-1 w-full sm:w-auto">
           <Plus className="w-4 h-4" /> Dodaj
         </button>
       </form>
@@ -132,7 +132,7 @@ export default function CategoriesPage() {
                     </button>
                     <button onClick={() => toggleMutation.mutate({ id: cat.id, isActive: !cat.is_active })}
                       className={`px-3 py-1 text-xs rounded-lg border font-medium ${
-                        cat.is_active ? "text-red-600 border-red-200 hover:bg-red-50" : "text-green-600 border-green-200 hover:bg-green-50"
+                        cat.is_active ? "text-[#E1002A] border-[#FFC2CD] hover:bg-[#FFF0F3]" : "text-green-600 border-green-200 hover:bg-green-50"
                       }`}>
                       {cat.is_active ? "Wyłącz" : "Włącz"}
                     </button>

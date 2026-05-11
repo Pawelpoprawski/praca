@@ -70,6 +70,23 @@ async def get_optional_user(
     return user
 
 
+async def get_current_user_optional(
+    credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme_optional),
+    db: AsyncSession = Depends(get_db),
+) -> User | None:
+    """Zwraca usera jezeli token jest podany i wazny, inaczej None (zamiast 401)."""
+    if credentials is None:
+        return None
+    payload = decode_token(credentials.credentials)
+    if payload is None or payload.get("type") != "access":
+        return None
+    user_id = payload.get("sub")
+    if not user_id:
+        return None
+    result = await db.execute(select(User).where(User.id == user_id))
+    return result.scalar_one_or_none()
+
+
 async def get_current_worker(
     current_user: User = Depends(get_current_user),
 ) -> User:
