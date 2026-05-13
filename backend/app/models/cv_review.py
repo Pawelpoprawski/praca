@@ -23,6 +23,9 @@ class CVReview(Base):
     status: Mapped[str] = mapped_column(
         String(20), nullable=False, default="analyzed", index=True
     )  # analyzed, improved, submitted_to_db
+    retention_status: Mapped[str] = mapped_column(
+        String(20), nullable=False, default="temporary", index=True
+    )  # temporary (CV file+text deleted after 24h), consented (kept permanently), purged (file+text already deleted by scheduler)
     previous_review_id: Mapped[str | None] = mapped_column(
         String(36), ForeignKey("cv_reviews.id", ondelete="SET NULL"), nullable=True
     )

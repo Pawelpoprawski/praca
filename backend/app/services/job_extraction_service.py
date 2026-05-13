@@ -153,7 +153,7 @@ async def _call_extraction_ai(title: str, company: str, description: str, job_id
     prompt = JOB_EXTRACTION_PROMPT.format(
         title=title,
         company=company,
-        description=description[:5000],
+        description=description,
     )
 
     try:

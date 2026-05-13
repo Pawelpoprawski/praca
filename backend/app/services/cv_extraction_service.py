@@ -92,7 +92,7 @@ async def extract_cv_data_unified(cv_text: str) -> dict | None:
                 },
                 {
                     "role": "user",
-                    "content": CV_UNIFIED_EXTRACTION_PROMPT + cv_text[:8000],
+                    "content": CV_UNIFIED_EXTRACTION_PROMPT + cv_text,
                 },
             ],
             temperature=0.1,

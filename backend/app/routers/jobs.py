@@ -163,6 +163,10 @@ async def list_jobs(
     result = await db.execute(query)
     jobs = result.scalars().all()
 
+    from app.services.company_overrides import apply_company_override
+    for j in jobs:
+        apply_company_override(j)
+
     return PaginatedResponse(
         data=[JobListResponse.model_validate(j) for j in jobs],
         total=total,
@@ -273,6 +277,9 @@ async def get_job(job_id: str, db: AsyncSession = Depends(get_db)):
 
     # Inkrementuj wyświetlenia (fire-and-forget)
     job.views_count += 1
+
+    from app.services.company_overrides import apply_company_override
+    apply_company_override(job)
 
     return job
 
@@ -414,6 +421,10 @@ async def get_similar_jobs(job_id: str, db: AsyncSession = Depends(get_db)):
         .order_by(JobOffer.published_at.desc())
     )
     jobs = result.scalars().all()
+
+    from app.services.company_overrides import apply_company_override
+    for j in jobs:
+        apply_company_override(j)
 
     return [JobListResponse.model_validate(j) for j in jobs[:6]]
 

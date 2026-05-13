@@ -465,7 +465,7 @@ async def process_single_text(text: str) -> dict | None:
     translation = await _call_translation_ai(
         title="",
         company="",
-        description=text[:10000],
+        description=text,
     )
 
     if translation:
@@ -474,13 +474,13 @@ async def process_single_text(text: str) -> dict | None:
     else:
         # If translation fails, try extraction on raw text
         title = ""
-        description = text[:10000]
+        description = text
 
     # Step 2: Extract metadata from Polish text
     ai_data = await _call_extraction_ai(
         title=title,
         company="",
-        description=description[:5000],
+        description=description,
     )
 
     if not ai_data:

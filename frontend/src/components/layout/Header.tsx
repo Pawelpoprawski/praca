@@ -33,16 +33,33 @@ export default function Header() {
           <div className="flex justify-between items-center h-[72px]">
             {/* Logo */}
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-              <Link href="/" aria-label="Strona główna" className="relative w-9 h-9 sm:w-10 sm:h-10 bg-[#E1002A] rounded-md flex items-center justify-center flex-shrink-0 group">
-                <svg viewBox="0 0 32 32" className="w-[22px] h-[22px] sm:w-[25px] sm:h-[25px]">
-                  <path
-                    fill="white"
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M10 6.5h8.2c3.59 0 6.3 2.78 6.3 6.4s-2.71 6.4-6.3 6.4H13.4v5.7c0 0.28-0.22 0.5-0.5 0.5h-2.9c-0.28 0-0.5-0.22-0.5-0.5V7c0-0.28 0.22-0.5 0.5-0.5zM13.4 10v6h4.6c1.7 0 3-1.34 3-3s-1.3-3-3-3h-4.6z"
-                  />
-                  <circle cx="24.5" cy="9.5" r="2" fill="white" opacity="0.95" />
+              <Link
+                href="/"
+                aria-label="Strona główna"
+                className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden shadow-[0_2px_6px_-1px_rgba(225,0,42,0.35)] group"
+                style={{
+                  background: "linear-gradient(135deg, #ED1F3A 0%, #D8001F 100%)",
+                }}
+              >
+                <svg viewBox="0 0 32 32" className="w-[22px] h-[22px] sm:w-[25px] sm:h-[25px] relative z-10" aria-hidden="true">
+                  <defs>
+                    <radialGradient id="logoHL" cx="28%" cy="22%" r="70%">
+                      <stop offset="0%" stopColor="white" stopOpacity="0.28" />
+                      <stop offset="100%" stopColor="white" stopOpacity="0" />
+                    </radialGradient>
+                    <linearGradient id="logoCross" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#FFFFFF" />
+                      <stop offset="100%" stopColor="#F1F3F5" />
+                    </linearGradient>
+                  </defs>
+                  {/* glossy top-left highlight on the red */}
+                  <rect width="32" height="32" fill="url(#logoHL)" />
+                  {/* Swiss cross — proper proportions, slightly rounded */}
+                  <rect x="12" y="5" width="8" height="22" rx="1.6" fill="url(#logoCross)" />
+                  <rect x="5" y="12" width="22" height="8" rx="1.6" fill="url(#logoCross)" />
                 </svg>
+                {/* hover shine */}
+                <span className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors" />
               </Link>
               <div className="leading-tight min-w-0">
                 <Link

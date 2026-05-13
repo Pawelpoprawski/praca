@@ -17,7 +17,6 @@ from app.models.cv_review import CVReview
 from app.models.cv_database import CVDatabase
 from app.services.cv_extractor import extract_text
 from app.services.cv_ai import analyze_cv_with_ai, fallback_analysis
-from app.services.cv_photo_detector import detect_photo
 from app.services.email import _send_email
 from app.schemas.cv_review import (
     CVReviewResponse,
@@ -93,11 +92,8 @@ async def analyze_cv(
             "Nie udało się wyodrębnić tekstu z CV. Upewnij się, że plik nie jest pusty ani zeskanowanym obrazem."
         )
 
-    # Vision-based photo detection (best-effort, can return None)
-    has_photo = await detect_photo(file_path, file.content_type)
-
     # AI analysis
-    analysis = await analyze_cv_with_ai(cv_text, has_photo=has_photo)
+    analysis = await analyze_cv_with_ai(cv_text)
     if analysis is None:
         # Fallback to basic analysis
         analysis = fallback_analysis(cv_text)
@@ -337,8 +333,9 @@ async def submit_to_database(
     )
     db.add(cv_db)
 
-    # Update review status
+    # Update review status & extend retention (user gave explicit consent)
     review.status = "submitted_to_db"
+    review.retention_status = "consented"
 
     await db.flush()
     await log_activity(

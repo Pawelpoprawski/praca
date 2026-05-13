@@ -302,7 +302,7 @@ async def _call_translation_ai(title: str, company: str, description: str, job_i
     prompt = JOB_TRANSLATION_PROMPT.format(
         title=title,
         company=company,
-        description=description[:5000],
+        description=description,
     )
 
     try:

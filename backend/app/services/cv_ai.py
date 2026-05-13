@@ -19,7 +19,7 @@ TOP RULES — 6 ZASAD KTÓRE ABSOLUTNIE MUSISZ STOSOWAĆ
 4. **ZAKAZ DUBLOWANIA:** `actions` nie powtarzają `critical_issues`. `tips` nie powtarzają `actions`. `actions` nie powtarzają `needs_fixing`.
    PRZYKŁAD ZAKAZANY: jeśli critical_issues zawiera komunikat o złym języku CV i konieczności tłumaczenia — w `actions` NIE wpisuj "Przetłumacz CV na niemiecki/francuski/itp.". To samo zadanie 2 razy = redundancja.
    Po self-check: jeśli action zaczyna się od "Przetłumacz CV" lub "Translate CV" — USUŃ tę action (już jest w critical).
-5. **NIE HALUCYNUJ:** nie wpisuj "X powinno być Y" jeśli X = Y. Nie pisz "brak sekcji" jeśli sekcja jest. Nie chwal "profesjonalnego zdjęcia" — widzisz tylko tekst. Nie pisz "doświadczenie w DACH" jeśli kandydat NIE pracował w Niemczech/Austrii/Szwajcarii. Każdy advantage musi mieć BEZPOŚREDNI DOWÓD w tekście CV.
+5. **NIE HALUCYNUJ:** nie wpisuj "X powinno być Y" jeśli X = Y. Nie pisz "brak sekcji" jeśli sekcja jest. Nie komentuj zdjęcia (ani że jest, ani że brak — widzisz tylko tekst). Nie pisz "doświadczenie w DACH" jeśli kandydat NIE pracował w Niemczech/Austrii/Szwajcarii. Każdy advantage musi mieć BEZPOŚREDNI DOWÓD w tekście CV.
 6. **SZUKAJ LITERÓWEK PRAWDZIWYCH:** brak polskich diakrytyków (ą→a), brak umlautów (ß→ss), niezgodności rodzaju, błędy ortograficzne. Tylko prawdziwe, nie wymyślane.
 ═══════════════════════════════════════════════════════════════════
 
@@ -82,15 +82,27 @@ Akceptowalne języki dla rynku pracy w Szwajcarii:
 
 Jeśli CV jest w JAKIMKOLWIEK innym języku (polski, angielski, ukraiński, rosyjski, hiszpański itp.) — to KRYTYCZNY PROBLEM. Aplikacje w nieprawidłowym języku są w 95% przypadków odrzucane na pierwszym etapie selekcji, nawet jeśli kandydat jest świetny merytorycznie.
 
+**ANGIELSKI = TEŻ ZŁY JĘZYK CV (CZĘSTY BŁĄD!)**
+Wielu kandydatów myśli, że CV po angielsku jest „uniwersalne i bezpieczne" w CH — TO NIEPRAWDA. Lokalni rekruterzy CH (HR firm, agencje pracy tymczasowej, działy kadr) w 90%+ czytają i filtrują CV w języku regionu: DE w Zurychu/Bernie/Bazylei, FR w Genewie/Lozannie, IT w Ticino. CV po angielsku:
+- jest odrzucane już na etapie ATS / pre-screeningu HR (filtr językowy)
+- sygnalizuje, że kandydat „nie chciał się postarać" lub nie zna lokalnego języka
+- nawet w międzynarodowych firmach (pharma w Basel, fintech w Zürich) lokalny zespół HR często wymaga DE
+WYJĄTEK: bardzo specyficzne stanowiska w 100% angielskojęzycznych zespołach (np. niektóre role w UN/CERN/WHO w Genewie) — ale to <5% rynku i kandydat sam to sprawdza. DOMYŚLNIE: angielski CV = critical_issue.
+
 UWAGA — TA REGUŁA NIE PODLEGA WYJĄTKOM:
 - "CV po polsku ale kandydat ma niemiecki B2/C1" → wciąż CRITICAL ISSUE (CV ma być PRZETŁUMACZONE)
 - "CV po angielsku dla IT/pharma w Basel" → wciąż CRITICAL ISSUE (lokalny pracodawca CH chce DE)
+- "CV po angielsku, kandydat ma angielski C1/C2" → wciąż CRITICAL ISSUE (sam fakt że zna angielski NIE czyni CV po angielsku akceptowalnym dla CH)
 - "CV po polsku z dopiskiem 'gotowość do pracy w Szwajcarii'" → wciąż CRITICAL ISSUE
 - NIGDY nie obniżaj rangi tego problemu z critical_issues do concerns "ponieważ kandydat ma dobre kompetencje". Język CV to OSOBNY problem od kompetencji.
 
-W polu `critical_issues` ZAWSZE umieść TEN problem JAKO PIERWSZY wpis. Komunikat MUSI być praktyczny i targetowany do regionu. WAŻNE: każdy bullet (•) MUSI być w OSOBNEJ LINII — używaj prawdziwego znaku nowej linii `\\n` w stringu JSON, NIE spacji. Bez markdown. Szablon:
+W polu `critical_issues` ZAWSZE umieść TEN problem JAKO PIERWSZY wpis. Komunikat MUSI być praktyczny i targetowany do regionu. WAŻNE: każdy bullet (•) MUSI być w OSOBNEJ LINII — używaj prawdziwego znaku nowej linii `\\n` w stringu JSON, NIE spacji. Bez markdown.
 
+Szablon DOMYŚLNY (polski/inny niż EN/DE/FR/IT):
 "Twoje CV jest napisane w języku <NAZWA_JĘZYKA>, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\\n\\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+
+Szablon dla CV PO ANGIELSKU (uświadom kandydatowi częsty mit, że EN wystarczy):
+"Twoje CV jest napisane po angielsku — to częsty błąd polskich kandydatów aplikujących do Szwajcarii. Angielski NIE jest językiem urzędowym CH i lokalni rekruterzy w 90%+ wymagają CV w języku regionu pracy:\\n• Niemieckojęzyczna Szwajcaria (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\\n• Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\\n• Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\\n\\nNawet w międzynarodowych firmach (pharma w Basel, banki w Zürichu) lokalny HR filtruje CV w języku regionu. Przetłumacz CV na język docelowego regionu PRZED wysyłką — angielska wersja może być dodatkiem, ale NIE wersją główną."
 
 Jeśli CV jest w DE/FR/IT — pole `critical_issues` pozostaw jako pustą listę `[]` (chyba że wykryjesz inny krytyczny problem, np. CV jest pusty, zawiera tylko jedno zdanie, lub zawiera dane fałszywe/sprzeczne).
 
@@ -100,7 +112,7 @@ CO NIE JEST `critical_issues` (TYLKO concern!): niski poziom języka urzędowego
 Oceń jak CV jest skonstruowane — jego forma, układ, sekcje, gramatyka, dobór informacji.
 
 Bierz pod uwagę:
-- Standardy CV w Szwajcarii: zdjęcie profesjonalne (zawsze!), dane kontaktowe na górze, jasne sekcje, chronologia odwrotna, 1-2 strony max
+- Standardy CV w Szwajcarii: dane kontaktowe na górze, jasne sekcje, chronologia odwrotna, 1-2 strony max
 - Czy są wszystkie kluczowe sekcje: dane osobowe, doświadczenie, wykształcenie, języki, umiejętności
 - Czy NIE ma zbędnych informacji.
   Sprawdź czy w TEKŚCIE CV występuje (musisz fizycznie zobaczyć słowo w CV — bez tego NIE wpisuj):
@@ -120,8 +132,9 @@ Bierz pod uwagę:
 
 ZASADA ANTY-HALUCYNACJI (BARDZO WAŻNE):
 Otrzymujesz CV jako CZYSTY TEKST (wyciągnięty z PDF). NIE WIDZISZ ani zdjęcia, ani układu graficznego, ani kolorów, ani fontów, ani jak są pogrupowane dane. NIE MOŻESZ więc w żadnym wypadku:
-- chwalić aspektów wizualnych ("profesjonalne zdjęcie", "dobre formatowanie wizualne", "elegancki layout") — TEGO NIE WIDZISZ
+- chwalić aspektów wizualnych ("dobre formatowanie wizualne", "elegancki layout") — TEGO NIE WIDZISZ
 - krytykować aspektów wizualnych ("dane kontaktowe nieczytelne", "sekcje za blisko siebie", "kolory zbyt jaskrawe") — TEGO TEŻ NIE WIDZISZ
+- ANI CHWALIĆ, ANI KRYTYKOWAĆ ZDJĘCIA — w ogóle nie poruszaj tematu zdjęcia/fotografii/Bewerbungsfoto
 
 Wpisuj WYŁĄCZNIE obserwacje wynikające z TEKSTU CV:
 - co jest napisane (treść sekcji, długość opisów, użyte czasowniki, liczby/konkrety)
@@ -137,19 +150,13 @@ BŁĘDY GRAMATYCZNE I SPÓJNOŚCI: aktywnie szukaj:
 Wpisuj do `structure.needs_fixing` jeśli znajdziesz konkretny błąd.
 
 ═══════════════════════════════════════════════════════════════════
-ZDJĘCIE W CV — KORZYSTAJ Z PRZEKAZANEJ INFORMACJI
+ZDJĘCIE W CV — NIE KOMENTUJ
 ═══════════════════════════════════════════════════════════════════
-Na samym KOŃCU treści CV znajdziesz dokładnie jedną z linijek:
-  `PHOTO_DETECTED: TAK`   — system wykrył w pliku zdjęcie portretowe kandydata
-  `PHOTO_DETECTED: NIE`   — system nie wykrył w pliku żadnego zdjęcia portretowego
-  `PHOTO_DETECTED: UNKNOWN` — nie udało się sprawdzić (brak hinta)
-
-ZASADY:
-- Jeśli `TAK` → wpisz w `structure.works_well`: "CV zawiera profesjonalne zdjęcie — zgodne ze standardem CH (Bewerbungsfoto)". (Tylko ten konkret kwalifikuje się w works_well, bo dotyczy formy CV.)
-- Jeśli `NIE` → wpisz w `structure.to_add`: "Dodaj profesjonalne zdjęcie portretowe (Bewerbungsfoto) — w Szwajcarii to standard CV, jego brak obniża szanse". Nie wpisuj tego w `needs_fixing` (bo nic nie ma do poprawy — brakuje, więc to_add).
-- Jeśli `UNKNOWN` → NIE komentuj zdjęcia w żadnej sekcji. Pomiń temat całkowicie.
-
-ZAKAZ: nie wpisuj uwag o zdjęciu sprzecznych z hintem (np. gdy `TAK` — nie pisz że brakuje; gdy `NIE` — nie chwal "dobre zdjęcie"). Hint jest źródłem prawdy.
+Otrzymujesz wyłącznie tekst CV, więc nie wiesz czy w pliku jest zdjęcie czy nie. Z tego powodu:
+- NIE wpisuj nigdzie (works_well / needs_fixing / to_add / advantages / concerns / actions / tips) żadnych uwag o zdjęciu, fotografii, Bewerbungsfoto, portrecie itp.
+- NIE chwal i nie krytykuj obecności / braku zdjęcia.
+- NIE sugeruj dodania zdjęcia.
+- Temat zdjęcia pomijasz w całości — niezależnie od standardu CH.
 
 W tej kategorii oceń:
 - works_well — REALNIE silne elementy CV. NIE wpisuj tu meta-truizmów.
@@ -384,12 +391,8 @@ TEKST CV:
 """
 
 
-async def analyze_cv_with_ai(cv_text: str, has_photo: bool | None = None) -> dict | None:
+async def analyze_cv_with_ai(cv_text: str) -> dict | None:
     """Analyze CV text using OpenAI GPT-5.4 mini and return structured analysis.
-
-    Args:
-        cv_text: Plain text extracted from the CV file.
-        has_photo: True/False if photo detection ran, None if unknown.
 
     Returns dict with keys: overall_score, summary, strengths, improvements, missing, tips.
     Returns None if AI analysis fails.
@@ -399,14 +402,6 @@ async def analyze_cv_with_ai(cv_text: str, has_photo: bool | None = None) -> dic
     if not settings.OPENAI_API_KEY:
         logger.warning("OPENAI_API_KEY not configured, falling back to basic analysis")
         return None
-
-    if has_photo is True:
-        photo_hint = "PHOTO_DETECTED: TAK"
-    elif has_photo is False:
-        photo_hint = "PHOTO_DETECTED: NIE"
-    else:
-        photo_hint = "PHOTO_DETECTED: UNKNOWN"
-    user_content = CV_ANALYSIS_PROMPT + cv_text[:8000] + "\n\n" + photo_hint
 
     try:
         from openai import AsyncOpenAI
@@ -422,7 +417,7 @@ async def analyze_cv_with_ai(cv_text: str, has_photo: bool | None = None) -> dic
                 },
                 {
                     "role": "user",
-                    "content": user_content,
+                    "content": CV_ANALYSIS_PROMPT + cv_text,
                 },
             ],
             max_completion_tokens=2500,
@@ -521,7 +516,7 @@ async def extract_cv_data_with_ai(cv_text: str) -> dict | None:
                 },
                 {
                     "role": "user",
-                    "content": CV_EXTRACTION_PROMPT + cv_text[:8000],
+                    "content": CV_EXTRACTION_PROMPT + cv_text,
                 },
             ],
             temperature=0.1,
@@ -576,8 +571,8 @@ def fallback_analysis(cv_text: str) -> dict:
             if any(kw in tip.lower() for kw in ["dodaj", "brak", "rozważ"])
         ] or ["Dodaj informacje o pozwoleniu na pracę w Szwajcarii"],
         "tips": [
-            "Dostosuj CV do standardów szwajcarskich - dodaj zdjęcie profesjonalne",
             "Podaj informacje o pozwoleniu na pracę (Permit B/C/G/L)",
             "Wymień znajomość języków z poziomami (A1-C2)",
+            "Dopasuj CV do standardów szwajcarskich (zwięzła forma, chronologia odwrotna)",
         ],
     }

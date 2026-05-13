@@ -542,6 +542,20 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
             </div>
           ) : null}
 
+          {/* Privacy notice */}
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6 flex items-start gap-3">
+            <Clock className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
+            <div className="text-sm text-gray-600">
+              <p className="font-semibold text-gray-900 mb-1">Prywatność: Twoje CV zostanie usunięte z naszych serwerów po 24 godzinach</p>
+              <p>
+                Zachowujemy Twój plik CV i tekst przez 24h — wyłącznie po to, byś mógł
+                wrócić do wyników i ewentualnie zostawić CV w bazie rekruterów. Jeśli klikniesz
+                „Dalej" i wyrazisz zgodę w kolejnym kroku — CV zostanie zapisane na stałe i
+                udostępnione rekruterom. W innym wypadku automatycznie znika.
+              </p>
+            </div>
+          </div>
+
           {/* Action buttons */}
           <div className="flex gap-4 mb-8">
             <div className="flex-1">

@@ -216,6 +216,43 @@ async def process_cv_extractions_scheduled():
         logger.error(f"CV extraction job failed: {e}", exc_info=True)
 
 
+async def purge_unconsented_cv_reviews():
+    """Delete CV file + clear cv_text for reviews older than 24h without user consent (hourly)."""
+    import os
+    from app.models.cv_review import CVReview
+
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=24)
+    upload_dir = os.path.join("uploads", "cv-review")
+    deleted = 0
+
+    async with async_session() as db:
+        result = await db.execute(
+            select(CVReview).where(
+                CVReview.retention_status == "temporary",
+                CVReview.created_at < cutoff,
+            )
+        )
+        reviews = result.scalars().all()
+
+        for review in reviews:
+            if review.cv_filename:
+                file_path = os.path.join(upload_dir, review.cv_filename)
+                try:
+                    if os.path.exists(file_path):
+                        os.remove(file_path)
+                except OSError as e:
+                    logger.warning(f"Failed to delete CV file {file_path}: {e}")
+            review.cv_text = None
+            review.cv_filename = ""
+            review.retention_status = "purged"
+            deleted += 1
+
+        await db.commit()
+
+    if deleted:
+        logger.info(f"CV retention: purged {deleted} unconsented CV review(s)")
+
+
 async def process_job_translations_scheduled():
     """Background job translation DE/FR/IT -> PL (every 2 minutes)."""
     try:
@@ -255,6 +292,12 @@ def start_scheduler():
         "interval",
         minutes=2,
         id="cv_extraction",
+    )
+    scheduler.add_job(
+        purge_unconsented_cv_reviews,
+        "interval",
+        hours=1,
+        id="purge_cv_reviews",
     )
     scheduler.add_job(
         process_job_translations_scheduled,
