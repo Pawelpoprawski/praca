@@ -508,7 +508,7 @@ async def process_single_text(text: str) -> dict | None:
         "salary_min": processed.get("salary_min"),
         "salary_max": processed.get("salary_max"),
         "salary_type": processed.get("salary_type", "monthly"),
-        "is_remote": processed.get("is_remote", False),
+        "is_remote": processed.get("is_remote") or "no",
         "experience_min": processed.get("experience_min", 0),
         "requirements": [],
         "benefits": [],
