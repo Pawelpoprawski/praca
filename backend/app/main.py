@@ -15,7 +15,7 @@ from app.core.rate_limit import limiter
 from app.models import *  # noqa: F401,F403 - register all models
 from app.models.user import User
 from app.models.system_setting import SystemSetting
-from app.routers import auth, auth_oauth, jobs, worker, employer, companies, admin, notifications, reviews, job_alerts, cv_review, files
+from app.routers import auth, auth_oauth, jobs, worker, employer, companies, admin, notifications, reviews, job_alerts, cv_review, files, tracking, admin_panel
 from app.tasks.scheduler import start_scheduler, stop_scheduler
 
 logging.basicConfig(level=logging.INFO)
@@ -250,6 +250,8 @@ app.include_router(reviews.router, prefix="/api/v1")
 app.include_router(job_alerts.router, prefix="/api/v1")
 app.include_router(cv_review.router, prefix="/api/v1")
 app.include_router(files.router, prefix="/api/v1")
+app.include_router(tracking.router, prefix="/api/v1")
+app.include_router(admin_panel.router, prefix="/api/v1")
 
 
 @app.get("/api/health")

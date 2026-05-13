@@ -18,6 +18,8 @@ from app.models.cv_database import CVDatabase
 from app.models.application_click import ApplicationClick
 from app.models.activity_log import ActivityLog
 from app.models.external_application import ExternalApplication
+from app.models.page_visit import PageVisit
+from app.models.company_override import CompanyOverride
 
 __all__ = [
     "User",
@@ -40,4 +42,6 @@ __all__ = [
     "ApplicationClick",
     "ActivityLog",
     "ExternalApplication",
+    "PageVisit",
+    "CompanyOverride",
 ]

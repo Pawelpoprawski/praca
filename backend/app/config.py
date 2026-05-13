@@ -59,6 +59,8 @@ class Settings(BaseSettings):
     # Admin
     FIRST_ADMIN_EMAIL: str = "admin@praca-w-szwajcarii.ch"
     FIRST_ADMIN_PASSWORD: str = "admin-zmien-po-pierwszym-logowaniu"
+    # Admin panel (/admin) — simple shared password, separate from JWT-based admin role
+    ADMIN_PANEL_PASSWORD: str = "Dupa1234"
 
     model_config = {"env_file": ".env", "extra": "ignore"}
 

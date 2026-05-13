@@ -3,6 +3,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { useAuthStore } from "@/store/authStore";
+import VisitTracker from "@/components/VisitTracker";
 
 function AuthInitializer({ children }: { children: React.ReactNode }) {
   const fetchUser = useAuthStore((s) => s.fetchUser);
@@ -29,7 +30,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthInitializer>{children}</AuthInitializer>
+      <AuthInitializer>
+        <VisitTracker />
+        {children}
+      </AuthInitializer>
     </QueryClientProvider>
   );
 }
