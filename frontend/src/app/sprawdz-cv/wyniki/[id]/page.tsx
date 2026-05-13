@@ -7,7 +7,7 @@ import {
   CheckCircle2, AlertTriangle, XCircle, Lightbulb, Mail,
   ArrowLeft, Upload, ArrowRight, Loader2, ChevronDown, ChevronUp,
   TrendingUp, User, Briefcase, Calendar, Globe,
-  FileText, Clock,
+  FileText, Clock, LayoutList, Flag, PlusCircle, MinusCircle, Sparkles,
 } from "lucide-react";
 import api from "@/services/api";
 import type { CVReviewResponse, MessageResponse } from "@/types/api";
@@ -56,6 +56,48 @@ function ScoreGauge({ score, previousScore }: { score: number; previousScore?: n
           }
         </div>
       )}
+    </div>
+  );
+}
+
+function CategoryBlock({
+  icon: Icon,
+  title,
+  subtitle,
+  score,
+  children,
+}: {
+  icon: React.ElementType;
+  title: string;
+  subtitle: string;
+  score: number;
+  children: React.ReactNode;
+}) {
+  const scoreColor =
+    score <= 3 ? "text-[#E1002A]" : score <= 6 ? "text-yellow-600" : "text-green-600";
+  const scoreBg =
+    score <= 3 ? "bg-[#FFF0F3] border-[#FFC2CD]" : score <= 6 ? "bg-yellow-50 border-yellow-200" : "bg-green-50 border-green-200";
+
+  return (
+    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+      <div className="flex items-start gap-4 p-5 border-b border-gray-100">
+        <div className="w-10 h-10 bg-[#0D2240] rounded flex items-center justify-center flex-shrink-0">
+          <Icon className="w-5 h-5 text-white" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <h3 className="font-display text-[1.1rem] font-bold text-[#0D2240] leading-tight">
+            {title}
+          </h3>
+          <p className="text-[0.85rem] text-gray-500 mt-0.5">{subtitle}</p>
+        </div>
+        <div className={`flex items-baseline gap-1 px-3 py-1.5 rounded border ${scoreBg} flex-shrink-0`}>
+          <span className={`font-display font-extrabold text-[1.25rem] leading-none ${scoreColor}`}>
+            {score}
+          </span>
+          <span className="text-gray-400 text-xs">/10</span>
+        </div>
+      </div>
+      <div className="p-5 space-y-3">{children}</div>
     </div>
   );
 }
@@ -296,6 +338,36 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
 
           <FunnelProgressBar currentStep={1} />
 
+          {/* Critical issues — shown PROMINENTLY above everything */}
+          {analysis.critical_issues && analysis.critical_issues.length > 0 && (
+            <div className="bg-[#FFF0F3] border-2 border-[#E1002A] rounded-lg p-6 mb-6 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-1.5 h-full bg-[#E1002A]" />
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 bg-[#E1002A] rounded-full flex items-center justify-center flex-shrink-0">
+                  <AlertTriangle className="w-5 h-5 text-white" strokeWidth={2.5} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[0.7rem] font-bold uppercase tracking-[0.15em] text-[#E1002A] mb-1.5">
+                    Krytyczny problem — najpilniejsze
+                  </div>
+                  <h2 className="font-display text-[1.15rem] font-bold text-[#0D2240] mb-3">
+                    To musisz naprawić zanim wyślesz CV
+                  </h2>
+                  <div className="space-y-3">
+                    {analysis.critical_issues.map((issue, i) => (
+                      <p
+                        key={i}
+                        className="text-[0.95rem] text-[#0D2240] leading-relaxed whitespace-pre-line"
+                      >
+                        {issue}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Score */}
           <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8 mb-6 text-center">
             <h1 className="text-2xl font-bold font-display text-[#0D2240] mb-6">
@@ -308,39 +380,127 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
           </div>
 
           {/* Analysis sections */}
-          <div className="space-y-4 mb-8">
-            <AnalysisSection
-              title="Mocne strony"
-              items={analysis.strengths}
-              icon={CheckCircle2}
-              iconColor="text-green-600"
-              bgColor="bg-green-50/50"
-              borderColor="border-green-200"
-            />
-            <AnalysisSection
-              title="Do poprawienia"
-              items={analysis.improvements}
-              icon={AlertTriangle}
-              iconColor="text-yellow-600"
-              bgColor="bg-yellow-50/50"
-              borderColor="border-yellow-200"
-            />
-            <AnalysisSection
-              title="Brakujące elementy"
-              items={analysis.missing}
-              icon={XCircle}
-              iconColor="text-red-500"
-              bgColor="bg-[#FFF0F3]/50"
-              borderColor="border-[#FFC2CD]"
-            />
-            <AnalysisSection
-              title="Porady na rynek szwajcarski"
-              items={analysis.tips}
-              icon={Lightbulb}
-              iconColor="text-blue-600"
-              bgColor="bg-blue-50/50"
-              borderColor="border-blue-200"
-            />
+          <div className="space-y-6 mb-8">
+            {analysis.structure || analysis.swiss_fit ? (
+              <>
+                {/* Category 1: CV structure */}
+                {analysis.structure && (
+                  <CategoryBlock
+                    icon={LayoutList}
+                    title="Struktura i zawartość CV"
+                    subtitle="Forma, sekcje, dobór informacji, gramatyka"
+                    score={analysis.structure.score}
+                  >
+                    <AnalysisSection
+                      title="Co działa dobrze — zostaw"
+                      items={analysis.structure.works_well}
+                      icon={CheckCircle2}
+                      iconColor="text-green-600"
+                      bgColor="bg-green-50/50"
+                      borderColor="border-green-200"
+                    />
+                    <AnalysisSection
+                      title="Co poprawić lub usunąć"
+                      items={analysis.structure.needs_fixing}
+                      icon={MinusCircle}
+                      iconColor="text-[#E1002A]"
+                      bgColor="bg-[#FFF0F3]/50"
+                      borderColor="border-[#FFC2CD]"
+                    />
+                    <AnalysisSection
+                      title="Co dodać"
+                      items={analysis.structure.to_add}
+                      icon={PlusCircle}
+                      iconColor="text-[#0D2240]"
+                      bgColor="bg-[#F0F4FA]"
+                      borderColor="border-[#C5D2E5]"
+                    />
+                  </CategoryBlock>
+                )}
+
+                {/* Category 2: Swiss market fit */}
+                {analysis.swiss_fit && (
+                  <CategoryBlock
+                    icon={Flag}
+                    title="Dopasowanie do rynku szwajcarskiego"
+                    subtitle="Języki, doświadczenie, branże, pozwolenia"
+                    score={analysis.swiss_fit.score}
+                  >
+                    <AnalysisSection
+                      title="Twoje atuty"
+                      items={analysis.swiss_fit.advantages}
+                      icon={CheckCircle2}
+                      iconColor="text-green-600"
+                      bgColor="bg-green-50/50"
+                      borderColor="border-green-200"
+                    />
+                    <AnalysisSection
+                      title="Na co zwrócić uwagę"
+                      items={analysis.swiss_fit.concerns}
+                      icon={AlertTriangle}
+                      iconColor="text-yellow-700"
+                      bgColor="bg-yellow-50/50"
+                      borderColor="border-yellow-200"
+                    />
+                    <AnalysisSection
+                      title="Konkretne kroki"
+                      items={analysis.swiss_fit.actions}
+                      icon={Sparkles}
+                      iconColor="text-[#0D2240]"
+                      bgColor="bg-[#F0F4FA]"
+                      borderColor="border-[#C5D2E5]"
+                    />
+                  </CategoryBlock>
+                )}
+
+                {analysis.tips && analysis.tips.length > 0 && (
+                  <AnalysisSection
+                    title="Dodatkowe porady"
+                    items={analysis.tips}
+                    icon={Lightbulb}
+                    iconColor="text-[#0D2240]"
+                    bgColor="bg-white"
+                    borderColor="border-gray-200"
+                  />
+                )}
+              </>
+            ) : (
+              <>
+                {/* Legacy display for old reviews */}
+                <AnalysisSection
+                  title="Mocne strony"
+                  items={analysis.strengths}
+                  icon={CheckCircle2}
+                  iconColor="text-green-600"
+                  bgColor="bg-green-50/50"
+                  borderColor="border-green-200"
+                />
+                <AnalysisSection
+                  title="Do poprawienia"
+                  items={analysis.improvements}
+                  icon={AlertTriangle}
+                  iconColor="text-yellow-600"
+                  bgColor="bg-yellow-50/50"
+                  borderColor="border-yellow-200"
+                />
+                <AnalysisSection
+                  title="Brakujące elementy"
+                  items={analysis.missing}
+                  icon={XCircle}
+                  iconColor="text-[#E1002A]"
+                  bgColor="bg-[#FFF0F3]/50"
+                  borderColor="border-[#FFC2CD]"
+                />
+                <AnalysisSection
+                  title="Porady na rynek szwajcarski"
+                  items={analysis.tips}
+                  icon={Lightbulb}
+                  iconColor="text-[#0D2240]"
+                  bgColor="bg-[#F0F4FA]"
+                  borderColor="border-[#C5D2E5]"
+                />
+              </>
+            )}
           </div>
 
           {/* Email notification */}

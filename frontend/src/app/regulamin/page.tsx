@@ -29,8 +29,8 @@ export default function RegulaminPage() {
             Niniejszy regulamin określa zasady korzystania z portalu internetowego dostępnego pod adresem{" "}
             <strong>Praca w Szwajcarii.com</strong> (dalej: &quot;Portal&quot;), którego właścicielem i operatorem jest portal
             Praca w Szwajcarii.com. Kontakt z administratorem możliwy jest pod adresem e-mail:{" "}
-            <a href="mailto:kontakt@praca-w-szwajcarii.ch" className="text-[#E1002A] hover:underline">
-              kontakt@praca-w-szwajcarii.ch
+            <a href="mailto:kontakt@polacyszwajcaria.com" className="text-[#E1002A] hover:underline">
+              kontakt@polacyszwajcaria.com
             </a>.
           </p>
           <p>Korzystanie z Portalu oznacza akceptację niniejszego regulaminu w całej jego treści.</p>
@@ -101,8 +101,8 @@ export default function RegulaminPage() {
         <Section number={9} title="Kontakt">
           <p>
             W sprawach związanych z regulaminem prosimy o kontakt pod adresem:{" "}
-            <a href="mailto:kontakt@praca-w-szwajcarii.ch" className="text-[#E1002A] hover:underline">
-              kontakt@praca-w-szwajcarii.ch
+            <a href="mailto:kontakt@polacyszwajcaria.com" className="text-[#E1002A] hover:underline">
+              kontakt@polacyszwajcaria.com
             </a>.
           </p>
         </Section>

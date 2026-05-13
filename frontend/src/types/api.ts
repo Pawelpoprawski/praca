@@ -416,9 +416,29 @@ export interface JobAlertList {
 
 // --- CV Review (AI) ---
 
+export interface CVStructureAnalysis {
+  score: number;
+  works_well: string[];
+  needs_fixing: string[];
+  to_add: string[];
+}
+
+export interface SwissMarketFit {
+  score: number;
+  advantages: string[];
+  concerns: string[];
+  actions: string[];
+}
+
 export interface CVReviewAnalysis {
   overall_score: number;
   summary: string;
+  // Critical, blocking issues (e.g. CV in wrong language)
+  critical_issues?: string[];
+  // New two-category structure
+  structure?: CVStructureAnalysis | null;
+  swiss_fit?: SwissMarketFit | null;
+  // Legacy fields (still populated for backwards compat)
   strengths: string[];
   improvements: string[];
   missing: string[];

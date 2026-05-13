@@ -587,14 +587,23 @@ function DualCard({
   );
 }
 
-const FAQ_ITEMS = [
-  {
-    q: "Czy korzystanie z portalu jest bezpłatne?",
-    a: "Tak, portal jest w pełni bezpłatny zarówno dla pracowników, jak i dla pracodawców. Publikowanie ogłoszeń, przeglądanie ofert i aplikowanie nie wiąże się z żadnymi opłatami.",
-  },
+const FAQ_ITEMS: { q: string; a: React.ReactNode }[] = [
   {
     q: "Jakie dokumenty są potrzebne do pracy w Szwajcarii?",
-    a: "Do legalnej pracy w Szwajcarii potrzebujesz pozwolenia na pracę (permit). Obywatele UE/EFTA mogą ubiegać się o pozwolenie typu L (krótkoterminowe) lub B (długoterminowe). Pracodawca zazwyczaj pomaga w uzyskaniu odpowiedniego pozwolenia.",
+    a: (
+      <>
+        Do legalnej pracy w Szwajcarii potrzebujesz{" "}
+        <a
+          href="https://polacyszwajcaria.com/poradniki/przeprowadzka-i-pobyt/szwajcaria-pozwolenie-na-pobyt-dla-obywateli-ue-efta/"
+          target="_blank"
+          rel="noopener"
+          className="text-[#E1002A] hover:underline font-medium"
+        >
+          pozwolenia na pracę (permit)
+        </a>
+        . Obywatele UE/EFTA mogą ubiegać się o pozwolenie typu L (krótkoterminowe) lub B (długoterminowe). Pracodawca zazwyczaj pomaga w uzyskaniu odpowiedniego pozwolenia.
+      </>
+    ),
   },
   {
     q: "Jak mogę sprawdzić swoje CV?",

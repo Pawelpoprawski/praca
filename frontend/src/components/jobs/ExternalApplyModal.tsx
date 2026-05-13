@@ -244,8 +244,8 @@ export default function ExternalApplyModal({ jobId, jobTitle, contactEmail, open
                   Wyrażam zgodę na przetwarzanie moich danych osobowych (imię, nazwisko, email, telefon, CV)
                   przez Praca w Szwajcarii oraz przekazanie ich pracodawcy w celu rozpatrzenia aplikacji.
                   Dane mogę w każdej chwili usunąć kontaktując się na{" "}
-                  <a href="mailto:kontakt@praca-w-szwajcarii.ch" className="text-[#E1002A] hover:underline">
-                    kontakt@praca-w-szwajcarii.ch
+                  <a href="mailto:kontakt@polacyszwajcaria.com" className="text-[#E1002A] hover:underline">
+                    kontakt@polacyszwajcaria.com
                   </a>
                   . Więcej w <a href="/polityka-prywatnosci" target="_blank" className="text-[#E1002A] hover:underline">Polityce prywatności</a>.
                 </span>

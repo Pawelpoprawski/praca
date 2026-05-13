@@ -8,10 +8,15 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-[#E1002A] rounded flex items-center justify-center">
-                <svg viewBox="0 0 32 32" fill="white" className="w-5 h-5">
-                  <rect x="13" y="6" width="6" height="20" rx="1" />
-                  <rect x="6" y="13" width="20" height="6" rx="1" />
+              <div className="relative w-10 h-10 bg-[#E1002A] rounded-md flex items-center justify-center">
+                <svg viewBox="0 0 32 32" className="w-[25px] h-[25px]">
+                  <path
+                    fill="white"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M10 6.5h8.2c3.59 0 6.3 2.78 6.3 6.4s-2.71 6.4-6.3 6.4H13.4v5.7c0 0.28-0.22 0.5-0.5 0.5h-2.9c-0.28 0-0.5-0.22-0.5-0.5V7c0-0.28 0.22-0.5 0.5-0.5zM13.4 10v6h4.6c1.7 0 3-1.34 3-3s-1.3-3-3-3h-4.6z"
+                  />
+                  <circle cx="24.5" cy="9.5" r="2" fill="white" opacity="0.95" />
                 </svg>
               </div>
               <div className="leading-tight">
@@ -19,7 +24,15 @@ export default function Footer() {
                   Praca <span className="text-[#E1002A]">w Szwajcarii</span>
                 </span>
                 <div className="text-[0.7rem] text-white/40 mt-0.5">
-                  część portalu <span className="font-semibold text-white/60">PolacySzwajcaria.com</span>
+                  część portalu{" "}
+                  <a
+                    href="https://polacyszwajcaria.com"
+                    target="_blank"
+                    rel="noopener"
+                    className="font-semibold text-white/60 hover:text-white no-underline transition-colors"
+                  >
+                    PolacySzwajcaria.com
+                  </a>
                 </div>
               </div>
             </div>
@@ -60,7 +73,7 @@ export default function Footer() {
             <ul className="flex flex-col gap-2.5 list-none">
               <li><Link href="/regulamin" className="text-white/50 hover:text-white text-[0.88rem] transition-colors no-underline">Regulamin</Link></li>
               <li><Link href="/polityka-prywatnosci" className="text-white/50 hover:text-white text-[0.88rem] transition-colors no-underline">Polityka prywatności</Link></li>
-              <li><a href="mailto:kontakt@praca-w-szwajcarii.ch" className="text-white/50 hover:text-white text-[0.88rem] transition-colors no-underline">Kontakt</a></li>
+              <li><a href="mailto:kontakt@polacyszwajcaria.com" className="text-white/50 hover:text-white text-[0.88rem] transition-colors no-underline">Kontakt</a></li>
             </ul>
           </div>
         </div>

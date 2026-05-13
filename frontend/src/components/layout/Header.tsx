@@ -32,22 +32,35 @@ export default function Header() {
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="flex justify-between items-center h-[72px]">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 sm:gap-3 group min-w-0">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-[#E1002A] rounded flex items-center justify-center flex-shrink-0">
-                <svg viewBox="0 0 32 32" fill="white" className="w-4 h-4 sm:w-5 sm:h-5">
-                  <rect x="13" y="6" width="6" height="20" rx="1" />
-                  <rect x="6" y="13" width="20" height="6" rx="1" />
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+              <Link href="/" aria-label="Strona główna" className="relative w-9 h-9 sm:w-10 sm:h-10 bg-[#E1002A] rounded-md flex items-center justify-center flex-shrink-0 group">
+                <svg viewBox="0 0 32 32" className="w-[22px] h-[22px] sm:w-[25px] sm:h-[25px]">
+                  <path
+                    fill="white"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M10 6.5h8.2c3.59 0 6.3 2.78 6.3 6.4s-2.71 6.4-6.3 6.4H13.4v5.7c0 0.28-0.22 0.5-0.5 0.5h-2.9c-0.28 0-0.5-0.22-0.5-0.5V7c0-0.28 0.22-0.5 0.5-0.5zM13.4 10v6h4.6c1.7 0 3-1.34 3-3s-1.3-3-3-3h-4.6z"
+                  />
+                  <circle cx="24.5" cy="9.5" r="2" fill="white" opacity="0.95" />
                 </svg>
-              </div>
+              </Link>
               <div className="leading-tight min-w-0">
-                <div className="font-display font-extrabold text-[1.05rem] sm:text-[1.4rem] text-[#0D2240] whitespace-nowrap">
+                <Link
+                  href="/"
+                  className="block font-display font-extrabold text-[1.05rem] sm:text-[1.4rem] text-[#0D2240] whitespace-nowrap no-underline"
+                >
                   Praca <span className="text-[#E1002A]">w Szwajcarii</span>
-                </div>
-                <div className="hidden sm:block text-[0.65rem] text-[#888] tracking-[0.05em] -mt-0.5">
+                </Link>
+                <a
+                  href="https://polacyszwajcaria.com"
+                  target="_blank"
+                  rel="noopener"
+                  className="hidden sm:block text-[0.65rem] text-[#888] tracking-[0.05em] -mt-0.5 no-underline hover:text-[#E1002A] transition-colors"
+                >
                   część portalu <span className="font-semibold">PolacySzwajcaria.com</span>
-                </div>
+                </a>
               </div>
-            </Link>
+            </div>
 
             {/* Desktop nav */}
             <nav className="hidden lg:flex items-center gap-7">

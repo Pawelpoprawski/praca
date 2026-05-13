@@ -7,12 +7,12 @@ import api from "@/services/api";
 import type { CVReviewResponse } from "@/types/api";
 
 const ANALYSIS_STEPS = [
-  { icon: Upload, label: "Wczytywanie dokumentu...", duration: 1500 },
-  { icon: Search, label: "Sprawdzamy strukturę CV...", duration: 2000 },
-  { icon: BookOpen, label: "Analizujemy doświadczenie zawodowe...", duration: 2000 },
-  { icon: Languages, label: "Weryfikujemy kompetencje językowe...", duration: 1500 },
-  { icon: FileCheck, label: "Sprawdzamy gramatykę i stylizację...", duration: 1500 },
-  { icon: Award, label: "Przygotowujemy rekomendacje...", duration: 1500 },
+  { icon: Upload, label: "Wczytujemy dokument" },
+  { icon: Search, label: "Sprawdzamy strukturę CV" },
+  { icon: BookOpen, label: "Analizujemy doświadczenie zawodowe" },
+  { icon: Languages, label: "Weryfikujemy kompetencje językowe" },
+  { icon: FileCheck, label: "Sprawdzamy zgodność z rynkiem szwajcarskim" },
+  { icon: Award, label: "Przygotowujemy rekomendacje" },
 ];
 
 const SWISS_FACTS = [
@@ -52,6 +52,8 @@ export default function SprawdzCVPage() {
   const stepTimerRef = useRef<NodeJS.Timeout | null>(null);
   const factTimerRef = useRef<NodeJS.Timeout | null>(null);
   const progressTimerRef = useRef<NodeJS.Timeout | null>(null);
+  // Randomized minimum analysis duration (5-10s) — set once per submission
+  const minDurationRef = useRef<number>(7000);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -69,21 +71,22 @@ export default function SprawdzCVPage() {
     return () => { if (factTimerRef.current) clearInterval(factTimerRef.current); };
   }, [uploading]);
 
-  // Step through analysis stages
+  // Step through analysis stages — distribute over min duration
   useEffect(() => {
     if (!uploading) return;
     setCurrentStep(0);
     let step = 0;
+    const perStep = Math.max(700, Math.floor(minDurationRef.current / ANALYSIS_STEPS.length));
 
     const advanceStep = () => {
       step++;
       if (step < ANALYSIS_STEPS.length) {
         setCurrentStep(step);
-        stepTimerRef.current = setTimeout(advanceStep, ANALYSIS_STEPS[step].duration);
+        stepTimerRef.current = setTimeout(advanceStep, perStep);
       }
     };
 
-    stepTimerRef.current = setTimeout(advanceStep, ANALYSIS_STEPS[0].duration);
+    stepTimerRef.current = setTimeout(advanceStep, perStep);
     return () => { if (stepTimerRef.current) clearTimeout(stepTimerRef.current); };
   }, [uploading]);
 
@@ -94,13 +97,12 @@ export default function SprawdzCVPage() {
       return;
     }
     setProgress(0);
-    const totalDuration = 10000; // 10 seconds to reach ~90%
+    const totalDuration = minDurationRef.current;
     const interval = 100;
     let elapsed = 0;
 
     progressTimerRef.current = setInterval(() => {
       elapsed += interval;
-      // Easing: fast start, slows down near 90%
       const raw = elapsed / totalDuration;
       const eased = raw < 1 ? 90 * (1 - Math.pow(1 - raw, 3)) : 90;
       setProgress(Math.min(eased, 90));
@@ -162,10 +164,16 @@ export default function SprawdzCVPage() {
 
   const handleSubmit = async () => {
     if (!file) return;
+    // Randomize minimum analysis duration to 5-10 seconds
+    minDurationRef.current = 5000 + Math.floor(Math.random() * 5000);
     setUploading(true);
     setApiDone(false);
     setReviewId(null);
     setError(null);
+
+    const minDelay = new Promise<void>((resolve) =>
+      setTimeout(resolve, minDurationRef.current),
+    );
 
     try {
       const formData = new FormData();
@@ -173,10 +181,13 @@ export default function SprawdzCVPage() {
       if (email) formData.append("email", email);
       if (previousReviewId) formData.append("previous_review_id", previousReviewId);
 
-      const response = await api.post<CVReviewResponse>("/cv-review/analyze", formData, {
+      const apiCall = api.post<CVReviewResponse>("/cv-review/analyze", formData, {
         headers: { "Content-Type": "multipart/form-data" },
         timeout: 120000,
       });
+
+      // Wait for BOTH the API response AND the minimum animation duration
+      const [response] = await Promise.all([apiCall, minDelay]);
 
       setReviewId(response.data.id);
       setApiDone(true);
@@ -192,91 +203,92 @@ export default function SprawdzCVPage() {
 
   // Loading screen
   if (uploading) {
-    const StepIcon = ANALYSIS_STEPS[currentStep]?.icon || FileCheck;
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center">
-        <div className="max-w-lg mx-auto px-4 w-full">
-          <div className="bg-white rounded-lg shadow-xl border border-gray-100 p-8 md:p-10">
-            {/* Animated icon */}
-            <div className="flex justify-center mb-8">
-              <div className="relative">
-                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center animate-pulse">
-                  <StepIcon className="w-10 h-10 text-blue-600" />
+      <div className="min-h-screen bg-[#F5F6F8] flex items-center justify-center py-12 px-4">
+        <div className="max-w-[560px] w-full">
+          <div className="bg-white border border-[#E0E3E8] rounded-lg overflow-hidden">
+            {/* Top strip — navy */}
+            <div className="bg-[#0D2240] px-8 py-7 text-white">
+              <span className="hays-red-line" />
+              <h2 className="font-display text-[1.5rem] font-extrabold leading-tight">
+                Analizujemy Twoje CV
+              </h2>
+              <p className="text-white/70 text-[0.9rem] mt-1.5">
+                Konsultant HR sprawdza dokument pod kątem rynku szwajcarskiego.
+              </p>
+            </div>
+
+            {/* Body */}
+            <div className="px-8 py-7">
+              {/* Progress bar */}
+              <div className="mb-7">
+                <div className="flex justify-between text-[0.75rem] text-[#888] mb-2 font-medium tracking-wide uppercase">
+                  <span>Postęp</span>
+                  <span className="tabular-nums">{Math.round(progress)}%</span>
                 </div>
-                <div className="absolute -inset-2 border-2 border-blue-200 rounded-full animate-spin" style={{ borderTopColor: 'transparent', animationDuration: '3s' }} />
-              </div>
-            </div>
-
-            <h2 className="text-xl font-bold font-display text-[#0D2240] text-center mb-2">
-              Analizujemy Twoje CV
-            </h2>
-            <p className="text-gray-500 text-center text-sm mb-8">
-              To zajmie tylko chwilę...
-            </p>
-
-            {/* Progress bar */}
-            <div className="mb-6">
-              <div className="flex justify-between text-xs text-gray-400 mb-2">
-                <span>Postęp analizy</span>
-                <span>{Math.round(progress)}%</span>
-              </div>
-              <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
-                <div
-                  className="h-full rounded-full transition-all duration-500 ease-out"
-                  style={{
-                    width: `${progress}%`,
-                    background: progress < 100
-                      ? 'linear-gradient(90deg, #3b82f6, #6366f1)'
-                      : 'linear-gradient(90deg, #22c55e, #16a34a)',
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Analysis steps */}
-            <div className="space-y-3 mb-8">
-              {ANALYSIS_STEPS.map((step, i) => {
-                const Icon = step.icon;
-                const isDone = i < currentStep;
-                const isCurrent = i === currentStep;
-                return (
+                <div className="h-1 bg-[#E0E3E8] overflow-hidden">
                   <div
-                    key={i}
-                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 ${
-                      isCurrent
-                        ? "bg-blue-50 border border-blue-200"
-                        : isDone
-                          ? "bg-green-50 border border-green-200"
-                          : "bg-gray-50 border border-transparent opacity-40"
-                    }`}
-                  >
-                    <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 ${
-                      isDone ? "bg-green-500" : isCurrent ? "bg-blue-500" : "bg-gray-300"
-                    }`}>
-                      {isDone ? (
-                        <CheckCircle2 className="w-4 h-4 text-white" />
-                      ) : (
-                        <Icon className={`w-3.5 h-3.5 text-white ${isCurrent ? "animate-pulse" : ""}`} />
-                      )}
-                    </div>
-                    <span className={`text-sm ${
-                      isDone ? "text-green-700 font-medium" : isCurrent ? "text-blue-700 font-medium" : "text-gray-400"
-                    }`}>
-                      {isDone ? step.label.replace("...", " - gotowe!") : step.label}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
+                    className="h-full transition-all duration-500 ease-out"
+                    style={{
+                      width: `${progress}%`,
+                      backgroundColor: progress < 100 ? "#E1002A" : "#16a34a",
+                    }}
+                  />
+                </div>
+              </div>
 
-            {/* Swiss fun fact */}
-            <div className="bg-gradient-to-r from-red-50 to-red-100/50 border border-[#FFC2CD] rounded-xl p-4">
-              <p className="text-xs font-semibold text-[#7A0014] mb-1 flex items-center gap-1.5">
-                <span className="text-base"></span> Czy wiesz, że...
-              </p>
-              <p className="text-sm text-[#B8001F] leading-relaxed transition-opacity duration-500">
-                {SWISS_FACTS[currentFact]}
-              </p>
+              {/* Analysis steps — sparse, editorial */}
+              <ul className="space-y-2.5 mb-7">
+                {ANALYSIS_STEPS.map((step, i) => {
+                  const isDone = i < currentStep;
+                  const isCurrent = i === currentStep;
+                  return (
+                    <li
+                      key={i}
+                      className={`flex items-center gap-3 text-[0.92rem] transition-opacity ${
+                        isDone || isCurrent ? "opacity-100" : "opacity-30"
+                      }`}
+                    >
+                      <span
+                        className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 border-2 ${
+                          isDone
+                            ? "bg-[#0D2240] border-[#0D2240]"
+                            : isCurrent
+                              ? "border-[#E1002A] bg-white"
+                              : "border-[#E0E3E8] bg-white"
+                        }`}
+                      >
+                        {isDone ? (
+                          <CheckCircle2 className="w-3 h-3 text-white" strokeWidth={3} />
+                        ) : isCurrent ? (
+                          <span className="w-1.5 h-1.5 bg-[#E1002A] rounded-full" />
+                        ) : null}
+                      </span>
+                      <span
+                        className={`${
+                          isDone
+                            ? "text-[#0D2240] font-medium"
+                            : isCurrent
+                              ? "text-[#0D2240] font-semibold"
+                              : "text-[#888]"
+                        }`}
+                      >
+                        {step.label}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              {/* Swiss fact — bottom info strip */}
+              <div className="border-t border-[#E0E3E8] pt-5">
+                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-[#888] mb-1.5">
+                  Warto wiedzieć
+                </p>
+                <p className="text-[0.9rem] text-[#555] leading-relaxed transition-opacity duration-500">
+                  {SWISS_FACTS[currentFact]}
+                </p>
+              </div>
             </div>
           </div>
         </div>

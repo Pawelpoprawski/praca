@@ -28,8 +28,8 @@ export default function PolitykaPrywatnosciPage() {
           <p>
             Administratorem danych osobowych jest portal <strong>Praca w Szwajcarii.com</strong>.
             Kontakt z administratorem możliwy jest pod adresem e-mail:{" "}
-            <a href="mailto:kontakt@praca-w-szwajcarii.ch" className="text-[#E1002A] hover:underline">
-              kontakt@praca-w-szwajcarii.ch
+            <a href="mailto:kontakt@polacyszwajcaria.com" className="text-[#E1002A] hover:underline">
+              kontakt@polacyszwajcaria.com
             </a>.
           </p>
         </PolicySection>
@@ -96,8 +96,8 @@ export default function PolitykaPrywatnosciPage() {
           ]} />
           <p className="mt-4">
             W celu skorzystania z powyższych praw prosimy o kontakt pod adresem:{" "}
-            <a href="mailto:kontakt@praca-w-szwajcarii.ch" className="text-[#E1002A] hover:underline">
-              kontakt@praca-w-szwajcarii.ch
+            <a href="mailto:kontakt@polacyszwajcaria.com" className="text-[#E1002A] hover:underline">
+              kontakt@polacyszwajcaria.com
             </a>.
           </p>
         </PolicySection>
@@ -138,8 +138,8 @@ export default function PolitykaPrywatnosciPage() {
         <PolicySection number={11} title="Kontakt">
           <p>
             W sprawach związanych z ochroną danych osobowych prosimy o kontakt:{" "}
-            <a href="mailto:kontakt@praca-w-szwajcarii.ch" className="text-[#E1002A] hover:underline">
-              kontakt@praca-w-szwajcarii.ch
+            <a href="mailto:kontakt@polacyszwajcaria.com" className="text-[#E1002A] hover:underline">
+              kontakt@polacyszwajcaria.com
             </a>.
           </p>
         </PolicySection>

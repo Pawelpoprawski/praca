@@ -6,33 +6,108 @@ from app.config import get_settings
 
 logger = logging.getLogger(__name__)
 
-CV_ANALYSIS_PROMPT = """Jesteś ekspertem HR specjalizującym się w rynku pracy w Szwajcarii, ze szczególnym uwzględnieniem polskich pracowników.
+CV_ANALYSIS_PROMPT = """Jesteś doświadczonym ekspertem HR i rekruterem specjalizującym się w rynku pracy w Szwajcarii, ze szczególnym uwzględnieniem polskich pracowników aplikujących na pozycje w Szwajcarii.
 
-Przeanalizuj poniższe CV i zwróć wynik w formacie JSON (bez markdown code blocks, czysty JSON).
+Twoim zadaniem jest przeanalizować CV w DWÓCH OSOBNYCH KATEGORIACH i zwrócić wynik w formacie JSON (bez markdown, czysty JSON).
 
-Ocena powinna być szczegółowa i konkretna. Bierz pod uwagę specyfikę rynku szwajcarskiego:
-- Ważność znajomości języków (niemiecki, francuski, włoski, angielski)
-- Znaczenie pozwoleń na pracę (Permit B, C, G, L)
-- Standardy CV w Szwajcarii (zdjęcie, dane osobowe, referencje)
-- Specyficzne wymagania branżowe
+=== KROK 0 (OBOWIĄZKOWY): WYKRYJ JĘZYK CV ===
+ZANIM zaczniesz oceniać cokolwiek innego — sprawdź w JAKIM JĘZYKU napisane jest CV (analizując sekcje, nagłówki, opisy doświadczenia, NIE tylko nazwy własne).
 
-Zwróć JSON z następującymi polami:
+Akceptowalne języki dla rynku pracy w Szwajcarii:
+- **niemiecki (de)** — DACH region (Zurych, Berno, Bazylea, większość kantonów) — najsilniejsza preferencja
+- **francuski (fr)** — Romandie (Genewa, Vaud, Neuchâtel, Jura, Fryburg)
+- **włoski (it)** — Ticino
+
+Jeśli CV jest w JAKIMKOLWIEK innym języku (polski, angielski, ukraiński, rosyjski, hiszpański itp.) — to KRYTYCZNY PROBLEM. Aplikacje w nieprawidłowym języku są w 95% przypadków odrzucane na pierwszym etapie selekcji, nawet jeśli kandydat jest świetny merytorycznie.
+
+W polu `critical_issues` ZAWSZE umieść TEN problem JAKO PIERWSZY wpis. Komunikat MUSI być praktyczny i targetowany do regionu — kandydat sam wybiera gdzie chce pracować. Użyj tego dokładnego szablonu (zachowaj formatowanie i pogrubienia w treści, nie używaj markdown):
+
+"Twoje CV jest napisane w języku <NAZWA_JĘZYKA>, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:
+• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.
+• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.
+• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.
+CV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+
+Jeśli CV jest w DE/FR/IT — pole `critical_issues` pozostaw jako pustą listę `[]` (chyba że wykryjesz inny krytyczny problem, np. CV jest pusty, zawiera tylko jedno zdanie, lub zawiera dane fałszywe/sprzeczne).
+
+=== KATEGORIA 1: STRUKTURA I ZAWARTOŚĆ CV ===
+Oceń jak CV jest skonstruowane — jego forma, układ, sekcje, gramatyka, dobór informacji.
+
+Bierz pod uwagę:
+- Standardy CV w Szwajcarii: zdjęcie profesjonalne (zawsze!), dane kontaktowe na górze, jasne sekcje, chronologia odwrotna, 1-2 strony max
+- Czy są wszystkie kluczowe sekcje: dane osobowe, doświadczenie, wykształcenie, języki, umiejętności
+- Czy NIE ma zbędnych informacji (PESEL, data urodzenia może być, ale stan cywilny i religia są niepotrzebne)
+- Czy opisy doświadczenia są konkretne (osiągnięcia, liczby) czy puste ("byłem odpowiedzialny za...")
+- Gramatyka, ortografia, stylistyka
+- Spójność formatowania, czytelność
+- Czy są referencje lub wzmianka o nich
+
+W tej kategorii oceń:
+- works_well — konkretne elementy, które działają dobrze i należy je ZOSTAWIĆ
+- needs_fixing — co należy POPRAWIĆ lub USUNĄĆ (z konkretną sugestią CO zamiast tego)
+- to_add — czego BRAKUJE i co warto DODAĆ (z uzasadnieniem dlaczego)
+
+=== KATEGORIA 2: DOPASOWANIE DO RYNKU SZWAJCARSKIEGO ===
+Oceń jak kandydat (jego kompetencje, doświadczenie, sytuacja) wpasowuje się w realia rynku pracy w Szwajcarii.
+
+DUŻE PLUSY (advantages) — szukaj ich aktywnie:
+- Znajomość niemieckiego (od B1 wzwyż) — otwiera 65% ofert
+- Znajomość francuskiego (Romandie: Genewa, Vaud, Neuchâtel, Jura, Fryburg)
+- Znajomość włoskiego (Ticino)
+- Doświadczenie za granicą (nawet w Polsce w międzynarodowej firmie liczy się)
+- Wcześniejsza praca w DACH (Niemcy, Austria) — bardzo zbliżona kultura pracy
+- Pozwolenie na pracę (Permit B/C/G/L) lub paszport UE/EFTA
+- Prawo jazdy + samochód (zwłaszcza dla budowlanki, transportu, opieki)
+- Certyfikaty branżowe (np. EU-Schweisspass dla spawaczy, dyplomy uznawane w CH)
+- Doświadczenie 5+ lat w branżach deficytowych (budownictwo, gastronomia, opieka, IT, inżynieria)
+- Zdolność do relokacji / gotowość do pracy w systemie tygodniowym
+
+GAPS (concerns) — czerwone flagi dla rynku CH:
+- Brak jakiegokolwiek języka niemieckiego/francuskiego/angielskiego
+- Brak doświadczenia poza Polską (utrudnia, ale nie blokuje)
+- Brak pozwolenia na pracę i brak paszportu UE
+- Krótkie staże (skakanie co 6 miesięcy między pracodawcami — w CH źle widziane)
+- Brak konkretów (brak nazw firm, dat, miast)
+- Wiek pracownika — Szwajcaria często ma górną granicę 50-55 lat w niektórych branżach (delikatnie wspomnieć tylko jeśli widoczne i istotne)
+
+Dla każdego advantage i concern PODAJ KONKRET z CV (np. "Znajomość niemieckiego na poziomie B2 — kluczowy atut" zamiast ogólnego "znasz języki").
+
+Actions — KONKRETNE kroki, co kandydat powinien zrobić ZANIM aplikuje (kurs językowy, certyfikat, uzupełnienie sekcji).
+
+=== FORMAT ODPOWIEDZI ===
+Zwróć JSON dokładnie z poniższą strukturą:
 {
-  "overall_score": <liczba 1-10>,
-  "summary": "<ogólna ocena CV w 2-3 zdaniach po polsku>",
-  "strengths": ["<mocna strona 1>", "<mocna strona 2>", ...],
-  "improvements": ["<co poprawić 1 - z konkretną sugestią>", "<co poprawić 2>", ...],
-  "missing": ["<czego brakuje 1>", "<czego brakuje 2>", ...],
-  "tips": ["<porada na rynek szwajcarski 1>", "<porada 2>", ...]
+  "overall_score": <liczba 1-10 — średnia z obu kategorii; jeśli krytyczny problem językowy → maks. 4>,
+  "summary": "<2-3 zdania po polsku: ogólny werdykt + 1 najważniejsza rzecz do poprawy>",
+  "critical_issues": ["<problem krytyczny 1 — np. zły język CV>", ...],
+  "structure": {
+    "score": <liczba 1-10 dla samej formy CV>,
+    "works_well": ["<konkret 1>", "<konkret 2>", ...],
+    "needs_fixing": ["<co poprawić/usunąć — z sugestią 1>", "<2>", ...],
+    "to_add": ["<co dodać — z uzasadnieniem 1>", "<2>", ...]
+  },
+  "swiss_fit": {
+    "score": <liczba 1-10 dla dopasowania do rynku CH>,
+    "advantages": ["<konkretny atut 1>", "<2>", ...],
+    "concerns": ["<konkretny gap 1>", "<2>", ...],
+    "actions": ["<konkretny krok 1>", "<2>", ...]
+  },
+  "tips": ["<1-3 uniwersalnych, krótkich porad — opcjonalnie>"]
 }
 
-Wymagania:
-- overall_score: obiektywna ocena od 1 (bardzo słabe) do 10 (doskonałe)
-- strengths: minimum 2 pozycje, maksimum 6
-- improvements: minimum 2 pozycje, maksimum 6, każda z konkretną sugestią
-- missing: minimum 1 pozycja, maksimum 5
-- tips: minimum 2 porady, maksimum 5, specyficzne dla rynku szwajcarskiego
-- Wszystkie teksty po polsku
+WYMAGANIA:
+- critical_issues: 0-3 pozycji. ZAWSZE pierwsze: zły język CV (PL/EN/inny niż DE/FR/IT). Tylko PRAWDZIWIE blokujące problemy — nie używaj dla drobnych spraw
+- structure.works_well: 2-5 pozycji
+- structure.needs_fixing: 2-6 pozycji
+- structure.to_add: 1-5 pozycji
+- swiss_fit.advantages: 1-5 pozycji (jeśli brak — pusta lista)
+- swiss_fit.concerns: 1-5 pozycji
+- swiss_fit.actions: 1-4 pozycji
+- tips: 0-3 pozycji (krótkie, ogólne)
+- Wszystko po polsku
+- KAŻDA pozycja zawiera KONKRET z CV (nie ogólniki typu "popraw doświadczenie")
+- Bądź szczery — jeśli CV jest słabe, nie wybielaj. Jeśli silne — nie udawaj że źle.
+- Jeśli CV jest w złym języku — `summary` MUSI zaczynać się od wzmianki o problemie językowym
 
 TEKST CV:
 """
@@ -95,15 +170,16 @@ async def analyze_cv_with_ai(cv_text: str) -> dict | None:
             messages=[
                 {
                     "role": "system",
-                    "content": "Jesteś ekspertem HR. Odpowiadasz wyłącznie czystym JSON bez żadnego formatowania markdown.",
+                    "content": "Jesteś ekspertem HR specjalizującym się w rynku pracy w Szwajcarii. Odpowiadasz wyłącznie czystym JSON.",
                 },
                 {
                     "role": "user",
                     "content": CV_ANALYSIS_PROMPT + cv_text[:8000],
                 },
             ],
-            temperature=0.3,
-            max_tokens=2000,
+            temperature=0.4,
+            max_tokens=2500,
+            response_format={"type": "json_object"},
         )
 
         content = response.choices[0].message.content
@@ -111,27 +187,48 @@ async def analyze_cv_with_ai(cv_text: str) -> dict | None:
             logger.error("Empty response from OpenAI")
             return None
 
-        # Strip possible markdown code block wrapping
-        content = content.strip()
-        if content.startswith("```"):
-            # Remove ```json and ``` wrappers
-            lines = content.split("\n")
-            if lines[0].startswith("```"):
-                lines = lines[1:]
-            if lines and lines[-1].strip() == "```":
-                lines = lines[:-1]
-            content = "\n".join(lines)
+        analysis = json.loads(content.strip())
 
-        analysis = json.loads(content)
-
-        # Validate required fields
-        required = ["overall_score", "summary", "strengths", "improvements", "missing", "tips"]
-        for field in required:
+        # Required top-level fields
+        for field in ("overall_score", "summary"):
             if field not in analysis:
-                logger.error(f"Missing field in AI response: {field}")
+                logger.error(f"Missing required field in AI response: {field}")
                 return None
 
-        # Clamp score
+        # Validate new two-category structure (preferred)
+        has_structure = isinstance(analysis.get("structure"), dict)
+        has_swiss_fit = isinstance(analysis.get("swiss_fit"), dict)
+
+        if has_structure:
+            s = analysis["structure"]
+            s.setdefault("score", analysis["overall_score"])
+            s.setdefault("works_well", [])
+            s.setdefault("needs_fixing", [])
+            s.setdefault("to_add", [])
+            s["score"] = max(1, min(10, int(s["score"])))
+
+        if has_swiss_fit:
+            sf = analysis["swiss_fit"]
+            sf.setdefault("score", analysis["overall_score"])
+            sf.setdefault("advantages", [])
+            sf.setdefault("concerns", [])
+            sf.setdefault("actions", [])
+            sf["score"] = max(1, min(10, int(sf["score"])))
+
+        # Backfill legacy fields from new structure so old UI/clients still work
+        if has_structure or has_swiss_fit:
+            s = analysis.get("structure", {}) or {}
+            sf = analysis.get("swiss_fit", {}) or {}
+            analysis.setdefault("strengths", (s.get("works_well") or []) + (sf.get("advantages") or []))
+            analysis.setdefault("improvements", s.get("needs_fixing") or [])
+            analysis.setdefault("missing", (s.get("to_add") or []) + (sf.get("concerns") or []))
+            analysis.setdefault("tips", (analysis.get("tips") or []) + (sf.get("actions") or []))
+        else:
+            # Legacy-only response — ensure legacy fields exist
+            for field in ("strengths", "improvements", "missing", "tips"):
+                analysis.setdefault(field, [])
+
+        # Clamp overall score
         analysis["overall_score"] = max(1, min(10, int(analysis["overall_score"])))
 
         return analysis

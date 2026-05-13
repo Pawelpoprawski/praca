@@ -2,13 +2,35 @@ from datetime import date, datetime
 from pydantic import BaseModel, EmailStr
 
 
+class CVStructureAnalysis(BaseModel):
+    """Ocena struktury i zawartości CV (forma, sekcje, gramatyka, zdjęcie itp.)."""
+    score: int  # 1-10
+    works_well: list[str]  # co działa, zostawić
+    needs_fixing: list[str]  # co poprawić lub usunąć
+    to_add: list[str]  # co dodać (brakujące elementy)
+
+
+class SwissMarketFit(BaseModel):
+    """Ocena dopasowania kandydata do rynku szwajcarskiego."""
+    score: int  # 1-10
+    advantages: list[str]  # niemiecki/francuski, doświadczenie za granicą, branże
+    concerns: list[str]  # czego brakuje dla rynku CH
+    actions: list[str]  # konkretne kroki do podjęcia
+
+
 class CVAnalysisResult(BaseModel):
     overall_score: int
     summary: str
-    strengths: list[str]
-    improvements: list[str]
-    missing: list[str]
-    tips: list[str]
+    # Krytyczne problemy wymagające natychmiastowej uwagi (np. CV w złym języku)
+    critical_issues: list[str] = []
+    # Nowe pola — dwie kategorie analizy
+    structure: CVStructureAnalysis | None = None
+    swiss_fit: SwissMarketFit | None = None
+    # Legacy pola — utrzymane dla wstecznej kompatybilności z poprzednimi analizami
+    strengths: list[str] = []
+    improvements: list[str] = []
+    missing: list[str] = []
+    tips: list[str] = []
 
 
 class CVReviewResponse(BaseModel):
