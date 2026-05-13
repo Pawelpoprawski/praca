@@ -100,6 +100,20 @@ async def list_jobs(
             db.add(SearchLog(query=q.strip()[:255].lower()))
         except Exception:
             pass
+        # Aggregated counter (UPSERT, no timestamps per-row)
+        try:
+            from sqlalchemy.dialects.postgresql import insert as pg_insert
+            from app.models.search_term_count import SearchTermCount
+            term = q.strip().lower()[:255]
+            if term:
+                stmt = pg_insert(SearchTermCount).values(term=term, count=1)
+                stmt = stmt.on_conflict_do_update(
+                    index_elements=["term"],
+                    set_={"count": SearchTermCount.count + 1, "last_seen_at": func.now()},
+                )
+                await db.execute(stmt)
+        except Exception:
+            pass
 
     # Kanton (multi-select)
     if canton:

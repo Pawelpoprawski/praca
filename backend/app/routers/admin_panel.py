@@ -18,10 +18,12 @@ from app.config import get_settings
 from app.database import get_db
 from app.models.page_visit import PageVisit
 from app.models.company_override import CompanyOverride
+from app.models.search_term_count import SearchTermCount
 from app.models.cv_review import CVReview
 from app.models.job_offer import JobOffer
 from app.models.application import Application
 from app.models.application_click import ApplicationClick
+from app.models.external_application import ExternalApplication
 from app.models.employer_profile import EmployerProfile
 from app.services.company_overrides import invalidate_cache
 
@@ -103,7 +105,8 @@ async def overview(db: AsyncSession = Depends(get_db)):
         "cv_scans": (CVReview, CVReview.created_at),
         "jobs_published": (JobOffer, JobOffer.created_at),
         "applications_internal": (Application, Application.created_at),
-        "apply_clicks_external": (ApplicationClick, ApplicationClick.created_at),
+        "applications_external_sent": (ExternalApplication, ExternalApplication.created_at),
+        "external_link_clicks": (ApplicationClick, ApplicationClick.created_at),
     }
 
     result: dict = {}
@@ -113,6 +116,13 @@ async def overview(db: AsyncSession = Depends(get_db)):
             if metric_key == "visits_unique_ips":
                 curr = await _unique_ips_between(db, cs, ce)
                 prev = await _unique_ips_between(db, ps, pe)
+            elif metric_key == "external_link_clicks":
+                # Only outbound clicks (apply_via=external_url). 'email' clicks are no
+                # longer recorded — the application is counted only when the email is
+                # actually sent (see applications_external_sent).
+                extra = [ApplicationClick.click_type == "external"]
+                curr = await _count_between(db, model, dt_col, cs, ce, extra_filters=extra)
+                prev = await _count_between(db, model, dt_col, ps, pe, extra_filters=extra)
             else:
                 curr = await _count_between(db, model, dt_col, cs, ce)
                 prev = await _count_between(db, model, dt_col, ps, pe)
@@ -159,7 +169,17 @@ async def timeseries(days: int = 30, db: AsyncSession = Depends(get_db)):
     cv_scans = await daily_count(CVReview, CVReview.created_at)
     jobs_added = await daily_count(JobOffer, JobOffer.created_at)
     apps_internal = await daily_count(Application, Application.created_at)
-    apps_external = await daily_count(ApplicationClick, ApplicationClick.created_at)
+    apps_external_sent = await daily_count(ExternalApplication, ExternalApplication.created_at)
+
+    # External link clicks only — click_type='external' (outbound to other portal)
+    ext_clicks_q = (
+        select(trunc_day(ApplicationClick.created_at).label("d"), func.count())
+        .where(ApplicationClick.created_at >= start, ApplicationClick.click_type == "external")
+        .group_by("d")
+        .order_by("d")
+    )
+    ext_clicks_rows = (await db.execute(ext_clicks_q)).all()
+    external_link_clicks = {row[0].date().isoformat(): int(row[1]) for row in ext_clicks_rows}
 
     # Fill all days, even those with 0
     series = []
@@ -173,7 +193,8 @@ async def timeseries(days: int = 30, db: AsyncSession = Depends(get_db)):
             "cv_scans": cv_scans.get(key, 0),
             "jobs_added": jobs_added.get(key, 0),
             "applications_internal": apps_internal.get(key, 0),
-            "apply_clicks_external": apps_external.get(key, 0),
+            "applications_external_sent": apps_external_sent.get(key, 0),
+            "external_link_clicks": external_link_clicks.get(key, 0),
         })
     return {"days": days, "series": series}
 
@@ -215,6 +236,17 @@ async def companies(db: AsyncSession = Depends(get_db)):
         )
         .join(JobOffer, JobOffer.employer_id == EmployerProfile.id)
         .join(ApplicationClick, ApplicationClick.job_offer_id == JobOffer.id)
+        .where(ApplicationClick.click_type == "external")
+        .group_by(EmployerProfile.id)
+    ).subquery()
+
+    external_sent = (
+        select(
+            EmployerProfile.id.label("employer_id"),
+            func.count(ExternalApplication.id).label("apps_external_sent"),
+        )
+        .join(JobOffer, JobOffer.employer_id == EmployerProfile.id)
+        .join(ExternalApplication, ExternalApplication.job_offer_id == JobOffer.id)
         .group_by(EmployerProfile.id)
     ).subquery()
 
@@ -229,10 +261,12 @@ async def companies(db: AsyncSession = Depends(get_db)):
             job_agg.c.job_count,
             job_agg.c.views_total,
             func.coalesce(internal_apps.c.apps_internal, 0).label("apps_internal"),
+            func.coalesce(external_sent.c.apps_external_sent, 0).label("apps_external_sent"),
             func.coalesce(external_clicks.c.clicks_external, 0).label("clicks_external"),
         )
         .select_from(job_agg)
         .outerjoin(internal_apps, internal_apps.c.employer_id == job_agg.c.employer_id)
+        .outerjoin(external_sent, external_sent.c.employer_id == job_agg.c.employer_id)
         .outerjoin(external_clicks, external_clicks.c.employer_id == job_agg.c.employer_id)
         .order_by(job_agg.c.views_total.desc().nulls_last(), job_agg.c.company_name)
     )
@@ -250,7 +284,8 @@ async def companies(db: AsyncSession = Depends(get_db)):
             "job_count": int(row.job_count or 0),
             "views_total": int(row.views_total or 0),
             "applications_internal": int(row.apps_internal or 0),
-            "apply_clicks_external": int(row.clicks_external or 0),
+            "applications_external_sent": int(row.apps_external_sent or 0),
+            "external_link_clicks": int(row.clicks_external or 0),
             "override_email": ovr.apply_email if ovr else None,
             "override_id": ovr.id if ovr else None,
             "override_note": ovr.note if ovr else None,
@@ -325,6 +360,25 @@ async def update_override(override_id: str, body: OverrideUpdate, db: AsyncSessi
     await db.flush()
     invalidate_cache()
     return {"ok": True}
+
+
+@router.get("/searches", dependencies=[Depends(require_admin_password)])
+async def list_searches(db: AsyncSession = Depends(get_db)):
+    """Aggregated user search terms (normalized to lowercase) with usage counts."""
+    res = await db.execute(
+        select(SearchTermCount).order_by(SearchTermCount.count.desc(), SearchTermCount.term)
+    )
+    rows = res.scalars().all()
+    return {
+        "searches": [
+            {
+                "term": r.term,
+                "count": r.count,
+                "last_seen_at": r.last_seen_at.isoformat() if r.last_seen_at else None,
+            }
+            for r in rows
+        ]
+    }
 
 
 @router.delete("/overrides/{override_id}", dependencies=[Depends(require_admin_password)])

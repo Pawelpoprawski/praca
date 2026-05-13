@@ -211,7 +211,7 @@ export default function JobDetailClient({ initialJob }: Props) {
             {/* Apply buttons */}
             {job.apply_via === "email" && job.contact_email ? (
               <button
-                onClick={() => { trackClick("email"); setShowExternalApply(true); }}
+                onClick={() => setShowExternalApply(true)}
                 className="w-full bg-[#E1002A] text-white py-3 rounded hover:bg-[#B8001F] font-medium flex items-center justify-center gap-2 transition-colors"
               >
                 <Mail className="w-4 h-4" />

@@ -6,7 +6,7 @@ import api from "@/services/api";
 
 const STORAGE_KEY = "admin-panel-password";
 
-type Tab = "overview" | "companies" | "overrides";
+type Tab = "overview" | "companies" | "overrides" | "searches";
 
 interface WindowMetric { current: number; previous: number; pct_change: number | null }
 interface MetricBlock { "7d": WindowMetric; "30d": WindowMetric; "ytd": WindowMetric }
@@ -15,7 +15,8 @@ interface OverviewData {
   cv_scans: MetricBlock;
   jobs_published: MetricBlock;
   applications_internal: MetricBlock;
-  apply_clicks_external: MetricBlock;
+  applications_external_sent: MetricBlock;
+  external_link_clicks: MetricBlock;
 }
 
 interface SeriesPoint {
@@ -25,7 +26,8 @@ interface SeriesPoint {
   cv_scans: number;
   jobs_added: number;
   applications_internal: number;
-  apply_clicks_external: number;
+  applications_external_sent: number;
+  external_link_clicks: number;
 }
 
 interface CompanyRow {
@@ -36,10 +38,17 @@ interface CompanyRow {
   job_count: number;
   views_total: number;
   applications_internal: number;
-  apply_clicks_external: number;
+  applications_external_sent: number;
+  external_link_clicks: number;
   override_email: string | null;
   override_id: string | null;
   override_note: string | null;
+}
+
+interface SearchRow {
+  term: string;
+  count: number;
+  last_seen_at: string | null;
 }
 
 interface OverrideRow {
@@ -56,15 +65,17 @@ const METRIC_LABELS: Record<keyof OverviewData, string> = {
   visits_unique_ips: "Unikalne IP",
   cv_scans: "Skany CV",
   jobs_published: "Nowe oferty",
-  applications_internal: "Aplikacje (formularz)",
-  apply_clicks_external: "Aplikacje (zewnętrzne)",
+  applications_internal: "Aplikacje (zalogowani)",
+  applications_external_sent: "Aplikacje (wysłany email)",
+  external_link_clicks: "Kliknięcia na zewn. URL",
 };
 
 const SERIES_KEYS: { key: keyof SeriesPoint; label: string; color: string }[] = [
   { key: "visits_unique_ips", label: "Unikalne IP / dzień", color: "#0D2240" },
   { key: "cv_scans", label: "Skany CV", color: "#E1002A" },
-  { key: "applications_internal", label: "Aplikacje (formularz)", color: "#16a34a" },
-  { key: "apply_clicks_external", label: "Aplikacje (zewnętrzne)", color: "#d97706" },
+  { key: "applications_internal", label: "Aplikacje (zalogowani)", color: "#16a34a" },
+  { key: "applications_external_sent", label: "Aplikacje (wysłany email)", color: "#0ea5e9" },
+  { key: "external_link_clicks", label: "Kliknięcia ext URL", color: "#d97706" },
   { key: "jobs_added", label: "Nowe oferty", color: "#6366f1" },
 ];
 
@@ -107,6 +118,7 @@ export default function AdminPanelPage() {
           {([
             ["overview", "Statystyki"],
             ["companies", "Firmy"],
+            ["searches", "Wyszukiwania"],
             ["overrides", "Override emaili"],
           ] as [Tab, string][]).map(([k, label]) => (
             <button
@@ -127,6 +139,7 @@ export default function AdminPanelPage() {
       <main className="max-w-[1200px] mx-auto px-6 py-6">
         {tab === "overview" && <OverviewTab password={password} />}
         {tab === "companies" && <CompaniesTab password={password} />}
+        {tab === "searches" && <SearchesTab password={password} />}
         {tab === "overrides" && <OverridesTab password={password} />}
       </main>
     </div>
@@ -482,7 +495,8 @@ type CompanySortKey =
   | "job_count"
   | "views_total"
   | "applications_internal"
-  | "apply_clicks_external"
+  | "applications_external_sent"
+  | "external_link_clicks"
   | "override_email";
 
 function CompaniesTab({ password }: { password: string }) {
@@ -561,8 +575,9 @@ function CompaniesTab({ password }: { password: string }) {
               <SortHeader k="company_name" label="Firma" />
               <SortHeader k="job_count" label="Ofert" align="right" />
               <SortHeader k="views_total" label="Wyświetleń" align="right" />
-              <SortHeader k="applications_internal" label="Aplikacji (formularz)" align="right" />
-              <SortHeader k="apply_clicks_external" label="Aplikacji (klik ext)" align="right" />
+              <SortHeader k="applications_internal" label="Aplik. (zalog.)" align="right" />
+              <SortHeader k="applications_external_sent" label="Aplik. (email)" align="right" />
+              <SortHeader k="external_link_clicks" label="Klik. ext URL" align="right" />
               <SortHeader k="override_email" label="Override email" />
             </tr>
           </thead>
@@ -590,7 +605,8 @@ function CompaniesTab({ password }: { password: string }) {
                 <td className="px-4 py-2.5 text-right tabular-nums">{c.job_count}</td>
                 <td className="px-4 py-2.5 text-right tabular-nums">{c.views_total}</td>
                 <td className="px-4 py-2.5 text-right tabular-nums">{c.applications_internal}</td>
-                <td className="px-4 py-2.5 text-right tabular-nums">{c.apply_clicks_external}</td>
+                <td className="px-4 py-2.5 text-right tabular-nums">{c.applications_external_sent}</td>
+                <td className="px-4 py-2.5 text-right tabular-nums">{c.external_link_clicks}</td>
                 <td className="px-4 py-2.5 text-xs">
                   {c.override_email ? (
                     <span className="font-mono text-green-700">{c.override_email}</span>
@@ -601,7 +617,7 @@ function CompaniesTab({ password }: { password: string }) {
               </tr>
             ))}
             {sortedAndFiltered.length === 0 && (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-500">Brak firm pasujących do filtra</td></tr>
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-gray-500">Brak firm pasujących do filtra</td></tr>
             )}
           </tbody>
         </table>
@@ -611,6 +627,112 @@ function CompaniesTab({ password }: { password: string }) {
 }
 
 // ────────────────────────────────────────────────────────────────────────────
+
+type SearchSortKey = "term" | "count" | "last_seen_at";
+
+function SearchesTab({ password }: { password: string }) {
+  const { data, error, loading, reload } = useAdminFetch<{ searches: SearchRow[] }>("/admin-panel/searches", password);
+  const [filter, setFilter] = useState("");
+  const [sortKey, setSortKey] = useState<SearchSortKey>("count");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+
+  const toggleSort = (k: SearchSortKey) => {
+    if (k === sortKey) setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    else { setSortKey(k); setSortDir(k === "term" ? "asc" : "desc"); }
+  };
+
+  const sortedAndFiltered = useMemo(() => {
+    if (!data) return [];
+    const f = data.searches.filter((r) => !filter || r.term.includes(filter.toLowerCase()));
+    const dir = sortDir === "asc" ? 1 : -1;
+    return [...f].sort((a, b) => {
+      const av = a[sortKey];
+      const bv = b[sortKey];
+      if (av === null) return 1;
+      if (bv === null) return -1;
+      if (typeof av === "number" && typeof bv === "number") return (av - bv) * dir;
+      return String(av).localeCompare(String(bv), "pl") * dir;
+    });
+  }, [data, filter, sortKey, sortDir]);
+
+  if (loading) return <Loading />;
+  if (error) return <ErrorBox text={error} />;
+  if (!data) return null;
+
+  const SortHeader = ({ k, label, align = "left" }: { k: SearchSortKey; label: string; align?: "left" | "right" }) => {
+    const active = sortKey === k;
+    return (
+      <th
+        onClick={() => toggleSort(k)}
+        className={`px-4 py-2.5 cursor-pointer select-none hover:text-[#0D2240] transition-colors ${align === "right" ? "text-right" : "text-left"}`}
+      >
+        <span className="inline-flex items-center gap-1">
+          {label}
+          <span className={`text-[10px] ${active ? "text-[#E1002A]" : "text-gray-300"}`}>
+            {active ? (sortDir === "asc" ? "▲" : "▼") : "▾"}
+          </span>
+        </span>
+      </th>
+    );
+  };
+
+  const totalSearches = data.searches.reduce((s, r) => s + r.count, 0);
+
+  return (
+    <div className="bg-white border border-[#E0E3E8] rounded-lg overflow-hidden">
+      <div className="px-5 py-4 border-b border-[#E0E3E8] flex flex-wrap items-center gap-3 justify-between">
+        <h2 className="font-display font-bold text-[#0D2240]">
+          Wyszukiwania ({data.searches.length} unikalnych, {totalSearches} łącznie)
+        </h2>
+        <div className="flex items-center gap-2">
+          <input
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            placeholder="Filtruj..."
+            className="px-3 py-1.5 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#E1002A]/40"
+          />
+          <button onClick={reload} className="text-xs text-gray-500 hover:text-[#E1002A] flex items-center gap-1">
+            <RefreshCcw className="w-3 h-3" /> Odśwież
+          </button>
+        </div>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="bg-gray-50 text-gray-600 text-xs uppercase tracking-wider">
+            <tr>
+              <SortHeader k="term" label="Fraza" />
+              <SortHeader k="count" label="Wystąpień" align="right" />
+              <SortHeader k="last_seen_at" label="Ostatnio" align="right" />
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {sortedAndFiltered.map((r) => (
+              <tr key={r.term} className="hover:bg-gray-50">
+                <td className="px-4 py-2.5 font-medium text-[#0D2240]">
+                  <a
+                    href={`/oferty?q=${encodeURIComponent(r.term)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#E1002A] hover:underline transition-colors"
+                  >
+                    {r.term}
+                  </a>
+                </td>
+                <td className="px-4 py-2.5 text-right tabular-nums font-bold text-[#0D2240]">{r.count}</td>
+                <td className="px-4 py-2.5 text-right text-xs text-gray-500">
+                  {r.last_seen_at ? new Date(r.last_seen_at).toLocaleString("pl-PL") : "—"}
+                </td>
+              </tr>
+            ))}
+            {sortedAndFiltered.length === 0 && (
+              <tr><td colSpan={3} className="px-4 py-8 text-center text-gray-500">Brak wyników</td></tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
 
 function OverridesTab({ password }: { password: string }) {
   const { data, error, loading, reload } = useAdminFetch<{ overrides: OverrideRow[] }>("/admin-panel/overrides", password);
