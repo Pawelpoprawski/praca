@@ -216,6 +216,264 @@ async def process_cv_extractions_scheduled():
         logger.error(f"CV extraction job failed: {e}", exc_info=True)
 
 
+async def check_public_alerts():
+    """Send weekly digest to no-login subscribers (every hour, throttled per-alert)."""
+    import re
+    import random
+    from sqlalchemy import or_ as sa_or
+    from app.models.public_job_alert import PublicJobAlert
+    from app.services.email import _send_email
+
+    settings = get_settings()
+    now = datetime.now(timezone.utc)
+    sent_count = 0
+
+    async with async_session() as db:
+        result = await db.execute(select(PublicJobAlert))
+        alerts = result.scalars().all()
+
+        for alert in alerts:
+            # SQLite drops tz info; normalise to UTC-aware for arithmetic
+            last_sent = alert.last_sent_at
+            if last_sent is not None and last_sent.tzinfo is None:
+                last_sent = last_sent.replace(tzinfo=timezone.utc)
+            # Weekly cooldown
+            if last_sent and (now - last_sent) < timedelta(days=6, hours=23):
+                continue
+            since = last_sent or (now - timedelta(days=7))
+
+            # Collect keywords (queries JSON list, fallback to legacy query)
+            keywords_raw: list[str] = []
+            if alert.queries:
+                keywords_raw = list(alert.queries)
+            elif alert.query:
+                keywords_raw = [alert.query]
+            # Sanitize each keyword for LIKE (strip wildcards) and build OR clause
+            keyword_clauses = []
+            for kw_raw in keywords_raw:
+                kw_clean = re.sub(r"[%_\\]", "", kw_raw or "").strip()
+                if len(kw_clean) < 2:
+                    continue
+                like = f"%{kw_clean}%"
+                keyword_clauses.append(JobOffer.title.ilike(like))
+                keyword_clauses.append(JobOffer.description.ilike(like))
+            if not keyword_clauses:
+                continue
+
+            jobs_q = (
+                select(JobOffer)
+                .options(selectinload(JobOffer.employer))
+                .where(
+                    JobOffer.status == "active",
+                    JobOffer.created_at > since,
+                    sa_or(*keyword_clauses),
+                )
+                .limit(30)
+            )
+            job_result = await db.execute(jobs_q)
+            matching_jobs = list(job_result.scalars().all())
+
+            if not matching_jobs:
+                continue
+
+            polish_jobs = [j for j in matching_jobs if j.recruiter_type == "polish"]
+            swiss_jobs = [j for j in matching_jobs if j.recruiter_type == "swiss"]
+            other_jobs = [j for j in matching_jobs if j.recruiter_type not in ("polish", "swiss")]
+
+            # Randomize within each group so users see different ordering each week
+            random.shuffle(polish_jobs)
+            random.shuffle(swiss_jobs)
+            random.shuffle(other_jobs)
+            # Treat ungrouped as polish (manual + legacy NULL — domyślnie polski rekruter)
+            polish_jobs = polish_jobs + other_jobs
+
+            site_url = settings.FRONTEND_URL.rstrip("/")
+            unsub_url = f"{site_url}/alerty/wypisz?token={alert.unsubscribe_token}"
+            search_url = f"{site_url}/oferty?q={alert.query}"
+
+            html = _render_alert_email(
+                query=alert.query,
+                polish_jobs=polish_jobs,
+                swiss_jobs=swiss_jobs,
+                site_url=site_url,
+                search_url=search_url,
+                unsub_url=unsub_url,
+            )
+
+            success = _send_email(
+                alert.email,
+                f'Nowe oferty pracy: {alert.query} ({len(matching_jobs)}) - Praca w Szwajcarii',
+                html,
+            )
+            if success:
+                alert.last_sent_at = now
+                sent_count += 1
+
+        await db.commit()
+
+    if sent_count:
+        logger.info(f"Public alerts: sent {sent_count} digest email(s)")
+
+
+def _render_alert_email(
+    *,
+    query: str,
+    polish_jobs: list,
+    swiss_jobs: list,
+    site_url: str,
+    search_url: str,
+    unsub_url: str,
+) -> str:
+    """Render the weekly digest email with separate Polish/Swiss recruiter sections."""
+    from html import escape
+
+    canton_names = {
+        "zurich": "Zurych", "bern": "Berno", "luzern": "Lucerna",
+        "uri": "Uri", "schwyz": "Schwyz", "obwalden": "Obwalden",
+        "nidwalden": "Nidwalden", "glarus": "Glarus", "zug": "Zug",
+        "fribourg": "Fryburg", "solothurn": "Solura",
+        "basel-stadt": "Bazylea-Miasto", "basel-landschaft": "Bazylea-Okręg",
+        "schaffhausen": "Szafuza",
+        "appenzell-ausserrhoden": "Appenzell Ausserrhoden",
+        "appenzell-innerrhoden": "Appenzell Innerrhoden",
+        "st-gallen": "St. Gallen", "graubunden": "Gryzonia",
+        "aargau": "Argowia", "thurgau": "Turgowia", "ticino": "Ticino",
+        "vaud": "Vaud", "valais": "Valais", "neuchatel": "Neuchâtel",
+        "geneve": "Genewa", "jura": "Jura",
+    }
+
+    def _row(job) -> str:
+        title = escape(job.title or "")
+        company = ""
+        if getattr(job, "employer", None) and getattr(job.employer, "company_name", None):
+            company = escape(job.employer.company_name)
+        location_parts = []
+        if job.city:
+            location_parts.append(escape(job.city))
+        if job.canton:
+            location_parts.append(canton_names.get(job.canton, escape(job.canton)))
+        location = " · ".join(location_parts) or "Cała Szwajcaria"
+
+        salary = ""
+        if job.salary_min and job.salary_max:
+            salary = f'{int(job.salary_min):,}–{int(job.salary_max):,} CHF'.replace(",", " ")
+        elif job.salary_min:
+            salary = f'od {int(job.salary_min):,} CHF'.replace(",", " ")
+
+        url = f"{site_url}/oferty/{job.id}"
+        return f"""
+        <tr>
+          <td style="padding:14px 16px;border-bottom:1px solid #EEF1F5;vertical-align:top;">
+            <a href="{url}" style="display:inline-block;color:#0D2240;text-decoration:none;font-weight:700;font-size:15px;line-height:1.3;">
+              {title}
+            </a>
+            <div style="margin-top:4px;color:#5B6478;font-size:13px;line-height:1.4;">
+              {('<span style=\"font-weight:600;color:#0D2240;\">' + company + '</span> · ') if company else ''}{location}
+            </div>
+            {('<div style=\"margin-top:6px;color:#0D2240;font-size:13px;font-weight:600;\">' + salary + '</div>') if salary else ''}
+          </td>
+          <td style="padding:14px 16px;border-bottom:1px solid #EEF1F5;vertical-align:top;text-align:right;white-space:nowrap;">
+            <a href="{url}" style="display:inline-block;padding:8px 16px;background:#E1002A;color:white;text-decoration:none;border-radius:999px;font-weight:600;font-size:12px;">
+              Zobacz ofertę →
+            </a>
+          </td>
+        </tr>
+        """
+
+    def _section(title_text: str, subtitle: str, jobs: list, flag_emoji: str, accent: str) -> str:
+        if not jobs:
+            return ""
+        rows = "".join(_row(j) for j in jobs)
+        return f"""
+        <div style="margin-top:28px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <span style="display:inline-block;width:4px;height:22px;background:{accent};border-radius:2px;"></span>
+            <h3 style="margin:0;font-size:17px;font-weight:800;color:#0D2240;letter-spacing:-0.01em;">
+              {flag_emoji} {title_text} <span style="color:#8693A6;font-weight:600;">({len(jobs)})</span>
+            </h3>
+          </div>
+          <p style="margin:0 0 12px;color:#6B7484;font-size:12px;">{subtitle}</p>
+          <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-collapse:collapse;border:1px solid #E0E3E8;border-radius:10px;overflow:hidden;">
+            {rows}
+          </table>
+        </div>
+        """
+
+    polish_section = _section(
+        "Polscy rekruterzy",
+        "Mówimy po polsku, znamy specyfikę pracy w Szwajcarii.",
+        polish_jobs,
+        "🇵🇱",
+        "#E1002A",
+    )
+    swiss_section = _section(
+        "Szwajcarscy pracodawcy",
+        "Bezpośrednio od pracodawców w Szwajcarii.",
+        swiss_jobs,
+        "🇨🇭",
+        "#0D2240",
+    )
+
+    total = len(polish_jobs) + len(swiss_jobs)
+    query_safe = escape(query)
+
+    return f"""<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nowe oferty: {query_safe}</title>
+</head>
+<body style="margin:0;padding:0;background:#F4F6FA;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;color:#0D2240;">
+  <table cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#F4F6FA;padding:24px 12px;">
+    <tr>
+      <td align="center">
+        <table cellspacing="0" cellpadding="0" border="0" width="640" style="max-width:640px;width:100%;background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(13,34,64,0.06);">
+          <tr>
+            <td style="background:linear-gradient(135deg,#0D2240 0%,#1B3157 100%);padding:32px 28px;color:white;">
+              <div style="height:3px;width:44px;background:#E1002A;border-radius:2px;margin-bottom:18px;"></div>
+              <div style="font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:6px;">
+                Cotygodniowy alert
+              </div>
+              <h1 style="margin:0;font-size:26px;font-weight:800;line-height:1.2;letter-spacing:-0.02em;">
+                {total} now{'a oferta' if total == 1 else 'e ofert' + ('y' if 2 <= total <= 4 else '')} dla &quot;{query_safe}&quot;
+              </h1>
+              <p style="margin:8px 0 0;color:rgba(255,255,255,0.75);font-size:14px;">
+                Oferty pojawiły się w ciągu ostatniego tygodnia. Najlepsze przeglądasz pierwszy.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:8px 28px 28px;background:white;">
+              {polish_section}
+              {swiss_section}
+
+              <div style="margin-top:32px;padding-top:24px;border-top:1px solid #E0E3E8;text-align:center;">
+                <a href="{search_url}" style="display:inline-block;padding:13px 26px;background:#0D2240;color:white;text-decoration:none;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:0.01em;">
+                  Zobacz wszystkie oferty &quot;{query_safe}&quot; →
+                </a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:20px 28px;background:#F8F9FC;border-top:1px solid #E0E3E8;text-align:center;">
+              <p style="margin:0 0 6px;color:#0D2240;font-size:13px;font-weight:700;">
+                Praca w Szwajcarii
+              </p>
+              <p style="margin:0;color:#8693A6;font-size:11px;line-height:1.5;">
+                Otrzymujesz ten email, bo zapisałeś się na powiadomienia o nowych ofertach.<br>
+                <a href="{unsub_url}" style="color:#8693A6;text-decoration:underline;">Wypisz się z powiadomień</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>"""
+
+
 async def purge_unconsented_cv_reviews():
     """Delete CV file + clear cv_text for reviews older than 24h without user consent (hourly)."""
     import os
@@ -298,6 +556,12 @@ def start_scheduler():
         "interval",
         hours=1,
         id="purge_cv_reviews",
+    )
+    scheduler.add_job(
+        check_public_alerts,
+        "interval",
+        hours=1,
+        id="check_public_alerts",
     )
     scheduler.add_job(
         process_job_translations_scheduled,

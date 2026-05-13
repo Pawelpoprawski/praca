@@ -21,6 +21,8 @@ from app.models.external_application import ExternalApplication
 from app.models.page_visit import PageVisit
 from app.models.company_override import CompanyOverride
 from app.models.search_term_count import SearchTermCount
+from app.models.public_job_alert import PublicJobAlert
+from app.models.unsubscribed_email import UnsubscribedEmail
 
 __all__ = [
     "User",
@@ -46,4 +48,6 @@ __all__ = [
     "PageVisit",
     "CompanyOverride",
     "SearchTermCount",
+    "PublicJobAlert",
+    "UnsubscribedEmail",
 ]

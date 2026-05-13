@@ -9,6 +9,7 @@ import api from "@/services/api";
 import { formatSalary, formatDate, formatJobLocation, CONTRACT_TYPES } from "@/lib/utils";
 import RecentlyViewed from "@/components/jobs/RecentlyViewed";
 import SaveJobButton from "@/components/jobs/SaveJobButton";
+import AlertSubscribeWidget from "@/components/jobs/AlertSubscribeWidget";
 import type { JobListItem, PaginatedResponse, Canton, CategoryBrief } from "@/types/api";
 
 function JobCardSkeleton() {
@@ -130,6 +131,22 @@ function JobsContent() {
     queryFn: () => api.get<CategoryBrief[]>("/jobs/categories").then((r) => r.data),
     staleTime: 60 * 60 * 1000,
   });
+
+  const { data: facets } = useQuery({
+    queryKey: ["facets"],
+    queryFn: () =>
+      api
+        .get<{
+          cantons: Record<string, number>;
+          categories: Record<string, number>;
+          recruiter_types: Record<string, number>;
+        }>("/jobs/facets")
+        .then((r) => r.data),
+    staleTime: 5 * 60 * 1000,
+  });
+  const cantonCounts = facets?.cantons ?? {};
+  const categoryCounts = facets?.categories ?? {};
+  const recruiterCounts = facets?.recruiter_types ?? {};
 
   const updateFilter = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -334,15 +351,20 @@ function JobsContent() {
               <select
                 value={categoryId}
                 onChange={(e) => updateFilter("category_id", e.target.value)}
-                className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-[#E1002A] cursor-pointer transition-all bg-gray-50 focus:bg-white"
+                className="appearance-none w-full pl-4 pr-10 py-3 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-[#E1002A] cursor-pointer transition-all bg-gray-50 focus:bg-white bg-[url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23475569%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[length:14px] bg-[position:right_14px_center]"
               >
                 <option value="">Wszystkie kategorie</option>
                 {categories
                   ?.slice()
                   .sort((a, b) => a.name.localeCompare(b.name, "pl"))
-                  .map((c) => (
-                    <option key={c.id} value={c.id}>{c.name}</option>
-                  ))}
+                  .map((c) => {
+                    const cnt = categoryCounts[c.id] ?? 0;
+                    return (
+                      <option key={c.id} value={c.id}>
+                        {c.name}{cnt ? ` (${cnt})` : ""}
+                      </option>
+                    );
+                  })}
               </select>
             </div>
 
@@ -352,15 +374,20 @@ function JobsContent() {
               <select
                 value={canton}
                 onChange={(e) => updateFilter("canton", e.target.value)}
-                className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-[#E1002A] cursor-pointer transition-all bg-gray-50 focus:bg-white"
+                className="appearance-none w-full pl-4 pr-10 py-3 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-[#E1002A] cursor-pointer transition-all bg-gray-50 focus:bg-white bg-[url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23475569%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[length:14px] bg-[position:right_14px_center]"
               >
                 <option value="">Wszystkie kantony</option>
                 {cantons
                   ?.slice()
                   .sort((a, b) => a.label.localeCompare(b.label, "pl"))
-                  .map((c) => (
-                    <option key={c.value} value={c.value}>{c.label}</option>
-                  ))}
+                  .map((c) => {
+                    const cnt = cantonCounts[c.value] ?? 0;
+                    return (
+                      <option key={c.value} value={c.value}>
+                        {c.label}{cnt ? ` (${cnt})` : ""}
+                      </option>
+                    );
+                  })}
               </select>
             </div>
 
@@ -370,11 +397,15 @@ function JobsContent() {
               <select
                 value={recruiterType}
                 onChange={(e) => updateFilter("recruiter_type", e.target.value)}
-                className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-[#E1002A] cursor-pointer transition-all bg-gray-50 focus:bg-white"
+                className="appearance-none w-full pl-4 pr-10 py-3 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[#E1002A]/20 focus:border-[#E1002A] cursor-pointer transition-all bg-gray-50 focus:bg-white bg-[url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23475569%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[length:14px] bg-[position:right_14px_center]"
               >
                 <option value="">Wszyscy</option>
-                <option value="polish">Polski rekruter</option>
-                <option value="swiss">Szwajcarski rekruter</option>
+                <option value="polish">
+                  Polski rekruter{recruiterCounts.polish ? ` (${recruiterCounts.polish})` : ""}
+                </option>
+                <option value="swiss">
+                  Szwajcarski rekruter{recruiterCounts.swiss ? ` (${recruiterCounts.swiss})` : ""}
+                </option>
               </select>
             </div>
 
@@ -473,6 +504,11 @@ function JobsContent() {
                 Wyczyść
               </button>
             </div>
+          )}
+
+          {/* Alert subscribe widget — only when there's a search query */}
+          {q && data?.data && data.data.length > 0 && (
+            <AlertSubscribeWidget query={q} />
           )}
 
           {isLoading ? (

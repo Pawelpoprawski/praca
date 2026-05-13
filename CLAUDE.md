@@ -103,4 +103,7 @@ See `.env.example` files in root and `backend/` for full list.
 
 ## TODO before production
 
-(none currently)
+- **Sprawdzić porządnie miasta i kantony w ofertach** — XML feed JOBSPL ma puste `<locations>` dla 91% ofert (328 z 360), głównie NJU JOB. AI prompt działa poprawnie (24/24 OK w lokalnych testach `backend/prompt_iteration/test_canton/`), ale dane geo nie istnieją w źródle. Opcje:
+  1. Filtr UI „Cała Szwajcaria (X)" w dropdownie kantonów na `/oferty` (Recommended, ~15 min)
+  2. Kontakt z NJU JOB / jobs.pl żeby wypełnili `<locations>` w XML (HTML jobs.pl jest chroniony anti-botem 403, scraping nie wchodzi w grę)
+  3. Headless browser (Playwright) — drogie, kruche, ryzyko blokady IP serwera

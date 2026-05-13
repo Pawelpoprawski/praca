@@ -473,6 +473,7 @@ async def create_job(
         contact_email=data.contact_email,
         apply_via=data.apply_via,
         external_url=data.external_url,
+        recruiter_type="polish",
         status="active",
         published_at=datetime.now(timezone.utc),
         expires_at=datetime.now(timezone.utc) + timedelta(days=30),

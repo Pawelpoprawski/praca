@@ -230,6 +230,42 @@ async def list_cantons():
     return [{"value": k, "label": v} for k, v in canton_names.items()]
 
 
+@router.get("/facets")
+async def list_facets(db: AsyncSession = Depends(get_db)):
+    """Liczniki ofert per kanton, kategoria i typ rekrutera (dla aktywnych ogłoszeń)."""
+    active_filter = [
+        JobOffer.status == "active",
+        or_(JobOffer.expires_at.is_(None), JobOffer.expires_at > func.now()),
+    ]
+
+    canton_rows = (await db.execute(
+        select(JobOffer.canton, func.count(JobOffer.id))
+        .where(*active_filter)
+        .group_by(JobOffer.canton)
+    )).all()
+    cantons = {row[0]: row[1] for row in canton_rows if row[0]}
+
+    category_rows = (await db.execute(
+        select(JobOffer.category_id, func.count(JobOffer.id))
+        .where(*active_filter)
+        .group_by(JobOffer.category_id)
+    )).all()
+    categories = {str(row[0]): row[1] for row in category_rows if row[0]}
+
+    recruiter_rows = (await db.execute(
+        select(JobOffer.recruiter_type, func.count(JobOffer.id))
+        .where(*active_filter)
+        .group_by(JobOffer.recruiter_type)
+    )).all()
+    recruiter_types = {row[0]: row[1] for row in recruiter_rows if row[0]}
+
+    return {
+        "cantons": cantons,
+        "categories": categories,
+        "recruiter_types": recruiter_types,
+    }
+
+
 @router.get("/popular-searches")
 async def popular_searches(db: AsyncSession = Depends(get_db)):
     """Top 6 najpopularniejszych wyszukiwań z ostatnich 30 dni."""

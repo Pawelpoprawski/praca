@@ -121,7 +121,7 @@ async def fetch_roljob() -> list[RawJobData]:
             salary_from=salary_from,
             salary_to=salary_to,
             salary_currency=currency,
-            recruiter_type="swiss",
+            recruiter_type="polish",
         ))
 
     logger.info(f"Fetched {len(jobs)} jobs from ROLJOB feed")
