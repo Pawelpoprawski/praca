@@ -214,7 +214,7 @@ export default function SprawdzCVPage() {
                 Analizujemy Twoje CV
               </h2>
               <p className="text-white/70 text-[0.9rem] mt-1.5">
-                Konsultant HR sprawdza dokument pod kątem rynku szwajcarskiego.
+                Analizujemy dokument pod kątem rynku szwajcarskiego.
               </p>
             </div>
 
