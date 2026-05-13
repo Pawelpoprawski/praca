@@ -19,11 +19,21 @@ export default function WorkerDashboard() {
       }).then((r) => r.data),
   });
 
+  const { data: statsData, isLoading: statsLoading } = useQuery({
+    queryKey: ["worker-applications-stats"],
+    queryFn: () =>
+      api
+        .get<{ sent: number; viewed: number; accepted: number; rejected: number; total: number }>(
+          "/worker/applications/stats",
+        )
+        .then((r) => r.data),
+  });
+
   const stats = {
-    sent: data?.data.filter((a) => a.status === "sent").length || 0,
-    viewed: data?.data.filter((a) => a.status === "viewed").length || 0,
-    accepted: data?.data.filter((a) => a.status === "accepted" || a.status === "shortlisted").length || 0,
-    rejected: data?.data.filter((a) => a.status === "rejected").length || 0,
+    sent: statsData?.sent ?? 0,
+    viewed: statsData?.viewed ?? 0,
+    accepted: statsData?.accepted ?? 0,
+    rejected: statsData?.rejected ?? 0,
   };
 
   return (
@@ -34,7 +44,7 @@ export default function WorkerDashboard() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
-        {isLoading ? (
+        {statsLoading ? (
           <>
             {[...Array(4)].map((_, i) => (
               <div key={i} className="bg-white border rounded-lg p-3 sm:p-4 animate-pulse">

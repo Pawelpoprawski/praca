@@ -6,7 +6,7 @@ import Link from "next/link";
 import {
   CheckCircle2, AlertTriangle, XCircle, Lightbulb, Mail,
   ArrowLeft, Upload, ArrowRight, Loader2, ChevronDown, ChevronUp,
-  TrendingUp, User, Briefcase, Calendar, Globe,
+  TrendingUp, TrendingDown, User, Briefcase, Calendar, Globe,
   FileText, Clock, LayoutList, Flag, PlusCircle, MinusCircle, Sparkles,
 } from "lucide-react";
 import api from "@/services/api";
@@ -47,12 +47,12 @@ function ScoreGauge({ score, previousScore }: { score: number; previousScore?: n
       </div>
       {previousScore != null && previousScore !== score && (
         <div className={`mt-3 flex items-center gap-1 text-sm font-semibold ${
-          score > previousScore ? "text-green-600" : score < previousScore ? "text-[#E1002A]" : "text-gray-500"
+          score > previousScore ? "text-green-600" : "text-[#E1002A]"
         }`}>
-          <TrendingUp className="w-4 h-4" />
+          {score > previousScore ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
           {score > previousScore
             ? `Wzrost z ${previousScore}/10 na ${score}/10!`
-            : `Zmiana z ${previousScore}/10 na ${score}/10`
+            : `Spadek z ${previousScore}/10 na ${score}/10`
           }
         </div>
       )}
@@ -152,6 +152,75 @@ function AnalysisSection({
 
 type FunnelStep = 1 | 3 | "loading" | 4;
 
+const FUNNEL_STEPS = [
+  { num: 1, label: "Analiza" },
+  { num: 2, label: "Popraw CV" },
+  { num: 3, label: "Zostaw CV" },
+  { num: 4, label: "Gotowe!" },
+];
+
+function FunnelProgressBar({ currentStep }: { currentStep: FunnelStep }) {
+  const getStepStatus = (stepNum: number) => {
+    if (currentStep === "loading" && stepNum <= 3) return "active";
+    if (currentStep === 4 && stepNum <= 4) return "completed";
+    if (typeof currentStep === "number" && stepNum < currentStep) return "completed";
+    if (typeof currentStep === "number" && stepNum === currentStep) return "active";
+    return "upcoming";
+  };
+
+  return (
+    <div className="mb-8">
+      <div className="flex items-center justify-between max-w-2xl mx-auto">
+        {FUNNEL_STEPS.map((step, i) => {
+          const status = getStepStatus(step.num);
+          return (
+            <div key={step.num} className="flex items-center flex-1">
+              <div className="flex flex-col items-center relative">
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all ${
+                    status === "completed"
+                      ? "bg-green-500 text-white"
+                      : status === "active"
+                        ? "bg-[#E1002A] text-white ring-4 ring-[#FFC2CD]"
+                        : "bg-gray-200 text-gray-400"
+                  }`}
+                >
+                  {status === "completed" ? <CheckCircle2 className="w-5 h-5" /> : step.num}
+                </div>
+                <span
+                  className={`text-xs mt-2 font-medium ${
+                    status === "completed" || status === "active" ? "text-[#0D2240]" : "text-gray-400"
+                  }`}
+                >
+                  {step.label}
+                </span>
+              </div>
+              {i < FUNNEL_STEPS.length - 1 && (
+                <div className="flex-1 h-1 mx-2 -mt-6 relative">
+                  <div className="absolute inset-0 bg-gray-200 rounded" />
+                  <div
+                    className={`absolute inset-0 rounded transition-all duration-500 ${
+                      getStepStatus(step.num + 1) === "completed" || getStepStatus(step.num + 1) === "active"
+                        ? "bg-green-500"
+                        : "bg-gray-200"
+                    }`}
+                    style={{
+                      width:
+                        getStepStatus(step.num + 1) === "completed" || getStepStatus(step.num + 1) === "active"
+                          ? "100%"
+                          : "0%",
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default function CVReviewResultPage({ params }: { params: { id: string } }) {
   const [funnelStep, setFunnelStep] = useState<FunnelStep>(1);
   const [emailInput, setEmailInput] = useState("");
@@ -215,7 +284,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <Loader2 className="w-10 h-10 animate-spin text-blue-600 mx-auto mb-4" />
+          <Loader2 className="w-10 h-10 animate-spin text-[#E1002A] mx-auto mb-4" />
           <p className="text-gray-600">Ładowanie wyników...</p>
         </div>
       </div>
@@ -244,84 +313,6 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
   }
 
   const { analysis } = review;
-
-  // Funnel progress bar component
-  const FunnelProgressBar = ({ currentStep }: { currentStep: FunnelStep }) => {
-    const steps = [
-      { num: 1, label: "Analiza" },
-      { num: 2, label: "Popraw CV" },
-      { num: 3, label: "Zostaw CV" },
-      { num: 4, label: "Gotowe!" },
-    ];
-
-    const getStepStatus = (stepNum: number) => {
-      if (currentStep === "loading" && stepNum <= 3) return "active";
-      if (currentStep === 4 && stepNum <= 4) return "completed";
-      if (typeof currentStep === "number" && stepNum < currentStep) return "completed";
-      if (typeof currentStep === "number" && stepNum === currentStep) return "active";
-      return "upcoming";
-    };
-
-    return (
-      <div className="mb-8">
-        <div className="flex items-center justify-between max-w-2xl mx-auto">
-          {steps.map((step, i) => {
-            const status = getStepStatus(step.num);
-            return (
-              <div key={step.num} className="flex items-center flex-1">
-                <div className="flex flex-col items-center relative">
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all ${
-                      status === "completed"
-                        ? "bg-green-500 text-white"
-                        : status === "active"
-                        ? "bg-blue-600 text-white ring-4 ring-blue-100"
-                        : "bg-gray-200 text-gray-400"
-                    }`}
-                  >
-                    {status === "completed" ? (
-                      <CheckCircle2 className="w-5 h-5" />
-                    ) : (
-                      step.num
-                    )}
-                  </div>
-                  <span
-                    className={`text-xs mt-2 font-medium ${
-                      status === "completed" || status === "active"
-                        ? "text-gray-900"
-                        : "text-gray-400"
-                    }`}
-                  >
-                    {step.label}
-                  </span>
-                </div>
-                {i < steps.length - 1 && (
-                  <div className="flex-1 h-1 mx-2 -mt-6 relative">
-                    <div className="absolute inset-0 bg-gray-200 rounded" />
-                    <div
-                      className={`absolute inset-0 rounded transition-all duration-500 ${
-                        getStepStatus(step.num + 1) === "completed" ||
-                        getStepStatus(step.num + 1) === "active"
-                          ? "bg-green-500"
-                          : "bg-gray-200"
-                      }`}
-                      style={{
-                        width:
-                          getStepStatus(step.num + 1) === "completed" ||
-                          getStepStatus(step.num + 1) === "active"
-                            ? "100%"
-                            : "0%",
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  };
 
   // Step 1: Results
   if (funnelStep === 1) {
@@ -511,7 +502,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
           ) : showEmailForm ? (
             <div className="bg-white border border-gray-200 rounded-xl p-6 mb-6">
               <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <Mail className="w-5 h-5 text-blue-600" />
+                <Mail className="w-5 h-5 text-[#E1002A]" />
                 Wyślij wyniki na email
               </h3>
               <div className="flex gap-3">
@@ -520,7 +511,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
                   placeholder="twoj@email.com"
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E1002A]/40"
                 />
                 <button
                   onClick={() => emailMutation.mutate(emailInput)}
@@ -584,7 +575,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
             onClick={() => setFunnelStep(3)}
             className="w-full flex items-center justify-center gap-2 bg-[#0D2240] text-white px-6 py-4 rounded-xl font-bold text-lg hover:shadow-xl transition-all"
           >
-            Dalej
+            Zostaw CV rekruterom
             <ArrowRight className="w-5 h-5" />
           </button>
         </div>
@@ -709,7 +700,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
               {/* Sekcja: O Tobie */}
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <User className="w-5 h-5 text-blue-600" />
+                  <User className="w-5 h-5 text-[#E1002A]" />
                   O Tobie
                 </h3>
                 <div className="space-y-4">
@@ -725,7 +716,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                       }
                       placeholder="Jan Kowalski"
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E1002A]/40"
                     />
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -741,7 +732,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                         }
                         placeholder="twoj@email.com"
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E1002A]/40"
                       />
                     </div>
                     <div>
@@ -756,7 +747,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                         }
                         placeholder="+48 123 456 789"
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E1002A]/40"
                       />
                     </div>
                   </div>
@@ -766,7 +757,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
               {/* Sekcja: Czego szukasz */}
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <Briefcase className="w-5 h-5 text-blue-600" />
+                  <Briefcase className="w-5 h-5 text-[#E1002A]" />
                   Czego szukasz?
                 </h3>
                 <div className="space-y-4">
@@ -782,7 +773,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                       placeholder="np. Praca w budownictwie, spawacz, kelner, opiekunka..."
                       rows={3}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E1002A]/40 resize-none"
                     />
                   </div>
                   <div>
@@ -796,7 +787,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                       onChange={(e) =>
                         setFormData({ ...formData, available_from: e.target.value })
                       }
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E1002A]/40"
                     />
                   </div>
                 </div>
@@ -805,7 +796,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
               {/* Sekcja: Kompetencje */}
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <Globe className="w-5 h-5 text-blue-600" />
+                  <Globe className="w-5 h-5 text-[#E1002A]" />
                   Twoje kompetencje
                 </h3>
                 <div className="space-y-4">
@@ -820,7 +811,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                           onChange={(e) =>
                             updateLanguage(i, "language", e.target.value)
                           }
-                          className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                          className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E1002A]/40 bg-white"
                         >
                           <option value="">Wybierz język</option>
                           {LANGUAGE_OPTIONS.map((l) => (
@@ -832,7 +823,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                         <select
                           value={lang.level}
                           onChange={(e) => updateLanguage(i, "level", e.target.value)}
-                          className="w-28 px-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                          className="w-28 px-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E1002A]/40 bg-white"
                         >
                           <option value="">Poziom</option>
                           {LEVEL_OPTIONS.map((l) => (
@@ -855,7 +846,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                     <button
                       type="button"
                       onClick={addLanguage}
-                      className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                      className="text-sm text-[#E1002A] hover:text-blue-700 font-medium"
                     >
                       + Dodaj język
                     </button>
@@ -870,7 +861,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                         onChange={(e) =>
                           setFormData({ ...formData, driving_license: e.target.value })
                         }
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E1002A]/40 bg-white"
                       >
                         <option value="">Brak / nie dotyczy</option>
                         <option value="B">Kat. B</option>
@@ -913,7 +904,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
               {/* Sekcja: Dodatkowe */}
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-blue-600" />
+                  <FileText className="w-5 h-5 text-[#E1002A]" />
                   Dodatkowe
                 </h3>
                 <div className="space-y-4">
@@ -928,7 +919,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                       }
                       placeholder="Dodatkowe informacje, które mogą być ważne..."
                       rows={2}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E1002A]/40 resize-none"
                     />
                   </div>
                   <div className="flex items-start gap-3 bg-gray-50 p-4 rounded-xl border border-gray-200">
@@ -939,7 +930,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                       onChange={(e) =>
                         setFormData({ ...formData, consent_given: e.target.checked })
                       }
-                      className="mt-1 w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      className="mt-1 w-5 h-5 text-[#E1002A] border-gray-300 rounded focus:ring-blue-500"
                     />
                     <label htmlFor="consent" className="text-sm text-gray-700">
                       Wyrażam zgodę na przetwarzanie moich danych osobowych zawartych w
@@ -1025,11 +1016,11 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
           <div className="bg-white rounded-lg shadow-xl border border-gray-100 p-8 md:p-10">
             <div className="flex justify-center mb-8">
               <div className="relative">
-                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center animate-pulse">
-                  <Clock className="w-10 h-10 text-blue-600" />
+                <div className="w-20 h-20 bg-[#FFF0F3] rounded-full flex items-center justify-center animate-pulse">
+                  <Clock className="w-10 h-10 text-[#E1002A]" />
                 </div>
                 <div
-                  className="absolute -inset-2 border-2 border-blue-200 rounded-full animate-spin"
+                  className="absolute -inset-2 border-2 border-[#FFC2CD] rounded-full animate-spin"
                   style={{ borderTopColor: "transparent", animationDuration: "3s" }}
                 />
               </div>
@@ -1054,7 +1045,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                     width: `${loadingProgress}%`,
                     background:
                       loadingProgress < 100
-                        ? "linear-gradient(90deg, #3b82f6, #6366f1)"
+                        ? "linear-gradient(90deg, #E1002A, #0D2240)"
                         : "linear-gradient(90deg, #22c55e, #16a34a)",
                   }}
                 />
@@ -1070,7 +1061,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                     key={i}
                     className={`flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 ${
                       isCurrent
-                        ? "bg-blue-50 border border-blue-200"
+                        ? "bg-[#FFF0F3] border border-[#FFC2CD]"
                         : isDone
                         ? "bg-green-50 border border-green-200"
                         : "bg-gray-50 border border-transparent opacity-40"
@@ -1081,7 +1072,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                         isDone
                           ? "bg-green-500"
                           : isCurrent
-                          ? "bg-blue-500"
+                          ? "bg-[#E1002A]"
                           : "bg-gray-300"
                       }`}
                     >
@@ -1100,7 +1091,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                         isDone
                           ? "text-green-700 font-medium"
                           : isCurrent
-                          ? "text-blue-700 font-medium"
+                          ? "text-[#0D2240] font-semibold"
                           : "text-gray-400"
                       }`}
                     >
@@ -1124,7 +1115,10 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
           <FunnelProgressBar currentStep={4} />
 
           <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8 text-center">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
+            <div
+              className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6"
+              style={{ animation: "bounce 1s ease-in-out 1" }}
+            >
               <CheckCircle2 className="w-10 h-10 text-green-600" />
             </div>
 
@@ -1134,11 +1128,11 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
             <p className="text-lg text-gray-600 mb-2">
               Twój unikalny numer referencyjny:
             </p>
-            <p className="text-2xl font-mono font-bold text-blue-600 mb-8">
+            <p className="text-2xl font-mono font-bold text-[#E1002A] mb-8">
               {referenceNumber}
             </p>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8 text-left">
+            <div className="bg-[#F0F4FA] border border-[#C5D2E5] rounded-xl p-6 mb-8 text-left">
               <p className="text-gray-700 mb-4">
                 Jeśli Twój profil spełni kryteria pracodawców, skontaktujemy się z
                 Tobą na podany adres email.

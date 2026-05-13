@@ -79,10 +79,10 @@ export default function Header() {
               </div>
             </div>
 
-            {/* Desktop nav */}
-            <nav className="hidden lg:flex items-center gap-7">
+            {/* Desktop / tablet nav */}
+            <nav className="hidden md:flex items-center gap-4 lg:gap-7">
               <Link href="/oferty" className="hays-nav-link">Oferty pracy</Link>
-              <Link href="/register/employer" className="hays-nav-link">Dla pracodawców</Link>
+              <Link href="/register/employer" className="hays-nav-link hidden lg:inline-flex">Dla pracodawców</Link>
               <Link href="/sprawdz-cv" className="hays-nav-link">Sprawdź CV</Link>
             </nav>
 

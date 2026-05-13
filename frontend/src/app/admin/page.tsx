@@ -345,11 +345,11 @@ function TimeSeriesChart({ series }: { series: SeriesPoint[] }) {
     return `${d.getDate()}.${String(d.getMonth() + 1).padStart(2, "0")}`;
   };
 
-  const handleMove = (e: React.MouseEvent<SVGSVGElement>) => {
+  const handlePointerAt = (clientX: number) => {
     const svg = svgRef.current;
     if (!svg) return;
     const rect = svg.getBoundingClientRect();
-    const relX = ((e.clientX - rect.left) / rect.width) * W;
+    const relX = ((clientX - rect.left) / rect.width) * W;
     if (relX < P || relX > W - P) {
       setHoverIdx(null);
       return;
@@ -357,6 +357,15 @@ function TimeSeriesChart({ series }: { series: SeriesPoint[] }) {
     const ratio = (relX - P) / innerW;
     const idx = Math.round(ratio * (n - 1));
     setHoverIdx(Math.max(0, Math.min(n - 1, idx)));
+  };
+
+  const handleMove = (e: React.MouseEvent<SVGSVGElement>) => handlePointerAt(e.clientX);
+  const handleTouch = (e: React.TouchEvent<SVGSVGElement>) => {
+    const t = e.touches[0] || e.changedTouches[0];
+    if (t) {
+      e.preventDefault();
+      handlePointerAt(t.clientX);
+    }
   };
 
   const fullDateLabel = (iso: string) => {
@@ -389,10 +398,13 @@ function TimeSeriesChart({ series }: { series: SeriesPoint[] }) {
         <svg
           ref={svgRef}
           viewBox={`0 0 ${W} ${H}`}
-          className="w-full h-auto"
+          className="w-full h-auto touch-none select-none"
           preserveAspectRatio="none"
           onMouseMove={handleMove}
           onMouseLeave={() => setHoverIdx(null)}
+          onTouchStart={handleTouch}
+          onTouchMove={handleTouch}
+          onTouchEnd={() => setHoverIdx(null)}
         >
           {/* Grid */}
           {ticks.map((t, i) => (

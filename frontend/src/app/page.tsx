@@ -486,8 +486,13 @@ export default function HomePage() {
               <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-[#E1002A]" /> 120+ stanowisk</li>
               <li className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-[#E1002A]" /> Dane 2026</li>
             </ul>
-            <button className="inline-flex items-center gap-2 bg-[#0D2240] hover:bg-[#1A3A5C] text-white px-7 py-3 rounded font-medium text-[0.9rem] transition-colors">
-              Pobierz bezpłatnie
+            <button
+              disabled
+              aria-disabled="true"
+              title="Raport będzie dostępny w I kwartale 2026 r."
+              className="inline-flex items-center gap-2 bg-gray-200 text-gray-500 px-7 py-3 rounded font-medium text-[0.9rem] cursor-not-allowed"
+            >
+              Wkrótce dostępne
             </button>
           </div>
           {/* Book mockup */}

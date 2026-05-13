@@ -301,8 +301,8 @@ export default function SprawdzCVPage() {
       <div className="max-w-2xl mx-auto px-4 py-16">
         {/* Header */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-            <FileText className="w-8 h-8 text-blue-600" />
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-[#FFF0F3] rounded-full mb-4">
+            <FileText className="w-8 h-8 text-[#E1002A]" />
           </div>
           <h1 className="text-3xl md:text-4xl font-bold font-display text-[#0D2240] mb-3">
             Sprawdź swoje CV za darmo
@@ -323,17 +323,27 @@ export default function SprawdzCVPage() {
 
         {/* Upload area */}
         <div
+          role="button"
+          tabIndex={file ? -1 : 0}
+          aria-label="Wgraj CV"
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onClick={() => !file && fileInputRef.current?.click()}
+          onKeyDown={(e) => {
+            if (file) return;
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              fileInputRef.current?.click();
+            }
+          }}
           className={`
-            relative border-2 border-dashed rounded-lg p-10 text-center transition-all cursor-pointer
+            relative border-2 border-dashed rounded-lg p-10 text-center transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#E1002A]/40
             ${dragOver
-              ? "border-blue-500 bg-blue-50 scale-[1.02]"
+              ? "border-[#E1002A] bg-[#FFF0F3] scale-[1.02]"
               : file
                 ? "border-green-300 bg-green-50"
-                : "border-gray-300 bg-white hover:border-blue-400 hover:bg-blue-50/50"
+                : "border-gray-300 bg-white hover:border-[#E1002A] hover:bg-[#FFF0F3]/40"
             }
           `}
         >
@@ -392,7 +402,7 @@ export default function SprawdzCVPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="twoj@email.com - wyślemy Ci wyniki analizy"
-            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E1002A]/40 focus:border-[#E1002A] transition-all"
           />
         </div>
 

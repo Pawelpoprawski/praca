@@ -125,7 +125,7 @@ function LoginForm() {
             </Field>
 
             <div className="flex items-center justify-end">
-              <Link href="/reset-password" className="text-sm text-[#888] hover:text-[#E1002A] font-medium transition-colors">
+              <Link href="/reset-password" className="text-sm text-[#0D2240] hover:text-[#E1002A] font-medium underline transition-colors">
                 Zapomniałeś hasła?
               </Link>
             </div>
@@ -164,7 +164,6 @@ function LoginForm() {
             <div className="flex flex-wrap gap-2 text-xs">
               <DemoBtn onClick={() => { setEmail("jan.kowalski@gmail.com"); setPassword("demo123"); }}>Pracownik</DemoBtn>
               <DemoBtn onClick={() => { setEmail("hr@swissbau.ch"); setPassword("demo123"); }}>Pracodawca</DemoBtn>
-              <DemoBtn onClick={() => { setEmail("admin@praca-w-szwajcarii.ch"); setPassword("admin-zmien-po-pierwszym-logowaniu"); }}>Admin</DemoBtn>
             </div>
           </div>
         </div>

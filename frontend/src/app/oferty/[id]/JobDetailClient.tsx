@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { MapPin, Clock, Briefcase, Car, ArrowLeft, Send, Zap, ExternalLink, Mail } from "lucide-react";
+import { MapPin, Clock, Briefcase, Car, ArrowLeft, Send, Zap, ExternalLink, Mail, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import api from "@/services/api";
 import { useAuthStore } from "@/store/authStore";
@@ -35,6 +35,7 @@ export default function JobDetailClient({ initialJob }: Props) {
   const [showQuickApply, setShowQuickApply] = useState(false);
   const [quickApplySuccess, setQuickApplySuccess] = useState(false);
   const [showExternalApply, setShowExternalApply] = useState(false);
+  const [showMobileApply, setShowMobileApply] = useState(false);
 
   const isWorker = isAuthenticated && user?.role === "worker";
 
@@ -361,12 +362,24 @@ export default function JobDetailClient({ initialJob }: Props) {
               <ExternalLink className="w-4 h-4" />
               Aplikuj na stronie pracodawcy
             </a>
+          ) : job.apply_via === "email" && job.contact_email ? (
+            <button
+              onClick={() => setShowExternalApply(true)}
+              className="w-full bg-[#E1002A] text-white py-3 rounded-xl hover:bg-[#B8001F] font-semibold flex items-center justify-center gap-2 transition-colors text-sm"
+            >
+              <Mail className="w-4 h-4" />
+              Aplikuj — wyślij CV
+            </button>
           ) : (
             <div className="flex gap-2">
               <button
-                onClick={() =>
-                  isAuthenticated ? setShowApply(!showApply) : router.push(`/login?redirect=/oferty/${job.id}`)
-                }
+                onClick={() => {
+                  if (!isAuthenticated) {
+                    router.push(`/login?redirect=/oferty/${job.id}`);
+                    return;
+                  }
+                  setShowMobileApply(true);
+                }}
                 className="flex-1 bg-[#E1002A] text-white py-3 rounded-xl hover:bg-[#B8001F] font-semibold flex items-center justify-center gap-2 transition-colors text-sm"
               >
                 <Send className="w-4 h-4" />
@@ -411,6 +424,71 @@ export default function JobDetailClient({ initialJob }: Props) {
           open={showExternalApply}
           onClose={() => setShowExternalApply(false)}
         />
+      )}
+
+      {/* Mobile apply sheet — formularz aplikacji dla zalogowanych pracowników na mobile */}
+      {showMobileApply && (
+        <div
+          className="lg:hidden fixed inset-0 z-50 flex items-end"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="mobile-apply-title"
+        >
+          <button
+            type="button"
+            aria-label="Zamknij"
+            onClick={() => setShowMobileApply(false)}
+            className="absolute inset-0 bg-black/50"
+          />
+          <div className="relative w-full bg-white rounded-t-2xl shadow-2xl max-h-[90vh] flex flex-col">
+            <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-gray-100">
+              <h2 id="mobile-apply-title" className="font-display text-lg font-bold text-[#0D2240]">
+                Aplikuj na ofertę
+              </h2>
+              <button
+                onClick={() => setShowMobileApply(false)}
+                aria-label="Zamknij"
+                className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-[#E1002A]"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="px-5 py-4 overflow-y-auto">
+              <p className="text-sm text-gray-600 mb-3 line-clamp-2">{job.title}</p>
+              <label htmlFor="mobile-cover-letter" className="block text-sm font-medium text-gray-700 mb-2">
+                List motywacyjny <span className="text-gray-400">(opcjonalnie)</span>
+              </label>
+              <textarea
+                id="mobile-cover-letter"
+                value={coverLetter}
+                onChange={(e) => setCoverLetter(e.target.value)}
+                placeholder="Napisz kilka słów o sobie..."
+                rows={5}
+                className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-[#E1002A]/30"
+              />
+              {error && (
+                <div className="mt-3 bg-[#FFF0F3] border border-[#FFC2CD] text-[#B8001F] px-3 py-2 rounded-lg text-sm" role="alert">
+                  {error}
+                </div>
+              )}
+            </div>
+            <div
+              className="px-5 pb-4 pt-2 border-t border-gray-100"
+              style={{ paddingBottom: "calc(1rem + env(safe-area-inset-bottom, 0px))" }}
+            >
+              <button
+                onClick={async () => {
+                  await handleApply();
+                  if (!error) setShowMobileApply(false);
+                }}
+                disabled={applying}
+                className="w-full bg-[#E1002A] text-white py-3 rounded-xl hover:bg-[#B8001F] font-semibold disabled:opacity-50"
+              >
+                {applying ? "Wysyłanie..." : "Wyślij aplikację"}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

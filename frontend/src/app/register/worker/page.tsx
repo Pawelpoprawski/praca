@@ -131,12 +131,22 @@ export default function WorkerCVSubmitPage() {
 
         {/* Upload area */}
         <div
+          role="button"
+          tabIndex={file ? -1 : 0}
+          aria-label="Wgraj CV"
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onClick={() => !file && fileInputRef.current?.click()}
+          onKeyDown={(e) => {
+            if (file) return;
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              fileInputRef.current?.click();
+            }
+          }}
           className={`
-            relative border-2 border-dashed rounded-lg p-10 text-center transition-all cursor-pointer
+            relative border-2 border-dashed rounded-lg p-10 text-center transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#E1002A]/40
             ${
               dragOver
                 ? "border-[#E1002A] bg-[#FFF0F3] scale-[1.01]"

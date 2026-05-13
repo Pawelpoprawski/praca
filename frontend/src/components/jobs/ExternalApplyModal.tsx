@@ -30,6 +30,8 @@ export default function ExternalApplyModal({ jobId, jobTitle, contactEmail, open
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const previouslyFocused = useRef<HTMLElement | null>(null);
 
   // Reset stanu przy otwarciu
   useEffect(() => {
@@ -39,12 +41,53 @@ export default function ExternalApplyModal({ jobId, jobTitle, contactEmail, open
     }
   }, [open]);
 
-  // Esc zamyka
+  // Focus management: save current focus, move into modal, trap Tab, restore on close
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    previouslyFocused.current = (document.activeElement as HTMLElement) || null;
+
+    const focusFirst = () => {
+      const root = modalRef.current;
+      if (!root) return;
+      const focusable = root.querySelector<HTMLElement>(
+        "button, [href], input, textarea, select, [tabindex]:not([tabindex='-1'])",
+      );
+      focusable?.focus();
+    };
+    const t = setTimeout(focusFirst, 0);
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const root = modalRef.current;
+      if (!root) return;
+      const focusables = Array.from(
+        root.querySelectorAll<HTMLElement>(
+          "button:not([disabled]), [href], input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex='-1'])",
+        ),
+      ).filter((el) => el.offsetParent !== null);
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
     document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+
+    return () => {
+      clearTimeout(t);
+      document.removeEventListener("keydown", onKey);
+      previouslyFocused.current?.focus();
+    };
   }, [open, onClose]);
 
   if (!open) return null;
@@ -118,6 +161,7 @@ export default function ExternalApplyModal({ jobId, jobTitle, contactEmail, open
       aria-labelledby="apply-modal-title"
     >
       <div
+        ref={modalRef}
         className="bg-white rounded-lg w-full max-w-[560px] max-h-[90vh] overflow-y-auto shadow-2xl border border-[#E0E3E8]"
         onClick={(e) => e.stopPropagation()}
       >
@@ -134,7 +178,7 @@ export default function ExternalApplyModal({ jobId, jobTitle, contactEmail, open
           <h2 id="apply-modal-title" className="font-display text-[1.4rem] font-extrabold leading-tight">
             Aplikuj na ofertę
           </h2>
-          <p className="text-white/70 text-[0.9rem] mt-1">{jobTitle}</p>
+          <p className="text-white/70 text-[0.9rem] mt-1 line-clamp-2">{jobTitle}</p>
         </div>
 
         {/* Content */}

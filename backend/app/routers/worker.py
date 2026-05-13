@@ -437,6 +437,28 @@ async def apply_for_job(
     return MessageResponse(message="Aplikacja została wysłana")
 
 
+@router.get("/applications/stats")
+async def applications_stats(
+    current_user: User = Depends(get_current_worker),
+    db: AsyncSession = Depends(get_db),
+):
+    """Aggregated application counts by status for the current worker (dashboard)."""
+    rows = await db.execute(
+        select(Application.status, func.count(Application.id))
+        .where(Application.worker_id == current_user.id)
+        .group_by(Application.status)
+    )
+    counts: dict[str, int] = {row[0]: int(row[1]) for row in rows.all()}
+    return {
+        "total": sum(counts.values()),
+        "sent": counts.get("sent", 0),
+        "viewed": counts.get("viewed", 0),
+        "accepted": counts.get("accepted", 0) + counts.get("shortlisted", 0),
+        "rejected": counts.get("rejected", 0),
+        "by_status": counts,
+    }
+
+
 @router.get("/applications", response_model=PaginatedResponse[ApplicationResponse])
 async def list_applications(
     current_user: User = Depends(get_current_worker),
