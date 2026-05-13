@@ -186,6 +186,14 @@ export default function ExternalApplyModal({ jobId, jobTitle, contactEmail, open
               </FormField>
 
               <FormField label="CV" required>
+                <div className="mb-2 bg-[#FFF7E6] border-l-4 border-[#D97706] px-3 py-2 rounded-r">
+                  <p className="text-[#92400E] font-bold tracking-wide text-[0.95rem] uppercase leading-tight">
+                    BITTE LEBENSLAUF AUF DEUTSCH HOCHLADEN
+                  </p>
+                  <p className="text-xs text-[#92400E]/80 mt-0.5">
+                    Prześlij CV po niemiecku — szwajcarscy pracodawcy oczekują CV w języku regionu pracy.
+                  </p>
+                </div>
                 <div
                   onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
                   onDragLeave={() => setDragOver(false)}
