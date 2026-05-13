@@ -63,12 +63,19 @@ DUŻE PLUSY (advantages) — szukaj ich aktywnie:
 - Zdolność do relokacji / gotowość do pracy w systemie tygodniowym
 
 GAPS (concerns) — czerwone flagi dla rynku CH:
-- Brak jakiegokolwiek języka niemieckiego/francuskiego/angielskiego
+- Brak jakiegokolwiek języka szwajcarskiego (niemieckiego/francuskiego/włoskiego) ORAZ brak angielskiego — to PRAWDZIWA czerwona flaga
 - Brak doświadczenia poza Polską (utrudnia, ale nie blokuje)
 - Brak pozwolenia na pracę i brak paszportu UE
 - Krótkie staże (skakanie co 6 miesięcy między pracodawcami — w CH źle widziane)
 - Brak konkretów (brak nazw firm, dat, miast)
 - Wiek pracownika — Szwajcaria często ma górną granicę 50-55 lat w niektórych branżach (delikatnie wspomnieć tylko jeśli widoczne i istotne)
+
+KLUCZOWA ZASADA DOTYCZĄCA JĘZYKÓW URZĘDOWYCH SZWAJCARII (DE/FR/IT):
+Jeśli kandydat zna PRZYNAJMNIEJ JEDEN z trzech urzędowych języków Szwajcarii (niemiecki, francuski, włoski) na poziomie A2+ — to wystarczy do uzyskania pracy w odpowiednim regionie.
+- NIE WSPOMINAJ o braku pozostałych dwóch jako gap/concern. Np. jeśli kandydat zna niemiecki, NIE pisz "brak francuskiego" ani "brak włoskiego" — to NIE jest problem.
+- NIE sugeruj w `actions` żeby uczył się dodatkowego języka urzędowego CH "bo by się przydał" — wystarczający jest jeden.
+- Wyjątek: jeśli kandydat zna język urzędowy CH na poziomie tylko A1/podstawowym, MOŻESZ zasugerować podniesienie poziomu DO B1/B2 — ale NIE naukę kolejnego języka.
+- Jeśli kandydat NIE zna ŻADNEGO z DE/FR/IT — wtedy w concerns wspomnij ogólnie o potrzebie nauki języka regionu docelowego (bez wskazywania konkretnie którego — to zależy gdzie chce pracować).
 
 Dla każdego advantage i concern PODAJ KONKRET z CV (np. "Znajomość niemieckiego na poziomie B2 — kluczowy atut" zamiast ogólnego "znasz języki").
 
