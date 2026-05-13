@@ -338,7 +338,18 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
 
           <FunnelProgressBar currentStep={1} />
 
-          {/* Critical issues — shown PROMINENTLY above everything */}
+          {/* Score */}
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8 mb-6 text-center">
+            <h1 className="text-2xl font-bold font-display text-[#0D2240] mb-6">
+              Wynik analizy Twojego CV
+            </h1>
+            <ScoreGauge score={analysis.overall_score} previousScore={review.previous_score} />
+            <p className="mt-6 text-gray-600 max-w-lg mx-auto leading-relaxed">
+              {analysis.summary}
+            </p>
+          </div>
+
+          {/* Critical issues banner (pod wynikiem) */}
           {analysis.critical_issues && analysis.critical_issues.length > 0 && (
             <div className="bg-[#FFF0F3] border-2 border-[#E1002A] rounded-lg p-6 mb-6 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-1.5 h-full bg-[#E1002A]" />
@@ -355,10 +366,7 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
                   </h2>
                   <div className="space-y-3">
                     {analysis.critical_issues.map((issue, i) => (
-                      <p
-                        key={i}
-                        className="text-[0.95rem] text-[#0D2240] leading-relaxed whitespace-pre-line"
-                      >
+                      <p key={i} className="text-[0.95rem] text-[#0D2240] leading-relaxed whitespace-pre-line">
                         {issue}
                       </p>
                     ))}
@@ -367,17 +375,6 @@ export default function CVReviewResultPage({ params }: { params: { id: string } 
               </div>
             </div>
           )}
-
-          {/* Score */}
-          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8 mb-6 text-center">
-            <h1 className="text-2xl font-bold font-display text-[#0D2240] mb-6">
-              Wynik analizy Twojego CV
-            </h1>
-            <ScoreGauge score={analysis.overall_score} previousScore={review.previous_score} />
-            <p className="mt-6 text-gray-600 max-w-lg mx-auto leading-relaxed">
-              {analysis.summary}
-            </p>
-          </div>
 
           {/* Analysis sections */}
           <div className="space-y-6 mb-8">

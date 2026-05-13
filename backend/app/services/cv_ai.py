@@ -48,6 +48,11 @@ Jeśli wykryjesz literówki/braki diakrytyków — wpisz do `structure.needs_fix
 LUB
 "Niemieckie umlauty zastąpione przez 'ss'/'oe' itd. (np. 'Schweisser' zamiast 'Schweißer'). Popraw na poprawną pisownię z umlautami."
 
+**JEŚLI CV JEST W ZŁYM JĘZYKU (critical_issues zawiera problem językowy):**
+NIE wpisuj do `structure.needs_fixing` żadnych uwag o literówkach, brakujących diakrytykach polskich, czy gramatyce — to bezcelowe. Cały tekst CV i tak będzie PRZETŁUMACZONY na DE/FR/IT przed wysyłką, więc szczegółowe sugestie typu „Doswiadczenie → Doświadczenie" są stratą uwagi kandydata. Skup się na uwagach o STRUKTURZE, BRAKUJĄCYCH SEKCJACH i KONKRETACH zawodowych, które przeniosą się do nowej wersji CV niezależnie od języka.
+
+Wyjątek: jeśli CV jest w POPRAWNYM języku (DE/FR/IT) i tam są literówki w docelowym języku — wpisuj normalnie.
+
 **ZAKAZ HALUCYNACJI LITERÓWEK — ZASADA KRYTYCZNA:**
 - NIE WPISUJ NIC DO LITERÓWEK jeśli CV jest poprawnie napisane. CV po polsku z pełnymi diakrytykami ("Doświadczenie", "Wykształcenie", "Języki") — w `needs_fixing` NIE wpisuj nic o literówkach.
 - NIE ODWRACAJ. Jeśli widzisz w CV "Doświadczenie" (z ś) — to JEST POPRAWNE. Nigdy nie pisz "Doświadczenie zamiast Doswiadczenie" — to byłoby sugerowanie kandydatowi USUNĄĆ diakrytyki, co jest absurdalne. Diakrytyki w polskim CV to NORMA, brak diakrytyków to literówka.
@@ -131,7 +136,20 @@ BŁĘDY GRAMATYCZNE I SPÓJNOŚCI: aktywnie szukaj:
 - Sprzecznych dat (np. praca X zaczyna się przed końcem pracy Y)
 Wpisuj do `structure.needs_fixing` jeśli znajdziesz konkretny błąd.
 
-Sugerowanie dodania zdjęcia/sekcji w `to_add` jest OK (nie wiemy czy są w PDF, ale możemy zachęcić). Krytykowanie istnienia/braku zdjęcia w `needs_fixing` lub `works_well` — ZAKAZ.
+═══════════════════════════════════════════════════════════════════
+ZDJĘCIE W CV — KORZYSTAJ Z PRZEKAZANEJ INFORMACJI
+═══════════════════════════════════════════════════════════════════
+Na samym KOŃCU treści CV znajdziesz dokładnie jedną z linijek:
+  `PHOTO_DETECTED: TAK`   — system wykrył w pliku zdjęcie portretowe kandydata
+  `PHOTO_DETECTED: NIE`   — system nie wykrył w pliku żadnego zdjęcia portretowego
+  `PHOTO_DETECTED: UNKNOWN` — nie udało się sprawdzić (brak hinta)
+
+ZASADY:
+- Jeśli `TAK` → wpisz w `structure.works_well`: "CV zawiera profesjonalne zdjęcie — zgodne ze standardem CH (Bewerbungsfoto)". (Tylko ten konkret kwalifikuje się w works_well, bo dotyczy formy CV.)
+- Jeśli `NIE` → wpisz w `structure.to_add`: "Dodaj profesjonalne zdjęcie portretowe (Bewerbungsfoto) — w Szwajcarii to standard CV, jego brak obniża szanse". Nie wpisuj tego w `needs_fixing` (bo nic nie ma do poprawy — brakuje, więc to_add).
+- Jeśli `UNKNOWN` → NIE komentuj zdjęcia w żadnej sekcji. Pomiń temat całkowicie.
+
+ZAKAZ: nie wpisuj uwag o zdjęciu sprzecznych z hintem (np. gdy `TAK` — nie pisz że brakuje; gdy `NIE` — nie chwal "dobre zdjęcie"). Hint jest źródłem prawdy.
 
 W tej kategorii oceń:
 - works_well — REALNIE silne elementy CV. NIE wpisuj tu meta-truizmów.
@@ -366,8 +384,12 @@ TEKST CV:
 """
 
 
-async def analyze_cv_with_ai(cv_text: str) -> dict | None:
-    """Analyze CV text using OpenAI GPT-4 and return structured analysis.
+async def analyze_cv_with_ai(cv_text: str, has_photo: bool | None = None) -> dict | None:
+    """Analyze CV text using OpenAI GPT-5.4 mini and return structured analysis.
+
+    Args:
+        cv_text: Plain text extracted from the CV file.
+        has_photo: True/False if photo detection ran, None if unknown.
 
     Returns dict with keys: overall_score, summary, strengths, improvements, missing, tips.
     Returns None if AI analysis fails.
@@ -377,6 +399,14 @@ async def analyze_cv_with_ai(cv_text: str) -> dict | None:
     if not settings.OPENAI_API_KEY:
         logger.warning("OPENAI_API_KEY not configured, falling back to basic analysis")
         return None
+
+    if has_photo is True:
+        photo_hint = "PHOTO_DETECTED: TAK"
+    elif has_photo is False:
+        photo_hint = "PHOTO_DETECTED: NIE"
+    else:
+        photo_hint = "PHOTO_DETECTED: UNKNOWN"
+    user_content = CV_ANALYSIS_PROMPT + cv_text[:8000] + "\n\n" + photo_hint
 
     try:
         from openai import AsyncOpenAI
@@ -392,7 +422,7 @@ async def analyze_cv_with_ai(cv_text: str) -> dict | None:
                 },
                 {
                     "role": "user",
-                    "content": CV_ANALYSIS_PROMPT + cv_text[:8000],
+                    "content": user_content,
                 },
             ],
             max_completion_tokens=2500,
