@@ -1,0 +1,48 @@
+{
+  "overall_score": 8,
+  "summary": "CV jest dobrze dopasowane do rynku szwajcarskiego pod względem branży i zawiera kilka mocnych atutów praktycznych. Najważniejsze do poprawy to brak polskich znaków diakrytycznych w tekście, co obniża profesjonalny odbiór dokumentu.",
+  "critical_issues": [],
+  "structure": {
+    "score": 6,
+    "works_well": [
+      "Profil zawodowy w 1 zdaniu jasno określa specjalizację i liczbę lat doświadczenia: „Kucharz z 7-letnim doswiadczeniem w kuchni polskiej i europejskiej”.",
+      "Doświadczenie zawodowe jest opisane w układzie chronologicznym i zawiera konkretne stanowiska oraz miejsca pracy.",
+      "W sekcji umiejętności pojawiają się praktyczne kompetencje istotne dla gastronomii: „przygotowanie dań à la carte”, „HACCP”, „praca pod presją”."
+    ],
+    "needs_fixing": [
+      "Braki polskich znaków diakrytycznych w tekście (np. „doswiadczeniem”, „Doswiadczenie”, „Umiejetnosci”, „Jezyki”). Popraw całość, aby CV wyglądało profesjonalnie.",
+      "Ujednolić zapis dat i zakresów zatrudnienia, np. „2019–2025” i „2017–2019” — warto dodać miesiące, jeśli są dostępne, aby chronologia była bardziej precyzyjna.",
+      "Sekcja „Dodatkowe informacje” jest bardzo krótka — można ją doprecyzować lub zamienić na bardziej standardową sekcję z dostępnością i mobilnością."
+    ],
+    "to_add": [
+      "Dodać dokładniejsze opisy obowiązków przy każdym stanowisku, aby pokazać zakres odpowiedzialności i poziom samodzielności.",
+      "Dodać poziom wykształcenia lub ukończony kierunek w sekcji edukacji, ponieważ obecnie widnieje tylko nazwa szkoły.",
+      "Dodać informację o dostępności w pracy zmianowej lub weekendowej, jeśli kandydat jest na to gotowy."
+    ]
+  },
+  "swiss_fit": {
+    "score": 9,
+    "advantages": [
+      "Praca w branży gastronomia — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "7 lat doświadczenia w gastronomii — stabilny i wartościowy staż w jednej branży",
+      "Znajomość angielskiego B1 — przydatna w środowisku międzynarodowym i hotelowo-gastronomicznym",
+      "Znajomość niemieckiego A2 — dobry punkt wyjścia do pracy w niemieckojęzycznej części Szwajcarii",
+      "Prawo jazdy kat. B",
+      "Paszport UE — automatyczna swoboda przepływu osób, brak potrzeby pozwolenia",
+      "Dostępność natychmiastowa — gotowość do pracy od zaraz"
+    ],
+    "concerns": [
+      "Niemiecki na poziomie A2 może być zbyt słaby do wielu samodzielnych ról w kuchni w niemieckojęzycznej części Szwajcarii.",
+      "Brak doświadczenia poza Polską, co może wymagać mocniejszego pokazania gotowości do pracy w międzynarodowym środowisku."
+    ],
+    "actions": [
+      "Celuj przede wszystkim w oferty kucharskie w hotelach, restauracjach i kantynach w regionach, gdzie rekrutacja odbywa się na stanowiska deficytowe.",
+      "W aplikacjach podkreśl HACCP, pracę zmianową i doświadczenie w kuchni hotelowej oraz restauracyjnej, bo to zwiększa wiarygodność operacyjną.",
+      "Rozważ uzupełnienie profilu o krótką listę dań, typów kuchni lub stacji kuchennych, na których pracujesz, aby lepiej pokazać specjalizację."
+    ]
+  },
+  "tips": [
+    "Warto przygotować też wersję CV po niemiecku, jeśli kandydat celuje w kantony niemieckojęzyczne.",
+    "Jeśli są dostępne, dodaj konkretne osiągnięcia, np. liczba obsługiwanych gości, skala wydawek lub zakres odpowiedzialności."
+  ]
+}

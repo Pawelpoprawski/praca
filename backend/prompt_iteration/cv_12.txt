@@ -1,0 +1,19 @@
+Jan Kowalski
+Front-end Developer
+Adres: Kraków, Polska
+Telefon: +48 501 234 567
+E-mail: jan.kowalski@mail.pl
+Profil: Frontend developer z 4-letnim doswiadczeniem w budowie aplikacji webowych.
+Doswiadczenie:
+2021–2025 Allegro Sp. z o.o. — Frontend Developer
+- rozwój interfejsów w React, TypeScript, Next.js
+- współpraca z UX/UI i backendem
+- optymalizacja wydajności i dostępności
+2019–2021 Software Mind — Junior Web Developer
+- tworzenie komponentów UI
+- wsparcie testów i code review
+Wykształcenie: Politechnika Krakowska, Informatyka, inżynier
+Umiejętności: React, TypeScript, HTML5, CSS3, Redux, Jest, Git, REST API
+Języki: polski ojczysty, angielski B2, niemiecki A2
+Prawo jazdy: kat. B
+Dodatkowe informacje: gotowość do relokacji do Szwajcarii, paszport UE

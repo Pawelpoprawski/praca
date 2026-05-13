@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { Lock, BarChart3, Building2, RefreshCcw, TrendingUp, TrendingDown, Minus, Plus, Trash2, Save, X } from "lucide-react";
 import api from "@/services/api";
 
@@ -31,6 +31,7 @@ interface SeriesPoint {
 interface CompanyRow {
   employer_id: string;
   company_name: string;
+  company_slug: string | null;
   company_key: string;
   job_count: number;
   views_total: number;
@@ -291,6 +292,8 @@ function TimeSeriesChart({ series }: { series: SeriesPoint[] }) {
   const [activeKeys, setActiveKeys] = useState<Set<string>>(
     () => new Set(SERIES_KEYS.map((s) => s.key)),
   );
+  const [hoverIdx, setHoverIdx] = useState<number | null>(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
 
   const toggle = (k: string) => {
     setActiveKeys((prev) => {
@@ -300,7 +303,7 @@ function TimeSeriesChart({ series }: { series: SeriesPoint[] }) {
     });
   };
 
-  const W = 1000, H = 280, P = 32;
+  const W = 1000, H = 280, P = 36;
   const innerW = W - 2 * P, innerH = H - 2 * P;
   const n = series.length || 1;
 
@@ -319,7 +322,6 @@ function TimeSeriesChart({ series }: { series: SeriesPoint[] }) {
   const x = (i: number) => P + (i / Math.max(1, n - 1)) * innerW;
   const y = (v: number) => P + innerH - (v / maxY) * innerH;
 
-  // Y axis tick lines (4 ticks)
   const ticks = [0, 0.25, 0.5, 0.75, 1].map((f) => ({
     val: Math.round(f * maxY),
     y: P + innerH - f * innerH,
@@ -330,9 +332,28 @@ function TimeSeriesChart({ series }: { series: SeriesPoint[] }) {
     return `${d.getDate()}.${String(d.getMonth() + 1).padStart(2, "0")}`;
   };
 
+  const handleMove = (e: React.MouseEvent<SVGSVGElement>) => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const rect = svg.getBoundingClientRect();
+    const relX = ((e.clientX - rect.left) / rect.width) * W;
+    if (relX < P || relX > W - P) {
+      setHoverIdx(null);
+      return;
+    }
+    const ratio = (relX - P) / innerW;
+    const idx = Math.round(ratio * (n - 1));
+    setHoverIdx(Math.max(0, Math.min(n - 1, idx)));
+  };
+
+  const fullDateLabel = (iso: string) => {
+    const d = new Date(iso);
+    const days = ["niedz", "pon", "wt", "śr", "czw", "pt", "sob"];
+    return `${days[d.getDay()]} ${d.getDate()}.${String(d.getMonth() + 1).padStart(2, "0")}.${d.getFullYear()}`;
+  };
+
   return (
-    <div>
-      {/* Legend toggle */}
+    <div className="relative">
       <div className="flex flex-wrap gap-3 mb-4">
         {SERIES_KEYS.map((s) => {
           const active = activeKeys.has(s.key);
@@ -351,56 +372,171 @@ function TimeSeriesChart({ series }: { series: SeriesPoint[] }) {
         })}
       </div>
 
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="none">
-        {/* Grid */}
-        {ticks.map((t, i) => (
-          <g key={i}>
-            <line x1={P} y1={t.y} x2={W - P} y2={t.y} stroke="#E0E3E8" strokeDasharray="2 4" />
-            <text x={4} y={t.y + 3} fontSize="10" fill="#888">{t.val}</text>
-          </g>
-        ))}
-        {/* X labels (every ~5 days) */}
-        {series.map((p, i) => {
-          if (i % Math.max(1, Math.floor(n / 6)) !== 0 && i !== n - 1) return null;
+      <div className="relative">
+        <svg
+          ref={svgRef}
+          viewBox={`0 0 ${W} ${H}`}
+          className="w-full h-auto"
+          preserveAspectRatio="none"
+          onMouseMove={handleMove}
+          onMouseLeave={() => setHoverIdx(null)}
+        >
+          {/* Grid */}
+          {ticks.map((t, i) => (
+            <g key={i}>
+              <line x1={P} y1={t.y} x2={W - P} y2={t.y} stroke="#E0E3E8" strokeDasharray="2 4" />
+              <text x={4} y={t.y + 3} fontSize="10" fill="#888">{t.val}</text>
+            </g>
+          ))}
+          {/* X labels (every ~5 days) */}
+          {series.map((p, i) => {
+            if (i % Math.max(1, Math.floor(n / 6)) !== 0 && i !== n - 1) return null;
+            return (
+              <text key={i} x={x(i)} y={H - 8} fontSize="10" fill="#888" textAnchor="middle">
+                {dateLabel(p.date)}
+              </text>
+            );
+          })}
+          {/* Lines */}
+          {SERIES_KEYS.filter((s) => activeKeys.has(s.key)).map((s) => {
+            const points = series.map((p, i) => `${x(i)},${y(p[s.key] as number)}`).join(" ");
+            return (
+              <polyline
+                key={s.key}
+                fill="none"
+                stroke={s.color}
+                strokeWidth={2}
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                points={points}
+              />
+            );
+          })}
+          {/* Hover guide line + dots */}
+          {hoverIdx !== null && (
+            <g>
+              <line
+                x1={x(hoverIdx)}
+                y1={P}
+                x2={x(hoverIdx)}
+                y2={H - P}
+                stroke="#0D2240"
+                strokeWidth={1}
+                strokeDasharray="3 3"
+                opacity={0.5}
+              />
+              {SERIES_KEYS.filter((s) => activeKeys.has(s.key)).map((s) => (
+                <circle
+                  key={s.key}
+                  cx={x(hoverIdx)}
+                  cy={y(series[hoverIdx][s.key] as number)}
+                  r={4}
+                  fill="white"
+                  stroke={s.color}
+                  strokeWidth={2}
+                />
+              ))}
+            </g>
+          )}
+        </svg>
+
+        {/* Tooltip */}
+        {hoverIdx !== null && (() => {
+          const point = series[hoverIdx];
+          // position tooltip near hovered x, but clamp inside container
+          const leftPct = (x(hoverIdx) / W) * 100;
+          const placeRight = leftPct < 65;
           return (
-            <text key={i} x={x(i)} y={H - 8} fontSize="10" fill="#888" textAnchor="middle">
-              {dateLabel(p.date)}
-            </text>
+            <div
+              className="absolute top-2 pointer-events-none bg-white border border-[#E0E3E8] rounded-lg shadow-lg px-3 py-2 text-xs z-10"
+              style={
+                placeRight
+                  ? { left: `calc(${leftPct}% + 16px)` }
+                  : { right: `calc(${100 - leftPct}% + 16px)` }
+              }
+            >
+              <p className="font-semibold text-[#0D2240] mb-1.5 whitespace-nowrap">{fullDateLabel(point.date)}</p>
+              <div className="space-y-1">
+                {SERIES_KEYS.filter((s) => activeKeys.has(s.key)).map((s) => (
+                  <div key={s.key} className="flex items-center gap-2 whitespace-nowrap">
+                    <span className="w-2 h-2 rounded-sm" style={{ background: s.color }} />
+                    <span className="text-gray-600">{s.label}:</span>
+                    <span className="font-bold text-[#0D2240] tabular-nums ml-auto">
+                      {(point[s.key] as number).toLocaleString("pl-PL")}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           );
-        })}
-        {/* Lines */}
-        {SERIES_KEYS.filter((s) => activeKeys.has(s.key)).map((s) => {
-          const points = series.map((p, i) => `${x(i)},${y(p[s.key] as number)}`).join(" ");
-          return (
-            <polyline
-              key={s.key}
-              fill="none"
-              stroke={s.color}
-              strokeWidth={2}
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              points={points}
-            />
-          );
-        })}
-      </svg>
+        })()}
+      </div>
     </div>
   );
 }
 
 // ────────────────────────────────────────────────────────────────────────────
 
+type CompanySortKey =
+  | "company_name"
+  | "job_count"
+  | "views_total"
+  | "applications_internal"
+  | "apply_clicks_external"
+  | "override_email";
+
 function CompaniesTab({ password }: { password: string }) {
   const { data, error, loading, reload } = useAdminFetch<{ companies: CompanyRow[] }>("/admin-panel/companies", password);
   const [filter, setFilter] = useState("");
+  const [sortKey, setSortKey] = useState<CompanySortKey>("views_total");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+
+  const toggleSort = (k: CompanySortKey) => {
+    if (k === sortKey) {
+      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(k);
+      setSortDir(k === "company_name" || k === "override_email" ? "asc" : "desc");
+    }
+  };
+
+  const sortedAndFiltered = useMemo(() => {
+    if (!data) return [];
+    const filtered = data.companies.filter((c) =>
+      !filter || (c.company_name || "").toLowerCase().includes(filter.toLowerCase()),
+    );
+    const dir = sortDir === "asc" ? 1 : -1;
+    return [...filtered].sort((a, b) => {
+      const av = a[sortKey];
+      const bv = b[sortKey];
+      // null/empty go to the end regardless of dir, to keep ranking useful
+      if (av === null || av === "") return 1;
+      if (bv === null || bv === "") return -1;
+      if (typeof av === "number" && typeof bv === "number") return (av - bv) * dir;
+      return String(av).localeCompare(String(bv), "pl") * dir;
+    });
+  }, [data, filter, sortKey, sortDir]);
 
   if (loading) return <Loading />;
   if (error) return <ErrorBox text={error} />;
   if (!data) return null;
 
-  const filtered = data.companies.filter((c) =>
-    !filter || (c.company_name || "").toLowerCase().includes(filter.toLowerCase()),
-  );
+  const SortHeader = ({ k, label, align = "left" }: { k: CompanySortKey; label: string; align?: "left" | "right" }) => {
+    const active = sortKey === k;
+    return (
+      <th
+        onClick={() => toggleSort(k)}
+        className={`px-4 py-2.5 cursor-pointer select-none hover:text-[#0D2240] transition-colors ${align === "right" ? "text-right" : "text-left"}`}
+      >
+        <span className="inline-flex items-center gap-1">
+          {label}
+          <span className={`text-[10px] ${active ? "text-[#E1002A]" : "text-gray-300"}`}>
+            {active ? (sortDir === "asc" ? "▲" : "▼") : "▾"}
+          </span>
+        </span>
+      </th>
+    );
+  };
 
   return (
     <div className="bg-white border border-[#E0E3E8] rounded-lg overflow-hidden">
@@ -422,18 +558,35 @@ function CompaniesTab({ password }: { password: string }) {
         <table className="w-full text-sm">
           <thead className="bg-gray-50 text-gray-600 text-xs uppercase tracking-wider">
             <tr>
-              <th className="px-4 py-2.5 text-left">Firma</th>
-              <th className="px-4 py-2.5 text-right">Ofert</th>
-              <th className="px-4 py-2.5 text-right">Wyświetleń</th>
-              <th className="px-4 py-2.5 text-right">Aplikacji (formularz)</th>
-              <th className="px-4 py-2.5 text-right">Aplikacji (klik ext)</th>
-              <th className="px-4 py-2.5 text-left">Override email</th>
+              <SortHeader k="company_name" label="Firma" />
+              <SortHeader k="job_count" label="Ofert" align="right" />
+              <SortHeader k="views_total" label="Wyświetleń" align="right" />
+              <SortHeader k="applications_internal" label="Aplikacji (formularz)" align="right" />
+              <SortHeader k="apply_clicks_external" label="Aplikacji (klik ext)" align="right" />
+              <SortHeader k="override_email" label="Override email" />
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {filtered.map((c) => (
+            {sortedAndFiltered.map((c) => (
               <tr key={c.employer_id} className="hover:bg-gray-50">
-                <td className="px-4 py-2.5 font-medium text-[#0D2240]">{c.company_name || <em className="text-gray-400">brak nazwy</em>}</td>
+                <td className="px-4 py-2.5 font-medium text-[#0D2240]">
+                  {c.company_name ? (
+                    c.company_slug ? (
+                      <a
+                        href={`/firmy/${c.company_slug}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-[#E1002A] hover:underline transition-colors"
+                      >
+                        {c.company_name}
+                      </a>
+                    ) : (
+                      c.company_name
+                    )
+                  ) : (
+                    <em className="text-gray-400">brak nazwy</em>
+                  )}
+                </td>
                 <td className="px-4 py-2.5 text-right tabular-nums">{c.job_count}</td>
                 <td className="px-4 py-2.5 text-right tabular-nums">{c.views_total}</td>
                 <td className="px-4 py-2.5 text-right tabular-nums">{c.applications_internal}</td>
@@ -447,7 +600,7 @@ function CompaniesTab({ password }: { password: string }) {
                 </td>
               </tr>
             ))}
-            {filtered.length === 0 && (
+            {sortedAndFiltered.length === 0 && (
               <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-500">Brak firm pasujących do filtra</td></tr>
             )}
           </tbody>

@@ -1,0 +1,57 @@
+{
+  "overall_score": 6,
+  "summary": "CV ma mocne dopasowanie do pracy w Szwajcarii w gastronomii, ale zawiera kilka kwestii do poprawy: jest po polsku, więc przed aplikacją musi zostać przygotowane w języku docelowego regionu. Dodatkowo warto usunąć dane wrażliwe i dopracować treść tak, by mocniej podkreślała konkretne obowiązki oraz osiągnięcia.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku polskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką.",
+    "W CV widnieje PESEL — usuń go, bo to dane wrażliwe i nie powinny trafiać do standardowego CV."
+  ],
+  "structure": {
+    "score": 6,
+    "works_well": [
+      "Profil zawodowy od razu podaje specjalizację i staż: „Kelnerka z 3-letnim doświadczeniem w obsłudze gości w restauracji i hotelu”.",
+      "Doświadczenie jest podane w układzie chronologicznym z nazwami miejsc pracy i lokalizacją.",
+      "W sekcji umiejętności pojawiają się konkretne kompetencje gastronomiczne: obsługa POS, serwis śniadaniowy, znajomość karty win.",
+      "Uwzględniono certyfikaty związane z obsługą klienta i gastronomią."
+    ],
+    "needs_fixing": [
+      "Usuń wzmiankę „Stan cywilny: panna” — w Szwajcarii stan cywilny jest informacją poufną i nie powinien być standardowo podawany w CV.",
+      "Usuń PESEL z części dodatkowej — to dane wrażliwe i nie są potrzebne rekruterowi.",
+      "Doprecyzuj opisy doświadczenia: zamiast samych nazw stanowisk dodaj 1-2 konkretne obowiązki lub efekty pracy przy każdej pozycji.",
+      "Ujednolić zapis ról zawodowych: „hostess / pomoc kelnerska” warto zapisać spójnie, np. po jednej nazwie stanowiska, aby CV było bardziej profesjonalne.",
+      "Profil zawodowy jest poprawny, ale zbyt ogólny — warto dodać, w jakim typie lokalu pracowałaś i przy jakim wolumenie gości."
+    ],
+    "to_add": [
+      "Dodaj sekcję „Doświadczenie zawodowe” z 2-3 konkretnymi punktami pod każdą pracą, aby szybciej pokazać zakres obowiązków.",
+      "Dodaj sekcję „Języki” w układzie poziomów CEFR już w docelowej wersji językowej CV, bo to ważny filtr w Szwajcarii.",
+      "Dodaj krótką sekcję z osiągnięciami, np. obsługa większych imprez, praca przy śniadaniach hotelowych lub wysoka jakość serwisu.",
+      "Rozważ dopisanie prawa jazdy tylko jeśli je posiadasz i jest to prawdą — w gastronomii może to zwiększyć elastyczność przy zmianach i dojazdach."
+    ]
+  },
+  "swiss_fit": {
+    "score": 8,
+    "advantages": [
+      "Praca w branży gastronomia — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "3 lata doświadczenia w obsłudze gości w restauracji i hotelu — dobry staż w branży cenionej w Szwajcarii",
+      "Znajomość niemieckiego B1 — kluczowy atut dla niemieckojęzycznej części Szwajcarii",
+      "Znajomość angielskiego B2 — przydatna w hotelarstwie i gastronomii nastawionej na gości międzynarodowych",
+      "Paszport UE — automatyczna swoboda przepływu osób, brak potrzeby pozwolenia",
+      "Dyspozycyjność sezonowa i całoroczna — elastyczność ceniona przez pracodawców"
+    ],
+    "concerns": [
+      "Brak doświadczenia poza Polską — może wymagać mocniejszego przedstawienia gotowości do pracy w standardach CH",
+      "Brak wskazania konkretnego regionu docelowego w Szwajcarii — warto dopasować wersję CV do niemieckojęzycznej części kraju lub Romandie",
+      "W CV nie widać liczb ani konkretnych efektów pracy, więc trudniej ocenić skalę doświadczenia",
+      "Zapis „hostess / pomoc kelnerska” jest mało precyzyjny i może osłabiać odbiór profilu"
+    ],
+    "actions": [
+      "Przygotuj osobną wersję CV pod region, do którego aplikujesz: niemiecką dla Zurychu/Berna/Bazylei albo francuską dla Romandie.",
+      "Dopisz konkretne przykłady pracy pod presją, np. obsługa dużej liczby gości, praca w godzinach szczytu, wsparcie przy śniadaniach hotelowych.",
+      "W aplikacjach podkreśl gotowość do pracy sezonowej, weekendowej i zmianowej — to dobrze pasuje do gastronomii w CH.",
+      "Wysyłaj CV także do hoteli, restauracji i firm cateringowych, bo Twoje doświadczenie łączy obsługę sali i środowisko hotelowe."
+    ]
+  },
+  "tips": [
+    "W Szwajcarii warto pisać CV bardziej konkretnie niż ogólnie — liczby i zakres obowiązków szybko zwiększają wiarygodność.",
+    "Dla pracy w gastronomii dodaj krótki profil z nastawieniem na standard obsługi, szybkość i pracę zespołową."
+  ]
+}

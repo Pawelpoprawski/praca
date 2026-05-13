@@ -1,0 +1,19 @@
+Thomas Kwiatkowski
+Lebenslauf
+Adresse: Zürich, Schweiz
+Telefon: +41 79 456 78 90
+E-Mail: thomas.kwiatkowski@mail.ch
+Profil: DevOps / SRE Engineer mit 8 Jahren Erfahrung in Cloud- und Plattform-Umgebungen.
+Berufserfahrung:
+2019–2025 Skanska Schweiz AG — Senior DevOps Engineer
+- Aufbau und Betrieb von CI/CD-Pipelines
+- Verwaltung von Kubernetes-Clustern und Observability
+- Automatisierung mit Terraform und Ansible
+2016–2019 IBM Polska — DevOps Engineer
+- Containerisierung von Services
+- Monitoring, Logging, Incident Response
+Ausbildung: AGH Kraków, Informatik
+Kenntnisse: Linux, Bash, Python, Terraform, Ansible, Kubernetes, Prometheus, Grafana, AWS, Azure
+Sprachen: Polnisch Muttersprache, Deutsch C1, Englisch B2
+Zertifikate: AWS Certified DevOps Engineer, CKA
+Weitere Angaben: EU-Pass vorhanden, Führerausweis Kategorie B

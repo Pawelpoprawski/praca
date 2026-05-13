@@ -1,0 +1,53 @@
+{
+  "overall_score": 4,
+  "summary": "Twoje CV jest napisane po polsku, co jest krytycznym problemem przy aplikowaniu w Szwajcarii. Merytorycznie profil pasuje do opieki nad dziećmi, ale przed wysyłką trzeba przygotować wersję w języku docelowego regionu i dopracować CV pod standardy szwajcarskie.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku polskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 5,
+    "works_well": [
+      "Profil zawodowy w 2 zdaniach jasno określa specjalizację: opieka nad dziećmi oraz cechy miękkie ważne w tej pracy.",
+      "Opis doświadczenia zawiera konkret zakresu obowiązków: opieka nad dziećmi w wieku 2–8 lat, organizacja zabaw i pomoc w codziennej rutynie.",
+      "Wskazano referencje dostępne na życzenie, co może wspierać wiarygodność kandydatki."
+    ],
+    "needs_fixing": [
+      "Brak dopasowania językowego do rynku szwajcarskiego — przygotuj osobną wersję CV po niemiecku, francusku albo włosku zależnie od kantonu.",
+      "Opis doświadczenia jest bardzo krótki — dodaj 2–3 konkretne obowiązki lub efekty pracy, np. liczba dzieci, typ opieki, zakres odpowiedzialności.",
+      "Sekcja 'Inne' jest zbyt ogólna — zastąp ją bardziej konkretnymi kompetencjami opiekuńczymi, np. pierwsza pomoc, organizacja dnia dziecka, komunikacja z rodzicami.",
+      "Brakuje pełniejszych danych o wykształceniu — doprecyzuj planowany termin ukończenia studiów lub aktualny rok studiów.",
+      "W CV nie widać informacji o miejscu zamieszkania poza Krakowem w kontekście relokacji — jeśli jesteś gotowa do przeprowadzki, warto to ująć precyzyjniej."
+    ],
+    "to_add": [
+      "Dodaj sekcję 'Umiejętności' z 4–6 konkretnymi kompetencjami związanymi z opieką nad dziećmi, aby CV było bardziej konkretne.",
+      "Dodaj daty miesięczne przy doświadczeniu, jeśli to możliwe, żeby łatwiej ocenić ciągłość zatrudnienia.",
+      "Dodaj krótki profil zawodowy skierowany do opieki nad dziećmi w Szwajcarii, z naciskiem na odpowiedzialność i pracę z rodzinami."
+    ]
+  },
+  "swiss_fit": {
+    "score": 4,
+    "advantages": [
+      "Praca w branży opieka — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "Roczne doświadczenie w opiece nad dziećmi — praktyczny punkt wejścia do branży opiekuńczej w Szwajcarii",
+      "Znajomość niemieckiego na poziomie podstawowym — częściowy atut przy dalszym rozwijaniu pod rynek niemieckojęzyczny",
+      "Znajomość angielskiego na poziomie komunikatywnym — ułatwia codzienną komunikację w międzynarodowych środowiskach",
+      "Studia z pedagogiki — naturalne dopasowanie do pracy z dziećmi i rodzinami",
+      "Gotowość do pracy w Szwajcarii — sygnał mobilności i otwartości na wyjazd"
+    ],
+    "concerns": [
+      "Niemiecki jest tylko na poziomie podstawowym, więc do większości ofert w niemieckojęzycznej części Szwajcarii będzie za słaby.",
+      "Brak konkretnej informacji o prawie do pracy w Szwajcarii lub obywatelstwie UE może utrudniać selekcję.",
+      "Doświadczenie jest ograniczone do jednego roku i jednego miasta, bez pracy za granicą.",
+      "Nie podano żadnych certyfikatów opiekuńczych ani potwierdzenia kwalifikacji przydatnych w Szwajcarii."
+    ],
+    "actions": [
+      "Jeśli celujesz w opiekę nad dziećmi w Szwajcarii, przygotuj wersję CV pod agencje i rodziny prywatne, podkreślając doświadczenie z dziećmi w wieku 2–8 lat.",
+      "Jeśli masz obywatelstwo UE lub możliwość legalnej pracy, dopisz to w CV, bo znacząco przyspiesza proces rekrutacji.",
+      "Rozważ uzyskanie krótkiego certyfikatu z pierwszej pomocy pediatrycznej lub opieki nad dziećmi, aby wzmocnić wiarygodność kandydatki."
+    ]
+  },
+  "tips": [
+    "Dostosuj CV do jednego konkretnego regionu Szwajcarii, zamiast wysyłać jedną wersję wszędzie.",
+    "W opiece nad dziećmi bardzo pomagają konkretne liczby: wiek dzieci, liczba podopiecznych, zakres obowiązków."
+  ]
+}

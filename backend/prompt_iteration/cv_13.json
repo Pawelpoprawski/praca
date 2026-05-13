@@ -1,0 +1,48 @@
+{
+  "overall_score": 7,
+  "summary": "CV jest dobrze dopasowane merytorycznie do rynku szwajcarskiego dla IT, ale wymaga uporządkowania pod kątem danych wrażliwych i dopracowania kilku elementów formalnych. Najważniejsze do poprawy: usunąć PESEL i stan cywilny oraz skorygować błąd w nagłówku \"Doswiadczenie\".",
+  "critical_issues": [],
+  "structure": {
+    "score": 6,
+    "works_well": [
+      "Profil zawodowy w 1 zdaniu jasno określa specjalizację: backend developer w systemach opartych o Java i Spring.",
+      "W doświadczeniu podano konkretne technologie i narzędzia: PostgreSQL, Kafka, Docker, Spring, Kubernetes, AWS.",
+      "Wymieniono certyfikat techniczny: Oracle Java SE 11 Developer."
+    ],
+    "needs_fixing": [
+      "Usuń PESEL: 90051212345 — to dane wrażliwe i nie powinny znajdować się w CV wysyłanym do pracodawcy w Szwajcarii.",
+      "Usuń informację o stanie cywilnym („panna”) — w Szwajcarii to dane prywatne i nie powinny być ujawniane w CV.",
+      "Popraw nagłówek „Doswiadczenie” na „Doświadczenie” — brakuje polskiego znaku diakrytycznego.",
+      "Opisy obowiązków w obu pozycjach są bardzo ogólne; warto doprecyzować skalę, odpowiedzialność lub efekt pracy, np. liczbę usług, użytkowników lub usprawnień."
+    ],
+    "to_add": [
+      "Dodaj konkretne osiągnięcia liczbowe przy projektach, aby wzmocnić wiarygodność i wyróżnić CV na tle innych kandydatów.",
+      "Dodaj sekcję z językami w bardziej uporządkowanej formie CEFR, jeśli chcesz ułatwić szybki screening rekruterowi.",
+      "Dodaj krótką sekcję z kluczowymi kompetencjami biznesowymi, np. architektura mikroserwisów, integracje API, optymalizacja wydajności."
+    ]
+  },
+  "swiss_fit": {
+    "score": 8,
+    "advantages": [
+      "Praca w branży IT — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "Znajomość niemieckiego na poziomie B1 — otwiera dostęp do niemieckojęzycznej części Szwajcarii",
+      "Doświadczenie w Roche Polska — rozpoznawalne środowisko korporacyjne i praca w dużej organizacji",
+      "Ponad 7 lat doświadczenia w Java backendzie — silny sygnał stabilności i ekspertyzy",
+      "Oracle Java SE 11 Developer — certyfikat techniczny wzmacniający profil kandydata"
+    ],
+    "concerns": [
+      "Brak doświadczenia poza Polską — może utrudniać wejście na rynek CH, choć nie jest to blokada.",
+      "W CV nie podano prawa do pracy w Szwajcarii ani obywatelstwa UE — rekruter może dopytywać o formalności zatrudnienia.",
+      "Niemiecki jest na poziomie B1 — wystarczający do aplikacji, ale w części zespołów może być jeszcze potrzebne dalsze rozwijanie komunikacji zawodowej."
+    ],
+    "actions": [
+      "Przygotuj wersję CV ukierunkowaną na niemieckojęzyczne oferty IT w regionie Zurychu, Bazylei lub Bernie, gdzie znajomość niemieckiego B1 ma praktyczne znaczenie.",
+      "W aplikacji podkreśl doświadczenie z mikroserwisami, API i chmurą AWS, bo to są elementy szczególnie atrakcyjne dla szwajcarskich pracodawców IT.",
+      "Jeśli masz możliwość, doprecyzuj status formalny do pracy w CH w liście motywacyjnym lub profilu kandydata, bo to skraca proces rekrutacyjny."
+    ]
+  },
+  "tips": [
+    "W Szwajcarii dla IT mocno działa konkret: pokaż zakres systemów, skalę i odpowiedzialność zamiast ogólnych opisów.",
+    "Usunięcie danych wrażliwych zwiększy profesjonalizm CV i zmniejszy ryzyko odrzutu na etapie preselekcji."
+  ]
+}

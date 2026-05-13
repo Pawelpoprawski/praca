@@ -1,0 +1,57 @@
+{
+  "overall_score": 4,
+  "summary": "Twoje CV jest napisane po polsku, więc w obecnej formie nie nadaje się do aplikacji na rynek szwajcarski bez tłumaczenia na język docelowego regionu. Dodatkowo zawiera dane wrażliwe i kilka braków językowo-formalnych; najmocniej warto poprawić język CV oraz usunąć informacje prywatne.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku polskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką.",
+    "CV zawiera PESEL: '84051212345' — usuń go, ponieważ to dane wrażliwe i nie powinny trafiać do CV wysyłanego za granicę.",
+    "CV zawiera informacje o stanie cywilnym ('Stan cywilny: zonaty') oraz religii ('Religia: katolicka') — usuń te dane, bo w Szwajcarii są niepotrzebne i potencjalnie problematyczne na etapie rekrutacji."
+  ],
+  "structure": {
+    "score": 3,
+    "works_well": [
+      "Podano konkretne daty zatrudnienia przy trzech miejscach pracy, co ułatwia ocenę ciągłości doświadczenia.",
+      "W sekcji umiejętności wymieniono praktyczne kompetencje istotne dla pracy magazynowo-produkcyjnej: obsługa wozka widlowego, kompletacja zamowien, kontrola jakosci, praca zmianowa.",
+      "Wskazano certyfikat UDT na wozki widlowe, co wzmacnia wiarygodność kandydatury."
+    ],
+    "needs_fixing": [
+      "Brak polskich znaków diakrytycznych w tekście (np. 'zonaty', 'wozka widlowego', 'zamowien', 'jakosci', 'Jezyki'). Popraw pisownię, aby CV wyglądało profesjonalnie.",
+      "Usuń dane wrażliwe: 'PESEL: 84051212345', 'Stan cywilny: zonaty' oraz 'Religia: katolicka'.",
+      "Popraw zapis języków na bardziej standardowy, np. 'języki: polski, angielski A2' i najlepiej podaj poziomy w pełnym formacie CEFR dla wszystkich języków.",
+      "Opis doświadczenia jest bardzo skrótowy i łączy kilka stanowisk w jednej linii — rozbij go na osobne pozycje z zakresem obowiązków przy każdym pracodawcy.",
+      "Brakuje pełnego opisu obowiązków i ewentualnych osiągnięć, przez co trudno ocenić skalę odpowiedzialności na produkcji i w magazynie."
+    ],
+    "to_add": [
+      "Dodaj osobną sekcję 'Wykształcenie', bo w obecnym tekście jej brakuje.",
+      "Dodaj pełniejszą sekcję 'Doświadczenie zawodowe' z nazwami stanowisk, miastami i krótkim opisem zadań przy każdej firmie.",
+      "Dodaj sekcję 'Umiejętności' w bardziej uporządkowanej formie, np. z podziałem na obsługę sprzętu, logistykę i jakość.",
+      "Dodaj sekcję 'Języki' z poziomami CEFR, bo obecny zapis jest zbyt lakoniczny dla rekrutera w CH.",
+      "Dodaj informację o gotowości do pracy zmianowej/relokacji tylko jeśli jest prawdziwa, ponieważ może zwiększyć atrakcyjność kandydata na rynku szwajcarskim."
+    ]
+  },
+  "swiss_fit": {
+    "score": 6,
+    "advantages": [
+      "Praca w branży transport/magazyn/produkcja — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "Doświadczenie w Roche Polska — praca w dużej, rozpoznawalnej firmie produkcyjnej",
+      "8 lat doświadczenia w Roche Polska",
+      "Certyfikat UDT na wozki widlowe",
+      "Prawo jazdy kat. B",
+      "Paszport UE — automatyczna swoboda przepływu osób, brak potrzeby pozwolenia"
+    ],
+    "concerns": [
+      "Brak języka regionu docelowego pracy na poziomie B1+ — angielski A2 nie wystarczy jako samodzielny atut na większości stanowisk w CH.",
+      "Całe doświadczenie zawodowe wygląda na z Polski, bez wskazania pracy w środowisku międzynarodowym poza Roche Polska.",
+      "CV pokazuje dwa dłuższe miejsca pracy, ale opis ról jest bardzo ogólny, więc trudno ocenić konkretną specjalizację i zakres odpowiedzialności."
+    ],
+    "actions": [
+      "Dopasuj aplikację do konkretnego regionu Szwajcarii i przygotuj wersję CV po niemiecku lub francusku zgodnie z miejscem pracy.",
+      "Zdobądź lub pokaż na CV bardziej precyzyjny poziom języka lokalnego na potrzeby pracy operacyjnej w CH, jeśli już go posiadasz.",
+      "Jeśli aplikujesz do logistyki lub produkcji, przygotuj krótki profil zawodowy podkreślający obsługę wozka widlowego, kontrolę jakości i pracę zmianową.",
+      "Przygotuj osobny wariant CV pod rekrutacje przez agencje staffingowe w Szwajcarii, które często obsadzają produkcję, magazyn i logistykę."
+    ]
+  },
+  "tips": [
+    "W CV na rynek szwajcarski warto podawać obowiązki w punktach, a nie w jednej linijce.",
+    "Usuń wszystkie dane prywatne, które nie są potrzebne do rekrutacji, zanim wyślesz dokument do pracodawcy."
+  ]
+}

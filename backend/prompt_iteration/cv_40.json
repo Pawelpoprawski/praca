@@ -1,0 +1,50 @@
+{
+  "overall_score": 5,
+  "summary": "CV jest napisane po niemiecku, ale jest raczej krótkie i ma ograniczoną liczbę konkretów zawodowych. Najważniejsze do poprawy: doprecyzowanie doświadczenia oraz uzupełnienie CV o mocniejsze opisy umiejętności i kwalifikacji pod transport w Szwajcarii.",
+  "critical_issues": [],
+  "structure": {
+    "score": 5,
+    "works_well": [
+      "Profil zawodowy jasno określa kierunek: kandydat jest początkującym kierowcą LKW i podaje podstawowe atuty: niezawodność, punktualność i gotowość do nauki.",
+      "W doświadczeniu pojawiają się konkretne zadania związane z transportem: 'Be- und Entladung', 'Ladungssicherung', 'Auslieferungen im Nahverkehr'.",
+      "Sekcja języków zawiera poziomy znajomości: niemiecki B1 oraz angielski na poziomie podstawowym."
+    ],
+    "needs_fixing": [
+      "Doprecyzuj opis doświadczenia o konkretne rezultaty lub zakres obowiązków, np. liczbę dostaw, typ pojazdów, trasę, rodzaj ładunków lub skalę odpowiedzialności.",
+      "Usuń lub dopracuj sformułowanie '18-jähriger, motivierter LKW-Fahrer-Anwärter' — brzmi bardzo ogólnie; lepiej zastąpić je krótkim profilem z konkretnym celem zawodowym i specjalizacją.",
+      "W sekcji 'Sonstiges' nie powtarzaj tych samych atutów wielokrotnie ('hohe Einsatzbereitschaft', 'flexible Arbeitszeiten', 'schnelle Auffassungsgabe') bez kontekstu — warto je połączyć z przykładem z doświadczenia.",
+      "Dodaj bardziej profesjonalny opis kompetencji technicznych lub logistycznych zamiast samej ogólnej deklaracji gotowości do pracy."
+    ],
+    "to_add": [
+      "Dodaj osobną sekcję 'Umiejętności' z konkretnymi kompetencjami przydatnymi w transporcie, np. zabezpieczanie ładunku, dokumenty transportowe, praca w magazynie, obsługa podstawowych procedur logistycznych.",
+      "Dodaj informacje o uprawnieniach zawodowych, jeśli kandydat je posiada lub jest w trakcie ich zdobywania, np. kategoria C/C+E, kurs na przewóz rzeczy lub kwalifikacja zawodowa.",
+      "Dodaj miasto i daty przy każdej pozycji w bardziej uporządkowanej formie, aby łatwiej było ocenić ciągłość doświadczenia.",
+      "Jeśli to możliwe, dodaj krótką sekcję 'Cel zawodowy', aby jasno pokazać, że kandydat szuka pracy w transporcie międzynarodowym lub krajowym."
+    ]
+  },
+  "swiss_fit": {
+    "score": 6,
+    "advantages": [
+      "Praca w branży transport — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "Znajomość niemieckiego na poziomie B1 — istotny atut dla niemieckojęzycznej części Szwajcarii",
+      "Posiadane własne auto — ułatwia dojazdy i pracę w terenie",
+      "Gotowość do długoterminowej pracy — kandydat deklaruje 'Interesse an langfristiger Beschäftigung in Deutschland'",
+      "Praktyczne doświadczenie w transporcie i logistyce: 'Ladungssicherung', 'Auslieferungen im Nahverkehr', przygotowanie dokumentów transportowych"
+    ],
+    "concerns": [
+      "Brak potwierdzonej kategorii C/C+E — w CV widnieje tylko 'Führerschein Klasse B', co ogranicza aplikacje na typowe stanowiska kierowcy ciężarówki w CH.",
+      "Doświadczenie ma charakter praktyk i pracy wakacyjnej, więc jest jeszcze dość ograniczone w porównaniu z wymaganiami rynku transportowego.",
+      "Brak informacji o pozwoleniu na pracę w Szwajcarii lub obywatelstwie UE, co może wymagać dodatkowej weryfikacji przez pracodawcę.",
+      "W CV nie ma wskazania na doświadczenie w pracy za granicą poza Polską, co może osłabiać profil przy aplikacjach międzynarodowych."
+    ],
+    "actions": [
+      "Jeśli kandydat planuje aplikacje jako kierowca ciężarówki w Szwajcarii, powinien jak najszybciej zdobyć lub wskazać kategorię C/C+E oraz kwalifikacje do przewozu rzeczy, bo samo prawo jazdy B nie wystarczy na większość ofert.",
+      "Warto skupić aplikacje na firmach logistycznych i dystrybucyjnych, które przyjmują młodszych kandydatów na stanowiska pomocnicze lub juniorskie w transporcie.",
+      "Przygotować osobną wersję CV z mocniejszym akcentem na logistykę, zabezpieczanie ładunku i pracę w magazynie, bo to zwiększy szanse na entry-level role."
+    ]
+  },
+  "tips": [
+    "Dodaj krótką sekcję z konkretnymi umiejętnościami technicznymi i logistycznymi, aby CV było bardziej przekonujące dla rekrutera.",
+    "Jeśli celem jest Szwajcaria, rozważ doprecyzowanie preferowanego regionu pracy, np. niemieckojęzyczna część kraju."
+  ]
+}

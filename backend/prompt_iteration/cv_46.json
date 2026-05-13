@@ -1,0 +1,57 @@
+{
+  "overall_score": 6,
+  "summary": "CV jest czytelne i zawiera konkretne doświadczenie zawodowe, ale kluczowym problemem jest brak dopasowania językowego do aplikacji w Szwajcarii, jeśli celem jest region niemieckojęzyczny lub francusko/włoskojęzyczny. Najważniejsza rzecz do poprawy to przygotowanie wersji CV w języku docelowego regionu oraz uzupełnienie treści o bardziej rynkowo użyteczne elementy, np. certyfikaty i ewentualne uprawnienia.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku polskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 7,
+    "works_well": [
+      "Profil zawodowy jasno określa specjalizację: farmacja apteczna, obsługa pacjenta, realizacja recept i doradztwo farmaceutyczne.",
+      "Podano konkretne, wieloletnie doświadczenie w jednym miejscu pracy: 2011–2024 w aptece.",
+      "Opis obowiązków jest rzeczowy i zawiera praktyczne zadania: Rx/OTC, kontrola recept, zamawianie towaru, dokumentacja."
+    ],
+    "needs_fixing": [
+      "Brakuje szerszej informacji o skali odpowiedzialności w aptece — warto dopisać, czy kandydatka pracowała samodzielnie, w jakim trybie zmianowym i z jakim typem pacjentów.",
+      "Sekcja „Inne” zawiera cechy miękkie, ale warto połączyć je z konkretem zawodowym, np. organizacja pracy w aptece, odpowiedzialność za dokumentację lub kontakt z pacjentem.",
+      "Warto doprecyzować osiągnięcia lub zakres odpowiedzialności liczbowo, jeśli to możliwe, zamiast samej listy obowiązków.",
+      "Nazwa stanowiska „Farmaceuta” przy profilu „Farmaceutka” warto ujednolicić stylistycznie do jednej formy żeńskiej.",
+      "Brak informacji o ewentualnych certyfikatach, kursach lub dodatkowych uprawnieniach zawodowych.",
+      "Brak informacji o znajomości systemów/aptecznych narzędzi lub specjalistycznych procedur, jeśli kandydatka je posiadała."
+    ],
+    "to_add": [
+      "Dodaj sekcję z certyfikatami lub kursami zawodowymi, jeśli istnieją — w farmacji są ważnym sygnałem aktualności kompetencji.",
+      "Dodaj języki z poziomami CEFR w bardziej uporządkowanej formie, aby rekruter od razu widział poziom niemieckiego.",
+      "Dodaj krótką sekcję kompetencji kluczowych, np. obsługa pacjenta, realizacja recept, doradztwo farmaceutyczne, dokumentacja, praca zespołowa.",
+      "Jeśli kandydatka posiada prawo wykonywania zawodu lub inne formalne uprawnienia, warto je wyeksponować."
+    ]
+  },
+  "swiss_fit": {
+    "score": 6,
+    "advantages": [
+      "Praca w branży zdrowie — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "13 lat doświadczenia w aptece ogólnodostępnej — stabilność zawodowa ceniona przez pracodawców",
+      "Znajomość języka niemieckiego na poziomie B1 — istotny atut na rynku niemieckojęzycznej Szwajcarii",
+      "Gotowość do relokacji do Szwajcarii — ułatwia dopasowanie do ofert",
+      "Doświadczenie w obsłudze pacjenta i doradztwie farmaceutycznym — praktyczne kompetencje ważne w aptekach",
+      "Doświadczenie w realizacji recept Rx i OTC — konkretna, rynkowo użyteczna umiejętność"
+    ],
+    "concerns": [
+      "CV jest obecnie po polsku, co mocno ogranicza szanse w procesach rekrutacyjnych w Szwajcarii.",
+      "Brak informacji o uznaniu kwalifikacji zawodowych lub wymaganych formalnościach dla pracy w szwajcarskiej farmacji.",
+      "Nie podano żadnych certyfikatów, szkoleń ani dodatkowych uprawnień zwiększających wiarygodność na rynku CH.",
+      "Język angielski opisany jako podstawowy — pomocniczy atut, ale może ograniczać pracę w środowisku międzynarodowym.",
+      "Brakuje informacji o prawie do pracy w UE/Szwajcarii, jeśli kandydatka nie posiada obywatelstwa UE lub stosownego permitu."
+    ],
+    "actions": [
+      "Przygotuj osobną wersję CV po niemiecku dla niemieckojęzycznej Szwajcarii, z naciskiem na farmację apteczną i kontakt z pacjentem.",
+      "Sprawdź procedurę uznania kwalifikacji i wymogi formalne dla pracy w szwajcarskiej farmacji, aby móc aplikować bez opóźnień.",
+      "Uzupełnij CV o certyfikaty, kursy i dodatkowe szkolenia farmaceutyczne, jeśli je posiadasz.",
+      "Jeśli masz prawo wykonywania zawodu lub inne formalne uprawnienia, wyeksponuj je w górnej części CV lub w osobnej sekcji."
+    ]
+  },
+  "tips": [
+    "Dodaj krótki profil zawodowy pod docelowy region, np. pod apteki w kantonie niemieckojęzycznym.",
+    "W CV do Szwajcarii warto mocniej akcentować odpowiedzialność, dokładność i pracę z procedurami niż ogólne cechy osobowości."
+  ]
+}

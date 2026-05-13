@@ -1,0 +1,49 @@
+{
+  "overall_score": 7,
+  "summary": "CV jest w dobrym języku dla Szwajcarii i pokazuje solidne, techniczne doświadczenie w projektowaniu konstrukcji stalowych. Najważniejsze do poprawy: usuń PESEL oraz doprecyzuj języki zgodnie z CEFR, bo obecny zapis jest zbyt niejednoznaczny dla rekrutera w CH.",
+  "critical_issues": [],
+  "structure": {
+    "score": 7,
+    "works_well": [
+      "Profil zawodowy od razu precyzuje specjalizację: „Konstrukteurin / Projektant konstrukcji stalowych” oraz obszar doświadczenia „Stahl- und Hallenbau”.",
+      "W doświadczeniu podano konkretne narzędzia i oprogramowanie: AutoCAD, Robot Structural Analysis, Tekla Structures.",
+      "Opis pracy zawiera rzeczowe obowiązki techniczne, np. „statische Berechnungen” i „Werkstattzeichnungen”."
+    ],
+    "needs_fixing": [
+      "Usuń PESEL: „PESEL: 92061454321” — to dane wrażliwe i nie powinny znaleźć się w CV wysyłanym do pracodawcy w Szwajcarii.",
+      "Zapis „Deutsch sehr gut” i „Englisch gut” jest zbyt mało precyzyjny — dodaj poziomy CEFR, np. B2/C1, aby rekruter mógł szybko ocenić dopasowanie.",
+      "W części „Kenntnisse” doprecyzuj zakres umiejętności technicznych, bo obecny zapis jest szeroki (np. czy chodzi o projektowanie konstrukcji stalowych, obliczenia statyczne, dokumentację wykonawczą)."
+    ],
+    "to_add": [
+      "Dodaj krótkie podsumowanie kompetencji 3–4 zdania na początku CV, żeby szybciej pokazać specjalizację w konstrukcjach stalowych i halach.",
+      "Dodaj miasto i kraj przy wykształceniu lub nazwie uczelni w bardziej czytelnym formacie, aby ułatwić rekruterowi weryfikację dyplomu.",
+      "Dodaj informację o dostępności do relokacji lub pracy projektowej dla szwajcarskiego pracodawcy, jeśli jest aktualna."
+    ]
+  },
+  "swiss_fit": {
+    "score": 8,
+    "advantages": [
+      "Praca w branży inżynieria — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "Doświadczenie 10 lat w projektowaniu konstrukcji stalowych i obiektów halowych",
+      "Znajomość niemieckiego na poziomie bardzo dobrym — kluczowy atut dla niemieckojęzycznej części Szwajcarii",
+      "Paszport UE — automatyczna swoboda przepływu osób, brak potrzeby pozwolenia",
+      "Prawo jazdy kat. B",
+      "Doświadczenie z AutoCAD, Robot Structural Analysis i Tekla Structures",
+      "Gotowość do pracy w Szwajcarii"
+    ],
+    "concerns": [
+      "Języki w CV są opisane nieprecyzyjnie („Deutsch sehr gut”, „Englisch gut”) bez poziomów CEFR, co utrudnia szybkie porównanie kandydatki z innymi aplikacjami.",
+      "Brak informacji o doświadczeniu poza Polską, więc pracodawca nie widzi od razu ekspozycji na inne standardy rynkowe.",
+      "Nie ma informacji o znajomości lokalnych norm lub praktyk projektowych używanych w Szwajcarii, poza ogólnym odwołaniem do Eurocodes."
+    ],
+    "actions": [
+      "Doprecyzuj poziom niemieckiego w CV do CEFR, bo w projektowaniu konstrukcji w CH to jeden z kluczowych filtrów rekrutacyjnych.",
+      "Jeśli aplikujesz do firm pracujących dla rynku szwajcarskiego, podkreśl znajomość Eurocodes i doświadczenie w konstrukcjach stalowych w sekcji profilu.",
+      "Przy aplikacjach do kantonów niemieckojęzycznych celuj w firmy projektowe, biura inżynierskie i generalnych wykonawców realizujących hale, obiekty przemysłowe lub stalowe."
+    ]
+  },
+  "tips": [
+    "W szwajcarskich aplikacjach bardzo pomaga krótki, konkretny profil zawodowy na 3–4 linie z najważniejszymi technologiami i typem projektów.",
+    "Jeśli masz możliwość, przygotuj też wersję CV z poziomami językowymi i jednym, spójnym nazewnictwem stanowisk."
+  ]
+}

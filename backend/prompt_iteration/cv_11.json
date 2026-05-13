@@ -1,0 +1,54 @@
+{
+  "overall_score": 6,
+  "summary": "CV ma mocne, jasno opisane doświadczenie w pielęgniarstwie i jest dobrze dopasowane do deficytowej branży w Szwajcarii. Najważniejsze do poprawy: usunąć dane poufne (PESEL, stan cywilny) oraz doprecyzować poziom niemieckiego i sformułować CV w standardzie pod rynek CH.",
+  "critical_issues": [],
+  "structure": {
+    "score": 6,
+    "works_well": [
+      "Profil zawodowy jasno określa specjalizację: pielęgniarstwo/stacjonarna i ambulatoryjna opieka.",
+      "W doświadczeniu pojawiają się konkretne obszary pracy: geriatria, Wundversorgung i Medikamentenmanagement.",
+      "Sekcja wykształcenia zawiera pełną nazwę uczelni oraz kierunek ('Bachelor of Nursing')."
+    ],
+    "needs_fixing": [
+      "Usuń PESEL: 90041167890 — to dane wrażliwe i nie powinny znaleźć się w CV wysyłanym do pracodawcy w Szwajcarii.",
+      "Usuń wzmiankę o stanie cywilnym ('Familienstand: verheiratet') — w CH stan cywilny jest informacją poufną i niepotrzebną w CV.",
+      "Popraw opis języka niemieckiego z 'Deutsch: gut' na konkretny poziom CEFR (np. B1/B2), aby rekruter mógł szybko ocenić dopasowanie.",
+      "Dodaj bardziej konkretne osiągnięcia lub zakres odpowiedzialności w doświadczeniu, bo obecne punkty są poprawne, ale dość ogólne.",
+      "Ujednolić zapis nazw własnych i sekcji w jednym języku docelowym, aby CV wyglądało bardziej profesjonalnie dla rynku CH."
+    ],
+    "to_add": [
+      "Dodaj numer telefonu i adres e-mail, jeśli nie są obecne w pełnej wersji CV — to podstawowe dane kontaktowe dla rekrutera.",
+      "Dodaj krótką sekcję umiejętności branżowych, np. opieka nad pacjentem geriatrycznym, dokumentacja medyczna, wózek pacjenta, higiena i aseptyka.",
+      "Dodaj informacje o statusie pobytowym lub prawie do pracy w UE/CH, jeśli kandydat je posiada — to ważne przy aplikacjach do Szwajcarii.",
+      "Dodaj poziom języka angielskiego w formie CEFR, jeśli ma znaczenie dla stanowiska lub dokumentacji wewnętrznej."
+    ]
+  },
+  "swiss_fit": {
+    "score": 7,
+    "advantages": [
+      "Praca w branży opieka/Pflege — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "9 lat doświadczenia w pielęgniarstwie i opiece — stabilność zawodowa ceniona przez pracodawców w Szwajcarii",
+      "Doświadczenie w opiece stacjonarnej i ambulatoryjnej — szeroki zakres praktyki",
+      "Doświadczenie z geriatrą / opieką nad osobami starszymi — bardzo przydatne w szwajcarskich placówkach",
+      "Znajomość niemieckiego na deklarowanym poziomie 'gut' — potencjalnie istotny atut dla niemieckojęzycznej części Szwajcarii",
+      "Wykształcenie pielęgniarskie: Bachelor of Nursing — mocna baza formalna do pracy w opiece",
+      "Prawo jazdy kat. B"
+    ],
+    "concerns": [
+      "Poziom języka niemieckiego jest opisany nieprecyzyjnie jako 'gut' zamiast w skali CEFR, co utrudnia ocenę gotowości do pracy w niemieckojęzycznej części Szwajcarii.",
+      "Brak informacji o statusie pobytowym / prawie do pracy w UE/CH, co może być ważne przy pierwszym screening'u.",
+      "Brak doświadczenia zawodowego poza Polską, więc kandydat nie pokazuje jeszcze znajomości szwajcarskich realiów pracy.",
+      "Brak konkretów liczbowych w opisie obowiązków i osiągnięć, co ogranicza siłę aplikacji."
+    ],
+    "actions": [
+      "Doprecyzuj niemiecki do poziomu CEFR i przygotuj CV pod niemieckojęzyczną część Szwajcarii, jeśli to Twój docelowy region.",
+      "Jeśli masz obywatelstwo UE lub prawo do pracy w Szwajcarii, uwzględnij to w profilu lub sekcji dodatkowej — to realnie zwiększa szanse w rekrutacji.",
+      "Przygotuj osobną wersję CV pod Pflege/Spital z naciskiem na geriatrie, Wundversorgung, Dokumentation i Medikamentenmanagement.",
+      "Rozważ dopisanie krótkiego podsumowania kompetencji klinicznych z liczbami (np. liczba pacjentów, oddział, typ dyżurów), aby wzmocnić aplikację."
+    ]
+  },
+  "tips": [
+    "W szwajcarskiej aplikacji do pielęgniarstwa warto od razu wskazać preferowany kanton lub region.",
+    "Jeśli masz referencje z oddziału lub placówki, dodaj je jako osobną sekcję lub załącznik."
+  ]
+}

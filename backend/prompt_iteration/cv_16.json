@@ -1,0 +1,51 @@
+{
+  "overall_score": 6,
+  "summary": "CV jest merytorycznie mocne dla rynku szwajcarskiego, ale ma krytyczny problem językowy: jest napisane po angielsku, więc przed aplikacją trzeba je przygotować w języku regionu docelowego. Największa poprawa to wersja po niemiecku dla niemieckojęzycznej Szwajcarii lub po francusku/włosku zależnie od regionu, z zachowaniem konkretnych projektów i technologii.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku angielskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 6,
+    "works_well": [
+      "Profil zawodowy w 2 zdaniach jasno określa specjalizację: Data Engineer z 6+ lat doświadczenia w ETL i platformach analitycznych.",
+      "Doświadczenie opisano konkretnymi technologiami i narzędziami: Python, Spark, Airflow, BigQuery, Snowflake, AWS, SQL."
+    ],
+    "needs_fixing": [
+      "Wzmianka „married” w dodatkowych informacjach powinna zostać usunięta — stan cywilny nie jest potrzebny w CV na rynek szwajcarski.",
+      "Dodałbym więcej konkretów liczbowych do opisów doświadczenia, np. skala danych, liczba pipeline’ów, spadek czasu przetwarzania lub poprawa jakości danych.",
+      "Sekcja „Additional information” jest zbyt ogólna — warto rozdzielić ją na krótsze, bardziej rekrutacyjne elementy albo ograniczyć do naprawdę istotnych faktów."
+    ],
+    "to_add": [
+      "Dodałbym krótką sekcję „Profil” lub „O mnie” w wersji pod konkretny rynek CH, z naciskiem na specjalizację Data Engineering i typy systemów, przy których kandydat pracował.",
+      "Warto dodać lokalizację gotowości do relokacji lub pracy hybrydowej/na miejscu w Szwajcarii, jeśli jest aktualna.",
+      "Przy certyfikacie warto dopisać rok uzyskania, aby wzmocnić wiarygodność i aktualność."
+    ]
+  },
+  "swiss_fit": {
+    "score": 7,
+    "advantages": [
+      "Praca w branży IT — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "Znajomość niemieckiego B1 — atut dla niemieckojęzycznej części Szwajcarii",
+      "Ponad 6 lat doświadczenia w data engineering — stabilność i dojrzałość zawodowa ceniona przez pracodawców w CH",
+      "Doświadczenie w dużych firmach: Promedica24, OLX Group, Transition Technologies",
+      "Certyfikat Google Professional Data Engineer — silny, rozpoznawalny sygnał kompetencji technicznych",
+      "Prawo jazdy kat. B",
+      "Doświadczenie z nowoczesnym stackiem danych: Python, PySpark, SQL, Airflow, dbt, Kafka, AWS, GCP, Snowflake, Docker"
+    ],
+    "concerns": [
+      "CV wskazuje lokalizację Poznań, Polska — brak informacji o gotowości do relokacji do Szwajcarii lub pracy zdalno-stacjonarnej.",
+      "Brak informacji o obywatelstwie UE lub pozwoleniu na pracę, co w CH ma znaczenie formalne.",
+      "Brak doświadczenia zawodowego w Szwajcarii, Niemczech lub Austrii.",
+      "Kontakt i treść są po angielsku, co ogranicza skuteczność aplikacji na rynek szwajcarski."
+    ],
+    "actions": [
+      "Przygotuj osobną wersję CV po niemiecku dla Zurychu/Berno/Bazylei albo po francusku dla Romandie, dopasowaną do konkretnego regionu i ofert Data Engineering.",
+      "Na LinkedIn i w aplikacjach podkreśl gotowość do relokacji do Szwajcarii oraz pracę w środowisku międzynarodowym.",
+      "W opisie certyfikatu Google Professional Data Engineer dodaj rok uzyskania i ewentualnie krótki kontekst zastosowania w projektach."
+    ]
+  },
+  "tips": [
+    "Dla rynku CH warto w CV mocniej eksponować efekty biznesowe, np. skalę przetwarzanych danych, automatyzacje i wpływ na czas lub jakość raportowania.",
+    "Jeśli aplikujesz do Zurychu lub Bazylei, niemiecka wersja CV będzie zdecydowanie skuteczniejsza niż angielska."
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "overall_score": 4,
+  "summary": "Twoje CV jest napisane po angielsku, a to jest krytyczny problem dla aplikacji w Szwajcarii — trzeba je przygotować w języku docelowego regionu. Merytorycznie masz dobry kierunek pod rynek CH, ale najważniejsza poprawka to pełne dostosowanie języka CV oraz doprecyzowanie opisu doświadczeń.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku angielskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 5,
+    "works_well": [
+      "Profil zawodowy w 2 zdaniach jasno wskazuje specjalizację: obsługa klienta, retail i hospitality.",
+      "W sekcji doświadczenia podano konkretne firmy oraz zakres lat, co ułatwia ocenę stabilności kariery.",
+      "Lista umiejętności zawiera konkretne narzędzia i obszary pracy: CRM, MS Office, SAP, handling complaints, sales support."
+    ],
+    "needs_fixing": [
+      "Tekst miesza język angielski z polskimi nazwami stanowisk i firm; ujednolić całość w jednym języku docelowego rynku CH.",
+      "Opis doświadczenia jest zbyt ogólny jak na standardy szwajcarskie — dopisz konkretne obowiązki, zakres odpowiedzialności i 1-2 mierzalne rezultaty przy każdej roli.",
+      "Brakuje pełnych dat miesięcznych przy stanowiskach 2021-2025, 2018-2021 i 2016-2018 — doprecyzuj miesiące, aby pokazać ciągłość zatrudnienia.",
+      "Zapis 'obslugi klienta' powinien mieć poprawną pisownię z polskimi znakami: 'obsługi klienta'.",
+      "Jeśli CV ma być wysyłane do Szwajcarii, nazwę stanowiska 'recepcjonistka' warto dopasować do wersji językowej CV i rynku docelowego."
+    ],
+    "to_add": [
+      "Dodaj sekcję wykształcenia z nazwą szkoły, kierunkiem i datami — w CH to standardowy element oceny kandydata.",
+      "Dodaj dokładniejsze opisy osiągnięć w każdej pracy, np. liczba obsłużonych spraw, poziom satysfakcji klientów, skrócenie czasu reakcji.",
+      "Dodaj języki obce w formie pełnych poziomów CEFR przy każdym języku, aby rekruter od razu widział dopasowanie do regionu.",
+      "Dodaj sekcję kompetencji branżowych, np. obsługa reklamacji, praca z klientem premium, systemy CRM/ERP, jeśli są faktycznie potwierdzone doświadczeniem."
+    ]
+  },
+  "swiss_fit": {
+    "score": 7,
+    "advantages": [
+      "Praca w branży hotelarstwo — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "Praca w branży gastronomia — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "Praca w branży hotelarstwo — 5 lat doświadczenia w retail i hospitality",
+      "Znajomość języka angielskiego na poziomie B2 — przydatna w środowisku międzynarodowym",
+      "Paszport UE — automatyczna swoboda przepływu osób, brak potrzeby pozwolenia",
+      "Prawo jazdy kat. B",
+      "Doświadczenie w międzynarodowej marce Marriott Hotel — wartość dodana dla hoteli i obsługi klienta"
+    ],
+    "concerns": [
+      "Niemiecki na poziomie A1 — zbyt niski do samodzielnej pracy w większości ofert w niemieckojęzycznej części Szwajcarii.",
+      "Brak doświadczenia zawodowego poza Polską — ogranicza dopasowanie do lokalnych standardów rynku CH.",
+      "Brak informacji o konkretnych wynikach sprzedażowych lub jakościowych z pracy w obsłudze klienta."
+    ],
+    "actions": [
+      "Przygotuj wersję CV pod konkretny region CH: dla Zurychu/Berna/Bazylei po niemiecku, dla Romandie po francusku, dla Ticino po włosku.",
+      "Jeśli celujesz w hotele lub front office, rozważ aplikacje do sieciowych hoteli i firm outsourcingowych obsługi gości, gdzie doświadczenie z Marriott Hotel będzie najlepiej rozumiane.",
+      "Uzupełnij CV o konkretne liczby z pracy w obsłudze klienta: liczba zgłoszeń dziennie, poziom satysfakcji, liczba reklamacji, wyniki sprzedażowe."
+    ]
+  },
+  "tips": [
+    "Dla Szwajcarii warto skrócić i uprościć opis profilu zawodowego, stawiając na konkrety zamiast ogólnych haseł.",
+    "Najsilniej sprzedasz się jako kandydatka do recepcji, customer service lub guest relations."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "overall_score": 6,
+  "summary": "CV jest merytorycznie mocne dla rynku szwajcarskiego, szczególnie przez 9 lat doświadczenia jako elektryk budowlany i elektryk utrzymania ruchu oraz uprawnienia SEP E do 1kV. Najważniejsze do poprawy: język CV i ukrycie danych wrażliwych — dokument jest po polsku i zawiera \"status cywilny\", co obniża szanse w CH.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku polskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 5,
+    "works_well": [
+      "Profil otwiera się konkretną specjalizacją: \"Elektryk z 9-letnim doświadczeniem przy instalacjach mieszkaniowych i komercyjnych\".",
+      "W części doświadczenia podano zakres obowiązków w dwóch rolach, zamiast samej listy stanowisk.",
+      "Sekcja umiejętności zawiera konkretne kompetencje techniczne: instalacje 230/400V, pomiary elektryczne, czytanie schematów i projektów."
+    ],
+    "needs_fixing": [
+      "Usuń wzmiankę \"status cywilny: kawaler\" — w Szwajcarii stan cywilny jest daną wrażliwą i nie powinien być podawany.",
+      "Dodaj krótkie osiągnięcia lub efekty pracy, np. skala projektów, liczba obsłużonych zleceń, typowe awarie lub odpowiedzialność za konkretne obszary.",
+      "Doprecyzuj zakres stanowisk przy doświadczeniu, np. większą liczbę informacji o instalacjach, typach obiektów lub samodzielności w pracy.",
+      "W CV brakuje dat przy wykształceniu — jeśli kandydat ma kursy lub szkołę branżową, warto je dodać z rokiem ukończenia."
+    ],
+    "to_add": [
+      "Dodaj sekcję wykształcenia lub kursów branżowych, jeśli są dostępne — w CH to ważne dla szybkiej oceny kwalifikacji.",
+      "Dodaj języki z poziomami CEFR, np. niemiecki A2, polski ojczysty — obecnie poziom jest podany tylko częściowo i bez pełnego kontekstu.",
+      "Dodaj informację o gotowości do pracy w systemie tygodniowym lub delegacjach, jeśli kandydat naprawdę ją ma — to pomaga przy ofertach w budownictwie i utrzymaniu ruchu."
+    ]
+  },
+  "swiss_fit": {
+    "score": 8,
+    "advantages": [
+      "Praca w branży budownictwo — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "9 lat doświadczenia jako elektryk — stabilność zawodowa ceniona w Szwajcarii",
+      "Doświadczenie w Roche Polska — praca w rozpoznawalnej, międzynarodowej firmie",
+      "Prawo jazdy kat. B",
+      "Sep E do 1kV — praktyczne uprawnienia przydatne na rynku CH",
+      "Gotowość do relokacji do Szwajcarii",
+      "Niemiecki A2"
+    ],
+    "concerns": [
+      "Niemiecki na poziomie A2 — przy wielu ofertach w niemieckojęzycznej części Szwajcarii może być niewystarczający do pełnej samodzielności w komunikacji.",
+      "CV nie pokazuje znajomości żadnego języka urzędowego CH na poziomie B1+, więc konkurencja na rynku może być trudniejsza.",
+      "Brak informacji o obywatelstwie UE lub pozwoleniu na pracę — pracodawca nie widzi od razu, czy formalnie kandydat jest łatwy do zatrudnienia."
+    ],
+    "actions": [
+      "Jeśli celujesz w Szwajcarię niemieckojęzyczną, przygotuj wersję aplikacyjną pod elektryków budowlanych z naciskiem na instalacje 230/400V, pomiary i utrzymanie ruchu.",
+      "Zbierz i pokaż dokumenty potwierdzające kwalifikacje elektryczne oraz zakres uprawnień, bo w CH pracodawcy bardzo patrzą na formalne potwierdzenie kompetencji.",
+      "Jeśli masz obywatelstwo UE, wpisz to w CV — ułatwia to ocenę dostępności do pracy bez dodatkowych formalności."
+    ]
+  },
+  "tips": [
+    "W CV szwajcarskim warto dodać konkrety liczbowe, bo nawet proste metryki zwiększają wiarygodność.",
+    "Dla elektryków w CH najlepiej działa krótki, techniczny profil zawodowy i jasne wskazanie typu obiektów, przy których kandydat pracował."
+  ]
+}

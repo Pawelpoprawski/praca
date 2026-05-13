@@ -1,0 +1,53 @@
+{
+  "overall_score": 7,
+  "summary": "CV jest merytorycznie mocne i dobrze pasuje do rynku szwajcarskiego, ale wymaga dopracowania pod kątem standardów rekrutacyjnych w CH. Najważniejsza rzecz do poprawy to dodanie języka niemieckiego, francuskiego lub włoskiego na poziomie co najmniej B1, jeśli kandydat chce realnie zwiększyć szanse w Szwajcarii.",
+  "critical_issues": [],
+  "structure": {
+    "score": 7,
+    "works_well": [
+      "Profil zawodowy od razu precyzuje specjalizację: \"Spawacz MIG/MAG z 6-letnim doświadczeniem w pracy na halach i budowach\".",
+      "Opis doświadczenia zawiera konkretne zakresy prac, m.in. spawanie elementów stalowych, przygotowanie materiału, szlifowanie i kontrolę jakości.",
+      "Wymieniono konkretne umiejętności techniczne: MIG/MAG, podstawy TIG, czytanie rysunku technicznego, obsługa szlifierki i przecinarki plazmowej.",
+      "Podano konkretne uprawnienia spawalnicze MIG/MAG 135 oraz kurs BHP."
+    ],
+    "needs_fixing": [
+      "Popraw brak polskich znaków diakrytycznych w nagłówkach sekcji: \"UMIEJETNOSCI\", \"CERTYFIKATY\", \"JEZYKI\" → \"UMIEJĘTNOŚCI\", \"CERTYFIKATY\", \"JĘZYKI\".",
+      "Ujednolić zapis zakresów dat, aby był bardziej czytelny w stylu szwajcarskim, np. \"2021–2024\" i \"2018–2021\" z pełnym formatem miesięcy, jeśli to możliwe.",
+      "Dodaj pełniejsze informacje o każdej pracy, np. lokalizację firmy lub 1-2 osiągnięcia, żeby opisy nie były wyłącznie listą zadań.",
+      "Sekcja języków jest bardzo krótka; warto doprecyzować poziom angielskiego według CEFR, jeśli kandydat zna go dokładniej niż \"komunikatywny\"."
+    ],
+    "to_add": [
+      "Dodaj język niemiecki, francuski lub włoski z poziomem CEFR, bo to kluczowe dla aplikacji w Szwajcarii.",
+      "Dodaj nazwę miasta przy firmach lub przy stanowiskach, aby wzmocnić wiarygodność i czytelność historii zawodowej.",
+      "Dodaj informację o ewentualnej gotowości do pracy zmianowej lub wyjazdów tygodniowych, jeśli jest aktualna.",
+      "Dodaj 1-2 krótkie osiągnięcia z pracy, np. typy konstrukcji, skala zleceń lub jakość/terminowość, żeby wyróżnić CV na tle innych spawaczy."
+    ]
+  },
+  "swiss_fit": {
+    "score": 8,
+    "advantages": [
+      "Praca w branży budownictwo — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "6 lat doświadczenia w spawaniu i montażu konstrukcji stalowych — mocny, stabilny staż w jednej branży",
+      "Uprawnienia spawalnicze MIG/MAG 135 — istotny atut praktyczny na rynku CH",
+      "Prawo jazdy kat. B",
+      "Możliwość pracy w delegacji",
+      "Paszport UE",
+      "Doświadczenie w pracy na halach i budowach — praktyczne środowisko cenione w Szwajcarii"
+    ],
+    "concerns": [
+      "Brak języka regionu docelowego pracy na poziomie B1+ — w Szwajcarii to wyraźnie ogranicza liczbę ofert dla spawacza/montera.",
+      "Angielski opisany tylko jako \"komunikatywny\" — może nie wystarczyć jako samodzielny język roboczy w rekrutacji CH.",
+      "Brak informacji o konkretnym miejscu pracy w Szwajcarii lub doświadczeniu w DACH — kandydat będzie startował jako osoba spoza lokalnego rynku.",
+      "Brak wzmianki o dodatkowych certyfikatach uznawanych w CH, np. bardziej precyzyjnych kwalifikacjach spawalniczych."
+    ],
+    "actions": [
+      "Uzyskaj poziom co najmniej B1 w języku niemieckim, jeśli celujesz w niemieckojęzyczną część Szwajcarii, lub we francuskim, jeśli aplikujesz do Romandie.",
+      "Zdobądź lub doprecyzuj certyfikację spawalniczą zgodną z oczekiwaniami szwajcarskich pracodawców, zwłaszcza jeśli planujesz pracę przy konstrukcjach stalowych.",
+      "Aplikuj równolegle do firm budowlano-montażowych i agencji technicznych specjalizujących się w spawaczach i monterach konstrukcji."
+    ]
+  },
+  "tips": [
+    "W szwajcarskich aplikacjach spawaczy dobrze działają krótkie, techniczne CV z jasno podanym typem spoin, materiałami i metodami pracy.",
+    "Jeśli masz możliwość, przygotuj osobną wersję CV pod niemieckojęzyczny lub francuskojęzyczny region CH."
+  ]
+}

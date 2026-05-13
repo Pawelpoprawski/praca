@@ -1,0 +1,53 @@
+{
+  "overall_score": 4,
+  "summary": "Twoje CV jest w języku polskim, a to krytyczny problem przy aplikacjach do Szwajcarii — przed wysyłką trzeba je przygotować w języku docelowego regionu (niemiecki, francuski lub włoski). Dodatkowo warto usunąć dane wrażliwe i doprecyzować wykształcenie oraz kompetencje branżowe.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku polskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 5,
+    "works_well": [
+      "Doświadczenie zawodowe jest podane w układzie chronologicznym i pokazuje stabilny przebieg kariery w hotelarstwie przez 10 lat.",
+      "W opisach stanowisk pojawiają się konkretne obowiązki: nadzór nad zespołem, kontrola czystości, planowanie grafików i zamówień.",
+      "Dodano informację o gotowości do pracy zmianowej, co jest praktyczne w branży hotelarskiej."
+    ],
+    "needs_fixing": [
+      "Usuń PESEL — to dane wrażliwe i nie powinny znajdować się w CV wysyłanym do pracodawcy w Szwajcarii.",
+      "Usuń wzmiankę o stanie cywilnym („mężatka”) — w Szwajcarii to informacja prywatna i niepotrzebna w CV.",
+      "Doprecyzuj wykształcenie: obecnie widnieje tylko nazwa szkoły bez lat nauki, kierunku i uzyskanego tytułu.",
+      "Dopisz dokładniejszy opis kompetencji zawodowych pod hotelarstwo, np. standardy housekeeping, zarządzanie zespołem, planowanie pracy i kontrola jakości.",
+      "Ujednolić opis umiejętności językowych: wpisz pełną nazwę i poziom w jednym formacie, np. „język angielski — B1”."
+    ],
+    "to_add": [
+      "Dodaj sekcję „Języki” z poziomami CEFR, bo obecnie jest tylko pojedyncza wzmianka o angielskim.",
+      "Dodaj sekcję „Umiejętności branżowe” z narzędziami i obszarami pracy w hotelarstwie, aby CV było bardziej konkretne.",
+      "Dodaj daty przy wykształceniu, jeśli je posiadasz — ułatwia to ocenę ciągłości kariery.",
+      "Rozważ dodanie krótkiego profilu zawodowego na 2–3 linie, który podsumuje doświadczenie w hotelarstwie i zakres odpowiedzialności."
+    ]
+  },
+  "swiss_fit": {
+    "score": 5,
+    "advantages": [
+      "Praca w branży hotelarstwo — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "5 lat doświadczenia jako Housekeeping Supervisor w Sheraton Wrocław — mocny, stabilny staż na stanowisku kierowniczym.",
+      "5 lat doświadczenia jako Pokojowa w Hotel Ibis Styles — wieloletnie doświadczenie operacyjne w hotelarstwie.",
+      "Gotowość do pracy zmianowej — ceniona w hotelach i obiektach z całodobową obsługą.",
+      "Praca w zespole międzynarodowym — dobra wskazówka dla środowiska hotelowego w Szwajcarii."
+    ],
+    "concerns": [
+      "Brak języka urzędowego Szwajcarii — w CV widnieje tylko angielski B1, co ogranicza dostęp do wielu ofert lokalnych.",
+      "CV nie pokazuje doświadczenia poza Polską, więc pracodawca nie widzi jeszcze ekspozycji na inne rynki.",
+      "Wpis „Bez nałogów” nie daje wartości rekrutacyjnej i nie zastępuje konkretnych kompetencji.",
+      "Brak informacji o obywatelstwie UE lub pozwoleniu na pracę — w Szwajcarii to ważny element oceny aplikacji."
+    ],
+    "actions": [
+      "Wybierz docelowy region Szwajcarii i przygotuj wersję CV pod ten rynek: niemiecki dla części niemieckojęzycznej, francuski dla Romandie albo włoski dla Ticino.",
+      "Jeśli nie masz jeszcze prawa pobytu/pracy w CH, przygotuj w CV i liście motywacyjnym jasną informację o statusie obywatelstwa UE lub gotowości do relokacji.",
+      "Dla stanowisk hotelarskich celuj też w rekrutacje przez sieci hoteli, agencje hospitality i bezpośrednie aplikacje do obiektów sezonowych oraz miejskich."
+    ]
+  },
+  "tips": [
+    "W CV do Szwajcarii najlepiej pokazują się konkretne liczby: liczba pokoi, wielkość zespołu, zakres odpowiedzialności.",
+    "Usuń informacje prywatne, a zamiast nich dodaj mierzalne efekty swojej pracy."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "overall_score": 8,
+  "summary": "CV jest dobrze dopasowane do rynku szwajcarskiego pod względem języka i doświadczenia, ale zawiera jedną istotną rzecz do poprawy: należy usunąć dane wrażliwe, w szczególności PESEL oraz status cywilny. Poza tym profil jest mocny dla rekrutacji w CH, zwłaszcza dzięki pracy w HR/rekrutingu, niemieckiemu C1 i doświadczeniu w Roche.",
+  "critical_issues": [],
+  "structure": {
+    "score": 7,
+    "works_well": [
+      "Opis doświadczenia zawiera konkretne obszary pracy w rekrutacji: „End-to-End Recruiting”, „Active Sourcing”, „Zusammenarbeit mit Hiring Managern”.",
+      "W sekcji umiejętności podano konkretne narzędzia i kompetencje: „ATS”, „MS Office”, „Employer Branding”."
+    ],
+    "needs_fixing": [
+      "Usuń PESEL: „PESEL: 91051267890” — to dane wrażliwe i nie powinny pojawiać się w CV do Szwajcarii.",
+      "Usuń informację „Ledig” — stan cywilny jest danymi prywatnymi i nie jest potrzebny pracodawcy w CH.",
+      "Dodaj bardziej konkretne efekty pracy, np. skala rekrutacji, liczba obsłużonych procesów lub usprawnienia, żeby opisy były bardziej przekonujące.",
+      "Ujednolić zapis sekcji językowej do bardziej standardowej formy, np. z poziomami przy każdym języku i bez mieszania polskiego oraz niemieckiego."
+    ],
+    "to_add": [
+      "Dodaj krótkie podsumowanie zawodowe na górze CV, które jasno pokaże specjalizację w rekrutacji i HR w środowisku międzynarodowym.",
+      "Dodaj sekcję z wybranymi osiągnięciami, np. liczba obsłużonych rekrutacji, skrócenie czasu zatrudnienia lub liczba prowadzonych procesów.",
+      "Dodaj informację o obywatelstwie UE lub statusie pobytowym, jeśli jest aktualny i zgodny z prawdą, bo to ułatwia ocenę dostępności do pracy w CH."
+    ]
+  },
+  "swiss_fit": {
+    "score": 9,
+    "advantages": [
+      "Paszport UE — automatyczna swoboda przepływu osób, brak potrzeby pozwolenia.",
+      "Prawo jazdy kat. B.",
+      "Znajomość niemieckiego C1 — kluczowy atut dla niemieckojęzycznej części Szwajcarii.",
+      "Doświadczenie w Roche — silny atut z międzynarodowego środowiska pracy.",
+      "Doświadczenie zawodowe w Szwajcarii — Basel, Schweiz.",
+      "Ponad 7 lat doświadczenia w rekrutingu i HR (2020-2024 oraz 2017-2020)."
+    ],
+    "concerns": [],
+    "actions": [
+      "Doprecyzuj w CV zakres odpowiedzialności w Roche, np. typy rekrutowanych ról, skala procesów i współpraca z managerami, aby lepiej pokazać seniority.",
+      "Jeśli aplikujesz poza HR, przygotuj osobną wersję CV pod konkretną specjalizację, bo obecna wersja najmocniej wspiera role rekrutacyjne i HR.",
+      "Przygotuj krótkie, dopasowane podanie po niemiecku do konkretnych ofert w regionie Basel/Zurych, bo w CH duża część selekcji opiera się na lokalnym dopasowaniu profilu."
+    ]
+  },
+  "tips": [
+    "W szwajcarskim CV warto mocniej eksponować liczby i rezultaty niż same obowiązki.",
+    "Usuń wszystkie dane prywatne, które nie są potrzebne do rekrutacji."
+  ]
+}

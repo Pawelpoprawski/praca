@@ -1,0 +1,19 @@
+Anna Pietrzak
+QA Engineer
+Location: Warszawa, Polska
+Phone: +48 664 222 333
+Email: anna.pietrzak@proton.me
+Profile: QA Engineer with 3 years of experience in manual and automated testing.
+Experience:
+2022–2025 Allegro — QA Engineer
+- test planning, functional and regression testing
+- automation in Cypress and Playwright
+- bug reporting and collaboration with product team
+2021–2022 Netcompany — Junior Tester
+- preparing test cases and test data
+- smoke and exploratory testing
+Education: University of Łódź, Computer Science
+Skills: тестowanie, Cypress, Playwright, Selenium, Postman, SQL, Jira, Confluence
+Languages: Polish native, English B2, German A1
+Certificates: ISTQB Foundation Level
+Additional: ready to work in Basel or remote, passport EU

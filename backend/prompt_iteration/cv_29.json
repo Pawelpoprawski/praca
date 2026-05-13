@@ -1,0 +1,54 @@
+{
+  "overall_score": 5,
+  "summary": "CV ma mocne podstawy zawodowe dla rynku szwajcarskiego, zwłaszcza w budownictwie i pracy techniczno-terenowej, ale wymaga pilnej korekty językowej oraz uporządkowania treści. Najważniejsze do poprawy: błędy ortograficzne w tekście CV, niepotrzebnie rozbudowane hobby i usunięcie danych wrażliwych.",
+  "critical_issues": [
+    "Twoje CV jest napisane po polsku, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 4,
+    "works_well": [
+      "Opis doświadczenia jest zwięzły i zawiera konkretne nazwy pracodawców oraz zakres lat zatrudnienia.",
+      "Sekcja umiejętności podaje praktyczne kompetencje techniczne: spawanie, czytanie planów, obsługa elektronarzędzi.",
+      "Wskazano gotowość do wyjazdu, co może ułatwiać proces rekrutacji."
+    ],
+    "needs_fixing": [
+      "Brakuje polskich znaków diakrytycznych w wielu miejscach, np. 'Doswiadczenie', 'Umiejetnosci', 'Jezyki', 'Poznan', 'Przedsiebiorstwo', 'Uslugowy', 'planow', 'obsluga', 'Dodatkowe', 'gotowy do wyjazdu'. Popraw pisownię, aby CV wyglądało profesjonalnie.",
+      "Sekcja hobby jest zdecydowanie zbyt rozbudowana i zajmuje wiele pozycji. Skróć ją do 2-4 najważniejszych zainteresowań albo usuń całkiem.",
+      "W danych dodatkowych widnieje PESEL: '90010198765'. Usuń go, ponieważ to dane wrażliwe i nie są potrzebne w CV do Szwajcarii.",
+      "Słowo 'pesel' jest zapisane małą literą i bez polskich znaków w otoczeniu. W praktyce najważniejsze jest jednak całkowite usunięcie numeru z CV.",
+      "Opis doświadczenia jest bardzo ogólny — przy każdej pracy warto dodać 1-2 konkretne obowiązki lub rezultat, zamiast samych nazw stanowisk."
+    ],
+    "to_add": [
+      "Dodaj lokalizację do każdego doświadczenia, jeśli to możliwe — w Szwajcarii pomaga to ocenić skalę i kontekst pracy.",
+      "Dodaj sekcję wykształcenia, jeśli nie została pominięta w pełnym CV, ponieważ w obecnym tekście jej nie widać.",
+      "Dodaj precyzyjniejsze opisy stanowisk, np. typ maszyny, rodzaj prac terenowych lub zakres konserwacji, aby wyróżnić profil techniczny.",
+      "Dodaj krótkie podsumowanie zawodowe na początku CV, najlepiej 2-3 zdania, z informacją o specjalizacji i gotowości do pracy."
+    ]
+  },
+  "swiss_fit": {
+    "score": 7,
+    "advantages": [
+      "Praca w branży budownictwo — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "Doświadczenie 7 lat w pracy techniczno-budowlanej i komunalnej (2015-2025) — ceniona stabilność zawodowa",
+      "Znajomość niemieckiego A2 — częściowy plus, ale jeszcze za słaba na samodzielną pracę w regionach niemieckojęzycznych",
+      "Prawo jazdy kat. C+E",
+      "Paszport UE — automatyczna swoboda przepływu osób, brak potrzeby pozwolenia",
+      "Gotowość do wyjazdu — elastyczność dla pracodawcy CH"
+    ],
+    "concerns": [
+      "Niemiecki na poziomie A2 jest zbyt słaby, by samodzielnie obsługiwać większość ofert w niemieckojęzycznej części Szwajcarii.",
+      "W CV nie widać doświadczenia poza Polską, co może utrudnić wejście na rynek CH.",
+      "Brak informacji o konkretnych certyfikatach zawodowych związanych ze spawaniem lub budownictwem."
+    ],
+    "actions": [
+      "Jeśli aplikujesz do prac budowlanych lub komunalnych, celuj najpierw w role pomocnicze, utrzymanie terenu, operatora lub prace fizyczne, gdzie liczy się praktyka i prawo jazdy C+E.",
+      "Rozważ zdobycie certyfikatu branżowego związanego ze spawaniem lub pracami technicznymi, jeśli chcesz podnieść konkurencyjność w Szwajcarii.",
+      "Przygotuj wersję CV dopasowaną do jednego regionu Szwajcarii i konkretnego typu pracy, zamiast wysyłać jedną uniwersalną wersję.",
+      "W aplikacjach podkreślaj gotowość do szybkiego podjęcia pracy i mobilność, zwłaszcza przy ofertach terenowych."
+    ]
+  },
+  "tips": [
+    "W Szwajcarii warto ograniczyć CV do najważniejszych informacji — mniej znaczy lepiej, jeśli treść jest konkretna.",
+    "Jeśli masz możliwość, przygotuj osobną wersję CV dla budownictwa i osobną dla prac techniczno-komunalnych."
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "overall_score": 7,
+  "summary": "CV jest merytorycznie mocne i dobrze dopasowane do rynku IT, ale ma krytyczny problem: jest napisane po polsku, więc wymaga przygotowania wersji w języku regionu docelowego w Szwajcarii. Najważniejsza rzecz do poprawy to lokalizacja CV oraz dopracowanie opisu osiągnięć, aby pokazać efekty pracy, a nie tylko zakres obowiązków.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku polskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 6,
+    "works_well": [
+      "Profil zawodowy w 1 zdaniu jasno określa specjalizację: frontend developer z 4-letnim doświadczeniem w budowie aplikacji webowych.",
+      "Doświadczenie opisano z konkretnymi technologiami: React, TypeScript, Next.js, Redux, Jest, Git, REST API.",
+      "Wskazano zakres współpracy międzyzespołowej: UX/UI i backend."
+    ],
+    "needs_fixing": [
+      "W tekście brakuje polskich znaków diakrytycznych w kilku miejscach, np. 'doswiadczeniem' zamiast 'doświadczeniem' oraz 'Doswiadczenie' zamiast 'Doświadczenie'. Popraw pisownię, bo wpływa to na profesjonalny odbiór CV.",
+      "Opisy obowiązków są dość ogólne. Dodaj więcej konkretów, np. skala projektu, liczba użytkowników, wpływ optymalizacji wydajności lub dostępności na produkt.",
+      "Sekcja 'Wykształcenie' jest bardzo skrótowa. Warto dopisać rok ukończenia oraz formę studiów, jeśli to możliwe.",
+      "Brakuje daty dostępności do pracy. Jeśli możesz zacząć od razu lub w konkretnym terminie, dopisz to wprost."
+    ],
+    "to_add": [
+      "Dodaj krótkie podsumowanie osiągnięć pod każdym stanowiskiem, aby pokazać efekty pracy, a nie tylko zakres zadań.",
+      "Dodaj sekcję z projektami lub portfolio, jeśli masz publiczne repozytoria lub wdrożone aplikacje webowe — to szczególnie wzmacnia kandydaturę w IT.",
+      "Dodaj poziomy języków w standardzie CEFR przy każdym języku, jeśli planujesz wersję pod rynek międzynarodowy.",
+      "Dodaj informację o mieście docelowym w Szwajcarii, jeśli aplikujesz do konkretnego regionu."
+    ]
+  },
+  "swiss_fit": {
+    "score": 8,
+    "advantages": [
+      "Praca w branży IT — branża deficytowa w CH (wysoki popyt na specjalistów).",
+      "Znajomość niemieckiego A2 — przydatna baza do aplikacji w niemieckojęzycznej części Szwajcarii.",
+      "Doświadczenie w dużej polskiej firmie Allegro — sygnał pracy w środowisku produktowym i komercyjnym.",
+      "4 lata doświadczenia w frontendzie — sensowny staż na stanowisko developerskie.",
+      "Paszport UE — brak potrzeby sponsorowania pozwolenia na pracę.",
+      "Prawo jazdy kat. B.",
+      "Gotowość do relokacji do Szwajcarii."
+    ],
+    "concerns": [
+      "Niemiecki jest na poziomie A2, więc do wielu ofert w Zurychu, Bernie czy Bazylei może być za niski na samodzielną pracę z zespołem i klientem.",
+      "CV nie wskazuje doświadczenia poza Polską, co może utrudniać wejście na bardziej konkurencyjne oferty w CH.",
+      "Brak informacji o projektach wdrożeniowych, liczbach lub skali odpowiedzialności ogranicza siłę kandydata na tle lokalnych aplikacji."
+    ],
+    "actions": [
+      "Przygotuj osobną wersję CV po niemiecku dla Zurychu/Bazylei lub po francusku dla Romandie, zależnie od regionu, w którym chcesz aplikować.",
+      "Uzupełnij portfolio o 2-3 konkretne projekty frontendowe z krótkim opisem technologii, odpowiedzialności i linkiem do repozytorium lub live demo.",
+      "Jeśli celujesz w role w większych firmach, doprecyzuj w CV zakres odpowiedzialności: wydajność, dostępność, współpraca z backendem, code review, testy."
+    ]
+  },
+  "tips": [
+    "Dla Szwajcarii warto mieć też wersję CV w formacie maksymalnie 1-2 stron.",
+    "W IT w CH bardzo pomaga dopisanie linku do GitHub lub portfolio, jeśli pokazuje realny kod i wdrożone projekty."
+  ]
+}

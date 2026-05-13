@@ -185,16 +185,17 @@ async def timeseries(days: int = 30, db: AsyncSession = Depends(get_db)):
 
 @router.get("/companies", dependencies=[Depends(require_admin_password)])
 async def companies(db: AsyncSession = Depends(get_db)):
-    # Aggregate by employer.company_name across all active jobs (lifetime).
+    # Aggregate by employer across all jobs (lifetime).
     job_agg = (
         select(
             EmployerProfile.id.label("employer_id"),
             EmployerProfile.company_name.label("company_name"),
+            EmployerProfile.company_slug.label("company_slug"),
             func.count(JobOffer.id).label("job_count"),
             func.coalesce(func.sum(JobOffer.views_count), 0).label("views_total"),
         )
         .join(JobOffer, JobOffer.employer_id == EmployerProfile.id, isouter=True)
-        .group_by(EmployerProfile.id, EmployerProfile.company_name)
+        .group_by(EmployerProfile.id, EmployerProfile.company_name, EmployerProfile.company_slug)
     ).subquery()
 
     internal_apps = (
@@ -224,6 +225,7 @@ async def companies(db: AsyncSession = Depends(get_db)):
         select(
             job_agg.c.employer_id,
             job_agg.c.company_name,
+            job_agg.c.company_slug,
             job_agg.c.job_count,
             job_agg.c.views_total,
             func.coalesce(internal_apps.c.apps_internal, 0).label("apps_internal"),
@@ -243,6 +245,7 @@ async def companies(db: AsyncSession = Depends(get_db)):
         out.append({
             "employer_id": row.employer_id,
             "company_name": row.company_name,
+            "company_slug": row.company_slug,
             "company_key": key,
             "job_count": int(row.job_count or 0),
             "views_total": int(row.views_total or 0),

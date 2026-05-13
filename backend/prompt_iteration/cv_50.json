@@ -1,0 +1,52 @@
+{
+  "overall_score": 6,
+  "summary": "CV jest napisane po polsku, co jest krytycznym problemem dla aplikacji w Szwajcarii i wymaga wersji w języku docelowego regionu. Merytorycznie kandydatka ma bardzo mocne doświadczenie w rekrutacji IT oraz dobry niemiecki B1, ale warto dopracować konkretność opisów i dodać brakujące elementy pod szwajcarskie aplikacje.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku polskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 7,
+    "works_well": [
+      "Profil zawodowy w 2 zdaniach jasno definiuje specjalizację: rekrutacja HR Tech oraz obszary IT, product i data.",
+      "Opisy doświadczenia zawierają konkretne obszary odpowiedzialności, np. rekrutacje end-to-end, współpraca z hiring managerami i usprawnianie procesów ATS.",
+      "W sekcji doświadczenia pojawiają się nazwy narzędzi i obszarów pracy, np. LinkedIn Recruiter, Greenhouse, Workday i Lever."
+    ],
+    "needs_fixing": [
+      "Doprecyzuj efekty pracy liczbami lub skalą, np. ile procesów prowadzonych równolegle, ile zatrudnień zamkniętych lub jaki był wpływ na time-to-hire.",
+      "Skróć i ustandaryzuj nazewnictwo ról oraz zakresów zadań, aby każda pozycja miała podobny poziom szczegółowości i była łatwa do szybkiego skanowania.",
+      "Rozwiń sekcję kursów o daty lub instytucję wydającą, aby były bardziej wiarygodne i użyteczne dla rekrutera."
+    ],
+    "to_add": [
+      "Dodaj krótką sekcję 'Kluczowe kompetencje' z 6-8 najważniejszymi umiejętnościami, np. sourcing, full-cycle recruitment, ATS, stakeholder management.",
+      "Dodaj sekcję z osiągnięciami zawodowymi, jeśli masz mierzalne wyniki, np. skrócenie czasu rekrutacji lub liczba obsłużonych procesów.",
+      "W wersji na Szwajcarię przygotuj CV w języku regionu docelowego, najlepiej z dopasowanym profilem pod lokalny rynek."
+    ]
+  },
+  "swiss_fit": {
+    "score": 6,
+    "advantages": [
+      "Praca w branży IT — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "Znajomość niemieckiego B1 — przydatna w niemieckojęzycznej części Szwajcarii",
+      "8 lat doświadczenia w rekrutacji technologicznej — stabilność i specjalizacja ceniona przez pracodawców",
+      "Doświadczenie we współpracy z menedżerami w Polsce i Szwajcarii — sygnał znajomości pracy w międzynarodowym środowisku",
+      "Prawo jazdy kat. B",
+      "Doświadczenie z narzędziami ATS: Greenhouse, Workday, Lever",
+      "Kursy: Tech Recruitment, LinkedIn Recruiter, Certified Talent Acquisition Specialist"
+    ],
+    "concerns": [
+      "Brak doświadczenia zawodowego bezpośrednio w Szwajcarii lub w krajach DACH poza współpracą z menedżerami ze Szwajcarii",
+      "Brak informacji o obywatelstwie UE lub pozwoleniu na pracę, co może wymagać dodatkowego sprawdzenia przez pracodawcę",
+      "CV jest obecnie po polsku, więc nie jest gotowe do szybkiej aplikacji na większość ofert w Szwajcarii"
+    ],
+    "actions": [
+      "Przygotuj osobne wersje CV pod niemieckojęzyczną Szwajcarię oraz pod Romandię, dopasowując język i profil do konkretnego regionu i rodzaju rekrutacji.",
+      "Dodaj w CV konkrety liczbowe: liczba prowadzonych procesów, liczba zatrudnień, time-to-hire, liczba klientów wewnętrznych lub skala pipeline'u kandydatów.",
+      "Jeśli aplikujesz do firm z Basel, Zurychu lub Lozanny, podkreśl rekrutację specjalistów IT i pracę z ATS w pierwszych 3-4 liniach profilu.",
+      "Uzupełnij informację o statusie pobytowym lub prawie do pracy, jeśli jest to aktualne, bo w Szwajcarii to często ważny filtr na etapie preselekcji."
+    ]
+  },
+  "tips": [
+    "W szwajcarskim CV najlepiej działa krótki profil + bardzo konkretne osiągnięcia liczbowe.",
+    "Wersja lokalna językowo zwykle zwiększa szanse bardziej niż ogólne, uniwersalne CV."
+  ]
+}

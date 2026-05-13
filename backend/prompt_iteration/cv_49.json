@@ -1,0 +1,54 @@
+{
+  "overall_score": 5,
+  "summary": "CV jest merytoryczne i dobrze opisuje doświadczenie w IT sales / account management, ale największym problemem jest język: dokument jest po polsku, co znacząco obniża szanse w Szwajcarii. Dodatkowo warto doprecyzować format doświadczenia i dodać więcej konkretów pod kątem rynku szwajcarskiego.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku polskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 7,
+    "works_well": [
+      "Profil zawodowy w 2 zdaniach jasno określa specjalizację: Account Manager IT z doświadczeniem w obsłudze klientów B2B i koordynacji projektów software'owych.",
+      "Opis doświadczenia zawiera konkretne liczby: portfel 20+ klientów oraz zakres działań obejmujący negocjacje, oferty i współpracę z zespołami PM/DEV/QA.",
+      "Wymieniono referencje dostępne na życzenie, co wzmacnia wiarygodność kandydata."
+    ],
+    "needs_fixing": [
+      "Przepisz sekcję doświadczenia w bardziej standardowym układzie chronologicznym (stanowisko, firma, lokalizacja, zakres obowiązków), aby było łatwiej ocenić przebieg kariery.",
+      "Dodaj bardziej mierzalne efekty pracy, np. wzrost sprzedaży, retencję klientów, wartość obsługiwanego portfela lub liczbę zamkniętych kontraktów.",
+      "Uzupełnij opis kompetencji o konkrety narzędziowe, jeśli były używane, np. nazwy systemów CRM lub narzędzi do raportowania.",
+      "Sekcja 'Inne' jest dość ogólna — warto rozdzielić ją na konkretne elementy, np. mobilność, prawo jazdy, dostępność i kluczowe kompetencje miękkie."
+    ],
+    "to_add": [
+      "Dodaj wersję CV po niemiecku lub francusku, dopasowaną do regionu Szwajcarii, do którego aplikujesz.",
+      "Dodaj sekcję z konkretną lokalizacją docelową w Szwajcarii oraz informacją o dostępności do rozpoczęcia pracy.",
+      "Dodaj 2-3 mierzalne osiągnięcia z pracy w SoftBridge, aby wzmocnić profil handlowy w oczach rekrutera.",
+      "Jeśli to możliwe, dodaj nazwę używanego CRM lub narzędzi sprzedażowych, bo to zwiększa czytelność profilu IT sales."
+    ]
+  },
+  "swiss_fit": {
+    "score": 5,
+    "advantages": [
+      "Praca w branży IT — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "5 lat doświadczenia w jednym obszarze IT sales / account management — stabilność i specjalizacja",
+      "Angielski C1 — mocny język roboczy w środowisku międzynarodowym",
+      "Prawo jazdy kat. B",
+      "Gotowość do relokacji do Szwajcarii",
+      "Doświadczenie w polskim software house — bliskie środowisku firm technologicznych",
+      "Obsługa kluczowych klientów B2B i negocjacje umów — cenne w sprzedaży usług IT"
+    ],
+    "concerns": [
+      "Brak języka urzędowego Szwajcarii na poziomie B1+ w CV, co ogranicza dopasowanie do wielu ról lokalnych.",
+      "Brak informacji o pozwoleniu na pracę lub obywatelstwie UE, więc rekruter nie widzi od razu statusu formalnego.",
+      "Brak doświadczenia zawodowego poza Polską, co może wymagać mocniejszego uzasadnienia mobilności i adaptacji do rynku CH."
+    ],
+    "actions": [
+      "Przygotuj osobną wersję CV po niemiecku lub francusku, dopasowaną do regionu, w którym chcesz pracować.",
+      "Zaznacz w aplikacji status formalny: obywatelstwo UE lub informację, że możesz legalnie pracować w Szwajcarii.",
+      "W liście motywacyjnym podkreśl, że obsługujesz klientów B2B i projekty software'owe, bo to dobrze pasuje do firm SaaS i IT services w Szwajcarii.",
+      "Jeśli aplikujesz do Zurychu, Bazylei lub Lozanny, kieruj się do firm technologicznych z międzynarodowym zespołem sprzedaży i customer success."
+    ]
+  },
+  "tips": [
+    "W szwajcarskich aplikacjach warto podawać konkretne wyniki liczbowe, nie tylko zakres obowiązków.",
+    "Dopasuj nazwę stanowiska do rynku docelowego, np. Account Manager / Key Account Manager / Customer Success, jeśli to odpowiada rzeczywistemu zakresowi."
+  ]
+}

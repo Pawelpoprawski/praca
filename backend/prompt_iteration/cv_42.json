@@ -1,0 +1,56 @@
+{
+  "overall_score": 8,
+  "summary": "CV jest napisane po polsku, więc wymaga przygotowania w języku docelowego regionu Szwajcarii. Merytorycznie kandydat wygląda bardzo dobrze: ma 9 lat doświadczenia w inżynierii mechanicznej, konkretne osiągnięcia i niemiecki na poziomie B2, ale kluczową barierą jest brak wersji CV w DE/FR/IT.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku polskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 8,
+    "works_well": [
+      "Profil zawodowy w 2 zdaniach jasno definiuje specjalizację: projektowanie, optymalizację procesów produkcyjnych i rozwiązania dla przemysłu motoryzacyjnego.",
+      "W doświadczeniu podano konkretne osiągnięcia liczbowe: redukcja przestojów maszyn o 18% oraz wdrożenie 3 nowych linii produkcyjnych.",
+      "Opis pracy zawiera konkretne obszary odpowiedzialności: analiza awarii, usprawnienia linii montażowych, współpraca z R&D i jakością.",
+      "Wskazano narzędzia i środowiska pracy: CAD/CAE, MS Office, systemy ERP."
+    ],
+    "needs_fixing": [
+      "CV jest przygotowane po polsku; przygotuj pełną wersję w języku docelowego regionu Szwajcarii, aby przejść pierwszy etap selekcji.",
+      "Dodaj dokładne nazwy stanowisk i firmy w formie zgodnej z CV docelowym rynkiem, najlepiej z pełnym opisem zakresu odpowiedzialności na każdy okres pracy.",
+      "Rozbuduj sekcję doświadczenia o 2-3 dodatkowe konkretne przykłady projektów lub wyników, aby jeszcze lepiej pokazać skalę wpływu biznesowego.",
+      "W sekcji certyfikatów doprecyzuj, co dokładnie obejmuje 'EUR ING' i kiedy został uzyskany, jeśli to możliwe."
+    ],
+    "to_add": [
+      "Dodaj krótkie podsumowanie zawodowe pod rynek szwajcarski, najlepiej ukierunkowane na inżynierię produkcji lub procesów.",
+      "Dodaj sekcję z uprawnieniami lub specjalistycznymi szkoleniami, jeśli posiadasz np. Lean, Six Sigma, TPM lub podobne.",
+      "Dodaj informację o obywatelstwie UE lub prawie do pracy w Szwajcarii, jeśli to prawda.",
+      "Dodaj lokalizację docelową w Szwajcarii lub preferowany region, jeśli aplikujesz selektywnie."
+    ]
+  },
+  "swiss_fit": {
+    "score": 8,
+    "advantages": [
+      "Praca w branży inżynieria — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "Znajomość niemiecki B2 — kluczowy atut dla niemieckojęzycznej części Szwajcarii",
+      "9 lat doświadczenia w inżynierii mechanicznej — silny argument stabilności i ekspertyzy",
+      "Doświadczenie w Bosch Polska — praca w dużej, międzynarodowej organizacji przemysłowej",
+      "Konkretne osiągnięcia liczbowe: redukcja przestojów o 18% i wdrożenie 3 linii produkcyjnych",
+      "Certyfikat EUR ING — mocny sygnał kompetencji inżynierskich",
+      "Gotowość do relokacji do Szwajcarii — ułatwia decyzję pracodawcy"
+    ],
+    "concerns": [
+      "Brak wersji CV w języku docelowego regionu Szwajcarii, mimo bardzo dobrego profilu merytorycznego",
+      "Nie podano obywatelstwa UE ani informacji o pozwoleniu na pracę, co w Szwajcarii ma duże znaczenie rekrutacyjne",
+      "Brak informacji o konkretnym typie stanowiska docelowego w Szwajcarii, przez co aplikacja może być mniej ukierunkowana",
+      "Nie ma nazw konkretnego miasta lub kantonu docelowego, więc trudniej dopasować CV do lokalnego rynku"
+    ],
+    "actions": [
+      "Przygotuj osobną wersję CV po niemiecku dla Zurychu, Bazylei, Berna lub Lucerny, bo niemiecki B2 już daje realną przewagę na rynku.",
+      "Jeśli masz obywatelstwo UE, wpisz je w CV lub w liście motywacyjnym, bo to upraszcza formalności zatrudnienia.",
+      "Skieruj aplikacje do firm przemysłowych i producentów komponentów automotive w regionach niemieckojęzycznych, gdzie profil inżyniera procesu jest szczególnie dobrze odbierany.",
+      "Jeśli posiadasz dodatkowe kompetencje w Lean, Six Sigma lub TPM, pokaż je wprost w wersji szwajcarskiej CV, bo są bardzo cenione w produkcji."
+    ]
+  },
+  "tips": [
+    "Dostosuj nagłówek CV do Szwajcarii i podaj od razu region, do którego aplikujesz.",
+    "W wersji DE używaj branżowych słów kluczowych z obszaru Prozessingenieur, Produktionsoptimierung i Lean Manufacturing."
+  ]
+}

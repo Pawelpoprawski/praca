@@ -1,0 +1,50 @@
+{
+  "overall_score": 9,
+  "summary": "CV jest dobrze dopasowane do rynku szwajcarskiego i ma bardzo mocny profil techniczny, zwłaszcza w DevOps/SRE oraz w pracy w Szwajcarii. Najważniejsze do poprawy: uzupełnić CV o bardziej konkretne efekty biznesowe i dodać krótkie, mierzalne osiągnięcia przy każdej roli.",
+  "critical_issues": [],
+  "structure": {
+    "score": 8,
+    "works_well": [
+      "Profil zawodowy w 1 zdaniu jasno definiuje specjalizację: \"DevOps / SRE Engineer\" oraz 8 lat doświadczenia.",
+      "Opis doświadczenia zawiera konkretne technologie i narzędzia: CI/CD, Kubernetes, Terraform, Ansible, Prometheus, Grafana, AWS, Azure.",
+      "Podano certyfikaty branżowe: AWS Certified DevOps Engineer oraz CKA.",
+      "W sekcji doświadczenia są konkretne role i lata pracy, co ułatwia ocenę przebiegu kariery.",
+      "Widoczna jest spójność techniczna między profilem, doświadczeniem i listą kompetencji."
+    ],
+    "needs_fixing": [
+      "Opisy obowiązków są jeszcze dość ogólne — dodaj efekty liczbowe lub biznesowe, np. skrócenie wdrożeń, poprawę dostępności, redukcję incydentów.",
+      "Sekcja \"Ausbildung\" jest bardzo skrótowa — warto doprecyzować stopień, lata studiów i ewentualną specjalizację z AGH Kraków.",
+      "Sekcja \"Kenntnisse\" to długa lista narzędzi bez poziomu zaawansowania — podziel je na kategorie i oznacz, które są kluczowe, a które dodatkowe.",
+      "Warto doprecyzować, czy przy pracy w Skanska Schweiz AG zakres był lokalny dla Szwajcarii, czy międzynarodowy — obecnie nie wynika to jasno z tekstu.",
+      "Brakuje informacji o konkretnych rezultatach w IBM Polska, np. skali wdrożeń, liczbie usług lub wielkości środowiska."
+    ],
+    "to_add": [
+      "Dodaj krótką sekcję \"Najważniejsze osiągnięcia\" z 2-4 punktami i liczbami, bo to znacząco podniesie siłę CV.",
+      "Dodaj informację o dostępności do pracy / okresie wypowiedzenia, bo w Szwajcarii jest to często ważne dla rekrutera.",
+      "Dodaj miasto i kraj przy wykształceniu, jeśli chcesz ułatwić szybką ocenę kontekstu edukacyjnego.",
+      "Dodaj ewentualnie link do LinkedIn lub GitHub, jeśli prezentujesz projekty automatyzacyjne lub infrastrukturalne."
+    ]
+  },
+  "swiss_fit": {
+    "score": 10,
+    "advantages": [
+      "Praca w branży IT — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "Znajomość niemieckiego C1 — kluczowy atut dla niemieckojęzycznej części Szwajcarii",
+      "Doświadczenie w Szwajcarii: Skanska Schweiz AG — bezpośrednie dopasowanie do lokalnego rynku pracy",
+      "Doświadczenie w Polsce w IBM — międzynarodowe środowisko pracy i dobra przenoszalność kompetencji",
+      "Paszport UE — automatyczna swoboda przepływu osób, brak potrzeby pozwolenia",
+      "Prawo jazdy kat. B",
+      "Stabilność zawodowa: 8 lat doświadczenia w DevOps/SRE, ceniona w CH"
+    ],
+    "concerns": [],
+    "actions": [
+      "Przygotuj wersję CV ukierunkowaną na DevOps/SRE dla ofert w Zurychu, Bazylei lub Bernie, podkreślając automatyzację, Kubernetes i cloud.",
+      "Dodaj 2-3 liczby pokazujące skalę pracy, np. liczbę pipeline'ów, usług, środowisk lub incydentów obsługiwanych w poprzednich rolach.",
+      "Jeśli aplikujesz do większych firm, rozważ doprecyzowanie poziomu odpowiedzialności: czy prowadziłeś projekty samodzielnie, czy w zespole, i jakiej skali były systemy."
+    ]
+  },
+  "tips": [
+    "W Szwajcarii bardzo pomaga CV nastawione na konkret: narzędzie, zakres odpowiedzialności, efekt.",
+    "Jeśli masz LinkedIn, zadbaj o spójność tytułu zawodowego z CV: DevOps Engineer / SRE Engineer."
+  ]
+}

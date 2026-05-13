@@ -1,0 +1,51 @@
+{
+  "overall_score": 4,
+  "summary": "CV jest napisane po polsku, co jest krytycznym problemem przy aplikacjach do Szwajcarii i wymaga tłumaczenia na język regionu docelowego. Merytorycznie profil jest sensowny dla roli administracyjnej, ale przed wysyłką warto też dopracować języki i dodać bardziej konkretne osiągnięcia.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku polskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 6,
+    "works_well": [
+      "Profil zawodowy jasno wskazuje specjalizację: organizacja pracy biura, obsługa administracyjna i wsparcie zarządu.",
+      "Doświadczenie opisano konkretnymi zadaniami: obieg dokumentów, kontakt z dostawcami, wsparcie HR, organizacja spotkań.",
+      "Widać 6 lat doświadczenia w obszarze administracyjno-biurowym, co wzmacnia wiarygodność profilu."
+    ],
+    "needs_fixing": [
+      "Opis doświadczenia jest dość ogólny — dodaj 1-2 mierzalne rezultaty, np. skala obsługiwanych procesów, liczba osób w zespole lub usprawnienia w pracy biura.",
+      "Sekcja 'Inne' zawiera kompetencje, ale warto rozbić je na bardziej uporządkowaną listę umiejętności, żeby były łatwiejsze do skanowania przez rekrutera.",
+      "Dodaj informację o kraju docelowym lub preferowanym regionie pracy w Szwajcarii, aby ułatwić dopasowanie aplikacji do rynku.",
+      "Brakuje poziomu języka niemieckiego wyższego niż A1 — w CV na rynek CH warto jasno pokazać, czy planujesz pracę w regionie niemieckojęzycznym."
+    ],
+    "to_add": [
+      "Dodaj sekcję 'Kompetencje' z konkretnymi narzędziami i systemami, z których korzystasz, np. MS Office, fakturowanie, raportowanie, organizacja podróży służbowych.",
+      "Dodaj krótkie osiągnięcia przy każdym stanowisku, aby pokazać wpływ pracy, a nie tylko zakres obowiązków.",
+      "Dodaj informacje o znajomości ewentualnych systemów ERP/CRM lub narzędzi biurowych, jeśli faktycznie je obsługujesz.",
+      "Dodaj sekcję języków w bardziej standardowej formie CEFR, aby była od razu czytelna dla pracodawcy w Szwajcarii."
+    ]
+  },
+  "swiss_fit": {
+    "score": 4,
+    "advantages": [
+      "6 lat doświadczenia w pracy administracyjno-biurowej — stabilne doświadczenie cenione przez pracodawców.",
+      "Doświadczenie jako Office Manager — stanowisko bliskie roli administracyjnej w firmach szwajcarskich.",
+      "Angielski B2 — przydatny w środowisku międzynarodowym.",
+      "Niemiecki A1 — sygnał gotowości do wejścia na rynek niemieckojęzyczny, choć jeszcze niewystarczający do samodzielnej pracy.",
+      "Bardzo dobra znajomość MS Office — praktyczny atut w pracy biurowej."
+    ],
+    "concerns": [
+      "Niemiecki na poziomie A1 jest zbyt niski do większości ofert w niemieckojęzycznej części Szwajcarii.",
+      "Brak informacji o pozwoleniu na pracę w Szwajcarii lub obywatelstwie UE, co może utrudniać szybkie zatrudnienie.",
+      "Brak doświadczenia poza Polską, więc kandydatka nie pokazuje jeszcze ekspozycji na międzynarodowe środowisko pracy."
+    ],
+    "actions": [
+      "Wybierz docelowy region Szwajcarii zgodny z aktualnym poziomem języka i aplikuj w pierwszej kolejności do firm, które akceptują kandydatów z silnym profilem administracyjnym.",
+      "Jeśli celujesz w rynek CH długofalowo, zaplanuj podniesienie niemieckiego co najmniej do poziomu B1, aby znacząco zwiększyć liczbę ofert.",
+      "Przygotuj osobną wersję CV pod rolę Office Manager / Administration Assistant w standardzie szwajcarskim, z naciskiem na narzędzia, procesy i konkretne efekty pracy."
+    ]
+  },
+  "tips": [
+    "Dodaj krótkie podsumowanie kariery z 2-3 najmocniejszymi kompetencjami na samym początku CV.",
+    "Jeśli masz doświadczenie w pracy z klientem wewnętrznym lub zewnętrznym, opisz je konkretnie — to dobrze działa w rekrutacji do CH."
+  ]
+}

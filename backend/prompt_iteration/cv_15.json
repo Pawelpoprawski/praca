@@ -1,0 +1,56 @@
+{
+  "overall_score": 5,
+  "summary": "Twoje CV ma solidne doświadczenie w QA i kilka mocnych atutów pod rynek szwajcarski, ale największym problemem jest język CV — jest po angielsku, więc w obecnej formie może zostać odrzucone na etapie selekcji. Dodatkowo warto doprecyzować profil zawodowy i dodać więcej konkretów o skali, rezultatach oraz przygotowaniu do aplikacji w CH.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku angielskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 6,
+    "works_well": [
+      "Profil zawodowy od razu określa specjalizację: 'QA Engineer with 3 years of experience in manual and automated testing'.",
+      "W doświadczeniu pojawiają się konkretne narzędzia i technologie: Cypress, Playwright, Selenium, Postman, SQL, Jira, Confluence.",
+      "Zakres obowiązków jest opisany rzeczowo, bez lania wody: planowanie testów, testy funkcjonalne, regresja, tworzenie przypadków testowych."
+    ],
+    "needs_fixing": [
+      "Ujednolić język całego CV do jednego docelowego regionu Szwajcarii — w obecnej formie angielska wersja nie jest optymalna dla większości ofert w CH.",
+      "Doprecyzować doświadczenie w Allegro i Netcompany o konkrety: skala zespołu, typ produktów, liczba testów/defektów, wpływ na jakość lub szybkość wdrożeń.",
+      "Rozwinąć sekcję umiejętności o podział na obszary (testy manualne, automatyzacja, narzędzia, SQL, procesy), zamiast jednej listy haseł.",
+      "W sekcji 'Languages' warto doprecyzować format poziomów w standardzie CEFR dla przejrzystości rekrutacyjnej w CH.",
+      "Sekcja 'Additional' jest bardzo krótka — warto ją przeredagować tak, aby informacje o gotowości do pracy w Bazylei i remote były bardziej konkretne."
+    ],
+    "to_add": [
+      "Dodaj krótki profil ukierunkowany na rynek CH, np. z informacją, czy celujesz w test automation, manual QA czy role łączone.",
+      "Dodaj konkretne osiągnięcia lub rezultaty z pracy: np. skrócenie czasu testów, poprawa pokrycia testami, liczba wspieranych wydań.",
+      "Dodaj informację o dostępności do relokacji lub modelu pracy, jeśli to realne — pomaga w aplikacjach do Szwajcarii.",
+      "Dodaj 1-2 zdania o znajomości procesów QA, jeśli były wykorzystywane w środowisku produktowym lub agile."
+    ]
+  },
+  "swiss_fit": {
+    "score": 5,
+    "advantages": [
+      "Praca w branży IT — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "3 lata doświadczenia w QA / testowaniu — dobra baza dla rynku szwajcarskiego",
+      "Znajomość niemieckiego na poziomie A1 — choć jeszcze niewystarczająca, pokazuje kierunek rozwoju pod rynek niemieckojęzyczny",
+      "Znajomość angielskiego na poziomie B2 — przydatna w międzynarodowych zespołach IT",
+      "ISTQB Foundation Level — rozpoznawalny certyfikat w obszarze testowania",
+      "Paszport UE — automatyczna swoboda przepływu osób, brak potrzeby pozwolenia",
+      "Gotowość do pracy w Bazylei lub zdalnie — zwiększa elastyczność wobec pracodawcy"
+    ],
+    "concerns": [
+      "Brak języka regionu docelowego pracy na poziomie B1+ — niemiecki jest na poziomie A1, więc w wielu ofertach w Bazylei będzie to za mało.",
+      "Brak doświadczenia zawodowego poza Polską — ogranicza wiarygodność na rynku CH, choć nie przekreśla aplikacji.",
+      "Brak informacji o szwajcarskim pozwoleniu na pracę — przy paszporcie UE nie jest to blokada, ale pracodawca może dopytać o formalności.",
+      "Opis doświadczenia nie pokazuje mierzalnych efektów ani skali odpowiedzialności — trudniej ocenić realny poziom samodzielności."
+    ],
+    "actions": [
+      "Skieruj aplikacje przede wszystkim do firm IT w Bazylei i innych niemieckojęzycznych kantonach, gdzie QA i test automation są realnie poszukiwane.",
+      "Jeśli celem jest praca stacjonarna w CH, przygotuj osobną wersję CV pod rynek niemieckojęzyczny, z naciskiem na automatyzację testów i narzędzia.",
+      "Rozważ uzyskanie silniejszego profilu pod automation QA, np. przez projekt demonstracyjny lub portfolio testów w Cypress/Playwright, aby wzmocnić konkurencyjność.",
+      "W aplikacjach podkreślaj gotowość do pracy w środowisku międzynarodowym oraz doświadczenie z automatyzacją, bo to najmocniej wspiera rekrutację w CH."
+    ]
+  },
+  "tips": [
+    "Jeśli masz konkretne wyniki pracy, zamień część listy obowiązków na liczby i efekty — to mocno podnosi jakość CV.",
+    "Dla Szwajcarii warto przygotować też krótszą, bardziej zwięzłą wersję CV, maksymalnie 1-2 strony."
+  ]
+}

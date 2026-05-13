@@ -1,0 +1,54 @@
+{
+  "overall_score": 5,
+  "summary": "CV jest merytorycznie mocne i pokazuje bardzo stabilne, długie doświadczenie w jednej specjalizacji, ale z perspektywy Szwajcarii ma dwa istotne problemy: jest napisane po polsku oraz nie zawiera języka regionu docelowego. Najważniejsza poprawka to przygotowanie wersji CV w języku niemieckim, francuskim lub włoskim oraz uzupełnienie sekcji językowej o poziomy CEFR.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku polskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 6,
+    "works_well": [
+      "Profil zawodowy jest konkretny i jasno określa specjalizację: technik dentystyczny z 14-letnim doświadczeniem w laboratoriach protetycznych.",
+      "Opis doświadczenia zawiera zakres obowiązków związanych z pracami protetycznymi, ceramiką, akrylem i współpracą z lekarzami dentystami.",
+      "Podano pełną ścieżkę edukacji zawodowej wraz z kierunkiem i miejscem nauki."
+    ],
+    "needs_fixing": [
+      "W sekcji „Języki” wpisano wyłącznie „polski – ojczysty”. Dodaj język docelowy aplikacji w Szwajcarii wraz z poziomem CEFR, aby rekruter mógł ocenić dopasowanie do regionu.",
+      "Sekcja „Inne” miesza kompetencje miękkie z deklaracją relokacji. Lepiej rozdzielić to na osobną sekcję „Umiejętności” i osobno „Dodatkowe informacje”, aby CV było bardziej przejrzyste.",
+      "Opisy z lat 2010–2011 są dość ogólne. Warto doprecyzować konkretne technologie, materiały lub typy prac, jeśli kandydat je wykonywał.",
+      "Dodaj informacje o językach obcych z poziomami oraz o ewentualnych certyfikatach lub szkoleniach branżowych, jeśli kandydat je posiada.",
+      "Jeśli CV ma być wysyłane do Szwajcarii, przygotuj wersję w języku regionu docelowego zamiast samej polskiej wersji."
+    ],
+    "to_add": [
+      "Sekcję „Umiejętności” z konkretnymi kompetencjami technicznymi, np. ceramika, akryl, modelowanie wosku, korekta i naprawy prac protetycznych.",
+      "Sekcję „Języki” z poziomami CEFR, np. niemiecki A2/B1 lub francuski A2/B1, jeśli kandydat zna któryś z tych języków.",
+      "Informację o ewentualnych certyfikatach, kursach lub szkoleniach z zakresu protetyki stomatologicznej, jeśli są dostępne.",
+      "Opcjonalnie krótki profil zawodowy pod kątem rynku CH, np. nastawiony na laboratoria protetyczne i współpracę z gabinetami stomatologicznymi."
+    ]
+  },
+  "swiss_fit": {
+    "score": 5,
+    "advantages": [
+      "Praca w branży zdrowie — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "14 lat doświadczenia jako technik dentystyczny w laboratoriach protetycznych.",
+      "Specjalizacja w pracach ceramicznych, koronach i mostach oraz protezach całkowitych i częściowych.",
+      "Doświadczenie w kontroli jakości i współpracy z lekarzami dentystami.",
+      "Gotowość do relokacji do Szwajcarii."
+    ],
+    "concerns": [
+      "W sekcji językowej widnieje wyłącznie „polski – ojczysty”, co ogranicza dopasowanie do większości ofert w Szwajcarii.",
+      "Brak wskazania języka regionu docelowego utrudnia ocenę gotowości do pracy w CH.",
+      "Brak informacji o certyfikatach, szkoleniach lub uznaniu kwalifikacji, które mogłyby wzmocnić pozycję kandydata.",
+      "Brak danych o prawie do pracy w UE/Szwajcarii w treści CV."
+    ],
+    "actions": [
+      "Przygotuj osobną wersję CV w języku niemieckim, francuskim albo włoskim, dopasowaną do konkretnego kantonu/regionu.",
+      "Uzupełnij języki o realny poziom CEFR dla języka docelowego aplikacji, aby rekruter od razu widział gotowość do pracy z zespołem i pacjentem.",
+      "Jeśli to możliwe, zbierz i pokaż certyfikaty lub szkolenia z protetyki stomatologicznej, bo w CH wzmacniają wiarygodność specjalisty.",
+      "W aplikacjach kieruj się przede wszystkim do laboratoriów protetycznych, klinik stomatologicznych i sieci gabinetów, które zatrudniają techników dentystycznych."
+    ]
+  },
+  "tips": [
+    "Dopasuj tytuł CV do rynku CH, np. „Zahntechniker/in” lub odpowiednik w języku regionu.",
+    "Jeśli znasz niemiecki lub francuski, pokaż go możliwie wysoko w CV — w tej branży to mocno podnosi skuteczność aplikacji."
+  ]
+}

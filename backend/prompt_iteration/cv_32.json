@@ -1,0 +1,56 @@
+{
+  "overall_score": 4,
+  "summary": "CV zawiera istotne doświadczenie techniczne, ale ma krytyczny problem językowy dla rynku szwajcarskiego, bo jest napisane po polsku. Dodatkowo widać długą przerwę zawodową oraz kilka elementów wymagających uporządkowania i doprecyzowania przed wysyłką.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku polskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 4,
+    "works_well": [
+      "Profil zawodowy jasno określa specjalizację: technik utrzymania ruchu.",
+      "Podano konkretne stanowiska i nazwy pracodawców, co ułatwia ocenę przebiegu kariery.",
+      "Wymieniono praktyczne umiejętności techniczne: diagnostyka usterek, czytanie dokumentacji technicznej, obsługa narzędzi."
+    ],
+    "needs_fixing": [
+      "Popraw literówkę w nagłówku: \"Doswiadczenie\" powinno być \"Doświadczenie\" — brakuje polskiego znaku diakrytycznego.",
+      "Usuń PESEL z CV: \"PESEL: 80010112345\" to dane wrażliwe i nie powinny trafiać do dokumentu aplikacyjnego.",
+      "Skróć i doprecyzuj opis przerwy zawodowej \"2019-2024 opieka rodzinna, wyjazd i sprawy osobiste\" — warto rozdzielić przyczynę przerwy od ewentualnej aktywności w tym okresie.",
+      "Doprecyzuj informacje o kursach doszkalających: przy \"elektryka przemysłowa, automatyka podstawy\" dodaj nazwę instytucji, liczbę godzin lub certyfikat, aby wyglądały wiarygodniej.",
+      "Dodaj pełniejsze opisy przy doświadczeniu zawodowym — obecnie każda pozycja ma tylko stanowisko i firmę, bez zakresu obowiązków i osiągnięć."
+    ],
+    "to_add": [
+      "Dodaj sekcję języków z poziomami CEFR dla wszystkich języków, nie tylko dla niemieckiego — w tej chwili widać tylko \"niemiecki A1\".",
+      "Dodaj sekcję z kursami/certyfikatami technicznymi, jeśli posiadasz dokumenty potwierdzające szkolenia z elektryki przemysłowej lub automatyki.",
+      "Dodaj krótkie podsumowanie kompetencji technicznych z informacją, przy jakich maszynach/systemach pracowałeś.",
+      "Dodaj informację o dyspozycyjności do pracy zmianowej w bardziej profesjonalnej formie, np. jako osobny punkt w profilu lub sekcji dodatkowej."
+    ]
+  },
+  "swiss_fit": {
+    "score": 5,
+    "advantages": [
+      "Praca w branży inżynieria — branża deficytowa w CH (wysoki popyt na specjalistów).",
+      "5-letnie doświadczenie w utrzymaniu ruchu i serwisie: technik utrzymania ruchu, mechanik maszyn, specjalista serwisu.",
+      "Znajomość niemieckiego A1 — punkt wyjścia do pracy w niemieckojęzycznej części Szwajcarii.",
+      "Prawo jazdy kat. B.",
+      "Gotowość do pracy zmianowej.",
+      "Kursy doszkalające z elektryki przemysłowej i automatyki podstawy.",
+      "Doświadczenie u dużych pracodawców przemysłowych: P&G, BSH, Whirlpool."
+    ],
+    "concerns": [
+      "Przerwa zawodowa 2019-2024 jest bardzo długa i wymaga dobrego wyjaśnienia w aplikacji.",
+      "Niemiecki na poziomie A1 jest zbyt niski jak na większość ofert w niemieckojęzycznej części Szwajcarii.",
+      "Cała historia zawodowa dotyczy Łodzi i Polski — brak doświadczenia zagranicznego.",
+      "W CV nie ma informacji o obywatelstwie UE ani pozwoleniu na pracę, więc pracodawca nie widzi od razu gotowości formalnej do zatrudnienia."
+    ],
+    "actions": [
+      "Przygotuj wersję CV po niemiecku dopasowaną do regionu, w którym chcesz aplikować.",
+      "Jeśli celujesz w Niemiecką Szwajcarię, podnieś niemiecki co najmniej do B1 i pokaż to w CV oraz na rozmowie.",
+      "Zbierz i opisz dowody ukończonych kursów technicznych, najlepiej z certyfikatem lub liczbą godzin.",
+      "Przygotuj krótkie, spójne wyjaśnienie przerwy zawodowej, nastawione na odpowiedzialność rodzinną i gotowość do powrotu do pracy."
+    ]
+  },
+  "tips": [
+    "W szwajcarskim CV warto podać 2-3 najważniejsze osiągnięcia z każdego miejsca pracy, nie tylko same nazwy stanowisk.",
+    "Jeśli masz obywatelstwo UE, wpisz je w CV lub liście motywacyjnym — dla pracodawcy w CH to ważna informacja formalna."
+  ]
+}

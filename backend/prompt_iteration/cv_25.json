@@ -1,0 +1,54 @@
+{
+  "overall_score": 6,
+  "summary": "CV jest napisane po polsku, więc to główny problem blokujący aplikacje w Szwajcarii — trzeba je przygotować w języku docelowego regionu. Merytorycznie kandydat ma mocne doświadczenie budowlane, ale warto dopracować język, dodać konkrety i uporządkować treść pod standard CH.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku polskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 5,
+    "works_well": [
+      "Profil zawodowy od razu podaje specjalizację: pracownik fizyczny z 8-letnim doświadczeniem na budowach w Polsce i Niemczech.",
+      "Opis profilu zawiera konkretny staż: 8 lat doświadczenia w branży budowlanej.",
+      "W sekcji umiejętności wymieniono praktyczne kompetencje związane z budową: czytanie prostych rysunków technicznych, szalunki, zbrojenia."
+    ],
+    "needs_fixing": [
+      "Brak polskich znaków diakrytycznych w tekście (np. 'doswiadczeniem', 'Doswiadczenie', 'Umiejetnosci', 'Jezyki', 'gotowosc', 'ogolnobudowlany'). Popraw na pełną, profesjonalną pisownię.",
+      "Sekcja doświadczenia jest bardzo skrótowa: dodaj po 2-4 punkty obowiązków i osiągnięć przy każdej pracy, aby pokazać zakres odpowiedzialności i skalę zadań.",
+      "Wpis 'Pracownik fizyczny' jest zbyt ogólny jak na CV do Szwajcarii — lepiej użyć bardziej precyzyjnego określenia stanowiska zgodnego z faktycznymi zadaniami, np. związane z budową lub montażem.",
+      "Nie podano żadnych dat miesięcznych przy zatrudnieniach, co utrudnia ocenę ciągłości pracy i stabilności zatrudnienia.",
+      "W sekcji umiejętności warto uporządkować treść i dopisać narzędzia, maszyny lub technologie, jeśli kandydat faktycznie je obsługuje."
+    ],
+    "to_add": [
+      "Dodaj pełne dane osobowe i lokalizację w formacie przyjaznym dla rekrutera w CH, najlepiej z informacją o gotowości do relokacji.",
+      "Dodaj sekcję z certyfikatami lub uprawnieniami, jeśli kandydat je posiada, bo w budownictwie są bardzo ważne dla pracodawców w Szwajcarii.",
+      "Dodaj dokładne daty miesięczne przy każdej pozycji zatrudnienia, żeby wzmocnić wiarygodność i ułatwić ocenę stabilności.",
+      "Dodaj krótkie podsumowanie zawodowe dopasowane do rynku CH, np. 2-3 zdania o typach prac budowlanych i gotowości do pracy w terenie."
+    ]
+  },
+  "swiss_fit": {
+    "score": 7,
+    "advantages": [
+      "Praca w branży budownictwo — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "8 lat doświadczenia na budowach w Polsce i Niemczech — mocny staż w branży cenionej w Szwajcarii",
+      "Doświadczenie w Niemczech — kultura pracy zbliżona do rynku niemieckojęzycznej części Szwajcarii",
+      "Niemiecki A2 — podstawy komunikacji przydatne na placu budowy",
+      "Prawo jazdy kat. B",
+      "Paszport UE — automatyczna swoboda przepływu osób, brak potrzeby pozwolenia",
+      "Gotowość do pracy w Szwajcarii"
+    ],
+    "concerns": [
+      "Niemiecki na poziomie A2 może być zbyt słaby do samodzielnej pracy na większości budów bez wsparcia zespołu.",
+      "Brak dokładnych dat miesięcznych przy zatrudnieniach utrudnia ocenę stabilności i ciągłości kariery.",
+      "Brak informacji o konkretnych uprawnieniach budowlanych lub certyfikatach, które w Szwajcarii mocno zwiększają szanse."
+    ],
+    "actions": [
+      "Jeśli celem jest niemieckojęzyczna część Szwajcarii, przygotuj osobną wersję CV po niemiecku i dostosuj słownictwo do stanowiska budowlanego.",
+      "Rozważ zdobycie lub doprecyzowanie uznawalnych uprawnień budowlanych/certyfikatów, jeśli masz je w praktyce lub możesz je szybko potwierdzić dokumentami.",
+      "Przygotuj aplikacje do firm budowlanych i agencji specjalizujących się w ekipach montażowych i ogólnobudowlanych w kantonach niemieckojęzycznych."
+    ]
+  },
+  "tips": [
+    "W CV podawaj miesiące i lata przy każdej pracy — to znacząco zwiększa wiarygodność.",
+    "W budownictwie w CH najlepiej działają krótkie, konkretne opisy zadań i narzędzi, nie ogólne hasła."
+  ]
+}

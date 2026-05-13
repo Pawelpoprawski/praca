@@ -1,0 +1,53 @@
+{
+  "overall_score": 4,
+  "summary": "Twoje CV jest napisane po angielsku, a to jest krytyczny problem dla aplikacji w Szwajcarii — dokument powinien być dopasowany językowo do regionu docelowego. Merytorycznie profil jest mocny, ale po przetłumaczeniu warto też dopracować dopasowanie do lokalnych wymagań CH, zwłaszcza pod kątem rynku niemieckojęzycznego lub Romandie.",
+  "critical_issues": [
+    "Twoje CV jest napisane w języku angielskim, a najważniejsze dla aplikacji w Szwajcarii to język CV dopasowany do regionu pracy:\n• Jeśli celujesz w niemieckojęzyczną część Szwajcarii (Zurych, Berno, Bazylea, Lucerna, St. Gallen — ok. 65% kraju i większość ofert) — CV MUSI być po niemiecku.\n• Jeśli celujesz w Romandie (Genewa, Lozanna, Neuchâtel, Fryburg, Jura) — CV MUSI być po francusku.\n• Jeśli celujesz w Ticino (Lugano, Bellinzona) — CV powinno być po włosku.\n\nCV w innym języku zostanie odrzucone już na pierwszym sicie selekcji u 90%+ pracodawców. Przetłumacz CV na język docelowego regionu PRZED wysyłką."
+  ],
+  "structure": {
+    "score": 7,
+    "works_well": [
+      "Profil zawodowy w 2 zdaniach jasno określa specjalizację: B2B SaaS, demand generation, product marketing i pipeline growth.",
+      "W doświadczeniu pojawia się mierzalny wynik: wzrost MQLs o 42% rok do roku.",
+      "Opis ról zawiera konkretne obszary odpowiedzialności, np. ABM, launch plans, CRM segmentation, marketing automation."
+    ],
+    "needs_fixing": [
+      "Dodaj pełny, lokalnie dopasowany nagłówek pod rynek Szwajcarii, najlepiej z imieniem, nazwiskiem, miastem docelowym i numerem telefonu w formacie zgodnym z CH.",
+      "Ujednolić zapis doświadczenia zawodowego do bardziej standardowej chronologii: każda pozycja powinna mieć oddzielnie nazwę stanowiska, firmę, lokalizację i pełne daty.",
+      "Rozbuduj opis stanowisk o 1-2 konkretne osiągnięcia biznesowe przy każdej roli, nie tylko zakres obowiązków.",
+      "Doprecyzuj sekcję 'Other' tak, aby narzędzia były pokazane jako kompetencje techniczne, a nie luźna lista."
+    ],
+    "to_add": [
+      "Dodaj sekcję z lokalizacją docelową w Szwajcarii lub informacją o gotowości do relokacji w formie bardziej profesjonalnej niż ogólna wzmianka.",
+      "Dodaj poziom znajomości języków w formacie CEFR przy każdym języku, co ułatwia szybki screening.",
+      "Dodaj sekcję 'Key skills' lub 'Core competencies' z 5-8 kompetencjami marketingowymi dopasowanymi do stanowiska w CH.",
+      "Dodaj informację o dostępności do rozpoczęcia pracy, jeśli jest aktualna, bo to pomaga rekruterowi w Szwajcarii."
+    ]
+  },
+  "swiss_fit": {
+    "score": 6,
+    "advantages": [
+      "Praca w branży IT — branża deficytowa w CH (wysoki popyt na specjalistów)",
+      "Znajomość niemieckiego A2 — dodatkowy atut językowy, choć jeszcze poniżej poziomu roboczego",
+      "Doświadczenie w Wielkiej Brytanii — rynek i kultura pracy dobrze rozumiane w środowisku międzynarodowym",
+      "10 lat doświadczenia w marketingu B2B/SaaS — mocna, stabilna ścieżka zawodowa ceniona przez pracodawców",
+      "Mierzalne osiągnięcie: wzrost MQLs o 42% YoY",
+      "Znajomość narzędzi marketingowych i CRM: HubSpot, Salesforce, Google Analytics, Marketo, SEM"
+    ],
+    "concerns": [
+      "Brak języka regionu docelowego pracy na poziomie B1 lub wyższym — obecny niemiecki A2 może ograniczać liczbę ofert w Szwajcarii",
+      "Brak doświadczenia zawodowego w Szwajcarii lub w regionie DACH, co oznacza konieczność silniejszego udowodnienia dopasowania do lokalnego rynku",
+      "Obecna lokalizacja w Londynie może oznaczać potrzebę wyjaśnienia dostępności relokacyjnej i organizacji startu pracy"
+    ],
+    "actions": [
+      "Przygotuj osobną wersję CV pod niemieckojęzyczną Szwajcarię i drugą pod Romandie, z naciskiem na lokalne słownictwo marketingowe i osiągnięcia biznesowe.",
+      "Zbuduj silniejszy profil pod rynek CH, pokazując wpływ na lead generation, pipeline i współpracę z sales w liczbach.",
+      "Jeśli celujesz w Zurych/Bazyleę/Berno, kontynuuj naukę niemieckiego z A2 do B1, bo to znacząco zwiększy liczbę rozmów.",
+      "Aplikuj także przez międzynarodowe firmy i zespoły regionalne w Szwajcarii, gdzie doświadczenie z Londynu i SaaS może być lepiej docenione."
+    ]
+  },
+  "tips": [
+    "Dopasuj tytuł profilu do konkretnej roli, np. 'B2B SaaS Marketing Manager', a nie tylko ogólny marketing manager.",
+    "W wersji na CH warto mocniej eksponować wyniki liczbowe i wpływ na sprzedaż, bo to jest szczególnie cenione przez rekruterów."
+  ]
+}

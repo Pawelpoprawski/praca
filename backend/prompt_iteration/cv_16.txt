@@ -1,0 +1,20 @@
+David Lewandowski
+DATA ENGINEER
+Phone: +48 698 100 200
+Email: david.lewandowski@outlook.com
+Location: Poznań, Poland
+Summary: Data Engineer with 6+ years of experience in building scalable ETL pipelines and analytics platforms.
+Experience:
+2020–2025 Promedica24 — Senior Data Engineer
+- designed data pipelines in Python and Spark
+- implemented Airflow orchestration and data quality checks
+- worked with BigQuery, Snowflake, and AWS
+2018–2020 OLX Group — Data Engineer
+- developed ELT processes and dashboards support
+- optimized SQL queries and data models
+2016–2018 Transition Technologies — Junior Data Analyst
+Education: Poznan University of Technology, Computer Science
+Skills: Python, PySpark, SQL, Airflow, dbt, Kafka, AWS, GCP, Snowflake, Docker
+Languages: English C1, Polish native, German B1
+Certifications: Google Professional Data Engineer
+Additional information: driving licence B, married, no criminal record

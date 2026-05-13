@@ -1,0 +1,19 @@
+Marta Nowak
+Backend Developer
+Adres: Wrocław, Polska
+Telefon: +48 603 987 111
+E-mail: m.nowak.dev@gmail.com
+Profil: Backend developer specjalizująca się w systemach opartych o Java i Spring.
+Doswiadczenie zawodowe:
+2020–2025 Roche Polska — Backend Developer
+- projektowanie API i mikroserwisów
+- praca z PostgreSQL, Kafka, Docker
+- integracja z systemami zewnętrznymi
+2017–2020 Capgemini — Java Developer
+- rozwój aplikacji biznesowych
+- utrzymanie i refaktoryzacja legacy code
+Wykształcenie: Uniwersytet Wrocławski, Informatyka
+Technologie: Java, Spring Boot, Hibernate, SQL, Docker, Kubernetes, AWS
+Języki: polski, angielski C1, niemiecki B1
+Certyfikaty: Oracle Java SE 11 Developer
+Dodatkowe: PESEL: 90051212345, stan cywilny: panna
