@@ -24,6 +24,8 @@ from app.models.system_setting import SystemSetting
 from app.models.cv_file import CVFile
 from app.models.cv_review import CVReview
 from app.models.cv_database import CVDatabase
+from app.models.public_job_alert import PublicJobAlert
+from app.models.unsubscribed_email import UnsubscribedEmail
 from app.schemas.auth import UserResponse
 from app.schemas.job import JobResponse
 from app.schemas.common import PaginatedResponse, MessageResponse
@@ -1568,6 +1570,212 @@ async def jobs_browser(
             for j in jobs
         ],
         "total": total or 0,
+        "page": page,
+        "per_page": per_page,
+        "pages": math.ceil(total / per_page) if total else 0,
+    }
+
+
+# === PUBLIC JOB ALERTS (admin insights) ===
+
+
+def _norm_kw(raw: str | None) -> str | None:
+    if not raw:
+        return None
+    norm = " ".join(raw.split()).strip().lower()
+    return norm if len(norm) >= 2 else None
+
+
+def _aware(dt: datetime | None) -> datetime | None:
+    if dt is None:
+        return None
+    return dt.replace(tzinfo=timezone.utc) if dt.tzinfo is None else dt
+
+
+@router.get("/alerts/stats")
+async def alerts_stats(
+    current_user: User = Depends(get_current_admin),
+    db: AsyncSession = Depends(get_db),
+):
+    """Overview + top keywords + new-subscriptions trend + recent unsubscribes."""
+    now = datetime.now(timezone.utc)
+    week_ago = now - timedelta(days=7)
+    month_ago = now - timedelta(days=30)
+
+    all_alerts = (await db.execute(select(PublicJobAlert))).scalars().all()
+
+    total_alerts = len(all_alerts)
+    email_to_keywords: dict[str, set[str]] = {}
+    sent_last_7d = 0
+    never_sent = 0
+    new_last_7d = 0
+    new_last_30d = 0
+    kw_to_emails: dict[str, set[str]] = {}
+    kw_first_seen: dict[str, datetime] = {}
+    by_day: dict[str, int] = {}
+
+    for a in all_alerts:
+        email_lc = (a.email or "").lower()
+        ca = _aware(a.created_at)
+        ls = _aware(a.last_sent_at)
+
+        if ls is None:
+            never_sent += 1
+        elif ls >= week_ago:
+            sent_last_7d += 1
+        if ca is not None:
+            if ca >= week_ago:
+                new_last_7d += 1
+            if ca >= month_ago:
+                new_last_30d += 1
+                key = ca.date().isoformat()
+                by_day[key] = by_day.get(key, 0) + 1
+
+        raw = list(a.queries) if a.queries else ([a.query] if a.query else [])
+        for kw_raw in raw:
+            kw = _norm_kw(kw_raw)
+            if not kw:
+                continue
+            kw_to_emails.setdefault(kw, set()).add(email_lc)
+            if email_lc:
+                email_to_keywords.setdefault(email_lc, set()).add(kw)
+            prev = kw_first_seen.get(kw)
+            if ca is not None and (prev is None or ca < prev):
+                kw_first_seen[kw] = ca
+
+    total_subscribers = len(email_to_keywords)
+    total_unsubscribes = int(
+        await db.scalar(select(func.count()).select_from(UnsubscribedEmail)) or 0
+    )
+
+    top_keywords = sorted(
+        (
+            {
+                "keyword": k,
+                "subscribers": len(emails),
+                "first_seen": kw_first_seen[k].isoformat() if kw_first_seen.get(k) else None,
+            }
+            for k, emails in kw_to_emails.items()
+        ),
+        key=lambda x: (-x["subscribers"], x["keyword"]),
+    )[:100]
+
+    daily = []
+    for i in range(29, -1, -1):
+        d = (now - timedelta(days=i)).date().isoformat()
+        daily.append({"date": d, "count": by_day.get(d, 0)})
+
+    avg_kw = (
+        round(sum(len(v) for v in email_to_keywords.values()) / total_subscribers, 2)
+        if total_subscribers else 0.0
+    )
+
+    unsub_rows = (
+        await db.execute(
+            select(UnsubscribedEmail)
+            .order_by(UnsubscribedEmail.unsubscribed_at.desc())
+            .limit(20)
+        )
+    ).scalars().all()
+    recent_unsubscribes = []
+    for u in unsub_rows:
+        ub = _aware(u.unsubscribed_at)
+        sb = _aware(u.subscribed_at)
+        days_subscribed = (
+            max(0, int((ub - sb).total_seconds() // 86400))
+            if ub is not None and sb is not None else None
+        )
+        recent_unsubscribes.append({
+            "email": u.email,
+            "query": u.query,
+            "unsubscribed_at": ub.isoformat() if ub else None,
+            "subscribed_at": sb.isoformat() if sb else None,
+            "days_subscribed": days_subscribed,
+        })
+
+    return {
+        "total_subscribers": total_subscribers,
+        "total_alerts": total_alerts,
+        "total_unsubscribes": total_unsubscribes,
+        "sent_last_7d": sent_last_7d,
+        "never_sent": never_sent,
+        "new_last_7d": new_last_7d,
+        "new_last_30d": new_last_30d,
+        "unique_keywords": len(kw_to_emails),
+        "avg_keywords_per_email": avg_kw,
+        "top_keywords": top_keywords,
+        "daily_new": daily,
+        "recent_unsubscribes": recent_unsubscribes,
+    }
+
+
+@router.get("/alerts/subscribers")
+async def alerts_subscribers(
+    page: int = Query(1, ge=1),
+    per_page: int = Query(30, ge=1, le=100),
+    q: str | None = Query(None, description="Filter by email or keyword substring"),
+    current_user: User = Depends(get_current_admin),
+    db: AsyncSession = Depends(get_db),
+):
+    """Lista subskrybentów zgrupowana po emailu (jeden wiersz = jeden adres)."""
+    all_alerts = (await db.execute(select(PublicJobAlert))).scalars().all()
+
+    by_email: dict[str, dict] = {}
+    for a in all_alerts:
+        email_lc = (a.email or "").lower()
+        if not email_lc:
+            continue
+        bucket = by_email.setdefault(email_lc, {
+            "email": email_lc,
+            "keywords": set(),
+            "alert_rows": 0,
+            "last_sent_at": None,
+            "earliest_created_at": None,
+        })
+        raw = list(a.queries) if a.queries else ([a.query] if a.query else [])
+        for kw_raw in raw:
+            kw = _norm_kw(kw_raw)
+            if kw:
+                bucket["keywords"].add(kw)
+        bucket["alert_rows"] += 1
+        ls = _aware(a.last_sent_at)
+        if ls is not None and (bucket["last_sent_at"] is None or ls > bucket["last_sent_at"]):
+            bucket["last_sent_at"] = ls
+        ca = _aware(a.created_at)
+        if ca is not None and (bucket["earliest_created_at"] is None or ca < bucket["earliest_created_at"]):
+            bucket["earliest_created_at"] = ca
+
+    rows = list(by_email.values())
+
+    if q:
+        needle = q.strip().lower()
+        rows = [
+            r for r in rows
+            if needle in r["email"] or any(needle in kw for kw in r["keywords"])
+        ]
+
+    rows.sort(
+        key=lambda r: r["earliest_created_at"] or datetime.min.replace(tzinfo=timezone.utc),
+        reverse=True,
+    )
+
+    total = len(rows)
+    start = (page - 1) * per_page
+    page_rows = rows[start:start + per_page]
+
+    data = [
+        {
+            "email": r["email"],
+            "keywords": sorted(r["keywords"]),
+            "alert_rows": r["alert_rows"],
+            "last_sent_at": r["last_sent_at"].isoformat() if r["last_sent_at"] else None,
+            "subscribed_at": r["earliest_created_at"].isoformat() if r["earliest_created_at"] else None,
+        }
+        for r in page_rows
+    ]
+    return {
+        "data": data,
+        "total": total,
         "page": page,
         "per_page": per_page,
         "pages": math.ceil(total / per_page) if total else 0,

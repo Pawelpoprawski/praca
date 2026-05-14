@@ -38,6 +38,7 @@ const adminLinks = [
   { href: "/panel/admin/baza-cv", label: "Baza CV", icon: FileSearch },
   { href: "/panel/admin/oferty", label: "Oferty AI", icon: Briefcase },
   { href: "/panel/admin/ekstrakcja", label: "Ekstrakcja AI", icon: Cpu },
+  { href: "/panel/admin/alerty", label: "Alerty", icon: BellRing },
   { href: "/panel/admin/logi", label: "Logi", icon: Activity },
   { href: "/panel/admin/kategorie", label: "Kategorie", icon: FolderOpen },
   { href: "/panel/admin/ustawienia", label: "Ustawienia", icon: Settings },
