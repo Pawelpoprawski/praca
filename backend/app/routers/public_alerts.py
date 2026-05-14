@@ -129,13 +129,19 @@ async def unsubscribe(
         # Idempotent — already unsubscribed or invalid token
         return MessageResponse(message="Powiadomienia są wyłączone.")
 
-    # Archive the email for analytics / GDPR record-of-withdrawal
-    db.add(
-        UnsubscribedEmail(
-            email=alert.email,
-            query=alert.query,
-            subscribed_at=alert.created_at,
+    # Merged-digest model: one email = one weekly digest with all keywords combined.
+    # Unsubscribing therefore removes EVERY alert on this email (anti-orphan).
+    email = alert.email
+    all_for_email = (
+        await db.execute(select(PublicJobAlert).where(PublicJobAlert.email == email))
+    ).scalars().all()
+    for a in all_for_email:
+        db.add(
+            UnsubscribedEmail(
+                email=a.email,
+                query=a.query,
+                subscribed_at=a.created_at,
+            )
         )
-    )
-    await db.delete(alert)
+        await db.delete(a)
     return MessageResponse(message="Powiadomienia zostały wyłączone.")

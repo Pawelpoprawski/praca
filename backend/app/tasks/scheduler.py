@@ -216,10 +216,26 @@ async def process_cv_extractions_scheduled():
         logger.error(f"CV extraction job failed: {e}", exc_info=True)
 
 
+def _pl_jobs_count(n: int) -> str:
+    """Polish plural for offers: '1 nowa oferta' / '2 nowe oferty' / '5 nowych ofert'."""
+    if n == 1:
+        return "1 nowa oferta"
+    last_two = n % 100
+    last = n % 10
+    if 2 <= last <= 4 and not (12 <= last_two <= 14):
+        return f"{n} nowe oferty"
+    return f"{n} nowych ofert"
+
+
 async def check_public_alerts():
-    """Send weekly digest to no-login subscribers (every hour, throttled per-alert)."""
+    """Send weekly digest to no-login subscribers — one email per address (merged).
+
+    Multiple alerts on the same email are coalesced into a single digest covering
+    all their keywords. Cooldown is computed per address (most recent send).
+    """
     import re
     import random
+    from urllib.parse import quote_plus
     from sqlalchemy import or_ as sa_or
     from app.models.public_job_alert import PublicJobAlert
     from app.services.email import _send_email
@@ -232,33 +248,52 @@ async def check_public_alerts():
         result = await db.execute(select(PublicJobAlert))
         alerts = result.scalars().all()
 
-        for alert in alerts:
-            # SQLite drops tz info; normalise to UTC-aware for arithmetic
-            last_sent = alert.last_sent_at
-            if last_sent is not None and last_sent.tzinfo is None:
-                last_sent = last_sent.replace(tzinfo=timezone.utc)
-            # Weekly cooldown
-            if last_sent and (now - last_sent) < timedelta(days=6, hours=23):
-                continue
-            since = last_sent or (now - timedelta(days=7))
+        # Group alerts by email (lowercased) so each address receives a single digest
+        alerts_by_email: dict[str, list[PublicJobAlert]] = {}
+        for a in alerts:
+            alerts_by_email.setdefault((a.email or "").lower(), []).append(a)
 
-            # Collect keywords (queries JSON list, fallback to legacy query)
-            keywords_raw: list[str] = []
-            if alert.queries:
-                keywords_raw = list(alert.queries)
-            elif alert.query:
-                keywords_raw = [alert.query]
-            # Sanitize each keyword for LIKE (strip wildcards) and build OR clause
+        for email, group in alerts_by_email.items():
+            if not email or not group:
+                continue
+
+            # Most recent send across this address's alerts → weekly cooldown
+            last_sents: list[datetime] = []
+            for a in group:
+                if a.last_sent_at:
+                    ls = a.last_sent_at
+                    if ls.tzinfo is None:
+                        ls = ls.replace(tzinfo=timezone.utc)
+                    last_sents.append(ls)
+            most_recent = max(last_sents) if last_sents else None
+            if most_recent and (now - most_recent) < timedelta(days=6, hours=23):
+                continue
+            since = most_recent or (now - timedelta(days=7))
+
+            # Aggregate keywords across all alerts on this email (dedup, case-insensitive)
+            seen: set[str] = set()
+            merged_keywords: list[str] = []
+            for a in group:
+                raw = list(a.queries) if a.queries else ([a.query] if a.query else [])
+                for kw_raw in raw:
+                    if not kw_raw:
+                        continue
+                    kw_clean = re.sub(r"[%_\\]", "", kw_raw).strip()
+                    if len(kw_clean) < 2:
+                        continue
+                    key = kw_clean.lower()
+                    if key in seen:
+                        continue
+                    seen.add(key)
+                    merged_keywords.append(kw_clean)
+            if not merged_keywords:
+                continue
+
             keyword_clauses = []
-            for kw_raw in keywords_raw:
-                kw_clean = re.sub(r"[%_\\]", "", kw_raw or "").strip()
-                if len(kw_clean) < 2:
-                    continue
-                like = f"%{kw_clean}%"
+            for kw in merged_keywords:
+                like = f"%{kw}%"
                 keyword_clauses.append(JobOffer.title.ilike(like))
                 keyword_clauses.append(JobOffer.description.ilike(like))
-            if not keyword_clauses:
-                continue
 
             jobs_q = (
                 select(JobOffer)
@@ -270,8 +305,7 @@ async def check_public_alerts():
                 )
                 .limit(30)
             )
-            job_result = await db.execute(jobs_q)
-            matching_jobs = list(job_result.scalars().all())
+            matching_jobs = list((await db.execute(jobs_q)).scalars().all())
 
             if not matching_jobs:
                 continue
@@ -279,20 +313,21 @@ async def check_public_alerts():
             polish_jobs = [j for j in matching_jobs if j.recruiter_type == "polish"]
             swiss_jobs = [j for j in matching_jobs if j.recruiter_type == "swiss"]
             other_jobs = [j for j in matching_jobs if j.recruiter_type not in ("polish", "swiss")]
-
-            # Randomize within each group so users see different ordering each week
             random.shuffle(polish_jobs)
             random.shuffle(swiss_jobs)
             random.shuffle(other_jobs)
-            # Treat ungrouped as polish (manual + legacy NULL — domyślnie polski rekruter)
             polish_jobs = polish_jobs + other_jobs
 
             site_url = settings.FRONTEND_URL.rstrip("/")
-            unsub_url = f"{site_url}/alerty/wypisz?token={alert.unsubscribe_token}"
-            search_url = f"{site_url}/oferty?q={alert.query}"
+            primary = group[0]
+            unsub_url = f"{site_url}/alerty/wypisz?token={primary.unsubscribe_token}"
+            query_display = ", ".join(merged_keywords)
+            # ; is a separator on the search page → links back to a multi-keyword OR view
+            search_url = f"{site_url}/oferty?q={quote_plus('; '.join(merged_keywords))}"
 
             html = _render_alert_email(
-                query=alert.query,
+                query=query_display,
+                jobs_count=len(matching_jobs),
                 polish_jobs=polish_jobs,
                 swiss_jobs=swiss_jobs,
                 site_url=site_url,
@@ -300,13 +335,11 @@ async def check_public_alerts():
                 unsub_url=unsub_url,
             )
 
-            success = _send_email(
-                alert.email,
-                f'Nowe oferty pracy: {alert.query} ({len(matching_jobs)}) - Praca w Szwajcarii',
-                html,
-            )
+            subject = f"{_pl_jobs_count(len(matching_jobs))}: {query_display} - Praca w Szwajcarii"
+            success = _send_email(email, subject, html)
             if success:
-                alert.last_sent_at = now
+                for a in group:
+                    a.last_sent_at = now
                 sent_count += 1
 
         await db.commit()
@@ -318,6 +351,7 @@ async def check_public_alerts():
 def _render_alert_email(
     *,
     query: str,
+    jobs_count: int,
     polish_jobs: list,
     swiss_jobs: list,
     site_url: str,
@@ -363,7 +397,7 @@ def _render_alert_email(
         url = f"{site_url}/oferty/{job.id}"
         return f"""
         <tr>
-          <td style="padding:14px 16px;border-bottom:1px solid #EEF1F5;vertical-align:top;">
+          <td style="padding:16px;border-bottom:1px solid #EEF1F5;">
             <a href="{url}" style="display:inline-block;color:#0D2240;text-decoration:none;font-weight:700;font-size:15px;line-height:1.3;">
               {title}
             </a>
@@ -371,11 +405,11 @@ def _render_alert_email(
               {('<span style=\"font-weight:600;color:#0D2240;\">' + company + '</span> · ') if company else ''}{location}
             </div>
             {('<div style=\"margin-top:6px;color:#0D2240;font-size:13px;font-weight:600;\">' + salary + '</div>') if salary else ''}
-          </td>
-          <td style="padding:14px 16px;border-bottom:1px solid #EEF1F5;vertical-align:top;text-align:right;white-space:nowrap;">
-            <a href="{url}" style="display:inline-block;padding:8px 16px;background:#E1002A;color:white;text-decoration:none;border-radius:999px;font-weight:600;font-size:12px;">
-              Zobacz ofertę →
-            </a>
+            <div style="margin-top:12px;">
+              <a href="{url}" style="display:inline-block;padding:9px 18px;background:#E1002A;color:white;text-decoration:none;border-radius:999px;font-weight:600;font-size:13px;">
+                Zobacz ofertę →
+              </a>
+            </div>
           </td>
         </tr>
         """
@@ -414,15 +448,15 @@ def _render_alert_email(
         "#0D2240",
     )
 
-    total = len(polish_jobs) + len(swiss_jobs)
     query_safe = escape(query)
+    headline = _pl_jobs_count(jobs_count)
 
     return f"""<!DOCTYPE html>
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nowe oferty: {query_safe}</title>
+  <title>Liczba nowych ofert: {jobs_count}</title>
 </head>
 <body style="margin:0;padding:0;background:#F4F6FA;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;color:#0D2240;">
   <table cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#F4F6FA;padding:24px 12px;">
@@ -436,7 +470,7 @@ def _render_alert_email(
                 Cotygodniowy alert
               </div>
               <h1 style="margin:0;font-size:26px;font-weight:800;line-height:1.2;letter-spacing:-0.02em;">
-                {total} now{'a oferta' if total == 1 else 'e ofert' + ('y' if 2 <= total <= 4 else '')} dla &quot;{query_safe}&quot;
+                {headline} dla &quot;{query_safe}&quot;
               </h1>
               <p style="margin:8px 0 0;color:rgba(255,255,255,0.75);font-size:14px;">
                 Oferty pojawiły się w ciągu ostatniego tygodnia. Najlepsze przeglądasz pierwszy.
@@ -449,9 +483,12 @@ def _render_alert_email(
               {swiss_section}
 
               <div style="margin-top:32px;padding-top:24px;border-top:1px solid #E0E3E8;text-align:center;">
-                <a href="{search_url}" style="display:inline-block;padding:13px 26px;background:#0D2240;color:white;text-decoration:none;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:0.01em;">
-                  Zobacz wszystkie oferty &quot;{query_safe}&quot; →
+                <a href="{search_url}" style="display:inline-block;padding:13px 24px;background:#0D2240;color:white;text-decoration:none;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:0.01em;line-height:1.3;">
+                  Zobacz wszystkie oferty →
                 </a>
+                <p style="margin:10px 0 0;color:#6B7484;font-size:12px;">
+                  dla fraz: &quot;{query_safe}&quot;
+                </p>
               </div>
             </td>
           </tr>

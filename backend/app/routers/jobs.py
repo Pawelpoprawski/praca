@@ -87,13 +87,26 @@ async def list_jobs(
         )
     )
 
-    # Full-text search — escape LIKE wildcards to prevent wildcard injection
+    # Full-text search — escape LIKE wildcards to prevent wildcard injection.
+    # `,` and `;` act as OR separators so users / alert emails can search multiple keywords.
     if q:
-        escaped_q = q.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
-        search_filter = or_(
-            JobOffer.title.ilike(f"%{escaped_q}%"),
-            JobOffer.description.ilike(f"%{escaped_q}%"),
-        )
+        terms = [t.strip() for t in re.split(r"[;,]", q) if len(t.strip()) >= 2][:10]
+        if not terms:
+            terms = [q.strip()] if q.strip() else []
+        if len(terms) > 1:
+            term_clauses = []
+            for term in terms:
+                escaped = term.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+                term_clauses.append(JobOffer.title.ilike(f"%{escaped}%"))
+                term_clauses.append(JobOffer.description.ilike(f"%{escaped}%"))
+            search_filter = or_(*term_clauses)
+        else:
+            single = terms[0] if terms else q
+            escaped_q = single.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+            search_filter = or_(
+                JobOffer.title.ilike(f"%{escaped_q}%"),
+                JobOffer.description.ilike(f"%{escaped_q}%"),
+            )
         query = query.where(search_filter)
         # Log search query (fire-and-forget, don't fail on error)
         try:
